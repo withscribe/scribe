@@ -1,4 +1,4 @@
-import { types, flow } from 'mobx-state-tree'
+import { types } from 'mobx-state-tree'
 
 const StoryModel = types
   .model('StoryModel', {
@@ -8,19 +8,10 @@ const StoryModel = types
     likes: types.maybe(types.number),
     genre: types.maybe(types.string),
   })
-  .views(self => ({}))
   .actions(self => ({
     changeTitle(newTitle) {
       self.title = newTitle
     },
   }))
 
-const UserStore = types
-  .model('UserStore', {
-    stories: types.optional(types.maybe(StoryModel), null),
-  })
-  .views(self => ({}))
-  .actions(self => ({}))
-
-
-export { StoryModel, UserStore }
+export default StoryModel

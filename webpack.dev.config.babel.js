@@ -2,11 +2,13 @@ import path from 'path'
 
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import Stylish from 'webpack-stylish'
 
 export default {
   devtool: 'cheap-module-eval-source-map',
   entry: {
     app: [
+      '@babel/polyfill',
       './src/index.js',
     ],
   },
@@ -18,8 +20,9 @@ export default {
   },
   devServer: {
     contentBase: './src/',
-    hot: true,
     historyApiFallback: true,
+    progress: true,
+    stats: 'none',
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -28,13 +31,15 @@ export default {
       },
     }),
     new HtmlWebpackPlugin({
+      // inject: false,
       title: 'webpack4 Boiler',
-      favicon: path.join(__dirname, 'src', 'assets', 'img', 'favicon.ico'),
+      // favicon: path.join(__dirname, 'src', 'assets', 'img', 'favicon.ico'),
       template: path.join(__dirname, 'src', 'index.ejs'),
       minify: {
         collapseWhitespace: true,
       },
     }),
+    new Stylish(),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
@@ -44,8 +49,9 @@ export default {
     ],
     alias: {
       Components: path.join(__dirname, 'src/components'),
-      Presentational: path.join(__dirname, 'src/presentational'),
-      Styles: path.join(__dirname, 'src/styles'),
+      Pages: path.join(__dirname, 'src/pages'),
+      Styled: path.join(__dirname, 'src/styled'),
+      _system: path.join(__dirname, 'src/styled/_system'),
     },
   },
   module: {
@@ -63,7 +69,7 @@ export default {
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/i,
-        use: ['raw-loader'],
+        use: ['url-loader'],
         include: path.join(__dirname, 'src'),
       },
     ],

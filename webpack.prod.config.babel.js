@@ -63,8 +63,9 @@ export default {
     ],
     alias: {
       Components: path.join(__dirname, 'src/components'),
-      Presentational: path.join(__dirname, 'src/presentational'),
-      Styles: path.join(__dirname, 'src/styles'),
+      Pages: path.join(__dirname, 'src/pages'),
+      Styled: path.join(__dirname, 'src/styled'),
+      _system: path.join(__dirname, 'src/styled/_system'),
     },
   },
   module: {

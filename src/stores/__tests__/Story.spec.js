@@ -25,3 +25,9 @@ it('can change the title of a story', () => {
 it('can create a UserStore', () => {
   const user = UserStore.create()
 })
+
+it('can fetch new stories', () => {
+  const user = UserStore.create()
+  user.fetchAllStories()
+  console.log(user.stories)
+})
