@@ -1,9 +1,9 @@
 import gql from 'graphql-tag'
 
-export const testQuery = gql`
-  query {
-    stories {
-      title
+export default gql`
+  query queryAll {
+    allUsers {
+      email
     }
   }
 `

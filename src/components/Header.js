@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import {
   HeaderWrapper,
@@ -9,7 +10,12 @@ import {
 
 const Header = () => (
   <HeaderWrapper>
-    <HeaderLogo>Unravel</HeaderLogo>
+    <Link to="/">
+      <HeaderLogo>Unravel</HeaderLogo>
+    </Link>
+    <Link to="/start">
+      <HeaderLogo>start</HeaderLogo>
+    </Link>
     <HeaderUsername>Evan</HeaderUsername>
     <HeaderBar />
   </HeaderWrapper>

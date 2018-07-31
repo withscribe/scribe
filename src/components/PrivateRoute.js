@@ -6,7 +6,9 @@ import { inject, observer } from 'mobx-react'
 /* eslint-disable no-undef */
 const PrivateRoute = ({
   component: Component, user, redirectTo, ...rest
-}) => (
+}) => {
+  console.log(user)
+  return (
   <Route
     {...rest}
     render={props => (
@@ -20,7 +22,8 @@ const PrivateRoute = ({
           }} />
       )
     )} />
-)
+  )
+}
 
 PrivateRoute.propTypes = {
   redirectTo: PropTypes.string.isRequired,
@@ -29,4 +32,4 @@ PrivateRoute.propTypes = {
 }
 
 
-export default inject('user')(PrivateRoute)
+export default inject('user')(observer(PrivateRoute))

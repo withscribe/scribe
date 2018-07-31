@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const HeaderWrapper = styled.header`
-  padding: 2rem 10vw 2rem 10vw;
+  padding: 2vh 10vw 2vh 10vw;
   display: flex;
   flex-align: center;
   justify-content: space-between;
@@ -20,6 +20,7 @@ const HeaderBar = styled.div`
 
 const HeaderLogo = styled.h1`
   font-size: 2rem;
+  color: #fff;
 `
 
 const HeaderUsername = styled.h1`

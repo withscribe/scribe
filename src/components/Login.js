@@ -9,6 +9,21 @@ class Login extends React.Component {
     redirectToReferrer: false,
   }
 
+  onRegister = () => {
+    const { auth } = this.props
+    auth.registerUser()
+  }
+
+  onLogin = () => {
+    const { auth } = this.props
+    auth.loginUser()
+  }
+
+  onQuery = () => {
+    const { user } = this.props
+    user.fetchAllUsers()
+  }
+
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/start' } }
     const { redirectToReferrer } = this.state
@@ -29,6 +44,11 @@ class Login extends React.Component {
         type="submit"
         onClick={this.onLogin}>
         test login
+      </button>
+      <button
+        type="submit"
+        onClick={this.onQuery}>
+        test query
       </button>
       <input
         placeholder="email"

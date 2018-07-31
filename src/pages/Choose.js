@@ -11,16 +11,6 @@ class Choose extends React.Component {
     chosen: 'yes',
   }
 
-  onRegister = () => {
-    const { auth } = this.props
-    auth.registerUser()
-  }
-
-  onLogin = () => {
-    const { auth } = this.props
-    auth.loginUser()
-  }
-
   render() {
     const { chosen } = this.state
     const { auth } = this.props
@@ -37,7 +27,6 @@ class Choose extends React.Component {
             <ChoiceLink to="/asg"></ChoiceLink>
           </ChoiceBox>
         </ChoiceWrapper>
-        <h1>state: { chosen }</h1>
       </Container>
     )
   }

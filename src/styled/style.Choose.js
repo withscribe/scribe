@@ -2,7 +2,9 @@ import styled from 'styled-components'
 import { Flex, Box } from 'grid-styled'
 import { Link } from 'react-router-dom'
 
-const ChoiceWrapper = styled(Flex)``
+const ChoiceWrapper = styled(Flex)`
+  height: 89vh;
+`
 
 const ChoiceBox = styled(Box)`
   background: #000;
@@ -18,6 +20,10 @@ const ChoiceLink = styled(Link)`//TODO: img w/ icon
   height: 100%;
   width: 100%;
   background: #efefef;
+
+  &:hover {
+    background: #3f3f3f;
+  }
 `
 
 // const Choice

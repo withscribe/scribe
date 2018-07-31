@@ -16,10 +16,10 @@ const httpLink = new HttpLink({
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
-      console.log('GraphQL error', message)
+      console.log('[GraphQL error]', message)
     })
     if (networkError) {
-      console.log('Network error', networkError)
+      console.log('[Network error]', networkError)
     }
   }
 })
@@ -29,7 +29,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : null,
+      authorization: token ? `${token}` : null,
     },
   }
 })

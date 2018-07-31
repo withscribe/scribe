@@ -54,14 +54,16 @@ const store = {
   auth: authStore,
 }
 
+export { store }
+
 const App = () => (
   <Provider {...store}>
     <Router>
       <>
         <Header />
         <Switch>
-          <Route exact path="/login" component={Login} />
-          <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
+          <Route path="/login" component={Login} />
+          <PrivateRoute path="/start" redirectTo="/login" component={Choose} />
         </Switch>
       </>
     </Router>

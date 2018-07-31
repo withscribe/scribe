@@ -1,6 +1,7 @@
 import { types, flow } from 'mobx-state-tree'
 
-import UserStore from './User'
+import { store } from 'Components/App'
+
 import { client } from '../services/Client'
 import loginMutation from '../mutations/login.mu'
 import registerMutation from '../mutations/register.mu'
@@ -35,6 +36,7 @@ const AuthStore = types
       })
       console.log(login)
       localStorage.setItem('token', login.token)
+      store.user.setMe(login)
       self.inProgress = false
     })
 

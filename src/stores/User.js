@@ -1,14 +1,15 @@
 import { types, flow } from 'mobx-state-tree'
 
 import { client } from '../services/Client'
-import { testQuery } from '../queries/test.query'
+import testQuery from '../queries/test.query'
 
 import StoryModel from './Story'
 
 
 const UserModel = types
   .model('UserModel', {
-    name: types.maybe(types.string),
+    email: types.maybe(types.string),
+    id: types.maybe(types.string),
   })
 
 const UserStore = types
@@ -18,18 +19,29 @@ const UserStore = types
     updatingUser: types.optional(types.boolean, false),
     loadingUser: types.optional(types.boolean, false),
     // updatingUserErrors: types.optional(types.array, []),
-    me: types.maybe(UserModel),
+    me: types.maybeNull(UserModel),
   })
   .actions((self) => {
-    const fetchAllStories = flow(function* () {
+    const fetchAllUsers = flow(function* () {
       self.fetchingData = true
-      const { data: { stories } } = yield client.query({
+      const { data: { allUsers } } = yield client.query({
         query: testQuery,
       })
-      self.stories = stories
+      // self.stories = stories
+      console.log(allUsers)
       self.fetchingData = false
     })
-    return { fetchAllStories }
+
+    const setMe = (data) => {
+      console.log('i got called', data)
+      self.me = UserModel.create({
+        email: data.user.email,
+        id: data.user.id,
+      })
+      console.log(self)
+    }
+
+    return { fetchAllUsers, setMe }
   })
 
 export default UserStore
