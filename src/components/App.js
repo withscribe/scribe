@@ -1,12 +1,15 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'mobx-react'
+import { onSnapshot } from 'mobx-state-tree'
 import makeInspectable from 'mobx-devtools-mst'
 import { injectGlobal } from 'styled-components'
+import decode from 'jwt-decode'
 
 import Header from 'Components/Header'
-import Login from 'Components/Login'
 import PrivateRoute from 'Components/PrivateRoute'
+import Register from 'Pages/Register'
+import Login from 'Pages/Login'
 import Choose from 'Pages/Choose'
 
 import UserStore from '../stores/User'
@@ -24,6 +27,9 @@ injectGlobal`
     font-family: Theinhardt-Bold;
     src: url(${TB}) format('woff');
   }
+  * {
+    box-sizing: border-box;
+  }
   body {
     font-family: Theinhardt;
     letter-spacing: auto;
@@ -35,7 +41,6 @@ injectGlobal`
     font-weight: 300;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     min-width: 100vw;
     max-width: 100vw;
     min-height: 100vh;
@@ -49,12 +54,28 @@ const userStore = UserStore.create()
 const authStore = AuthStore.create()
 makeInspectable(userStore, authStore)
 
-const store = {
-  user: userStore,
-  auth: authStore,
+if (localStorage.getItem('token')) {
+  const fromToken = decode(localStorage.getItem('token'))
+  console.log(fromToken)
+  userStore.pullMeById(fromToken.userId)
 }
 
-export { store }
+
+/*
+  not sure if this is necessary, the only time setting 'me' should occur
+  is logging in. We dont want to update it after EVERY change.
+*/
+// eslint-disable-next-line
+onSnapshot(userStore, snapshot => {
+  console.log(`here is the snapshot ${snapshot}`)
+  // localStorage.setItem('me', JSON.stringify(snapshot))
+})
+
+
+const store = {
+  userStore,
+  authStore,
+}
 
 const App = () => (
   <Provider {...store}>
@@ -63,6 +84,7 @@ const App = () => (
         <Header />
         <Switch>
           <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
           <PrivateRoute path="/start" redirectTo="/login" component={Choose} />
         </Switch>
       </>
