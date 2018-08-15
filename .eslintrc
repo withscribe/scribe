@@ -45,6 +45,7 @@
     "import/extensions": 0,
     "import/order": ["warn", {"newlines-between": "always"}],
     "semi": [2, "never" ],
+    "operator-linebreak": ["error", "after"],
     "babel/object-curly-spacing": 0
   },
   "overrides": [
