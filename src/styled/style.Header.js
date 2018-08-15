@@ -10,6 +10,27 @@ const HeaderWrapper = styled.header`
   position: relative;
 `
 
+const HeaderContainer = styled.nav`
+  width: 100%;
+  margin: 0 auto;
+`
+
+const NavList = styled.ul`
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`
+
+const NavItem = styled.li`
+  display: inline-block;
+  flex: 0 0 auto;
+  position: relative;
+  margin-left: 2em;
+  margin-right: ${props => props.spaceRight ? 'auto' : null}
+`
+
 const HeaderBar = styled.div`
   width: 80vw;
   height: 1px;
@@ -21,6 +42,7 @@ const HeaderBar = styled.div`
 const HeaderLogo = styled.h1`
   font-size: 2rem;
   color: #fff;
+  text-decoration: none;
 `
 
 const HeaderUsername = styled.h1`
@@ -30,6 +52,9 @@ const HeaderUsername = styled.h1`
 
 export {
   HeaderWrapper,
+  HeaderContainer,
+  NavList,
+  NavItem,
   HeaderBar,
   HeaderLogo,
   HeaderUsername,
