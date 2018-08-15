@@ -6,6 +6,7 @@ import Stylish from 'webpack-stylish'
 
 export default {
   devtool: 'cheap-module-eval-source-map',
+  mode: 'development',
   entry: {
     app: [
       '@babel/polyfill',
