@@ -1,7 +1,5 @@
 import { types, flow } from 'mobx-state-tree'
 
-import { store } from 'Components/App'
-
 import { client } from '../services/Client'
 import loginMutation from '../mutations/login.mu'
 import registerMutation from '../mutations/register.mu'
@@ -36,8 +34,8 @@ const AuthStore = types
       })
       console.log(login)
       localStorage.setItem('token', login.token)
-      store.user.setMe(login)
       self.inProgress = false
+      return login
     })
 
     const registerUser = flow(function* () {
@@ -50,12 +48,23 @@ const AuthStore = types
       console.log(token)
       self.inProgress = false
     })
+
+    const logoutUser = () => {
+      if (localStorage.getItem('token')) {
+        localStorage.removeItem('token')
+      } else {
+        return false
+      }
+      return true
+    }
+
     return {
       changeUsername,
       changeEmail,
       changePassword,
       loginUser,
       registerUser,
+      logoutUser,
     }
   })
 

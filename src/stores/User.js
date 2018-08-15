@@ -1,7 +1,7 @@
 import { types, flow } from 'mobx-state-tree'
 
 import { client } from '../services/Client'
-import testQuery from '../queries/test.query'
+import userById from '../queries/query.userById'
 
 import StoryModel from './Story'
 
@@ -22,26 +22,41 @@ const UserStore = types
     me: types.maybeNull(UserModel),
   })
   .actions((self) => {
-    const fetchAllUsers = flow(function* () {
-      self.fetchingData = true
-      const { data: { allUsers } } = yield client.query({
-        query: testQuery,
-      })
-      // self.stories = stories
-      console.log(allUsers)
-      self.fetchingData = false
-    })
+    // const fetchAllUsers = flow(function* () {
+    //   self.fetchingData = true
+    //   const { data: { allUsers } } = yield client.query({
+    //     query: testQuery,
+    //   })
+    //   // self.stories = stories
+    //   console.log(allUsers)
+    //   self.fetchingData = false
+    // })
 
     const setMe = (data) => {
       console.log('i got called', data)
       self.me = UserModel.create({
-        email: data.user.email,
-        id: data.user.id,
+        email: data.email,
+        id: data.id,
       })
       console.log(self)
     }
 
-    return { fetchAllUsers, setMe }
+    const pullMeById = flow(function* (id) {
+      self.fetchingData = true
+      const { data: { findUserById } } = yield client.query({
+        query: userById,
+        variables: ({ id }),
+      })
+      console.log(findUserById)
+      self.fetchingData = false
+      self.setMe(findUserById)
+    })
+
+    const removeMe = (flag) => {
+      if (flag) self.me = null
+    }
+
+    return { pullMeById, setMe, removeMe }
   })
 
 export default UserStore
