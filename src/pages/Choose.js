@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react'
 import Container from '_system/Container'
 import { ChoiceBox, ChoiceWrapper, ChoiceLink } from 'Styled/style.Choose'
 
-@inject('user', 'auth')
+@inject('userStore', 'authStore')
 @observer
 class Choose extends React.Component {
   state = {
@@ -13,7 +13,7 @@ class Choose extends React.Component {
 
   render() {
     const { chosen } = this.state
-    const { auth } = this.props
+    const { authStore } = this.props
 
     return (
       <Container>
