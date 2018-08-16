@@ -1,9 +1,11 @@
 import gql from 'graphql-tag'
 
-export default gql`
+const registerMutation = gql`
   mutation register($email: String!, $password: String!) {
     register(email: $email, password: $password) {
       token
     }
   }
 `
+
+ export default registerMutation
