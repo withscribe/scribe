@@ -1,7 +1,7 @@
 import { types, flow } from 'mobx-state-tree'
 
 import { client } from '../services/Client'
-import userById from '../queries/query.userById'
+import userById from '../queries/userById'
 
 import StoryModel from './Story'
 
