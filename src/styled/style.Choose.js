@@ -3,7 +3,8 @@ import { Flex, Box } from 'grid-styled'
 import { Link } from 'react-router-dom'
 
 const ChoiceWrapper = styled(Flex)`
-  height: 89vh;
+  height: calc(100vh - 69px);
+  padding-top: 10vh;
 `
 
 const ChoiceBox = styled(Box)`

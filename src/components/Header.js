@@ -51,16 +51,18 @@ class Header extends React.Component {
               </NavItem>
             )}
             {me && (
-              <NavItem>
-                <Button
-                  fillWhite
-                  onClick={this.logout}>
-                  logout
-                </Button>
-              </NavItem>
+              <>
+                <NavItem>
+                  <Button
+                    fillWhite
+                    onClick={this.logout}>
+                    logout
+                  </Button>
+                </NavItem>
+                <HeaderDropdown />
+              </>
             )}
-            <HeaderDropdown />
-            <HeaderBar />
+            {/* <HeaderBar /> */}
           </NavList>
         </HeaderContainer>
       </HeaderWrapper>

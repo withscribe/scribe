@@ -3,9 +3,26 @@ import { inject, observer } from 'mobx-react'
 
 import AvatarBox from '_system/Avatar'
 import {
-  DropdownMenu, DropdownContext, DropdownLast,
+  DropdownWrapper, DropdownMenu, DropdownContext, DropdownLast,
   DropdownItems, DropdownItem, ContextDetail,
 } from 'Styled/style.AccountDropdown'
+
+
+const DropdownArrow = ({ flipped }) => (
+  <figure style={{ margin: 0, display: 'inline-flex', color: 'rgb(218, 216, 222)' }}>
+    <svg
+      style={{ fill: '#fff' }}
+      width="20px"
+      height="20px"
+      version="1.1"
+      viewBox="0 0 20 20"
+      x="0px"
+      y="0px">
+      <path
+        d="M 5.054 7.463 A 0.714 0.714 0 0 1 5.714 7 h 8.572 c 0.289 0 0.55 0.183 0.66 0.463 c 0.11 0.28 0.05 0.603 -0.155 0.817 l -4.286 4.5 A 0.696 0.696 0 0 1 10 13 a 0.696 0.696 0 0 1 -0.505 -0.22 L 5.21 8.28 a 0.777 0.777 0 0 1 -0.155 -0.817" />
+    </svg>
+  </figure>
+)
 
 @inject('userStore')
 @observer
@@ -61,18 +78,22 @@ class Dropdown extends React.Component {
     const initials = this.getInitials()
     return (
       <>
-        <AvatarBox
-          onClick={this.openMenu}>
+      <DropdownWrapper
+        onClick={this.openMenu}>
+        <AvatarBox>
           <span>{ initials }</span>
         </AvatarBox>
+        Evan Kysley
+        <DropdownArrow />
+      </DropdownWrapper>
         { showMenu && (
           <DropdownMenu>
             <DropdownItems>
               <DropdownContext>
-                <AvatarBox inline size={24}>{ initials }</AvatarBox>
+                {/* <AvatarBox size={24}>{ initials }</AvatarBox> */}
                 <span>
-                <ContextDetail>{me.email}</ContextDetail>
-                <ContextDetail>{me.id}</ContextDetail>
+                  <ContextDetail>{me.email}</ContextDetail>
+                  <ContextDetail>{me.id}</ContextDetail>
                 </span>
               </DropdownContext>
               <DropdownLast>

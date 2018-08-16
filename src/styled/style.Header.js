@@ -1,7 +1,9 @@
+import React from 'react'
 import styled from 'styled-components'
 
 const HeaderWrapper = styled.header`
-  padding: 2vh 10vw 2vh 10vw;
+  /* padding: 2vh 10vw 2vh 10vw; */
+  padding: 0 1vw 0 1vw;
   display: flex;
   flex-align: center;
   justify-content: space-between;
@@ -17,6 +19,7 @@ const HeaderContainer = styled.nav`
 
 const NavList = styled.ul`
   display: flex;
+  height: 69px;
   align-items: center;
   list-style: none;
   margin: 0;

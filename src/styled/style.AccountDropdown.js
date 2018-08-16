@@ -1,27 +1,47 @@
 import styled from 'styled-components'
 
+const DropdownWrapper = styled.div`
+  width: 274px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: 0 -1vw 0 1em;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background-color: hsla(0, 0% ,100%, .1);
+  }
+`
+
 const DropdownMenu = styled.div`
-  min-width: 150px;
-  top: 9vh;
+  max-width: 274px;
+  min-width: 274px;
+  top: 69px;
   position: absolute;
-  border: 1px solid #dfdfdf;
-  border-radius: 3px;
+  /* border: 1px solid #dfdfdf; */
+  border-radius: 0 3px 0 3px;
   margin: 0;
   line-height: 1rem;
-  right: 1vw;
+  right: 0vw;
   z-index: 4;
   color: #333;
-  background-color: #FFF;
+  background-color: #fff;
+  user-select: none;
 `
+
 const DropdownContext = styled.div`
-  max-height: 310px;
-  margin: 5px;
+  max-width: 274px;
+  min-width: 274px;
+  padding: 5px;
   display: inline-flex;
   align-items: center;
+  background-color: rgb(28,36,128);
+  color: #fff;
 `
 
 const DropdownLast = styled.section`
-  border-top: 1px solid #dfdfdf;
+  /* border-top: 1px solid #dfdfdf; */
 `
 
 const DropdownItems = styled.ul`
@@ -36,6 +56,11 @@ const DropdownItem = styled.li`
   line-height: normal;
   list-style: none;
   padding: 1em;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(220,220,220);
+  }
 `
 
 const ContextDetail = styled.span`
@@ -43,6 +68,7 @@ const ContextDetail = styled.span`
 `
 
 export {
+  DropdownWrapper,
   DropdownMenu,
   DropdownContext,
   DropdownLast,

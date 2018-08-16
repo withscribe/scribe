@@ -7,7 +7,10 @@ import { inject, observer } from 'mobx-react'
 const PrivateRoute = ({
   component: Component, userStore, redirectTo, ...rest
 }) => {
+  const { fetchingData } = userStore
   return (
+    <>
+    { !fetchingData &&
     <Route
       {...rest}
       render={props => (
@@ -21,6 +24,9 @@ const PrivateRoute = ({
             }} />
         )
       )} />
+    }
+  }
+  </>
   )
 }
 
