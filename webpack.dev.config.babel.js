@@ -43,7 +43,7 @@ export default {
     new Stylish(),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.json', '.graphql'],
     modules: [
       path.join(__dirname, 'src'),
       path.join(__dirname, 'node_modules'),
@@ -53,6 +53,8 @@ export default {
       Pages: path.join(__dirname, 'src/pages'),
       Styled: path.join(__dirname, 'src/styled'),
       _system: path.join(__dirname, 'src/styled/_system'),
+      Queries: path.join(__dirname, 'src/queries'),
+      Mutations: path.join(__dirname, 'src/mutations'),
     },
   },
   module: {
@@ -65,11 +67,13 @@ export default {
       },
       {
         test: /\.(jpg|jpeg|png|gif)$/i,
+        exclude: /node_modules/,
         use: ['file-loader'],
         include: path.join(__dirname, 'src'),
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/i,
+        exclude: /node_modules/,
         use: ['url-loader'],
         include: path.join(__dirname, 'src'),
       },
