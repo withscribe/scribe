@@ -16,6 +16,7 @@ const UserStore = types
   .model('UserStore', {
     stories: types.optional(types.array(StoryModel), []),
     fetchingData: types.optional(types.boolean, false),
+    pullingLoginData: types.optional(types.boolean, false),
     updatingUser: types.optional(types.boolean, false),
     loadingUser: types.optional(types.boolean, false),
     // updatingUserErrors: types.optional(types.array, []),
@@ -42,13 +43,13 @@ const UserStore = types
     }
 
     const pullMeById = flow(function* (id) {
-      self.fetchingData = true
+      self.pullingLoginData = true
       const { data: { findUserById } } = yield client.query({
         query: userById,
         variables: ({ id }),
       })
       console.log(findUserById)
-      self.fetchingData = false
+      self.pullingLoginData = false
       self.setMe(findUserById)
     })
 

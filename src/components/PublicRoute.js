@@ -14,7 +14,7 @@ const PrivateRoute = ({
     <Route
       {...rest}
       render={props => (
-        userStore.me ? (
+        !userStore.me ? (
           <Component {...props} />
         ) : (
           <Redirect

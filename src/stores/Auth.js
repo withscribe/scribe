@@ -8,9 +8,9 @@ const AuthStore = types
   .model('AuthStore', {
     inProgress: types.optional(types.boolean, false),
     errors: types.maybe(types.string),
-    username: types.maybe(types.string),
-    email: types.maybe(types.string),
-    password: types.maybe(types.string),
+    username: types.optional(types.string, ''),
+    email: types.optional(types.string, ''),
+    password: types.optional(types.string, ''),
   })
   .actions((self) => {
     const changeUsername = (newUsername) => {

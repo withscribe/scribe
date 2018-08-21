@@ -1,5 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
+import { Transition } from 'react-spring'
 
 import AvatarBox from '_system/Avatar'
 import {
@@ -9,7 +10,7 @@ import {
 
 
 const DropdownArrow = ({ flipped }) => (
-  <figure style={{ margin: 0, display: 'inline-flex', color: 'rgb(218, 216, 222)' }}>
+  <figure style={{ margin: '0 0 0 1em', display: 'inline-flex', color: 'rgb(218, 216, 222)' }}>
     <svg
       style={{ fill: '#fff' }}
       width="20px"
@@ -26,7 +27,7 @@ const DropdownArrow = ({ flipped }) => (
 
 @inject('userStore')
 @observer
-class Dropdown extends React.Component {
+class HeaderDropdown extends React.Component {
   state = {
     showMenu: false,
   }
@@ -74,7 +75,8 @@ class Dropdown extends React.Component {
 
   render() {
     const { showMenu } = this.state
-    const { userStore: { me } } = this.props
+    console.log(showMenu)
+    const { logout, userStore: { me } } = this.props
     const initials = this.getInitials()
     return (
       <>
@@ -86,8 +88,10 @@ class Dropdown extends React.Component {
         Evan Kysley
         <DropdownArrow />
       </DropdownWrapper>
-        { showMenu && (
-          <DropdownMenu>
+        {/* { showMenu && ( */}
+          <Transition from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
+            { showMenu && (styles =>
+          <DropdownMenu style={styles}>
             <DropdownItems>
               <DropdownContext>
                 {/* <AvatarBox size={24}>{ initials }</AvatarBox> */}
@@ -100,14 +104,16 @@ class Dropdown extends React.Component {
                 <DropdownItem>Create a Story</DropdownItem>
                 <DropdownItem>Profile</DropdownItem>
                 <DropdownItem>Account</DropdownItem>
-                <DropdownItem>Logout</DropdownItem>
+                <DropdownItem onClick={logout}>Logout</DropdownItem>
               </DropdownLast>
             </DropdownItems>
           </DropdownMenu>
-        )}
+          )}
+          </Transition>
+        {/* )} */}
       </>
     )
   }
 }
 
-export default Dropdown
+export default HeaderDropdown

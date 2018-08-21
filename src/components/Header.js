@@ -3,7 +3,6 @@ import { withRouter, Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import HeaderDropdown from 'Components/AccountDropdown'
-
 import { ButtonLink, Button } from '_system/Button'
 import {
   HeaderWrapper,
@@ -44,22 +43,29 @@ class Header extends React.Component {
               </ButtonLink>
             </NavItem>
             {!me && (
+              <>
               <NavItem>
                 <ButtonLink border to="/login">
-                  login
+                  Login
                 </ButtonLink>
               </NavItem>
+              <NavItem>
+                <ButtonLink fillWhite to="/register">
+                  Sign Up
+                </ButtonLink>
+              </NavItem>
+              </>
             )}
             {me && (
               <>
-                <NavItem>
-                  <Button
-                    fillWhite
-                    onClick={this.logout}>
-                    logout
-                  </Button>
-                </NavItem>
-                <HeaderDropdown />
+                {/* <NavItem> */}
+                {/*   <Button */}
+                {/*     fillWhite */}
+                {/*     onClick={this.logout}> */}
+                {/*     logout */}
+                {/*   </Button> */}
+                {/* </NavItem> */}
+                <HeaderDropdown logout={this.logout} />
               </>
             )}
             {/* <HeaderBar /> */}

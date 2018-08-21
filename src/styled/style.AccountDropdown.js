@@ -28,6 +28,7 @@ const DropdownMenu = styled.div`
   color: #333;
   background-color: #fff;
   user-select: none;
+  overflow: hidden;
 `
 
 const DropdownContext = styled.div`

@@ -36,6 +36,8 @@ const Button = styled.button`
 
   height: ${props => props.height ? '48px' : null};
 
+  margin-top: ${props => props.height ? '2em' : null};
+
   width: ${props => props.full ? '100%' : 'auto'};
 `
 

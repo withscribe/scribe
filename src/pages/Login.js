@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react'
 
 import Input from '_system/Input'
 import { Button } from '_system/Button'
-import { LoginWrapper, LoginContainer } from 'Styled/style.Login'
+import { FormWrapper, FormContainer, FormTitle } from 'Styled/style.LRForm'
 
 @inject('userStore', 'authStore')
 @observer
@@ -19,6 +19,7 @@ class Login extends React.Component {
       .then((res) => {
         const { user } = res
         userStore.setMe(user)
+        this.setState({ redirectToReferrer: true })
       })
   }
 
@@ -32,8 +33,8 @@ class Login extends React.Component {
     }
 
     return (
-      <LoginWrapper>
-        <LoginContainer width={[1.1 / 3, 1 / 4]}>
+      <FormWrapper>
+        <FormContainer width={[1.1 / 3, 1 / 4]}>
           <Input
             placeholder="email"
             type="text"
@@ -49,11 +50,8 @@ class Login extends React.Component {
             Login
           </Button>
           <Link to="/register">Don't have an account? <b>Sign Up</b></Link>
-          { userStore.me &&
-            <span>you are logged in</span>
-          }
-        </LoginContainer>
-      </LoginWrapper>
+        </FormContainer>
+      </FormWrapper>
     )
   }
 }

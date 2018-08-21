@@ -30,16 +30,16 @@ export default {
     new CleanWebpackPlugin(['dist']),
     new webpack.HashedModuleIdsPlugin(),
     new WebpackChunkHash(),
-    // new CompressionWebpackPlugin({
-    //   asset: '[path].gz[query]',
-    //   algorithm: 'gzip',
-    //   test: new RegExp('\\.(js|css)$'),
-    //   threshold: 10240,
-    //   minRatio: 0.8,
-    // }),
+    new CompressionWebpackPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: new RegExp('\\.(js|css)$'),
+      threshold: 10240,
+      minRatio: 0.8,
+    }),
     new HtmlWebpackPlugin({
-      title: 'webpack4 Boiler',
-      favicon: path.join(__dirname, 'assets', 'img', 'favicon.ico'),
+      title: 'Unravel',
+      // favicon: path.join(__dirname, 'assets', 'img', 'favicon.ico'),
       template: path.join(__dirname, 'src', 'index.ejs'),
       minify: {
         removeComments: true,

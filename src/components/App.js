@@ -8,6 +8,7 @@ import decode from 'jwt-decode'
 
 import Header from 'Components/Header'
 import PrivateRoute from 'Components/PrivateRoute'
+import PublicRoute from 'Components/PublicRoute'
 import Register from 'Pages/Register'
 import Login from 'Pages/Login'
 import Choose from 'Pages/Choose'
@@ -83,9 +84,9 @@ const App = () => (
       <>
         <Header />
         <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <PrivateRoute path="/start" redirectTo="/login" component={Choose} />
+          <PublicRoute exact path="/login" redirectTo="/start" component={Login} />
+          <PublicRoute exact path="/register" redirectTo="/start" component={Register} />
+          <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
         </Switch>
       </>
     </Router>
