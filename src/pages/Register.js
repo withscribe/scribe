@@ -15,60 +15,19 @@ class Register extends React.Component {
     redirectToReferrer: false,
   }
 
-//   handleValidation = () => {
-//     const { authStore: { username, email } } = this.props
-//     const errors = {}
-//     let isFormValid = true
-//
-//     if (!username) {
-//       isFormValid = false
-//       errors.username = 'Username cannot be empty'
-//     }
-//     if (typeof username !== 'undefined') {
-//       if (!username.match(/^[a-zA-Z0-9]+$/)) {
-//         isFormValid = false
-//         errors.username = 'Username can only contain letters and numbers'
-//       }
-//     }
-//
-//     if (!email) {
-//       isFormValid = false
-//       errors.email = 'Email cannot be empty'
-//     }
-//     if (typeof email !== 'undefined') {
-//       const lastAtPos = email.lastIndexOf('@')
-//       const lastDotPos = email.lastIndexOf('.')
-//
-//       if (!(lastAtPos < lastDotPos && lastAtPos > 0 && email.indexOf('@@') === -1 && lastDotPos > 2 && (email.length - lastDotPos) > 2)) {
-//         isFormValid = false
-//         errors.email = 'Email is not valid'
-//       }
-//     }
-//
-//     this.setState({ errors, isFormValid })
-//     return isFormValid
-//   }
-
   onRegister = (e) => {
     e.preventDefault()
-    const { authStore: { username, email } } = this.props
-    const canRegister = this.props.validate(username, email)
-    console.log(canRegister)
+    const canRegister = this.props.validate()
     if (canRegister) {
       const { authStore } = this.props
       authStore.registerUser()
     }
   }
 
-  refreshValidation = () => {
-    const { authStore: { username, email } } = this.props
-    const canRegister = this.props.validate(username, email)
-  }
-
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/start' } }
     const { redirectToReferrer } = this.state
-    const { authStore, errors, valid, validate } = this.props
+    const { authStore, errors, valid, validate, single } = this.props
 
     if (redirectToReferrer) {
       return <Redirect to={from} />
@@ -77,26 +36,31 @@ class Register extends React.Component {
     return (
       <FormWrapper>
         <FormContainer width={[1.1 / 3, 1 / 4]}>
-          <form
-            onBlur={this.refreshValidation}>
+          <form>
             <Input
               placeholder="username"
               type="text"
+              onBlur={() => single('username')}
               onChange={e => authStore.changeUsername(e.target.value)} />
             {errors.username && <span style={{ color: 'red' }}>{errors.username}</span>}
             <Input
               placeholder="email"
-              type="text"
+              type="email"
+              onBlur={() => single('email')}
               onChange={e => authStore.changeEmail(e.target.value)} />
             {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
             <Input
               placeholder="password"
-              type="text"
+              type="password"
+              onBlur={() => single('password')}
               onChange={e => authStore.changePassword(e.target.value)} />
+            {errors.password && <span style={{ color: 'red' }}>{errors.password}</span>}
             <Input
               placeholder="confirm password"
-              type="text"
-              onChange={e => authStore.changePassword(e.target.value)} />
+              type="password"
+              onBlur={() => single('copy')}
+              onChange={e => authStore.changeConfirmPassword(e.target.value)} />
+            {errors.copy && <span style={{ color: 'red' }}>{errors.copy}</span>}
             <Button
               type="submit"
               disabled={valid === false}

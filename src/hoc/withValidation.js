@@ -1,15 +1,42 @@
 import React from 'react'
+import { inject, observer } from 'mobx-react'
 
 const withValidation = (WrappedComponent) => {
+  @inject('authStore')
+  @observer
   class HOC extends React.Component {
     state = {
       errors: {},
       isFormValid: true,
     }
 
-    validate = (username, email, password) => {
-      const isUsernameValid = this.checkUsername(username)
-      const isEmailValid = this.checkEmail(email)
+    singleValidation = (type) => {
+      if (type === 'username') {
+        this.checkUsername(this.props.authStore.username)
+      }
+      if (type === 'email') {
+        this.checkEmail(this.props.authStore.email)
+      }
+      if (type === 'password') {
+        this.checkPassword(this.props.authStore.password)
+      }
+      if (type === 'copy') {
+        this.checkCopy(this.props.authStore.password, this.props.authStore.confirmPassword)
+      }
+    }
+
+    validate = () => {
+      const {
+        authStore: {
+          username, email, password, confirmPassword,
+        },
+      } = this.props
+      let isUsernameValid = false
+      let isEmailValid = false
+      let isPasswordValid = false
+
+      if (username) { isUsernameValid = this.checkUsername(username) }
+      if (email) { isEmailValid = this.checkEmail(email) }
 
       if (isUsernameValid && isEmailValid) {
         this.setState({ isFormValid: true })
@@ -33,7 +60,7 @@ const withValidation = (WrappedComponent) => {
         }
       }
 
-      this.setState(prevState => ({ errors: { ...prevState.errors, username: errors } } ))
+      this.setState(prevState => ({ errors: { ...prevState.errors, username: errors } }))
       return isFieldValid
     }
 
@@ -54,7 +81,31 @@ const withValidation = (WrappedComponent) => {
           errors = 'Email is not valid'
         }
       }
-      this.setState(prevState => ({ errors: { ...prevState.errors, email: errors } } ))
+      this.setState(prevState => ({ errors: { ...prevState.errors, email: errors } }))
+      return isFieldValid
+    }
+
+    checkPassword = (password) => {
+      let errors = []
+      let isFieldValid = true
+
+      if (password.length < 8 || password.length > 32) {
+        isFieldValid = false
+        errors = 'Password must be at between 8 and 32 characters long'
+      }
+      this.setState(prevState => ({ errors: { ...prevState.errors, password: errors } }))
+      return isFieldValid
+    }
+
+    checkCopy = (password, copy) => {
+      let errors = []
+      let isFieldValid = true
+
+      if (password !== copy) {
+        isFieldValid = false
+        errors = 'Passwords do not match'
+      }
+      this.setState(prevState => ({ errors: { ...prevState.errors, copy: errors } }))
       return isFieldValid
     }
 
@@ -67,6 +118,7 @@ const withValidation = (WrappedComponent) => {
           errors={errors}
           valid={isFormValid}
           validate={this.validate}
+          single={this.singleValidation}
           {...props} />
       )
     }

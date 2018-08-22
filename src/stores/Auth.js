@@ -11,6 +11,7 @@ const AuthStore = types
     username: types.optional(types.string, ''),
     email: types.optional(types.string, ''),
     password: types.optional(types.string, ''),
+    confirmPassword: types.optional(types.string, ''),
   })
   .actions((self) => {
     const changeUsername = (newUsername) => {
@@ -23,6 +24,10 @@ const AuthStore = types
 
     const changePassword = (newPassword) => {
       self.password = newPassword
+    }
+
+    const changeConfirmPassword = (newConfirmPassword) => {
+      self.confirmPassword = newConfirmPassword
     }
 
     const loginUser = flow(function* () {
@@ -62,6 +67,7 @@ const AuthStore = types
       changeUsername,
       changeEmail,
       changePassword,
+      changeConfirmPassword,
       loginUser,
       registerUser,
       logoutUser,
