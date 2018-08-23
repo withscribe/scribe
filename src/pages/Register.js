@@ -40,27 +40,27 @@ class Register extends React.Component {
             <Input
               placeholder="username"
               type="text"
-              onBlur={() => single('username')}
+              onBlur={() => single('CHECK_USERNAME')}
               onChange={e => authStore.changeUsername(e.target.value)} />
-            {errors.username && <span style={{ color: 'red' }}>{errors.username}</span>}
+            {errors.CHECK_USERNAME && <span style={{ color: 'red' }}>{errors.CHECK_USERNAME}</span>}
             <Input
               placeholder="email"
               type="email"
-              onBlur={() => single('email')}
+              onBlur={() => single('CHECK_EMAIL')}
               onChange={e => authStore.changeEmail(e.target.value)} />
-            {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
+            {errors.CHECK_EMAIL && <span style={{ color: 'red' }}>{errors.CHECK_EMAIL}</span>}
             <Input
               placeholder="password"
               type="password"
-              onBlur={() => single('password')}
+              onBlur={() => single('CHECK_PASSWORD')}
               onChange={e => authStore.changePassword(e.target.value)} />
-            {errors.password && <span style={{ color: 'red' }}>{errors.password}</span>}
+            {errors.CHECK_PASSWORD && <span style={{ color: 'red' }}>{errors.CHECK_PASSWORD}</span>}
             <Input
               placeholder="confirm password"
               type="password"
-              onBlur={() => single('copy')}
+              onBlur={() => single('CHECK_COPY')}
               onChange={e => authStore.changeConfirmPassword(e.target.value)} />
-            {errors.copy && <span style={{ color: 'red' }}>{errors.copy}</span>}
+            {errors.CHECK_COPY && <span style={{ color: 'red' }}>{errors.CHECK_COPY}</span>}
             <Button
               type="submit"
               disabled={valid === false}
