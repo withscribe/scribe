@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'mobx-react'
 import { onSnapshot } from 'mobx-state-tree'
 import makeInspectable from 'mobx-devtools-mst'
-import { injectGlobal } from 'styled-components'
+import { injectGlobal } from 'react-emotion'
 import decode from 'jwt-decode'
 
 import Header from 'Components/Header'
@@ -58,7 +58,7 @@ makeInspectable(userStore, authStore)
 if (localStorage.getItem('token')) {
   const fromToken = decode(localStorage.getItem('token'))
   console.log(fromToken)
-  userStore.pullMeById(fromToken.userId)
+  userStore.pullMeById(fromToken.accountId)
 }
 
 

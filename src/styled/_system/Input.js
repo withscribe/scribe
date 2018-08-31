@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'react-emotion'
 
 const Input = styled.input`
   padding: 0 0.5em;

@@ -1,8 +1,8 @@
 const types = {
-  CHECK_USERNAME: 'CHECK_USERNAME',
-  CHECK_PASSWORD: 'CHECK_PASSWORD',
-  CHECK_COPY: 'CHECK_COPY',
-  CHECK_EMAIL: 'CHECK_EMAIL',
+  USERNAME: 'USERNAME',
+  PASSOWORD: 'PASSOWORD',
+  COPY: 'COPY',
+  EMAIL: 'EMAIL',
 }
 
 const checkUsername = (username) => {
@@ -89,13 +89,13 @@ const validate = (validatorType, value) => {
   console.log(validatorType)
   console.log(value)
   switch (validatorType) {
-  case types.CHECK_USERNAME:
+  case types.USERNAME:
     return validators.checkUsername(value.username)
-  case types.CHECK_PASSWORD:
+  case types.PASSOWORD:
     return validators.checkPassword(value.password)
-  case types.CHECK_COPY:
+  case types.COPY:
     return validators.checkCopy(value.password)
-  case types.CHECK_EMAIL:
+  case types.EMAIL:
     return validators.checkEmail(value.confirmPassword)
   default:
     return value

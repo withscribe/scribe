@@ -25,9 +25,9 @@ const DropdownArrow = ({ flipped }) => (
   </figure>
 )
 
-@inject('userStore')
-@observer
-class HeaderDropdown extends React.Component {
+// @inject('userStore')
+// @observer
+class HeaderDropdown extends React.PureComponent {
   state = {
     showMenu: false,
   }
@@ -38,26 +38,13 @@ class HeaderDropdown extends React.Component {
     // or send down as a prop from the Header component...
     // this doesnt really need to be state aware
     const name = 'Evan Kysley'
-    if (!name || typeof name != 'string') return fallback
+    if (!name || typeof name !== 'string') return fallback
     return name
       .replace(/\s+/, ' ')
       .split(' ')
       .slice(0, 2)
       .map(v => v && v[0].toUpperCase())
       .join('')
-  }
-
-  hashCode = (s) => {
-    const str = String(s)
-    let hash = 0
-    let char
-    if (str.trim().length === 0) return hash
-    for (let i = 0; i < str.length; i++) {
-      char = str.charCodeAt(i)
-      hash = (hash << 5) - hash + char
-      hash &= hash
-    }
-    return Math.abs(hash)
   }
 
   openMenu = (event) => {
@@ -76,7 +63,8 @@ class HeaderDropdown extends React.Component {
   render() {
     const { showMenu } = this.state
     console.log(showMenu)
-    const { logout, userStore: { me } } = this.props
+    const { me, logout } = this.props
+    // const { logout, userStore: { me } } = this.props
     const initials = this.getInitials()
     return (
       <>
@@ -89,27 +77,27 @@ class HeaderDropdown extends React.Component {
         <DropdownArrow />
       </DropdownWrapper>
         {/* { showMenu && ( */}
-          <Transition from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
-            { showMenu && (styles =>
-          <DropdownMenu style={styles}>
-            <DropdownItems>
-              <DropdownContext>
-                {/* <AvatarBox size={24}>{ initials }</AvatarBox> */}
-                <span>
-                  <ContextDetail>{me.email}</ContextDetail>
-                  <ContextDetail>{me.id}</ContextDetail>
-                </span>
-              </DropdownContext>
-              <DropdownLast>
-                <DropdownItem>Create a Story</DropdownItem>
-                <DropdownItem>Profile</DropdownItem>
-                <DropdownItem>Account</DropdownItem>
-                <DropdownItem onClick={logout}>Logout</DropdownItem>
-              </DropdownLast>
-            </DropdownItems>
-          </DropdownMenu>
-          )}
-          </Transition>
+        <Transition from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
+          { showMenu && (styles => (
+            <DropdownMenu style={styles}>
+              <DropdownItems>
+                <DropdownContext>
+                  {/* <AvatarBox size={24}>{ initials }</AvatarBox> */}
+                  <span>
+                    <ContextDetail>{me.email}</ContextDetail>
+                    <ContextDetail>{me.id}</ContextDetail>
+                  </span>
+                </DropdownContext>
+                <DropdownLast>
+                  <DropdownItem>Create a Story</DropdownItem>
+                  <DropdownItem>Profile</DropdownItem>
+                  <DropdownItem>Account</DropdownItem>
+                  <DropdownItem onClick={logout}>Logout</DropdownItem>
+                </DropdownLast>
+              </DropdownItems>
+            </DropdownMenu>
+          ))}
+        </Transition>
         {/* )} */}
       </>
     )

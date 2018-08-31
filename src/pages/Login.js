@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
+import PropTypes from 'prop-types'
 
 import Input from '_system/Input'
 import { Button } from '_system/Button'
@@ -17,8 +18,8 @@ class Login extends React.Component {
     const { authStore, userStore } = this.props
     authStore.loginUser()
       .then((res) => {
-        const { user } = res
-        userStore.setMe(user)
+        const { account } = res
+        userStore.setMe(account)
         this.setState({ redirectToReferrer: true })
       })
   }
@@ -26,7 +27,7 @@ class Login extends React.Component {
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/start' } }
     const { redirectToReferrer } = this.state
-    const { authStore, userStore } = this.props
+    const { authStore } = this.props
 
     if (redirectToReferrer) {
       return <Redirect to={from} />
@@ -54,6 +55,11 @@ class Login extends React.Component {
       </FormWrapper>
     )
   }
+}
+
+Login.propTypes = {
+  userStore: PropTypes.shape({}),
+  authStore: PropTypes.shape({}),
 }
 
 export default Login

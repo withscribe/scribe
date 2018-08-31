@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from 'react-emotion'
 import { Link } from 'react-router-dom'
 
 const Button = styled.button`
@@ -41,7 +41,7 @@ const Button = styled.button`
   width: ${props => props.full ? '100%' : 'auto'};
 `
 
-const ButtonFill = Button.extend``
+const ButtonFill = Button
 
 const ButtonLink = Button.withComponent(Link)
 

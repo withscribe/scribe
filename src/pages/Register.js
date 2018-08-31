@@ -17,11 +17,11 @@ class Register extends React.Component {
 
   onRegister = (e) => {
     e.preventDefault()
-    const canRegister = this.props.validate()
-    if (canRegister) {
+    // const canRegister = this.props.validate()
+    // if (canRegister) {
       const { authStore } = this.props
       authStore.registerUser()
-    }
+    // }
   }
 
   render() {
@@ -40,27 +40,27 @@ class Register extends React.Component {
             <Input
               placeholder="username"
               type="text"
-              onBlur={() => single('CHECK_USERNAME')}
+              onBlur={() => single('USERNAME')}
               onChange={e => authStore.changeUsername(e.target.value)} />
-            {errors.CHECK_USERNAME && <span style={{ color: 'red' }}>{errors.CHECK_USERNAME}</span>}
+            {errors.USERNAME && <span style={{ color: 'red' }}>{errors.USERNAME}</span>}
             <Input
               placeholder="email"
               type="email"
-              onBlur={() => single('CHECK_EMAIL')}
+              onBlur={() => single('EMAIL')}
               onChange={e => authStore.changeEmail(e.target.value)} />
-            {errors.CHECK_EMAIL && <span style={{ color: 'red' }}>{errors.CHECK_EMAIL}</span>}
+            {errors.EMAIL && <span style={{ color: 'red' }}>{errors.EMAIL}</span>}
             <Input
               placeholder="password"
               type="password"
-              onBlur={() => single('CHECK_PASSWORD')}
+              onBlur={() => single('PASSWORD')}
               onChange={e => authStore.changePassword(e.target.value)} />
-            {errors.CHECK_PASSWORD && <span style={{ color: 'red' }}>{errors.CHECK_PASSWORD}</span>}
+            {errors.PASSWORD && <span style={{ color: 'red' }}>{errors.PASSWORD}</span>}
             <Input
               placeholder="confirm password"
               type="password"
-              onBlur={() => single('CHECK_COPY')}
+              onBlur={() => single('COPY')}
               onChange={e => authStore.changeConfirmPassword(e.target.value)} />
-            {errors.CHECK_COPY && <span style={{ color: 'red' }}>{errors.CHECK_COPY}</span>}
+            {errors.COPY && <span style={{ color: 'red' }}>{errors.COPY}</span>}
             <Button
               type="submit"
               disabled={valid === false}

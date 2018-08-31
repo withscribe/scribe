@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'react-emotion'
 import PropTypes from 'prop-types'
-import { Flex } from 'grid-styled'
+import { Flex } from 'grid-styled/emotion'
 
 const Container = styled.div`
   padding: 0 10vw 0 10vw;

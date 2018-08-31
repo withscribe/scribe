@@ -7,8 +7,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import fetch from 'unfetch'
 
 const httpLink = new HttpLink({
-  // uri: 'http://167.99.187.228:4466',
-  uri: 'http://138.197.171.34/auth',
+  uri: 'http://138.197.130.167/unravel',
   credentials: 'same-origin',
   fetch,
 })

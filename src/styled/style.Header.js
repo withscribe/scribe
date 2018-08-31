@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'react-emotion'
 
 const HeaderWrapper = styled.header`
   /* padding: 2vh 10vw 2vh 10vw; */

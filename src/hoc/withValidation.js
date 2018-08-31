@@ -23,17 +23,7 @@ const withValidation = (WrappedComponent) => {
           username, email, password, confirmPassword,
         },
       } = this.props
-      let isUsernameValid = false
-      let isEmailValid = false
-      let isPasswordValid = false
 
-      if (username) { isUsernameValid = this.checkUsername(username) }
-      if (email) { isEmailValid = this.checkEmail(email) }
-
-      if (isUsernameValid && isEmailValid) {
-        this.setState({ isFormValid: true })
-        return true
-      }
       return false
     }
 

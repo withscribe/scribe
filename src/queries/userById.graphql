@@ -1,12 +1,12 @@
 import gql from 'graphql-tag'
 
-const UserById = gql`
-  query queryId($id: ID!) {
-    findUserById(id: $id) {
+const AccountByIdQuery = gql`
+  query accountById($id: ID!) {
+    accountById(id: $id) {
       id
       email
     }
   }
 `
 
-export default UserById
+export default AccountByIdQuery

@@ -65,7 +65,7 @@ class Header extends React.Component {
                 {/*     logout */}
                 {/*   </Button> */}
                 {/* </NavItem> */}
-                <HeaderDropdown logout={this.logout} />
+                <HeaderDropdown me={me} logout={this.logout} />
               </>
             )}
             {/* <HeaderBar /> */}

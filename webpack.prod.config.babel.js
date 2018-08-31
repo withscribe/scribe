@@ -6,7 +6,7 @@ import WebpackChunkHash from 'webpack-chunk-hash'
 import CompressionWebpackPlugin from 'compression-webpack-plugin'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
-
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 export default {
   entry: {
@@ -54,6 +54,7 @@ export default {
         minifyURLs: true,
       },
     }),
+    new BundleAnalyzerPlugin(),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.graphql'],

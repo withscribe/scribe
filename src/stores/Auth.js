@@ -45,10 +45,10 @@ const AuthStore = types
 
     const registerUser = flow(function* () {
       self.inProgress = true
-      const { email, password } = self
-      const { data: { register: { token } } } = yield client.mutate({
+      const { username, email, password } = self
+      const { data: { registerAccountWithProfile: { token } } } = yield client.mutate({
         mutation: registerMutation,
-        variables: ({ email, password }),
+        variables: ({ userName: username, email, password }),
       })
       console.log(token)
       self.inProgress = false

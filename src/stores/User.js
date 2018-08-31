@@ -1,7 +1,7 @@
 import { types, flow } from 'mobx-state-tree'
 
 import { client } from '../services/Client'
-import userById from '../queries/userById'
+import AccountByIdQuery from '../queries/userById'
 
 import StoryModel from './Story'
 
@@ -43,14 +43,15 @@ const UserStore = types
     }
 
     const pullMeById = flow(function* (id) {
+      console.log('id:', id)
       self.pullingLoginData = true
-      const { data: { findUserById } } = yield client.query({
-        query: userById,
+      const { data: { account } } = yield client.query({
+        query: AccountByIdQuery,
         variables: ({ id }),
       })
-      console.log(findUserById)
+      console.log(account)
       self.pullingLoginData = false
-      self.setMe(findUserById)
+      self.setMe(account)
     })
 
     const removeMe = (flag) => {

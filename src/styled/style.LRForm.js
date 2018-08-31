@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { Box } from 'grid-styled'
+import styled from 'react-emotion'
+import { Box } from 'grid-styled/emotion'
 
 
 const FormWrapper = styled.div`

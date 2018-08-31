@@ -1,11 +1,11 @@
-import styled from 'styled-components'
+import styled from 'react-emotion'
 
 const AvatarBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${props => props.size + 'px'}
-  width: ${props => props.size + 'px'}
+  height: ${props => props.size + 'px'};
+  width: ${props => props.size + 'px'};
   border-radius: 50px;
   border: 1px solid rgb(255, 255, 255);
   margin: 1em;
