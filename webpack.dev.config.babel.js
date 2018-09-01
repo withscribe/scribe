@@ -9,8 +9,8 @@ export default {
   mode: 'development',
   entry: {
     app: [
-      '@babel/polyfill',
-      './src/index.js',
+      // '@babel/polyfill',
+      path.join(__dirname, 'src', 'index.js'),
     ],
   },
   output: {

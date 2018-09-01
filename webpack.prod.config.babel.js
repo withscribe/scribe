@@ -11,7 +11,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 export default {
   entry: {
     app: [
-      '@babel/polyfill',
+      // '@babel/polyfill',
       path.join(__dirname, 'src', 'index.js'),
     ],
   },
