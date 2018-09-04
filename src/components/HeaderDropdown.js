@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Transition } from 'react-spring'
 
@@ -62,7 +63,7 @@ class HeaderDropdown extends React.PureComponent {
 
   render() {
     const { showMenu } = this.state
-    console.log(showMenu)
+    console.log(`menu state: ${showMenu}`)
     const { me, logout } = this.props
     // const { logout, userStore: { me } } = this.props
     const initials = this.getInitials()
@@ -90,8 +91,8 @@ class HeaderDropdown extends React.PureComponent {
                 </DropdownContext>
                 <DropdownLast>
                   <DropdownItem>Create a Story</DropdownItem>
-                  <DropdownItem>Profile</DropdownItem>
-                  <DropdownItem>Account</DropdownItem>
+                  <DropdownItem to="/profile">Profile</DropdownItem>
+                  <DropdownItem to="/profile/settings">Account</DropdownItem>
                   <DropdownItem onClick={logout}>Logout</DropdownItem>
                 </DropdownLast>
               </DropdownItems>
@@ -102,6 +103,11 @@ class HeaderDropdown extends React.PureComponent {
       </>
     )
   }
+}
+
+HeaderDropdown.propTypes = {
+  logout: PropTypes.func.isRequired,
+  me: PropTypes.object.isRequired,
 }
 
 export default HeaderDropdown

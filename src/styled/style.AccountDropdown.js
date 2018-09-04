@@ -12,6 +12,10 @@ const DropdownWrapper = styled.div`
   &:hover {
     background-color: hsla(0, 0% ,100%, .1);
   }
+
+  &:active {
+    background-color: hsla(0, 0%, 100%, .2);
+  }
 `
 
 const DropdownMenu = styled.div`
@@ -20,7 +24,6 @@ const DropdownMenu = styled.div`
   top: 69px;
   position: absolute;
   /* border: 1px solid #dfdfdf; */
-  border-radius: 0 3px 0 3px;
   margin: 0;
   line-height: 1rem;
   right: 0vw;

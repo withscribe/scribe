@@ -14,7 +14,7 @@ const AvatarBox = styled.div`
 
   &:hover {
     cursor: pointer;
-    background-color: hsla(0, 0% ,100%, .1);
+    /* background-color: hsla(0, 0% ,100%, .1); */
   }
 `
 
