@@ -10,21 +10,23 @@ const PrivateRoute = ({
   const { pullingLoginData } = userStore
   return (
     <>
-    { !pullingLoginData &&
-    <Route
-      {...rest}
-      render={props => (
-        userStore.me ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: redirectTo,
-              state: { from: props.location },
-            }} />
-        )
-      )} />
-    }
+      {pullingLoginData ? (
+        <span>hello content is loading thanks</span>
+      ) : (
+        <Route
+          {...rest}
+          render={props => (
+            userStore.me ? (
+              <Component {...props} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: redirectTo,
+                  state: { from: props.location },
+                }} />
+            )
+          )} />
+      )}
   </>
   )
 }
