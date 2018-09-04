@@ -16,7 +16,8 @@
     "transform-inline-environment-variables",
     [
       "transform-react-remove-prop-types", {
-        removeImport: true
+        // "removeImport": true
+        "mode": "remove"
       },
     ],
     "@babel/plugin-transform-runtime",
