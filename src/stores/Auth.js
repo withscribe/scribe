@@ -30,6 +30,12 @@ const AuthStore = types
       self.confirmPassword = newConfirmPassword
     }
 
+    /**
+     * Auth store function for logging in a user
+     * @async
+     * @function loginUser
+     * @returns {object} Login data from loginMutation
+     */
     const loginUser = flow(function* () {
       self.inProgress = true
       const { email, password } = self
@@ -42,7 +48,11 @@ const AuthStore = types
       self.inProgress = false
       return login
     })
-
+    /**
+     * Auth store function for registering a new user
+     * @async
+     * @function registerUser
+     */
     const registerUser = flow(function* () {
       self.inProgress = true
       const { username, email, password } = self
@@ -54,6 +64,12 @@ const AuthStore = types
       self.inProgress = false
     })
 
+    /**
+     * Auth store function for 'logging out' a user
+     * @todo Use the logout mutation
+     * @function logoutUser
+     * @returns {boolean} Value determined by the sucess of logging the user out
+     */
     const logoutUser = () => {
       if (localStorage.getItem('token')) {
         localStorage.removeItem('token')
