@@ -1,9 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { withRouter, Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
-import HeaderDropdown from 'Components/AccountDropdown'
+import HeaderDropdown from 'Components/HeaderDropdown'
 import { ButtonLink, Button } from '_system/Button'
+import { GhostSmall } from '_system/Ghost'
 import {
   HeaderWrapper,
   HeaderContainer,
@@ -27,9 +29,8 @@ class Header extends React.Component {
     }
   }
 
-  // TODO: conditionally render... etc
   render() {
-    const { userStore: { me } } = this.props
+    const { userStore: { me, pullingLoginData } } = this.props
     return (
       <HeaderWrapper>
         <HeaderContainer>
@@ -42,38 +43,41 @@ class Header extends React.Component {
                 start
               </ButtonLink>
             </NavItem>
-            {!me && (
-              <>
-              <NavItem>
-                <ButtonLink border to="/login">
-                  Login
-                </ButtonLink>
-              </NavItem>
-              <NavItem>
-                <ButtonLink fillWhite to="/register">
-                  Sign Up
-                </ButtonLink>
-              </NavItem>
-              </>
+            {pullingLoginData && (
+              <GhostSmall />
             )}
-            {me && (
+            {!me && !pullingLoginData &&
               <>
-                {/* <NavItem> */}
-                {/*   <Button */}
-                {/*     fillWhite */}
-                {/*     onClick={this.logout}> */}
-                {/*     logout */}
-                {/*   </Button> */}
-                {/* </NavItem> */}
-                <HeaderDropdown me={me} logout={this.logout} />
+                <NavItem>
+                  <ButtonLink border to="/login">
+                    Login
+                  </ButtonLink>
+                </NavItem>
+                <NavItem>
+                  <ButtonLink fillWhite to="/register">
+                    Sign Up
+                  </ButtonLink>
+                </NavItem>
               </>
-            )}
+            }
+            {me && !pullingLoginData &&
+              <HeaderDropdown me={me} logout={this.logout} />
+            }
             {/* <HeaderBar /> */}
           </NavList>
         </HeaderContainer>
       </HeaderWrapper>
     )
   }
+}
+
+Header.propTypes = {
+  history: PropTypes.shape({}).isRequired,
+}
+
+Header.wrappedComponent.propTypes /* remove-proptypes */ = {
+  userStore: PropTypes.object.isRequired,
+  authStore: PropTypes.object.isRequired,
 }
 
 export default withRouter(Header)
