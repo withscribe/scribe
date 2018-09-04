@@ -49,6 +49,10 @@ injectGlobal`
     overflow-x: hidden;
     background: #fff;
   }
+  a {
+    text-decoration: none;
+    color: #333;
+  }
 `
 
 const userStore = UserStore.create()

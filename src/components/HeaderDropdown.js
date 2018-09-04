@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Transition } from 'react-spring'
+import { Link } from 'react-router-dom'
 
 import AvatarBox from '_system/Avatar'
 import {
   DropdownWrapper, DropdownMenu, DropdownContext, DropdownLast,
   DropdownItems, DropdownItem, ContextDetail,
-} from 'Styled/style.AccountDropdown'
+} from 'Styled/style.HeaderDropdown'
 
 
 const DropdownArrow = ({ flipped }) => (
@@ -91,7 +92,11 @@ class HeaderDropdown extends React.PureComponent {
                 </DropdownContext>
                 <DropdownLast>
                   <DropdownItem>Create a Story</DropdownItem>
-                  <DropdownItem to="/profile">Profile</DropdownItem>
+                  <Link to="/profile">
+                    <DropdownItem>
+                      Profile
+                    </DropdownItem>
+                  </Link>
                   <DropdownItem to="/profile/settings">Account</DropdownItem>
                   <DropdownItem onClick={logout}>Logout</DropdownItem>
                 </DropdownLast>
