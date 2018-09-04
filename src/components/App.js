@@ -53,18 +53,26 @@ injectGlobal`
 
 const userStore = UserStore.create()
 const authStore = AuthStore.create()
+/*
+ * Let the stores be accessable to the browser plugin
+ */
 makeInspectable(userStore, authStore)
 
+/*
+ * Check if a token exists in localstorage, if it does
+ * get it, and pull the users data into the store
+ * TODO: this use the login mutation and logic
+ */
 if (localStorage.getItem('token')) {
   const fromToken = decode(localStorage.getItem('token'))
-  console.log(fromToken)
+  console.log(`data from local token: ${fromToken}`)
   userStore.pullMeById(fromToken.accountId)
 }
 
 
 /*
-  not sure if this is necessary, the only time setting 'me' should occur
-  is logging in. We dont want to update it after EVERY change.
+ * not sure if this is necessary, the only time setting 'me' should occur
+ * is logging in. We dont want to update it after EVERY change.
 */
 // eslint-disable-next-line
 onSnapshot(userStore, snapshot => {
@@ -72,7 +80,9 @@ onSnapshot(userStore, snapshot => {
   // localStorage.setItem('me', JSON.stringify(snapshot))
 })
 
-
+/*
+ * Init our store object, which is given to the provider
+ */
 const store = {
   userStore,
   authStore,
@@ -86,7 +96,9 @@ const App = () => (
         <Switch>
           <PublicRoute exact path="/login" redirectTo="/start" component={Login} />
           <PublicRoute exact path="/register" redirectTo="/start" component={Register} />
+
           <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
+          <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={Choose} />
         </Switch>
       </>
     </Router>
