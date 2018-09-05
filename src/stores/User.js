@@ -1,7 +1,6 @@
 import { types, flow } from 'mobx-state-tree'
 
 import { client } from '../services/Client'
-import AccountByIdQuery from '../queries/userById'
 import ProfileByIdQuery from '../queries/userProfileById'
 
 import StoryModel from './Story'
@@ -9,13 +8,13 @@ import StoryModel from './Story'
 
 const UserModel = types
   .model('UserModel', {
-    email: types.maybe(types.string),
-    id: types.maybe(types.string),
-    account_Id: types.maybe(types.string),
-    firstName: types.maybe(types.string),
-    lastName: types.maybe(types.string),
-    userName: types.maybe(types.string),
-    occupation: types.maybe(types.string),
+    email: types.string,
+    id: types.string,
+    account_id: types.string,
+    firstName: types.maybeNull(types.string),
+    lastName: types.maybeNull(types.string),
+    userName: types.string,
+    occupation: types.maybeNull(types.string),
     stories: types.optional(types.array(StoryModel), []),
   })
 
@@ -36,29 +35,54 @@ const UserStore = types
      * @param {object} data - The return value from pullMeById containing user data
      */
     const setMe = (data) => {
-      console.log('i got called', data)
-      self.me = UserModel.create({
-        email: data.email,
-        id: data.id,
-      })
-      console.log(self)
+      const { profile } = data
+      console.log(`[userStore] setMe was called ${data}`)
+      if (self.me === null) {
+        console.log(`[userStore] 'me' isn't created yet... creating`)
+        self.me = UserModel.create({
+          ...data,
+          ...profile,
+        })
+        return
+      }
+      console.log(`[userStore] 'me' exists... patching`)
+      self.me = {
+        ...data,
+        ...profile,
+      }
     }
 
     /**
-     * User store function that is intended to pull only the current Users data
+     * User store function that is intended to pull only the current Users data on [persisted/] login
      * @async
      * @function pullMeById
      * @param {string} id - The current Users id
      */
     const pullMeById = flow(function* (id) {
-      console.log(`pulling id: ${id}`)
+      console.log(`[userStore] pullMeById: (account_id) ${id}`)
       self.pullingLoginData = true
       const { data: { accountById } } = yield client.query({
         query: ProfileByIdQuery,
         variables: ({ id }),
       })
-      console.log(accountById)
       self.pullingLoginData = false
+      self.setMe(accountById)
+    })
+
+    /**
+     * User store function that is intended to pull only the current Users data
+     * @async
+     * @function refreshMeById
+     * @param {string} id - The current Users account_id
+     */
+    const refreshMeById = flow(function* (id) {
+      console.log(`[userStore] refreshMeById: (account_id) ${id}`)
+      self.updatingUser = true
+      const { data: { accountById } } = yield client.query({
+        query: ProfileByIdQuery,
+        variables: ({ id }),
+      })
+      self.updatingUser = false
       self.setMe(accountById)
     })
 
@@ -71,7 +95,7 @@ const UserStore = types
       if (flag) self.me = null
     }
 
-    return { pullMeById, setMe, removeMe }
+    return { pullMeById, refreshMeById, setMe, removeMe }
   })
 
 export default UserStore
