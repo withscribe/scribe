@@ -5,30 +5,31 @@ import { inject, observer } from 'mobx-react'
 import Container from '_system/Container'
 import { ChoiceBox, ChoiceWrapper, ChoiceLink } from 'Styled/style.Choose'
 
-@inject('userStore', 'authStore')
+@inject('userStore')
 @observer
 class Choose extends React.Component {
   state = {
-    chosen: 'yes',
+    loaded: false,
+  }
+
+  componentDidMount() {
+    const { userStore } = this.props
+    userStore.refreshMeById(userStore.me.account_id)
   }
 
   render() {
-    const { chosen } = this.state
-    const { authStore } = this.props
-
+    const { userStore: { me } } = this.props
     return (
-      <Container>
-        <ChoiceWrapper flexWrap="wrap">
-          <ChoiceBox width={[1, 1 / 2]}>
-            <ChoiceLink to="/asd">
-
-            </ChoiceLink>
-          </ChoiceBox>
-          <ChoiceBox width={[1, 1 / 2]}>
-            <ChoiceLink to="/asg"></ChoiceLink>
-          </ChoiceBox>
-        </ChoiceWrapper>
-      </Container>
+      <>
+        <span>User Info Dump</span>
+        <h3>username: {me.userName}</h3>
+        <h3>email: {me.email}</h3>
+        <h3>id: {me.id}</h3>
+        <h3>account_id: {me.account_id}</h3>
+        <h3>last name: {me.lastName}</h3>
+        <h3>first name: {me.firstName}</h3>
+        <h3>occupation: {me.occupation}</h3>
+      </>
     )
   }
 }

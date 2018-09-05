@@ -19,7 +19,7 @@ class Login extends React.Component {
     authStore.loginUser()
       .then((res) => {
         const { account } = res
-        userStore.setMe(account)
+        userStore.pullMeById(account.id)
         this.setState({ redirectToReferrer: true })
       })
   }

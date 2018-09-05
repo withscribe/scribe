@@ -97,7 +97,11 @@ class HeaderDropdown extends React.PureComponent {
                       Profile
                     </DropdownItem>
                   </Link>
-                  <DropdownItem to="/profile/settings">Account</DropdownItem>
+                  <Link to="/profile/settings">
+                    <DropdownItem>
+                      Settings
+                    </DropdownItem>
+                  </Link>
                   <DropdownItem onClick={logout}>Logout</DropdownItem>
                 </DropdownLast>
               </DropdownItems>

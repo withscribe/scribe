@@ -12,6 +12,7 @@ import PublicRoute from 'Components/PublicRoute'
 import Register from 'Pages/Register'
 import Login from 'Pages/Login'
 import Choose from 'Pages/Choose'
+import ProfileSettings from 'Pages/ProfileSettings'
 
 import UserStore from '../stores/User'
 import AuthStore from '../stores/Auth'
@@ -73,17 +74,6 @@ if (localStorage.getItem('token')) {
   userStore.pullMeById(fromToken.accountId)
 }
 
-
-/*
- * not sure if this is necessary, the only time setting 'me' should occur
- * is logging in. We dont want to update it after EVERY change.
-*/
-// eslint-disable-next-line
-onSnapshot(userStore, snapshot => {
-  console.log(`here is the snapshot ${snapshot}`)
-  // localStorage.setItem('me', JSON.stringify(snapshot))
-})
-
 /*
  * Init our store object, which is given to the provider
  */
@@ -102,7 +92,8 @@ const App = () => (
           <PublicRoute exact path="/register" redirectTo="/start" component={Register} />
 
           <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
-          <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={Choose} />
+          <PrivateRoute exact path="/profile" redirectTo="/login" component={ProfileSettings} />
+          <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={ProfileSettings} />
         </Switch>
       </>
     </Router>
