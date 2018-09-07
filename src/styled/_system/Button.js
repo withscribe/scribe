@@ -34,15 +34,15 @@ const Button = styled.button`
 
   border: ${props => props.border ? '1px solid white' : null};
 
-  height: ${props => props.height ? '48px' : null};
+  height: ${props => props.withHeight ? '48px' : null};
 
-  margin-top: ${props => props.height ? '2em' : null};
+  margin-top: ${props => props.withHeight ? '2em' : null};
 
   width: ${props => props.full ? '100%' : 'auto'};
 `
 
 const ButtonFill = Button
 
-const ButtonLink = Button.withComponent(Link)
+// const ButtonLink = Button.withComponent(Link)
 
-export { Button, ButtonLink, ButtonFill }
+export { Button, ButtonFill }
