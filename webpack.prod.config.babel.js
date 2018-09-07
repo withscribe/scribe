@@ -31,9 +31,10 @@ export default {
     new webpack.HashedModuleIdsPlugin(),
     new WebpackChunkHash(),
     new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
+      filename: '[path].gz[query]',
       algorithm: 'gzip',
-      test: new RegExp('\\.(js|css)$'),
+      // test: new RegExp('\\.(js|css)$'),
+      test: /\.js(\?.*)?$/i,
       threshold: 10240,
       minRatio: 0.8,
     }),
