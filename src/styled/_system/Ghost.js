@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'react-emotion'
 
 // import { Button } from '_system/Button'
@@ -10,6 +11,17 @@ const GhostSmall = styled('div')`
   border-radius: 3px;
 `
 
+const GhostWrapper = ({ isDoneRendering, children, ...props }) => (
+  <>
+    {isDoneRendering &&
+      <>
+        { children }
+      </>
+    }
+  </>
+)
+
 export {
+  GhostWrapper,
   GhostSmall,
 }
