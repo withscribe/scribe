@@ -65,7 +65,7 @@ class Register extends React.Component {
               type="submit"
               disabled={valid === false}
               full
-              height
+              withHeight
               onClick={e => this.onRegister(e)}>
               Register Account
             </Button>

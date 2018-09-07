@@ -46,7 +46,7 @@ class Login extends React.Component {
             onChange={e => authStore.changePassword(e.target.value)} />
           <Button
             full
-            height
+            withHeight
             onClick={this.onLogin}>
             Login
           </Button>
