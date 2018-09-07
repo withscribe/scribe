@@ -4,8 +4,8 @@ import { withRouter, Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import HeaderDropdown from 'Components/HeaderDropdown'
-import { ButtonLink, Button } from '_system/Button'
-import { GhostSmall } from '_system/Ghost'
+import { Button } from '_system/Button'
+import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import {
   HeaderWrapper,
   HeaderContainer,
@@ -39,24 +39,30 @@ class Header extends React.Component {
               <HeaderLogo>Unravel</HeaderLogo>
             </Link>
             <NavItem spaceRight>
-              <ButtonLink border to="/start">
-                start
-              </ButtonLink>
+              <Link to="/start">
+                <Button border>
+                  start
+                </Button>
+              </Link>
             </NavItem>
-            {pullingLoginData && (
+            <GhostWrapper isDoneRendering={pullingLoginData}>
               <GhostSmall />
-            )}
+            </GhostWrapper>
             {!me && !pullingLoginData &&
               <>
                 <NavItem>
-                  <ButtonLink border to="/login">
-                    Login
-                  </ButtonLink>
+                  <Link to="/login">
+                    <Button border>
+                      Login
+                    </Button>
+                  </Link>
                 </NavItem>
                 <NavItem>
-                  <ButtonLink fillWhite to="/register">
-                    Sign Up
-                  </ButtonLink>
+                  <Link to="/register">
+                    <Button fillWhite>
+                      Sign Up
+                    </Button>
+                  </Link>
                 </NavItem>
               </>
             }
