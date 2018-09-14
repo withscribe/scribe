@@ -43,7 +43,7 @@ export default {
     new Stylish(),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.graphql'],
+    extensions: ['.js', '.jsx', '.json'],
     modules: [
       path.join(__dirname, 'src'),
       path.join(__dirname, 'node_modules'),
