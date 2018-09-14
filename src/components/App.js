@@ -16,6 +16,7 @@ import ProfileSettings from 'Pages/ProfileSettings'
 
 import UserStore from '../stores/User'
 import AuthStore from '../stores/Auth'
+import ProfileStore from '../stores/Profile'
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
 import TB from '../assets/fonts/Theinhardt-Bold.woff'
 
@@ -58,6 +59,7 @@ injectGlobal`
 
 const userStore = UserStore.create()
 const authStore = AuthStore.create()
+const profileStore = ProfileStore.create()
 /*
  * Let the stores be accessable to the browser plugin
  */
@@ -80,6 +82,7 @@ if (localStorage.getItem('token')) {
 const store = {
   userStore,
   authStore,
+  profileStore,
 }
 
 const App = () => (

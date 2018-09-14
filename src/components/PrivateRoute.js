@@ -10,9 +10,9 @@ const PrivateRoute = ({
   const { pullingLoginData } = userStore
   return (
     <>
-      {pullingLoginData ? (
-        <span>hello content is loading thanks</span>
-      ) : (
+      {pullingLoginData
+        ? (<span>hello content is loading thanks</span>)
+        : (
         <Route
           {...rest}
           render={props => (

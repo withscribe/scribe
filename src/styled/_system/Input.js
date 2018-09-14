@@ -13,4 +13,12 @@ const Input = styled.input`
   outline: 0;
 `
 
+const Label = styled.label`
+  label: form-label;
+  /* margin-bottom: 0.25em; */
+  display: block
+`
+
 export default Input
+
+export { Label }

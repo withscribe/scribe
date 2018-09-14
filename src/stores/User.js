@@ -20,7 +20,6 @@ const UserModel = types
 
 const UserStore = types
   .model('UserStore', {
-    // stories: types.optional(types.array(StoryModel), []),
     fetchingData: types.optional(types.boolean, false),
     pullingLoginData: types.optional(types.boolean, false),
     updatingUser: types.optional(types.boolean, false),

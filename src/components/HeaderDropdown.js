@@ -70,14 +70,14 @@ class HeaderDropdown extends React.PureComponent {
     const initials = this.getInitials()
     return (
       <>
-      <DropdownWrapper
-        onClick={this.openMenu}>
-        <AvatarBox>
-          <span>{ initials }</span>
-        </AvatarBox>
-        Evan Kysley
-        <DropdownArrow />
-      </DropdownWrapper>
+        <DropdownWrapper
+          onClick={this.openMenu}>
+          <AvatarBox>
+            <span>{ initials }</span>
+          </AvatarBox>
+            Evan Kysley
+          <DropdownArrow />
+        </DropdownWrapper>
         {/* { showMenu && ( */}
         <Transition from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
           { showMenu && (styles => (
