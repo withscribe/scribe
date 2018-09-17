@@ -14,7 +14,7 @@ import {
   HeaderBar,
   HeaderLogo,
   HeaderUsername,
-} from 'Styled/style.Header'
+} from 'Styled/Header'
 
 @inject('userStore', 'authStore')
 @observer
@@ -48,26 +48,26 @@ class Header extends React.Component {
             <GhostWrapper isDoneRendering={pullingLoginData}>
               <GhostSmall />
             </GhostWrapper>
-            {!me && !pullingLoginData &&
-              <>
-                <NavItem>
-                  <Link to="/login">
-                    <Button border>
-                      Login
-                    </Button>
-                  </Link>
-                </NavItem>
-                <NavItem>
-                  <Link to="/register">
-                    <Button fillWhite>
-                      Sign Up
-                    </Button>
-                  </Link>
-                </NavItem>
-              </>
+            {!me && !pullingLoginData
+            && <>
+              <NavItem>
+                <Link to="/login">
+                  <Button border>
+                    Login
+                  </Button>
+                </Link>
+              </NavItem>
+              <NavItem>
+                <Link to="/register">
+                  <Button fillWhite>
+                    Sign Up
+                  </Button>
+                </Link>
+              </NavItem>
+            </>
             }
-            {me && !pullingLoginData &&
-              <HeaderDropdown me={me} logout={this.logout} />
+            {me && !pullingLoginData
+             && <HeaderDropdown me={me} logout={this.logout} />
             }
             {/* <HeaderBar /> */}
           </NavList>

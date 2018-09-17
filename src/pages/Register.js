@@ -6,7 +6,7 @@ import withValidation from '../hoc/withValidation'
 
 import Input from '_system/Input'
 import { Button } from '_system/Button'
-import { FormWrapper, FormContainer, FormTitle } from 'Styled/style.LRForm'
+import { FormWrapper, FormContainer, FormTitle } from 'Styled/LRForm'
 
 @inject('userStore', 'authStore')
 @observer

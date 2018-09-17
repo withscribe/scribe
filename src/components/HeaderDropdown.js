@@ -8,7 +8,7 @@ import AvatarBox from '_system/Avatar'
 import {
   DropdownWrapper, DropdownMenu, DropdownContext, DropdownLast,
   DropdownItems, DropdownItem, ContextDetail,
-} from 'Styled/style.HeaderDropdown'
+} from 'Styled/HeaderDropdown'
 
 
 const DropdownArrow = ({ flipped }) => (

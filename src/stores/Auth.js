@@ -1,8 +1,8 @@
 import { types, flow } from 'mobx-state-tree'
 
 import { client } from '../services/Client'
-import loginMutation from '../mutations/login'
-import registerMutation from '../mutations/register'
+import loginMutation from 'Mutations/login'
+import registerMutation from 'Mutations/register'
 
 const AuthStore = types
   .model('AuthStore', {
