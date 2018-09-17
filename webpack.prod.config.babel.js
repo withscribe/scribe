@@ -70,6 +70,7 @@ export default {
       _system: path.join(__dirname, 'src/styled/_system'),
       Queries: path.join(__dirname, 'src/queries'),
       Mutations: path.join(__dirname, 'src/mutations'),
+      Stores: path.join(__dirname, 'src/stores'),
     },
   },
   module: {
