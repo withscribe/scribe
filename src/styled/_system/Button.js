@@ -8,7 +8,7 @@ const Button = styled.button`
   position: relative;
   display: inline-flex;
   justify-content: center;
-  flex-wrap: nowrap;
+  align-self: flex-start;
   border: 0;
   outline: 0;
   background: rgb(28,36,128);
