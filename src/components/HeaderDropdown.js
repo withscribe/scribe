@@ -91,7 +91,11 @@ class HeaderDropdown extends React.PureComponent {
                   </span>
                 </DropdownContext>
                 <DropdownLast>
-                  <DropdownItem>Create a Story</DropdownItem>
+                  <Link to="/editor">
+                    <DropdownItem>
+                      Create a Story
+                    </DropdownItem>
+                  </Link>
                   <Link to="/profile">
                     <DropdownItem>
                       Profile

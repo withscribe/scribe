@@ -13,10 +13,12 @@ import Register from 'Pages/Register'
 import Login from 'Pages/Login'
 import Choose from 'Pages/Choose'
 import ProfileSettings from 'Pages/ProfileSettings'
+import StoryEditor from 'Pages/StoryEditor'
 
 import UserStore from '../stores/User'
 import AuthStore from '../stores/Auth'
 import ProfileStore from '../stores/Profile'
+import StoreEditorStore from '../stores/StoryEditor'
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
 import TB from '../assets/fonts/Theinhardt-Bold.woff'
 
@@ -60,6 +62,7 @@ injectGlobal`
 const userStore = UserStore.create()
 const authStore = AuthStore.create()
 const profileStore = ProfileStore.create()
+const storyEditorStore = StoreEditorStore.create()
 /*
  * Let the stores be accessable to the browser plugin
  */
@@ -83,6 +86,7 @@ const store = {
   userStore,
   authStore,
   profileStore,
+  storyEditorStore,
 }
 
 const App = () => (
@@ -94,6 +98,7 @@ const App = () => (
           <PublicRoute exact path="/login" redirectTo="/start" component={Login} />
           <PublicRoute exact path="/register" redirectTo="/start" component={Register} />
 
+          <PrivateRoute exact path="/editor" redirectTo="/login" component={StoryEditor} />
           <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
           <PrivateRoute exact path="/profile" redirectTo="/login" component={ProfileSettings} />
           <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={ProfileSettings} />
