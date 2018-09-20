@@ -8,6 +8,7 @@ import decode from 'jwt-decode'
 import Header from 'Components/Header'
 import PrivateRoute from 'Components/PrivateRoute'
 import PublicRoute from 'Components/PublicRoute'
+import ToastProvider from 'Components/Toast/ToastContainer'
 import Register from 'Pages/Register'
 import Login from 'Pages/Login'
 import Choose from 'Pages/Choose'
@@ -86,6 +87,8 @@ const store = {
 
 const App = () => (
   <Provider {...store}>
+    <>
+    <ToastProvider />
     <Router>
       <>
         <Header />
@@ -99,6 +102,7 @@ const App = () => (
         </Switch>
       </>
     </Router>
+  </>
   </Provider>
 )
 
