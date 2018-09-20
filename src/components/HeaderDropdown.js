@@ -12,7 +12,7 @@ import {
 
 
 const DropdownArrow = ({ flipped }) => (
-  <figure style={{ margin: '0 0 0 1em', display: 'inline-flex', color: 'rgb(218, 216, 222)' }}>
+  <figure style={{ margin: '0 0 0 6em', display: 'inline-flex', color: 'rgb(218, 216, 222)' }}>
     <svg
       style={{ fill: '#fff' }}
       width="20px"
@@ -27,20 +27,27 @@ const DropdownArrow = ({ flipped }) => (
   </figure>
 )
 
-// @inject('userStore')
-// @observer
-class HeaderDropdown extends React.PureComponent {
+@inject('userStore')
+@observer
+class HeaderDropdown extends React.Component {
   state = {
     showMenu: false,
+    initials: '',
+  }
+
+  componentWillMount() {
+    const initials = this.getInitials()
+    this.setState({ initials })
   }
 
   // TODO: Make this into a util instead of a class property
   getInitials = (fallback = '?') => {
+    const { userStore } = this.props
     // TODO: Get this from userStore.me
     // or send down as a prop from the Header component...
     // this doesnt really need to be state aware
-    const name = 'Evan Kysley'
-    if (!name || typeof name !== 'string') return fallback
+    const name = userStore.concatenatedName
+    if (!name || typeof name !== 'string' || name === null) return fallback
     return name
       .replace(/\s+/, ' ')
       .split(' ')
@@ -65,9 +72,8 @@ class HeaderDropdown extends React.PureComponent {
   render() {
     const { showMenu } = this.state
     console.log(`menu state: ${showMenu}`)
-    const { me, logout } = this.props
-    // const { logout, userStore: { me } } = this.props
-    const initials = this.getInitials()
+    const { logout, userStore, userStore: { me } } = this.props
+    const { initials } = this.state
     return (
       <>
         <DropdownWrapper
@@ -75,7 +81,10 @@ class HeaderDropdown extends React.PureComponent {
           <AvatarBox>
             <span>{ initials }</span>
           </AvatarBox>
-            Evan Kysley
+          {me.firstName && me.lastName
+            ? `${userStore.concatenatedName}`
+            : 'Anonymous Moose'
+          }
           <DropdownArrow />
         </DropdownWrapper>
         {/* { showMenu && ( */}

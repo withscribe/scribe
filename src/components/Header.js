@@ -11,6 +11,7 @@ import {
   HeaderContainer,
   NavList,
   NavItem,
+  NavLink,
   HeaderBar,
   HeaderLogo,
   HeaderUsername,
@@ -35,15 +36,25 @@ class Header extends React.Component {
       <HeaderWrapper>
         <HeaderContainer>
           <NavList>
-            <Link to="/">
-              <HeaderLogo>Unravel</HeaderLogo>
-            </Link>
-            <NavItem spaceRight>
-              <Link to="/start">
-                <Button border>
-                  start
-                </Button>
+            <NavItem>
+              <Link to="/">
+                <HeaderLogo>Unravl</HeaderLogo>
               </Link>
+            </NavItem>
+            <NavItem>
+              <NavLink to="/start">
+                Discover
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink to="/start">
+                Create
+              </NavLink>
+            </NavItem>
+            <NavItem spaceRight>
+              <NavLink to="/start">
+                My Stories
+              </NavLink>
             </NavItem>
             <GhostWrapper isDoneRendering={pullingLoginData}>
               <GhostSmall />
@@ -67,7 +78,7 @@ class Header extends React.Component {
             </>
             }
             {me && !pullingLoginData
-             && <HeaderDropdown me={me} logout={this.logout} />
+             && <HeaderDropdown logout={this.logout} />
             }
             {/* <HeaderBar /> */}
           </NavList>
