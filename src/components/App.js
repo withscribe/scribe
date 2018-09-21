@@ -8,23 +8,20 @@ import decode from 'jwt-decode'
 import Header from 'Components/Header'
 import PrivateRoute from 'Components/PrivateRoute'
 import PublicRoute from 'Components/PublicRoute'
+import ToastProvider from 'Components/Toast/ToastContainer'
 import Register from 'Pages/Register'
 import Login from 'Pages/Login'
 import Choose from 'Pages/Choose'
 import ProfileSettings from 'Pages/ProfileSettings'
-<<<<<<< HEAD
 import UserStore from 'Stores/User'
 import AuthStore from 'Stores/Auth'
 import ProfileStore from 'Stores/Profile'
-
-=======
 import StoryEditor from 'Pages/StoryEditor'
 
 import UserStore from '../stores/User'
 import AuthStore from '../stores/Auth'
 import ProfileStore from '../stores/Profile'
 import StoreEditorStore from '../stores/StoryEditor'
->>>>>>> d41fc60bbe2173cfff10b52f259a54b1bb8638db
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
 import TB from '../assets/fonts/Theinhardt-Bold.woff'
 
@@ -97,6 +94,8 @@ const store = {
 
 const App = () => (
   <Provider {...store}>
+    <>
+    <ToastProvider />
     <Router>
       <>
         <Header />
@@ -111,6 +110,7 @@ const App = () => (
         </Switch>
       </>
     </Router>
+  </>
   </Provider>
 )
 

@@ -5,7 +5,7 @@ const DropdownWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
-  margin: 0 -1vw 0 1em;
+  /* margin: 0 -1vw 0 1em; */
   cursor: pointer;
   user-select: none;
 
@@ -26,7 +26,7 @@ const DropdownMenu = styled.div`
   /* border: 1px solid #dfdfdf; */
   margin: 0;
   line-height: 1rem;
-  right: 0vw;
+  right: 10vw;
   z-index: 4;
   color: #333;
   background-color: #fff;

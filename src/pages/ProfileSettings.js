@@ -26,8 +26,10 @@ class Choose extends React.Component {
   }
 
   saveChanges = () => {
-    const { profileStore } = this.props
-    profileStore.saveProfileChanges()
+    const { userStore, profileStore } = this.props
+    profileStore.saveProfileChanges().then(() => {
+      userStore.refreshMeById(userStore.me.account_id)
+    })
   }
 
   render() {
@@ -44,14 +46,14 @@ class Choose extends React.Component {
                 <Input
                   type="text"
                   value={profileStore.editedProfile.firstName}
-                  onChange={e => profileStore.changeLastName(e.target.value)} />
+                  onChange={e => profileStore.changefirstName(e.target.value)} />
               </Box>
               <Box width={0.7 / 2}>
                 <Label>Last Name</Label>
                 <Input
                   type="text"
                   value={profileStore.editedProfile.lastName}
-                  onChange={e => profileStore.changeLastName(e.target.value)} />
+                  onChange={e => profileStore.changelastName(e.target.value)} />
               </Box>
             </Flex>
             <Box width={1 / 2}>
@@ -62,7 +64,7 @@ class Choose extends React.Component {
                 value={profileStore.editedProfile.email}
                 onChange={e => profileStore.changeEmail(e.target.value)} />
             </Box>
-            <Box width={ 1 / 2}>
+            <Box width={1 / 2}>
               <Label>Username</Label>
               <Input
                 // placeholder={me.userName}

@@ -7,7 +7,7 @@ import registerMutation from 'Mutations/register'
 const AuthStore = types
   .model('AuthStore', {
     inProgress: types.optional(types.boolean, false),
-    errors: types.maybe(types.string),
+    // errors: types.optional(types.array(Error), []),
     username: types.optional(types.string, ''),
     email: types.optional(types.string, ''),
     password: types.optional(types.string, ''),
