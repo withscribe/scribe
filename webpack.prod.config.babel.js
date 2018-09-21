@@ -58,7 +58,7 @@ export default {
     new BundleAnalyzerPlugin(),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.graphql'],
+    extensions: ['.js', '.jsx', '.json'],
     modules: [
       path.join(__dirname, 'src'),
       path.join(__dirname, 'node_modules'),
@@ -70,6 +70,7 @@ export default {
       _system: path.join(__dirname, 'src/styled/_system'),
       Queries: path.join(__dirname, 'src/queries'),
       Mutations: path.join(__dirname, 'src/mutations'),
+      Stores: path.join(__dirname, 'src/stores'),
     },
   },
   module: {

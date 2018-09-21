@@ -5,7 +5,7 @@ const AvatarBox = styled.div`
   justify-content: center;
   align-items: center;
   height: ${props => props.size + 'px'};
-  width: ${props => props.size + 'px'};
+  min-width: ${props => props.size + 'px'};
   border-radius: 50px;
   border: 1px solid rgb(255, 255, 255);
   margin: 1em;

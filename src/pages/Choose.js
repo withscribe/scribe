@@ -2,7 +2,7 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 
 import Container from '_system/Container'
-import { ChoiceBox, ChoiceWrapper, ChoiceLink } from 'Styled/style.Choose'
+import { ChoiceBox, ChoiceWrapper, ChoiceLink } from 'Styled/Choose'
 
 @inject('userStore', 'authStore')
 @observer

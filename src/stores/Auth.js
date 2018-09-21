@@ -1,13 +1,13 @@
 import { types, flow } from 'mobx-state-tree'
 
 import { client } from '../services/Client'
-import loginMutation from '../mutations/login'
-import registerMutation from '../mutations/register'
+import loginMutation from 'Mutations/login'
+import registerMutation from 'Mutations/register'
 
 const AuthStore = types
   .model('AuthStore', {
     inProgress: types.optional(types.boolean, false),
-    errors: types.maybe(types.string),
+    // errors: types.optional(types.array(Error), []),
     username: types.optional(types.string, ''),
     email: types.optional(types.string, ''),
     password: types.optional(types.string, ''),

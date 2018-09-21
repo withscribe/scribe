@@ -1,9 +1,8 @@
-import React from 'react'
 import styled from 'react-emotion'
+import { Link } from 'react-router-dom'
 
 const HeaderWrapper = styled.header`
-  /* padding: 2vh 10vw 2vh 10vw; */
-  padding: 0 1vw 0 1vw;
+  padding: 0 10vw 0 10vw;
   display: flex;
   flex-align: center;
   justify-content: space-between;
@@ -31,7 +30,21 @@ const NavItem = styled.li`
   flex: 0 0 auto;
   position: relative;
   margin-left: 2em;
-  margin-right: ${props => props.spaceRight ? 'auto' : null}
+  margin-right: ${props => props.spaceRight ? 'auto' : null};
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:first-of-type {
+    margin-left: 0;
+  }
+`
+
+const NavLink = styled(Link)`
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.25rem;
 `
 
 const HeaderBar = styled.div`
@@ -42,10 +55,13 @@ const HeaderBar = styled.div`
   bottom: 2rem;
 `
 
-const HeaderLogo = styled.h1`
-  font-size: 2rem;
+const HeaderLogo = styled.span`
+  font-size: 1.25rem;
   color: #fff;
   text-decoration: none;
+  font-family: Theinhardt-Bold;
+  font-weight: 300;
+  margin: 0;
 `
 
 const HeaderUsername = styled.h1`
@@ -58,6 +74,7 @@ export {
   HeaderContainer,
   NavList,
   NavItem,
+  NavLink,
   HeaderBar,
   HeaderLogo,
   HeaderUsername,

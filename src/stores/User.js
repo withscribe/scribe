@@ -1,9 +1,15 @@
 import { types, flow } from 'mobx-state-tree'
 
 import { client } from '../services/Client'
-import ProfileByIdQuery from '../queries/userProfileById'
+import ProfileByIdQuery from 'Queries/userProfileById'
 
 import StoryModel from './Story'
+
+const ErrorModel = types
+  .model('ErrorModel', {
+    id: types.string,
+    message: types.string,
+  })
 
 
 const UserModel = types
@@ -24,7 +30,7 @@ const UserStore = types
     pullingLoginData: types.optional(types.boolean, false),
     updatingUser: types.optional(types.boolean, false),
     loadingUser: types.optional(types.boolean, false),
-    // updatingUserErrors: types.optional(types.array, []),
+    errors: types.optional(types.array(ErrorModel), []),
     me: types.maybeNull(UserModel),
   })
   .actions((self) => {
@@ -42,6 +48,11 @@ const UserStore = types
           ...data,
           ...profile,
         })
+        const fakeError = {
+          id: 'Error 1',
+          message: 'Fake Error, do not worry!',
+        }
+        self.errors.push(fakeError)
         return
       }
       console.log(`[userStore] 'me' exists... patching`)
@@ -80,7 +91,16 @@ const UserStore = types
       const { data: { accountById } } = yield client.query({
         query: ProfileByIdQuery,
         variables: ({ id }),
+        fetchPolicy: 'network-only',
       })
+
+      const anotherError = {
+        id: 'Error 2',
+        message: 'Triggered by refreshMeById',
+      }
+
+      self.errors.push(anotherError)
+
       self.updatingUser = false
       self.setMe(accountById)
     })
@@ -96,5 +116,10 @@ const UserStore = types
 
     return { pullMeById, refreshMeById, setMe, removeMe }
   })
+  .views(self => ({
+    get concatenatedName() {
+      return self.me && self.me.firstName !== null && self.me.lastName != null ? `${self.me.firstName} ${self.me.lastName}` : '?'
+    },
+  }))
 
 export default UserStore

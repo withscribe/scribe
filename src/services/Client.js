@@ -4,12 +4,12 @@ import { HttpLink } from 'apollo-link-http'
 import { onError } from 'apollo-link-error'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import fetch from 'unfetch'
+// import fetch from 'unfetch'
 
 const httpLink = new HttpLink({
   uri: 'http://138.197.130.167/unravel',
   credentials: 'same-origin',
-  fetch,
+  // fetch,
 })
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {

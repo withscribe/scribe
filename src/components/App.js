@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'mobx-react'
-import { onSnapshot } from 'mobx-state-tree'
 import makeInspectable from 'mobx-devtools-mst'
 import { injectGlobal } from 'react-emotion'
 import decode from 'jwt-decode'
@@ -9,6 +8,7 @@ import decode from 'jwt-decode'
 import Header from 'Components/Header'
 import PrivateRoute from 'Components/PrivateRoute'
 import PublicRoute from 'Components/PublicRoute'
+import ToastProvider from 'Components/Toast/ToastContainer'
 import Register from 'Pages/Register'
 import Login from 'Pages/Login'
 import Choose from 'Pages/Choose'
@@ -19,6 +19,7 @@ import UserStore from '../stores/User'
 import AuthStore from '../stores/Auth'
 import ProfileStore from '../stores/Profile'
 import StoreEditorStore from '../stores/StoryEditor'
+
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
 import TB from '../assets/fonts/Theinhardt-Bold.woff'
 
@@ -91,6 +92,8 @@ const store = {
 
 const App = () => (
   <Provider {...store}>
+    <>
+    <ToastProvider />
     <Router>
       <>
         <Header />
@@ -105,6 +108,7 @@ const App = () => (
         </Switch>
       </>
     </Router>
+  </>
   </Provider>
 )
 

@@ -1,5 +1,9 @@
 import { types, flow } from 'mobx-state-tree'
 
+import { client } from '../services/Client'
+import UpdateProfileMutation from 'Mutations/updateProfile'
+import ProfileByIdQuery from 'Queries/userProfileById'
+
 const ProfileModel = types
   .model('ProfileModel', {
     email: types.string,
@@ -23,7 +27,7 @@ const ProfileStore = types
   .actions((self) => {
     const importCurrentProfile = (data) => {
       // const { profile } = data
-      console.log({...data})
+      console.log({ ...data })
       if (self.editedProfile === null) {
         self.editedProfile = ProfileModel.create({
           ...data,
@@ -34,6 +38,19 @@ const ProfileStore = types
         ...data,
       }
     }
+
+    const saveProfileChanges = flow(function* () {
+      self.isEditingProfile = false
+      self.updatingProfile = true
+      const values = self.editedProfile
+      console.log({ ...values })
+      const { data } = yield client.mutate({
+        mutation: UpdateProfileMutation,
+        variables: ({ ...values, accountId: values.account_id }),
+      })
+      self.updatingProfile = false
+      console.log(data)
+    })
 
     const changeEmail = (newEmail) => {
       self.editedProfile.email = newEmail
@@ -57,6 +74,7 @@ const ProfileStore = types
 
     return {
       importCurrentProfile,
+      saveProfileChanges,
       changeEmail,
       changefirstName,
       changelastName,
