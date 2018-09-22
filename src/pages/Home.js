@@ -5,7 +5,7 @@ import Input, {
   Label, InlineLabel, InlineInput, TextArea, Button,
 } from '../styled/_system/Input'
 
-@inject('storyEditorStore')
+@inject('storiesStore')
 @observer
 class Home extends React.Component {
   componentDidMount() {

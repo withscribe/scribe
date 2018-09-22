@@ -7,7 +7,7 @@ import StoryModel from './Story'
 import AllStories from 'Queries/allStories'
 
 const StoryStore = types
-  .model('StoryStory', {
+  .model('StoryStore', {
     fetchingData: types.optional(types.boolean, false),
     dataFetched: types.optional(types.boolean, false),
     stories: types.optional(types.array(StoryModel), []),
@@ -21,6 +21,11 @@ const StoryStore = types
       console.log('inside story store actions')
       console.log(stories)
     })
+
+    // const getAllStories = () => {
+    //   console.log(self.fetchingData)
+    // }
+
     return { getAllStories }
   })
   .views(self => ({
