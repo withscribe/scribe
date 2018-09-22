@@ -12,6 +12,7 @@ class Home extends React.Component {
     const { storiesStore } = this.props
     console.log('in component did mount home')
     console.log(storiesStore.getAllStories())
+    console.log(storiesStore.stories)    
   }
 
   render() {

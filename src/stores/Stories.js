@@ -13,20 +13,25 @@ const StoryStore = types
     stories: types.optional(types.array(StoryModel), []),
   })
   .actions((self) => {
+    const setStories = (stuff) => {
+      console.log('in set stories')
+      self.stories = stuff
+      console.log(self.stories)   
+      console.log(self.stories[0].title);
+      
+      console.log('stories object')
+    }
+
     const getAllStories = flow(function* () {
       self.fetchingData = true
-      const { data: { stories } } = yield client.query({
+      const { data: { allStories } } = yield client.query({
         query: AllStories,
       })
-      console.log('inside story store actions')
-      console.log(stories)
+      console.log(allStories)
+      self.setStories(allStories)   
     })
 
-    // const getAllStories = () => {
-    //   console.log(self.fetchingData)
-    // }
-
-    return { getAllStories }
+    return { getAllStories, setStories }
   })
   .views(self => ({
     get storyLength() {
