@@ -16,10 +16,6 @@ const StoryStore = types
     const setStories = (stuff) => {
       console.log('in set stories')
       self.stories = stuff
-      console.log(self.stories)   
-      console.log(self.stories[0].title);
-      
-      console.log('stories object')
     }
 
     const getAllStories = flow(function* () {
@@ -27,8 +23,7 @@ const StoryStore = types
       const { data: { allStories } } = yield client.query({
         query: AllStories,
       })
-      console.log(allStories)
-      self.setStories(allStories)   
+      self.setStories(allStories)
     })
 
     return { getAllStories, setStories }
