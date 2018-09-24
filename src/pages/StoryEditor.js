@@ -34,7 +34,9 @@ class StoryEditor extends React.Component {
         <Input
           type="text"
           value={storyEditorStore.title}
-          onChange={e => storyEditorStore.changeTitle(e.target.value)} />
+          onChange={e => storyEditorStore.changeTitle(e.target.value)} 
+          style={{ width: '90%' }}
+          />
         <Label>Story Description</Label>
         <Input
           type="text"
