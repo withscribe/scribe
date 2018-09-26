@@ -23,6 +23,7 @@ import AuthStore from '../stores/Auth'
 import ProfileStore from '../stores/Profile'
 import StoreEditorStore from '../stores/StoryEditor'
 import StoriesStore from '../stores/Stories'
+import StoryModel from '../stores/Story'
 
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
 import TB from '../assets/fonts/Theinhardt-Bold.woff'
@@ -69,6 +70,7 @@ const authStore = AuthStore.create()
 const profileStore = ProfileStore.create()
 const storyEditorStore = StoreEditorStore.create()
 const storiesStore = StoriesStore.create()
+const storyStore = StoryModel.create()
 /*
  * Let the stores be accessable to the browser plugin
  */
@@ -94,6 +96,7 @@ const store = {
   profileStore,
   storyEditorStore,
   storiesStore,
+  storyStore
 }
 
 const App = () => (
