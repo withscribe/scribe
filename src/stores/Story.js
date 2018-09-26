@@ -11,6 +11,14 @@ const StoryModel = types
     profileId: types.maybeNull(types.string),
     title: types.maybe(types.string),
   })
+
+const StoryStore = types
+  .model("StoryStore", {
+    fetchingStory: types.optional(types.boolean, false),
+    updatingStory: types.optional(types.boolean, false),
+    errors: types.optional(types.array(ErrorModel), []),
+    story: types.maybeNull(StoryModel)
+  })
   .actions((self) => {
     const changeTitle = (newTitle) => {
       self.title = newTitle
@@ -18,15 +26,15 @@ const StoryModel = types
 
     const getStory = flow(function* (storyId) {
       console.log(storyId)
-      const { story } = yield client.query({
+      const { data: { storyById } } = yield client.query({
         query: StoryByIdQuery,
         variables: ({ storyId })
       })
-      console.log(story)
-      self.title = story.title;
-      self.description = story.description;
-      self.content = story.content;
-      self.profileId = story.profileId;
+      console.log(storyById)
+      // self.title = story.title;
+      // self.description = story.description;
+      // self.content = story.content;
+      // self.profileId = story.profileId;
     })
 
     return {
@@ -35,4 +43,4 @@ const StoryModel = types
     }
   })
 
-export default StoryModel
+export default StoryStore
