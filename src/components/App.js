@@ -16,13 +16,15 @@ import ProfileSettings from 'Pages/ProfileSettings'
 import StoryEditor from 'Pages/StoryEditor'
 import Home from 'Pages/Home'
 import StoryPreview from 'Pages/StoryPreview'
-
-import UserStore from '../stores/User'
-import AuthStore from '../stores/Auth'
-import ProfileStore from '../stores/Profile'
-import StoreEditorStore from '../stores/StoryEditor'
-import StoriesStore from '../stores/Stories'
-import StoryStore from '../stores/Story'
+// Stores
+import UserStore from 'Stores/User'
+import AuthStore from 'Stores/Auth'
+import ProfileStore from 'Stores/Profile'
+import StoreEditorStore from 'Stores/StoryEditor'
+import StoriesStore from 'Stores/Stories'
+import StoryStore from 'Stores/Story'
+// End
+import errors from 'Services/Errors'
 
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
 import TB from '../assets/fonts/Theinhardt-Bold.woff'
@@ -101,7 +103,7 @@ const store = {
 const App = () => (
   <Provider {...store}>
     <>
-    <ToastProvider />
+    <ToastProvider e={errors} />
     <Router>
       <>
         <Header />

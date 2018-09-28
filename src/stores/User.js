@@ -1,7 +1,7 @@
 import { types, flow } from 'mobx-state-tree'
 
-import { client } from '../services/Client'
-
+import { client } from 'Services/Client'
+import { addError } from 'Services/Errors'
 import ProfileByIdQuery from 'Queries/userProfileById'
 
 import StoryModel from './Story'
@@ -49,11 +49,6 @@ const UserStore = types
           ...data,
           ...profile,
         })
-        const fakeError = {
-          id: 'Error 1',
-          message: 'Fake Error, do not worry!',
-        }
-        self.errors.push(fakeError)
         return
       }
       console.log(`[userStore] 'me' exists... patching`)
@@ -100,7 +95,7 @@ const UserStore = types
         message: 'Triggered by refreshMeById',
       }
 
-      self.errors.push(anotherError)
+      addError(anotherError)
 
       self.updatingUser = false
       self.setMe(accountById)
@@ -120,6 +115,10 @@ const UserStore = types
   .views(self => ({
     get concatenatedName() {
       return self.me && self.me.firstName !== null && self.me.lastName != null ? `${self.me.firstName} ${self.me.lastName}` : '?'
+    },
+
+    get geterrors() {
+      return self.errors
     },
   }))
 

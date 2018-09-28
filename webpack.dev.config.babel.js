@@ -56,6 +56,7 @@ export default {
       Queries: path.join(__dirname, 'src/queries'),
       Mutations: path.join(__dirname, 'src/mutations'),
       Stores: path.join(__dirname, 'src/stores'),
+      Services: path.join(__dirname, 'src/services'),
     },
   },
   module: {
