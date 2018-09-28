@@ -13,9 +13,16 @@ import Register from 'Pages/Register'
 import Login from 'Pages/Login'
 import Choose from 'Pages/Choose'
 import ProfileSettings from 'Pages/ProfileSettings'
-import UserStore from 'Stores/User'
-import AuthStore from 'Stores/Auth'
-import ProfileStore from 'Stores/Profile'
+import StoryEditor from 'Pages/StoryEditor'
+import Home from 'Pages/Home'
+import StoryPreview from 'Pages/StoryPreview'
+
+import UserStore from '../stores/User'
+import AuthStore from '../stores/Auth'
+import ProfileStore from '../stores/Profile'
+import StoreEditorStore from '../stores/StoryEditor'
+import StoriesStore from '../stores/Stories'
+import StoryStore from '../stores/Story'
 
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
 import TB from '../assets/fonts/Theinhardt-Bold.woff'
@@ -60,6 +67,9 @@ injectGlobal`
 const userStore = UserStore.create()
 const authStore = AuthStore.create()
 const profileStore = ProfileStore.create()
+const storyEditorStore = StoreEditorStore.create()
+const storiesStore = StoriesStore.create()
+const storyStore = StoryStore.create()
 /*
  * Let the stores be accessable to the browser plugin
  */
@@ -83,6 +93,9 @@ const store = {
   userStore,
   authStore,
   profileStore,
+  storyEditorStore,
+  storiesStore,
+  storyStore,
 }
 
 const App = () => (
@@ -96,6 +109,9 @@ const App = () => (
           <PublicRoute exact path="/login" redirectTo="/start" component={Login} />
           <PublicRoute exact path="/register" redirectTo="/start" component={Register} />
 
+          <PrivateRoute exact path="/home" redirectTo="/login" component={Home} />
+          <PrivateRoute exact path="/StoryPreview" redirectTo="/login" component={StoryPreview} />
+          <PrivateRoute exact path="/editor" redirectTo="/login" component={StoryEditor} />
           <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
           <PrivateRoute exact path="/profile" redirectTo="/login" component={ProfileSettings} />
           <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={ProfileSettings} />
