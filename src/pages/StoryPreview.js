@@ -8,13 +8,13 @@ import Input, {
 } from '_system/Input'
 
 
-@inject('storiesStore', 'storyStore')
+@inject('storyStore')
 @observer
 class StoryPreview extends React.Component {
   componentDidMount() {
-    const { storiesStore, storyStore } = this.props
+    const { storyStore } = this.props
     console.log('in component did mount story preview')
-    const id = storiesStore.selectedStory
+    const id = storyStore.selectedStory
     console.log(`Story ID ----> ${id}`)
     storyStore.getStory(id)
     console.log(storyStore.story)
@@ -47,7 +47,6 @@ class StoryPreview extends React.Component {
 }
 
 StoryPreview.propTypes = {
-  storiesStore: PropTypes.object.isRequired,
   storyStore: PropTypes.object.isRequired,
 }
 

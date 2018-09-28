@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Link, withRouter } from 'react-router-dom'
 
@@ -7,37 +8,37 @@ import Input, {
 } from '../styled/_system/Input'
 
 
-@inject('storiesStore')
+@inject('storyStore')
 @observer
 class Home extends React.Component {
   state = {}
 
   componentDidMount() {
-    const { storiesStore } = this.props
-    storiesStore.getAllStories()
+    const { storyStore } = this.props
+    storyStore.getAllStories()
   }
 
   setActiveStory = (storyId) => {
-    const { storiesStore } = this.props
+    const { storyStore } = this.props
     console.log(storyId)
-    storiesStore.setActiveStory(storyId)
-    this.props.history.push('/StoryPreview')
+    storyStore.setActiveStory(storyId)
+    this.props.history.push(`/story/preview/${storyId}`)
   }
 
   render() {
-    const { storiesStore } = this.props
+    const { storyStore } = this.props
     return (
         <>
           {
-            storiesStore.loadingStoryData
-              ? <span>Stories Loaded</span>
-              : <span>Stories Loading</span>
+            storyStore.fetchingStories
+              ? <span>Stories Loading</span>
+              : <span>Stories Loaded</span>
           }
-          {storiesStore.stories.length > 0
+          {storyStore.stories.length > 0
             ? (
               <ul>
                 {
-                  storiesStore.stories.map(story => (
+                  storyStore.stories.map(story => (
                     <div key={story.id}>
                       <li>{story.title}</li>
                       <Button onClick={() => this.setActiveStory(story.id)}> View  </Button>
@@ -52,6 +53,10 @@ class Home extends React.Component {
         </>
     )
   }
+}
+
+Home.propTypes = {
+  storyStore: PropTypes.object.isRequired,
 }
 
 export default Home
