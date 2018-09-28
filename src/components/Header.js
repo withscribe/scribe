@@ -17,19 +17,9 @@ import {
   HeaderUsername,
 } from 'Styled/Header'
 
-@inject('userStore', 'authStore')
+@inject('userStore')
 @observer
 class Header extends React.Component {
-  // TODO: rewrite this and the logout system..?
-  logout = () => {
-    const { userStore, authStore } = this.props
-    const success = authStore.logoutUser()
-    if (success) {
-      userStore.removeMe(success)
-      this.props.history.push('/login')
-    }
-  }
-
   render() {
     const { userStore: { me, pullingLoginData } } = this.props
     return (
@@ -94,7 +84,6 @@ Header.propTypes = {
 
 Header.wrappedComponent.propTypes /* remove-proptypes */ = {
   userStore: PropTypes.object.isRequired,
-  authStore: PropTypes.object.isRequired,
 }
 
 export default withRouter(Header)

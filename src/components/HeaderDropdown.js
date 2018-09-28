@@ -14,7 +14,11 @@ import {
 const DropdownArrow = ({ flipped }) => (
   <figure style={{ margin: '0 0 0 6em', display: 'inline-flex', color: 'rgb(218, 216, 222)' }}>
     <svg
-      style={{ fill: '#fff' }}
+      style={{
+        fill: '#fff',
+        transform: flipped ? 'rotate(180deg)' : 'none',
+        transition: 'all .2s ease-in',
+      }}
       width="20px"
       height="20px"
       version="1.1"
@@ -27,7 +31,7 @@ const DropdownArrow = ({ flipped }) => (
   </figure>
 )
 
-@inject('userStore')
+@inject('userStore', 'authStore')
 @observer
 class HeaderDropdown extends React.Component {
   state = {
@@ -38,6 +42,16 @@ class HeaderDropdown extends React.Component {
   componentWillMount() {
     const initials = this.getInitials()
     this.setState({ initials })
+  }
+
+  // TODO: rewrite this and the logout system..?
+  logout = () => {
+    const { userStore, authStore } = this.props
+    const success = authStore.logoutUser()
+    if (success) {
+      userStore.removeMe(success)
+      this.props.history.push('/login')
+    }
   }
 
   // TODO: Make this into a util instead of a class property
@@ -72,7 +86,7 @@ class HeaderDropdown extends React.Component {
   render() {
     const { showMenu } = this.state
     console.log(`menu state: ${showMenu}`)
-    const { logout, userStore, userStore: { me } } = this.props
+    const { userStore, userStore: { me } } = this.props
     const { initials } = this.state
     return (
       <>
@@ -85,15 +99,13 @@ class HeaderDropdown extends React.Component {
             ? `${userStore.concatenatedName}`
             : 'Anonymous Moose'
           }
-          <DropdownArrow />
+          <DropdownArrow flipped={showMenu}/>
         </DropdownWrapper>
-        {/* { showMenu && ( */}
         <Transition from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
           { showMenu && (styles => (
             <DropdownMenu style={styles}>
               <DropdownItems>
                 <DropdownContext>
-                  {/* <AvatarBox size={24}>{ initials }</AvatarBox> */}
                   <span>
                     <ContextDetail>{me.email}</ContextDetail>
                     <ContextDetail>{me.id}</ContextDetail>
@@ -115,21 +127,21 @@ class HeaderDropdown extends React.Component {
                       Settings
                     </DropdownItem>
                   </Link>
-                  <DropdownItem onClick={logout}>Logout</DropdownItem>
+                  <DropdownItem onClick={this.logout}>Logout</DropdownItem>
                 </DropdownLast>
               </DropdownItems>
             </DropdownMenu>
           ))}
         </Transition>
-        {/* )} */}
       </>
     )
   }
 }
 
 HeaderDropdown.propTypes = {
-  logout: PropTypes.func.isRequired,
-  me: PropTypes.object.isRequired,
+  userStore: PropTypes.object.isRequired,
+  authStore: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 export default HeaderDropdown

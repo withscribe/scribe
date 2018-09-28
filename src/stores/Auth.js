@@ -39,14 +39,19 @@ const AuthStore = types
     const loginUser = flow(function* () {
       self.inProgress = true
       const { email, password } = self
-      const { data: { login } } = yield client.mutate({
-        mutation: loginMutation,
-        variables: ({ email, password }),
-      })
-      console.log(login)
-      localStorage.setItem('token', login.token)
-      self.inProgress = false
-      return login
+      try {
+        const { data: { login } } = yield client.mutate({
+          mutation: loginMutation,
+          variables: ({ email, password }),
+        })
+        console.log(login)
+        localStorage.setItem('token', login.token)
+        self.inProgress = false
+        return login
+      } catch (err) {
+        console.log(err)
+        self.inProgress = false
+      }
     })
     /**
      * Auth store function for registering a new user
@@ -56,12 +61,17 @@ const AuthStore = types
     const registerUser = flow(function* () {
       self.inProgress = true
       const { username, email, password } = self
-      const { data: { registerAccountWithProfile: { token } } } = yield client.mutate({
-        mutation: registerMutation,
-        variables: ({ userName: username, email, password }),
-      })
-      console.log(token)
-      self.inProgress = false
+      try {
+        const { data: { register: { token } } } = yield client.mutate({
+          mutation: registerMutation,
+          variables: ({ userName: username, email, password }),
+        })
+        console.log(token)
+        self.inProgress = false
+      } catch (err) {
+        console.log(err)
+        self.inProgress = false
+      }
     })
 
     /**

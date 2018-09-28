@@ -11,4 +11,4 @@ const registerMutation = gql`
   }
 `
 
- export default registerMutation
+export default registerMutation
