@@ -2,11 +2,19 @@ import { types, flow } from 'mobx-state-tree'
 
 import { client } from '../services/Client'
 
-import StoryModel from './Story'
-
 import AllStories from 'Queries/allStories'
 
-const StoryStore = types
+const StoryModel = types
+  .model('StoryModel', {
+    content: types.maybe(types.string),
+    description: types.maybe(types.string),
+    id: types.maybeNull(types.string),
+    parentStoryId: types.maybeNull(types.string),
+    profileId: types.maybeNull(types.string),
+    title: types.maybe(types.string),
+  })
+  
+const StoriesStore = types
   .model('StoryStore', {
     fetchingData: types.optional(types.boolean, false),
     dataFetched: types.optional(types.boolean, false),
@@ -37,9 +45,9 @@ const StoryStore = types
     },
     get getActiveStory() {
       console.log("in get active story")
-      console.log(self.selectedStory)      
+      console.log(self.selectedStory)
       return self.selectedStory
     },
   }))
 
-export default StoryStore
+export default StoriesStore

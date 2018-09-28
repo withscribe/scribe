@@ -96,7 +96,7 @@ const store = {
   profileStore,
   storyEditorStore,
   storiesStore,
-  storyStore
+  storyStore,
 }
 
 const App = () => (

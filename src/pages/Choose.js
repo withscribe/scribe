@@ -19,12 +19,10 @@ class Choose extends React.Component {
       <Container>
         <ChoiceWrapper flexWrap="wrap">
           <ChoiceBox width={[1, 1 / 2]}>
-            <ChoiceLink to="/asd">
-
-            </ChoiceLink>
+            <ChoiceLink to="/editor" />
           </ChoiceBox>
           <ChoiceBox width={[1, 1 / 2]}>
-            <ChoiceLink to="/asg"></ChoiceLink>
+            <ChoiceLink to="/home" />
           </ChoiceBox>
         </ChoiceWrapper>
       </Container>

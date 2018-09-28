@@ -1,6 +1,13 @@
 import { types, flow } from 'mobx-state-tree'
+
 import { client } from '../services/Client'
 import StoryByIdQuery from '../queries/storyById'
+
+const ErrorModel = types
+  .model('ErrorModel', {
+    id: types.string,
+    message: types.string,
+  })
 
 const StoryModel = types
   .model('StoryModel', {
@@ -13,11 +20,11 @@ const StoryModel = types
   })
 
 const StoryStore = types
-  .model("StoryStore", {
+  .model('StoryStore', {
     fetchingStory: types.optional(types.boolean, false),
     updatingStory: types.optional(types.boolean, false),
     errors: types.optional(types.array(ErrorModel), []),
-    story: types.maybeNull(StoryModel)
+    story: types.maybeNull(StoryModel),
   })
   .actions((self) => {
     const changeTitle = (newTitle) => {
@@ -28,18 +35,31 @@ const StoryStore = types
       console.log(storyId)
       const { data: { storyById } } = yield client.query({
         query: StoryByIdQuery,
-        variables: ({ storyId })
+        variables: ({ storyId }),
       })
       console.log(storyById)
-      // self.title = story.title;
-      // self.description = story.description;
-      // self.content = story.content;
-      // self.profileId = story.profileId;
+      self.setStory(storyById)
     })
+
+    const setStory = (data) => {
+      if (self.story == null) {
+        self.story = StoryModel.create({
+          ...data,
+        })
+        console.log(self.story)
+
+        return
+      }
+
+      self.story = {
+        ...data,
+      }
+    }
 
     return {
       changeTitle,
-      getStory
+      getStory,
+      setStory,
     }
   })
 

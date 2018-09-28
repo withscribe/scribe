@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 
 import Input, {
@@ -35,8 +36,7 @@ class StoryEditor extends React.Component {
           type="text"
           value={storyEditorStore.title}
           onChange={e => storyEditorStore.changeTitle(e.target.value)} 
-          style={{ width: '90%' }}
-          />
+          style={{ width: '90%' }} />
         <Label>Story Description</Label>
         <Input
           type="text"
@@ -72,6 +72,11 @@ class StoryEditor extends React.Component {
       </>
     )
   }
+}
+
+StoryEditor.propTypes = {
+  storyEditorStore: PropTypes.object.isRequired,
+  userStore: PropTypes.object.isRequired,
 }
 
 export default StoryEditor
