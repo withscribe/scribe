@@ -6,19 +6,26 @@ import Input, {
   Label, InlineLabel, InlineInput, TextArea, Button,
 } from '../styled/_system/Input'
 
-@inject('storyEditorStore', 'userStore')
+@inject('storyEditorStore', 'userStore', 'profileStore')
 @observer
 class StoryEditor extends React.Component {
   componentDidMount() {
-    const { storyEditorStore } = this.props
+    const { storyEditorStore, userStore, profileStore } = this.props
+    userStore.refreshMeById(userStore.me.account_id)
+    /**
+     * 'data' is the current .me model
+     * we can reuse this because the structure is the same
+     */
+    const { ...data } = userStore.me
+    profileStore.importCurrentProfile(data)
     if (!storyEditorStore.isValid()) { storyEditorStore.init() }
   }
 
   handleSubmitClick = () => {
-    const { storyEditorStore, userStore } = this.props
+    const { storyEditorStore, profileStore } = this.props
 
     if (storyEditorStore.isValid) {
-      storyEditorStore.submitStory(userStore.me.id)
+      storyEditorStore.submitStory(profileStore.editedProfile.id)
         .then((res) => {
           console.log(`SubmitStory Response: ${res}`)
         }).catch((err) => {
@@ -77,6 +84,7 @@ class StoryEditor extends React.Component {
 StoryEditor.propTypes = {
   storyEditorStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
+  profileStore: PropTypes.object.isRequired,
 }
 
 export default StoryEditor

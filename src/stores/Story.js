@@ -2,6 +2,7 @@ import { types, flow } from 'mobx-state-tree'
 
 import { client } from '../services/Client'
 import StoryByIdQuery from '../queries/storyById'
+import cloneStoryMutation from '../mutations/clone'
 
 import AllStories from 'Queries/allStories'
 
@@ -31,13 +32,23 @@ const StoryStore = types
     selectedStory: types.optional(types.string, ''),
   })
   .actions((self) => {
-    const setStories = (stuff) => {
-      self.stories = stuff
+    const checkForClone = (story) => {
+      console.log('Is it a clone?')
+      console.log(story)
+      if (!story.isCloned) {
+        self.stories.push(story)
+      }
     }
+    
+    const setStories = (stuff) => {
+      stuff.map(checkForClone)
+    }
+
     const setActiveStory = (storyId) => {
       console.log(`ID ---->  ${storyId}`)
       self.selectedStory = storyId
     }
+
     const getAllStories = flow(function* () {
       self.fetchingStories = true
       const { data: { allStories } } = yield client.query({
@@ -76,6 +87,14 @@ const StoryStore = types
       }
     }
 
+    const clone = flow(function* (parentStoryId, profileId) {
+      const { data: { cloneStory } } = yield client.mutate({
+        mutation: cloneStoryMutation,
+        variables: ({ parentStoryId, profileId }),
+      })
+      console.log(cloneStory)
+    })
+
     return {
       changeTitle,
       getStory,
@@ -83,6 +102,7 @@ const StoryStore = types
       getAllStories,
       setStories,
       setActiveStory,
+      clone,
     }
   })
   .views(self => ({

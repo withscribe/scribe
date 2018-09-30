@@ -9,6 +9,7 @@ const AllStories = gql`
       content
       profileId
       parentStoryId
+      isCloned
     } 
   }
 `
