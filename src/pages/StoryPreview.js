@@ -8,49 +8,41 @@ import Input, {
 } from '_system/Input'
 
 
-@inject('storyStore', 'userStore', 'profileStore')
+@inject('storyStore', 'userStore')
 @observer
 class StoryPreview extends React.Component {
   componentDidMount() {
-    const { storyStore, userStore, profileStore } = this.props
+    const { storyStore } = this.props
     const id = storyStore.selectedStory
-    // refresh user -- we need this later to query user's profile
-    userStore.refreshMeById(userStore.me.account_id)
-    const { ...data } = userStore.me
-    // refresh user's profile -- we'll need the id later to attach to the clone
-    profileStore.importCurrentProfile(data)
     // find the story to display
     storyStore.getStory(id)
   }
 
   cloneStory = (parentStoryId) => {
-    const { storyStore, profileStore } = this.props
-    storyStore.clone(parentStoryId, profileStore.editedProfile.id)
+    const { storyStore, userStore } = this.props
+    storyStore.clone(parentStoryId, userStore.me.id)
   }
 
   render() {
     const { storyStore: { story } } = this.props
-    console.log(story)
     return (
         <>
-          {
-            story && (
-                <>
-                  <Label> In Preview </Label>
-                  <Label>
-                    {story.title}
-                  </Label>
-                  <Label>
-                    {story.description}
-                  </Label>
-                  <Label>
-                    {story.content}
-                  </Label>
-                  <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
-                </>
-            )
-          }
-        </>
+          {story && (
+            <>
+              <Label> I Preview</Label>
+              <Label>
+                {story.title}
+              </Label>
+              <Label>
+                {story.description}
+              </Label>
+              <Label>
+                {story.content}
+              </Label>
+              <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
+            </>
+          )}
+      </>
     )
   }
 }
@@ -58,7 +50,6 @@ class StoryPreview extends React.Component {
 StoryPreview.propTypes = {
   storyStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
-  profileStore: PropTypes.object.isRequired,
 }
 
 export default StoryPreview

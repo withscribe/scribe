@@ -27,21 +27,21 @@ class Home extends React.Component {
 
   render() {
     const { storyStore } = this.props
+    console.log(storyStore.nonClonedStories)
     return (
         <>
-          {
-            storyStore.fetchingStories
-              ? <span>Stories Loading</span>
-              : <span>Stories Loaded</span>
+          {storyStore.fetchingStories
+            ? <span>Stories Loading</span>
+            : <span>Stories Loaded</span>
           }
           {storyStore.stories.length > 0
             ? (
               <ul>
                 {
-                  storyStore.stories.map(story => (
+                  storyStore.nonClonedStories.map(story => (
                     <div key={story.id}>
                       <li>{story.title}</li>
-                      <Button onClick={() => this.setActiveStory(story.id)}> View  </Button>
+                      <Button onClick={() => this.setActiveStory(story.id)}>View</Button>
                     </div>
                   ))
                 }
@@ -49,7 +49,7 @@ class Home extends React.Component {
             )
             : <span>nothing to see here</span>
           }
-    
+
         </>
     )
   }
