@@ -15,11 +15,12 @@ class Choose extends React.Component {
   }
 
   componentDidMount() {
-    /*
-    * NOT SURE IF I NEED TO IMPORT THE BELOW TO USE PROFILEID EVERYWHERE
-    */
     const { userStore, profileStore } = this.props
     userStore.refreshMeById(userStore.me.account_id)
+    /**
+     * 'data' is the current .me model
+     * we can reuse this because the structure is the same
+     */
     const { ...data } = userStore.me
     profileStore.importCurrentProfile(data)
   }

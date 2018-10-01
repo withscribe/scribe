@@ -10,14 +10,8 @@ import Input, {
 @observer
 class StoryEditor extends React.Component {
   componentDidMount() {
-    const { storyEditorStore, userStore, profileStore } = this.props
-    userStore.refreshMeById(userStore.me.account_id)
-    /**
-     * 'data' is the current .me model
-     * we can reuse this because the structure is the same
-     */
-    const { ...data } = userStore.me
-    profileStore.importCurrentProfile(data)
+    const { storyEditorStore, userStore } = this.props
+
     if (!storyEditorStore.isValid()) { storyEditorStore.init() }
   }
 
