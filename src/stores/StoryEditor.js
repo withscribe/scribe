@@ -1,7 +1,7 @@
 import { types, flow } from 'mobx-state-tree'
 
-import { client } from '../services/Client'
-import submitStoryMutation from '../mutations/submitStory'
+import { client } from 'Services/Client'
+import submitStoryMutation from 'Mutations/submitStory'
 
 const StoryEditorStore = types
   .model('StoryEditorModel', {
@@ -49,7 +49,7 @@ const StoryEditorStore = types
         mutation: submitStoryMutation,
         variables: ({ title, description, content, profileId }),
       })
-      console.log(id)
+      console.log(`[storyEditorStore] submitStory: (resulting id) ${id}`)
       self.saveInProgress = false
     })
 

@@ -1,9 +1,8 @@
 import { types, flow } from 'mobx-state-tree'
 
-import { client } from '../services/Client'
-import StoryByIdQuery from '../queries/storyById'
-import cloneStoryMutation from '../mutations/clone'
-
+import { client } from 'Services/Client'
+import StoryByIdQuery from 'Queries/storyById'
+import cloneStoryMutation from 'Mutations/clone'
 import AllStories from 'Queries/allStories'
 
 const ErrorModel = types
@@ -32,20 +31,12 @@ const StoryStore = types
     selectedStory: types.optional(types.string, ''),
   })
   .actions((self) => {
-    const checkForClone = (story) => {
-      console.log('Is it a clone?')
-      console.log(story)
-      if (!story.isCloned) {
-        self.stories.push(story)
-      }
-    }
-    
-    const setStories = (stuff) => {
-      stuff.map(checkForClone)
+    const setStories = (stories) => {
+      self.stories = stories
     }
 
     const setActiveStory = (storyId) => {
-      console.log(`ID ---->  ${storyId}`)
+      console.log(`[storyStore] setActiveStory: (storyId) ${storyId}`)
       self.selectedStory = storyId
     }
 
@@ -63,22 +54,20 @@ const StoryStore = types
     }
 
     const getStory = flow(function* (storyId) {
-      console.log(storyId)
+      console.log(`[storyStore] getStory: (storyId) ${storyId}`)
       const { data: { storyById } } = yield client.query({
         query: StoryByIdQuery,
         variables: ({ storyId }),
       })
-      console.log(storyById)
       self.setStory(storyById)
     })
 
     const setStory = (data) => {
+      console.log(`[storyStore] setStory: (data) ${data}`)
       if (self.story == null) {
         self.story = StoryModel.create({
           ...data,
         })
-        console.log(self.story)
-
         return
       }
 
@@ -92,16 +81,15 @@ const StoryStore = types
         mutation: cloneStoryMutation,
         variables: ({ parentStoryId, profileId }),
       })
-      console.log(cloneStory)
     })
 
     return {
+      setStories,
+      setActiveStory,
+      getAllStories,
       changeTitle,
       getStory,
       setStory,
-      getAllStories,
-      setStories,
-      setActiveStory,
       clone,
     }
   })
@@ -110,9 +98,11 @@ const StoryStore = types
       return self.stories.length
     },
     get getActiveStory() {
-      console.log('in get active story')
-      console.log(self.selectedStory)
+      console.log('[storyStore] getActiveStory')
       return self.selectedStory
+    },
+    get nonClonedStories() {
+      return self.stories.filter(story => !story.parentStoryId)
     },
   }))
 

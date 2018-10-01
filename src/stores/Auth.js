@@ -1,6 +1,6 @@
 import { types, flow } from 'mobx-state-tree'
 
-import { client } from '../services/Client'
+import { client } from 'Services/Client'
 
 import loginMutation from 'Mutations/login'
 import registerMutation from 'Mutations/register'

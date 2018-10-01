@@ -1,6 +1,6 @@
 import { types, flow } from 'mobx-state-tree'
 
-import { client } from '../services/Client'
+import { client } from 'Services/Client'
 import UpdateProfileMutation from 'Mutations/updateProfile'
 import ProfileByIdQuery from 'Queries/userProfileById'
 
