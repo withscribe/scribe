@@ -6,7 +6,7 @@ import Input, {
   Label, InlineLabel, InlineInput, TextArea, Button,
 } from '../styled/_system/Input'
 
-@inject('storyEditorStore', 'userStore', 'profileStore')
+@inject('storyEditorStore', 'userStore')
 @observer
 class StoryEditor extends React.Component {
   componentDidMount() {
@@ -16,10 +16,10 @@ class StoryEditor extends React.Component {
   }
 
   handleSubmitClick = () => {
-    const { storyEditorStore, profileStore } = this.props
+    const { storyEditorStore, userStore } = this.props
 
     if (storyEditorStore.isValid) {
-      storyEditorStore.submitStory(profileStore.editedProfile.id)
+      storyEditorStore.submitStory(userStore.me.id)
         .then((res) => {
           console.log(`SubmitStory Response: ${res}`)
         }).catch((err) => {
