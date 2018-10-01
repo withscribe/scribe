@@ -24,7 +24,7 @@ import AuthStore from 'Stores/Auth'
 import ProfileStore from 'Stores/Profile'
 import StoreEditorStore from 'Stores/StoryEditor'
 import StoryStore from 'Stores/Story'
-import errors from 'Services/Errors'
+import ErrorStore from 'Stores/Errors'
 
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
 import TB from '../assets/fonts/Theinhardt-Bold.woff'
@@ -71,6 +71,7 @@ const authStore = AuthStore.create()
 const profileStore = ProfileStore.create()
 const storyEditorStore = StoreEditorStore.create()
 const storyStore = StoryStore.create()
+const errorStore = ErrorStore.create()
 /*
  * Let the stores be accessable to the browser plugin
  */
@@ -96,12 +97,13 @@ const store = {
   profileStore,
   storyEditorStore,
   storyStore,
+  errorStore,
 }
 
 const App = () => (
   <Provider {...store}>
     <>
-      <ToastProvider e={errors} />
+      <ToastProvider />
       <Router>
       <>
         <Header />
@@ -123,3 +125,7 @@ const App = () => (
 )
 
 export default App
+
+export {
+  errorStore,
+}

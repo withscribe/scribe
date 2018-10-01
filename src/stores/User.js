@@ -3,7 +3,7 @@ import { types, flow } from 'mobx-state-tree'
 import { client } from 'Services/Client'
 import { addError } from 'Services/Errors'
 import ProfileByIdQuery from 'Queries/userProfileById'
-
+import { errorStore } from 'Components/App'
 import StoryModel from './Story'
 
 const ErrorModel = types
@@ -90,12 +90,12 @@ const UserStore = types
         fetchPolicy: 'network-only',
       })
 
-      const anotherError = {
-        id: 'Error 2',
-        message: 'Triggered by refreshMeById',
+      const testError = {
+        id: '182461823',
+        message: 'Timeout from cDM',
       }
 
-      addError(anotherError)
+      errorStore.addError(testError)
 
       self.updatingUser = false
       self.setMe(accountById)
