@@ -8,16 +8,24 @@ import Input, {
 } from '_system/Input'
 
 
-@inject('storiesStore', 'storyStore')
+@inject('storyStore', 'userStore', 'profileStore')
 @observer
 class StoryPreview extends React.Component {
   componentDidMount() {
-    const { storiesStore, storyStore } = this.props
-    console.log('in component did mount story preview')
-    const id = storiesStore.selectedStory
-    console.log(`Story ID ----> ${id}`)
+    const { storyStore, userStore, profileStore } = this.props
+    const id = storyStore.selectedStory
+    // refresh user -- we need this later to query user's profile
+    userStore.refreshMeById(userStore.me.account_id)
+    const { ...data } = userStore.me
+    // refresh user's profile -- we'll need the id later to attach to the clone
+    profileStore.importCurrentProfile(data)
+    // find the story to display
     storyStore.getStory(id)
-    console.log(storyStore.story)
+  }
+
+  cloneStory = (parentStoryId) => {
+    const { storyStore, profileStore } = this.props
+    storyStore.clone(parentStoryId, profileStore.editedProfile.id)
   }
 
   render() {
@@ -38,6 +46,7 @@ class StoryPreview extends React.Component {
                   <Label>
                     {story.content}
                   </Label>
+                  <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
                 </>
             )
           }
@@ -47,8 +56,9 @@ class StoryPreview extends React.Component {
 }
 
 StoryPreview.propTypes = {
-  storiesStore: PropTypes.object.isRequired,
   storyStore: PropTypes.object.isRequired,
+  userStore: PropTypes.object.isRequired,
+  profileStore: PropTypes.object.isRequired,
 }
 
 export default StoryPreview

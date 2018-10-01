@@ -10,7 +10,8 @@ import Input, {
 @observer
 class StoryEditor extends React.Component {
   componentDidMount() {
-    const { storyEditorStore } = this.props
+    const { storyEditorStore, userStore } = this.props
+
     if (!storyEditorStore.isValid()) { storyEditorStore.init() }
   }
 
@@ -77,6 +78,7 @@ class StoryEditor extends React.Component {
 StoryEditor.propTypes = {
   storyEditorStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
+  profileStore: PropTypes.object.isRequired,
 }
 
 export default StoryEditor

@@ -5,10 +5,12 @@ import makeInspectable from 'mobx-devtools-mst'
 import { injectGlobal } from 'react-emotion'
 import decode from 'jwt-decode'
 
+/* Import Components Start */
 import Header from 'Components/Header'
 import PrivateRoute from 'Components/PrivateRoute'
 import PublicRoute from 'Components/PublicRoute'
 import ToastProvider from 'Components/Toast/ToastProvider'
+/* Import Pages Start */
 import Register from 'Pages/Register'
 import Login from 'Pages/Login'
 import Choose from 'Pages/Choose'
@@ -16,15 +18,13 @@ import ProfileSettings from 'Pages/ProfileSettings'
 import StoryEditor from 'Pages/StoryEditor'
 import Home from 'Pages/Home'
 import StoryPreview from 'Pages/StoryPreview'
-// Stores
+/* Import Stores Start */
 import UserStore from 'Stores/User'
 import AuthStore from 'Stores/Auth'
 import ProfileStore from 'Stores/Profile'
 import StoreEditorStore from 'Stores/StoryEditor'
-import StoriesStore from 'Stores/Stories'
 import StoryStore from 'Stores/Story'
-// End
-import errors from 'Services/Errors'
+import ErrorStore from 'Stores/Errors'
 
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
 import TB from '../assets/fonts/Theinhardt-Bold.woff'
@@ -70,8 +70,8 @@ const userStore = UserStore.create()
 const authStore = AuthStore.create()
 const profileStore = ProfileStore.create()
 const storyEditorStore = StoreEditorStore.create()
-const storiesStore = StoriesStore.create()
 const storyStore = StoryStore.create()
+const errorStore = ErrorStore.create()
 /*
  * Let the stores be accessable to the browser plugin
  */
@@ -96,15 +96,15 @@ const store = {
   authStore,
   profileStore,
   storyEditorStore,
-  storiesStore,
   storyStore,
+  errorStore,
 }
 
 const App = () => (
   <Provider {...store}>
     <>
-    <ToastProvider e={errors} />
-    <Router>
+      <ToastProvider />
+      <Router>
       <>
         <Header />
         <Switch>
@@ -112,16 +112,20 @@ const App = () => (
           <PublicRoute exact path="/register" redirectTo="/start" component={Register} />
 
           <PrivateRoute exact path="/home" redirectTo="/login" component={Home} />
-          <PrivateRoute exact path="/StoryPreview" redirectTo="/login" component={StoryPreview} />
+          <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={StoryPreview} />
           <PrivateRoute exact path="/editor" redirectTo="/login" component={StoryEditor} />
           <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
           <PrivateRoute exact path="/profile" redirectTo="/login" component={ProfileSettings} />
           <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={ProfileSettings} />
         </Switch>
       </>
-    </Router>
+      </Router>
   </>
   </Provider>
 )
 
 export default App
+
+export {
+  errorStore,
+}
