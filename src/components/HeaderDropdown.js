@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Transition } from 'react-spring'
-import { Link } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 import AvatarBox from '_system/Avatar'
 import {
@@ -138,10 +138,14 @@ class HeaderDropdown extends React.Component {
   }
 }
 
-HeaderDropdown.propTypes = {
+HeaderDropdown.wrappedComponent.propTypes /* remove-proptypes */ = {
   userStore: PropTypes.object.isRequired,
   authStore: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 }
 
-export default HeaderDropdown
+HeaderDropdown.propTypes = {
+  history: PropTypes.shape({}).isRequired,
+}
+
+export default withRouter(HeaderDropdown)

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import HeaderDropdown from 'Components/HeaderDropdown'
@@ -68,7 +68,7 @@ class Header extends React.Component {
             </>
             }
             {me && !pullingLoginData
-             && <HeaderDropdown logout={this.logout} />
+             && <HeaderDropdown />
             }
             {/* <HeaderBar /> */}
           </NavList>
@@ -78,12 +78,8 @@ class Header extends React.Component {
   }
 }
 
-Header.propTypes = {
-  history: PropTypes.shape({}).isRequired,
-}
-
-Header.wrappedComponent.propTypes /* remove-proptypes */ = {
+Header.propTypes /* remove-proptypes */ = {
   userStore: PropTypes.object.isRequired,
 }
 
-export default withRouter(Header)
+export default Header
