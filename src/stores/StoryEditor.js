@@ -78,7 +78,6 @@ const StoryEditorStore = types
      * @function loadStory
      */
     const loadStory = flow(function* (storyId) {
-      console.log(`[storyEditorStore] loadStory: (storyId) ${storyId}`)
       const { data: { storyById } } = yield client.query({
         query: StoryByIdQuery,
         variables: ({ storyId }),
@@ -93,7 +92,6 @@ const StoryEditorStore = types
      * @param {object} data - Story data returned from loadStory
      */
     const setData = (data) => {
-      console.log(`[storyStore] setStory: (data) ${data}`)
       const {
         id, title, description, content,
       } = data
@@ -111,13 +109,12 @@ const StoryEditorStore = types
     const submitStory = flow(function* (profileId) {
       self.saveInProgress = true
       const { title, description, content } = self
-      const { id } = yield client.mutate({
+      yield client.mutate({
         mutation: submitStoryMutation,
         variables: ({
           title, description, content, profileId,
         }),
       })
-      console.log(`[storyEditorStore] submitStory: (resulting id) ${id}`)
       self.saveInProgress = false
     })
 
