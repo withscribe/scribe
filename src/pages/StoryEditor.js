@@ -6,13 +6,21 @@ import Input, {
   Label, InlineLabel, InlineInput, TextArea, Button,
 } from '../styled/_system/Input'
 
-@inject('storyEditorStore', 'userStore')
+@inject('storyEditorStore')
 @observer
 class StoryEditor extends React.Component {
   componentDidMount() {
-    const { storyEditorStore, userStore } = this.props
+    const { storyEditorStore, history } = this.props
 
-    if (!storyEditorStore.isValid()) { storyEditorStore.init() }
+    const id = history.location.pathname.split('/').pop()
+
+    if (id !== 'new') {
+      storyEditorStore.loadStory(id)
+    }
+
+    if (!storyEditorStore.isValid()) {
+      storyEditorStore.init()
+    }
   }
 
   handleSubmitClick = () => {
@@ -36,7 +44,7 @@ class StoryEditor extends React.Component {
         <Input
           type="text"
           value={storyEditorStore.title}
-          onChange={e => storyEditorStore.changeTitle(e.target.value)} 
+          onChange={e => storyEditorStore.changeTitle(e.target.value)}
           style={{ width: '90%' }} />
         <Label>Story Description</Label>
         <Input
@@ -78,7 +86,7 @@ class StoryEditor extends React.Component {
 StoryEditor.propTypes = {
   storyEditorStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
-  profileStore: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 export default StoryEditor

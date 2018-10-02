@@ -5,6 +5,7 @@ const StoryByIdQuery = gql`
         storyById(storyID: $storyId) {
             id
             title
+            description
             content
         }
     }
