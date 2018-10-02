@@ -14,15 +14,13 @@ import Input, {
 class StoryPreview extends React.Component {
   constructor() {
     super()
-
-    this.state = {
-      modalIsOpen: false,
-    }
-
-    this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
   }
 
+  state = {
+    showCloneModal: false,
+  }
+  
   componentDidMount() {
     const { storyStore } = this.props
     const id = storyStore.selectedStory
@@ -33,35 +31,36 @@ class StoryPreview extends React.Component {
   cloneStory = (parentStoryId) => {
     const { storyStore, userStore } = this.props
     storyStore.clone(parentStoryId, userStore.me.id)
-      .then((res) => {
-        console.log(`CloneStory Response: ${res}`)
-      }).catch((err) => {
-        console.log(`CloneStory Error: ${err}`)
+      .then(() => {
+        this.setState({ showCloneModal: true })
       })
-    this.setState({ modalIsOpen: true })
-  }
-
-  afterOpenModal = () => {
-    // references are now sync'd and can be accessed.
   }
 
   closeModal = () => {
-    this.setState({ modalIsOpen: false })
+    this.setState({ showCloneModal: false })
   }
 
-  viewStory = () => {
-    // redirect to Story preview with the cloned story id
-    console.log('Cloned Story Success Model: View')
+  viewClone = () => {
+
+    const { storyStore, history } = this.props
+    const id = storyStore.currentCloneId
+
+    history.push(`/story/preview/${id}`)
+    storyStore.setActiveStory(id)
+
+    storyStore.getStory(id)
+    this.closeModal()
   }
 
   editStory = () => {
     // redirect to Story editor with the cloned story id
     console.log('Cloned Story Success Model: Edit')
+    this.closeModal()
   }
 
   render() {
-    const { storyStore: { story } } = this.props
-    const { modalIsOpen } = this.state
+    const { storyStore: { story, cloningStory } } = this.props
+    const { showCloneModal } = this.state
     return (
         <>
           {story && (
@@ -76,19 +75,22 @@ class StoryPreview extends React.Component {
               <Label>
                 {story.content}
               </Label>
-              <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
+              {!cloningStory
+                ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
+                : <Button onClick={() => {}}>Cloning Story</Button>
+              }
+
             </>
           )}
 
           <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={this.afterOpenModal}
+            isOpen={showCloneModal}
             onRequestClose={this.closeModal}
             contentLabel="Clone Success Modal">
 
             <h2>Story Cloned!</h2>
             <button type="button" onClick={this.closeModal}>close</button>
-            <button type="button" onClick={this.viewStory}>View</button>
+            <button type="button" onClick={this.viewClone}>View</button>
             <button type="button" onClick={this.editStory}>Edit</button>
           </Modal>
           
@@ -100,6 +102,7 @@ class StoryPreview extends React.Component {
 StoryPreview.propTypes = {
   storyStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 export default StoryPreview
