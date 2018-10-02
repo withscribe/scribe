@@ -2,10 +2,12 @@ import { types, flow } from 'mobx-state-tree'
 
 import { client } from 'Services/Client'
 import submitStoryMutation from 'Mutations/submitStory'
+import updateStoryMutation from 'Mutations/updateStory'
 
 const StoryEditorStore = types
   .model('StoryEditorModel', {
     saveInProgress: types.optional(types.boolean, false),
+    storyId: types.maybe(types.string),
     title: types.maybe(types.string),
     description: types.maybe(types.string),
     content: types.maybe(types.string),
@@ -13,6 +15,16 @@ const StoryEditorStore = types
     maxAge: types.maybe(types.integer),
   })
   .actions((self) => {
+    /**
+     * Story store function used to alter the Story storyId
+     * only to be used after submit or when importing a story into the editor
+     * @function changeStoryId
+     * @param {String} storyId - The value provided the through the props
+     */
+    const changeStoryId = (storyId) => {
+      self.storyId = storyId
+    }
+
     /**
      * Story store function used to alter the Story title
      * @function changeTitle
@@ -63,6 +75,7 @@ const StoryEditorStore = types
      * @function init
      */
     const init = () => {
+      self.storyId = ''
       self.title = ''
       self.description = ''
       self.content = ''
@@ -79,17 +92,38 @@ const StoryEditorStore = types
     const submitStory = flow(function* (profileId) {
       self.saveInProgress = true
       const { title, description, content } = self
-      const { id } = yield client.mutate({
+      const { data: { submitStory: { id } } } = yield client.mutate({
         mutation: submitStoryMutation,
         variables: ({
           title, description, content, profileId,
         }),
       })
       console.log(`[storyEditorStore] submitStory: (resulting id) ${id}`)
+      self.changeStoryId(id)
+      self.saveInProgress = false
+    })
+
+    /**
+     * Story store function used to update the Story on the server
+     * @function updateStory
+     */
+    const updateStory = flow(function* () {
+      self.saveInProgress = true
+      const {
+        storyId, title, description, content,
+      } = self
+      const { data: { updateStory: { id } } } = yield client.mutate({
+        mutation: updateStoryMutation,
+        variables: ({
+          id: storyId, title, description, content,
+        }),
+      })
+      console.log(`[storyEditorStore] updateStory: (resulting id) ${StoryId}`)
       self.saveInProgress = false
     })
 
     return {
+      changeStoryId,
       changeTitle,
       changeDesc,
       changeContent,
@@ -97,6 +131,7 @@ const StoryEditorStore = types
       changeMaxAge,
       init,
       submitStory,
+      updateStory,
     }
   })
   .views((self) => {
@@ -107,6 +142,7 @@ const StoryEditorStore = types
 
     const isValid = () => !self.title && !self.description && !self.content
       && !self.content && !self.minAge && !self.maxAge && !isAgeRangeValid()
+
 
     return { isAgeRangeValid, isValid }
   })
