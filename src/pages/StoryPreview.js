@@ -22,8 +22,6 @@ class StoryPreview extends React.Component {
   }
   
   componentDidMount() {
-    this.closeModal() // make sure it is closed
-
     const { storyStore } = this.props
     const id = storyStore.selectedStory
     // find the story to display
@@ -46,22 +44,21 @@ class StoryPreview extends React.Component {
     const { storyStore, history } = this.props
     const id = storyStore.currentCloneId
 
-    history.push(`/story/preview/${id}`)
-    storyStore.setActiveStory(id)
-
     this.closeModal()
+
+    storyStore.setActiveStory(id)
+    storyStore.getStory(id) // need to get this bc it doesn't mount again
+    history.push(`/story/preview/${id}`)
   }
 
   editClone = () => {
     const { storyStore, history } = this.props
     const id = storyStore.currentCloneId
 
-    history.push(`/editor/${id}`)
-    storyStore.setActiveStory(id)
+    this.closeModal()
 
-    storyStore.getStory(id)
-    this.closeModal()
-    this.closeModal()
+    storyStore.setActiveStory(id)
+    history.push(`/editor/${id}`)
   }
 
   render() {
