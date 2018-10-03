@@ -6,14 +6,9 @@ import Input, {
   Label, InlineLabel, InlineInput, TextArea, Button,
 } from '../styled/_system/Input'
 
-@inject('storyEditorStore')
+@inject('storyEditorStore', 'userStore')
 @observer
 class StoryEditor extends React.Component {
-  constructor() {
-    super()
-    this.handleSubmitClick = this.handleSubmitClick.bind(this)
-    this.handleUpdateClick = this.handleUpdateClick.bind(this)
-  }
 
   componentDidMount() {
     const { storyEditorStore, history } = this.props
@@ -48,9 +43,9 @@ class StoryEditor extends React.Component {
     if (storyEditorStore.isValid) {
       storyEditorStore.updateStory()
         .then((res) => {
-          console.log(`SubmitStory Response: ${res}`)
+          console.log(`UpdateStory Response: ${res}`)
         }).catch((err) => {
-          console.log(`SubmitStory Error: ${err}`)
+          console.log(`UpdateStory Error: ${err}`)
         })
     }
   }

@@ -108,7 +108,7 @@ const StoryEditorStore = types
       const {
         id, title, description, content,
       } = data
-      self.id = id
+      self.storyId = id
       self.title = title
       self.description = description
       self.content = content
@@ -148,7 +148,7 @@ const StoryEditorStore = types
           id: storyId, title, description, content,
         }),
       })
-      console.log(`[storyEditorStore] updateStory: (resulting id) ${StoryId}`)
+      console.log(`[storyEditorStore] updateStory: (resulting id) ${id}`)
       self.saveInProgress = false
     })
 
