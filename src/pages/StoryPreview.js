@@ -22,10 +22,16 @@ class StoryPreview extends React.Component {
   }
   
   componentDidMount() {
+    this.closeModal() // make sure it is closed
+
     const { storyStore } = this.props
     const id = storyStore.selectedStory
     // find the story to display
     storyStore.getStory(id)
+  }
+
+  closeModal = () => {
+    this.setState({ showCloneModal: false })
   }
 
   cloneStory = (parentStoryId) => {
@@ -36,25 +42,25 @@ class StoryPreview extends React.Component {
       })
   }
 
-  closeModal = () => {
-    this.setState({ showCloneModal: false })
-  }
-
   viewClone = () => {
-
     const { storyStore, history } = this.props
     const id = storyStore.currentCloneId
 
     history.push(`/story/preview/${id}`)
     storyStore.setActiveStory(id)
 
-    storyStore.getStory(id)
     this.closeModal()
   }
 
-  editStory = () => {
-    // redirect to Story editor with the cloned story id
-    console.log('Cloned Story Success Model: Edit')
+  editClone = () => {
+    const { storyStore, history } = this.props
+    const id = storyStore.currentCloneId
+
+    history.push(`/editor/${id}`)
+    storyStore.setActiveStory(id)
+
+    storyStore.getStory(id)
+    this.closeModal()
     this.closeModal()
   }
 
@@ -91,7 +97,7 @@ class StoryPreview extends React.Component {
             <h2>Story Cloned!</h2>
             <button type="button" onClick={this.closeModal}>close</button>
             <button type="button" onClick={this.viewClone}>View</button>
-            <button type="button" onClick={this.editStory}>Edit</button>
+            <button type="button" onClick={this.editClone}>Edit</button>
           </Modal>
           
       </>

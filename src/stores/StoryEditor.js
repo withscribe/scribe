@@ -3,6 +3,7 @@ import { types, flow } from 'mobx-state-tree'
 import { client } from 'Services/Client'
 import submitStoryMutation from 'Mutations/submitStory'
 import updateStoryMutation from 'Mutations/updateStory'
+import StoryByIdQuery from 'Queries/storyById'
 
 const StoryEditorStore = types
   .model('StoryEditorModel', {
@@ -85,6 +86,35 @@ const StoryEditorStore = types
     }
 
     /**
+     * Story store function used to pull a story from the server
+     * Will call [setData] on successful pull
+     * @function loadStory
+     */
+    const loadStory = flow(function* (storyId) {
+      const { data: { storyById } } = yield client.query({
+        query: StoryByIdQuery,
+        variables: ({ storyId }),
+      })
+      self.setData(storyById)
+    })
+
+    /**
+     * Story store function used to initialise the Store with values from [loadStory]
+     * This is only meant to be called from [loadStory]
+     * @function setData
+     * @param {object} data - Story data returned from loadStory
+     */
+    const setData = (data) => {
+      const {
+        id, title, description, content,
+      } = data
+      self.id = id
+      self.title = title
+      self.description = description
+      self.content = content
+    }
+
+    /**
      * Story store function used to submit the Story to the server
      * @function submitStory
      * @param {number} profileId - The ProfileId of the user submitting the Story
@@ -132,6 +162,8 @@ const StoryEditorStore = types
       init,
       submitStory,
       updateStory,
+      loadStory,
+      setData,
     }
   })
   .views((self) => {
@@ -142,7 +174,6 @@ const StoryEditorStore = types
 
     const isValid = () => !self.title && !self.description && !self.content
       && !self.content && !self.minAge && !self.maxAge && !isAgeRangeValid()
-
 
     return { isAgeRangeValid, isValid }
   })

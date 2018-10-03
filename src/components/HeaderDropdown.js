@@ -112,7 +112,7 @@ class HeaderDropdown extends React.Component {
                   </span>
                 </DropdownContext>
                 <DropdownLast>
-                  <Link to="/editor">
+                  <Link to="/editor/new">
                     <DropdownItem>
                       Create a Story
                     </DropdownItem>
