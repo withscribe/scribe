@@ -12,15 +12,10 @@ import Input, {
 @inject('storyStore', 'userStore')
 @observer
 class StoryPreview extends React.Component {
-  constructor() {
-    super()
-    this.closeModal = this.closeModal.bind(this)
-  }
-
   state = {
     showCloneModal: false,
   }
-  
+
   componentDidMount() {
     const { storyStore } = this.props
     const id = storyStore.selectedStory
@@ -96,7 +91,7 @@ class StoryPreview extends React.Component {
             <button type="button" onClick={this.viewClone}>View</button>
             <button type="button" onClick={this.editClone}>Edit</button>
           </Modal>
-          
+
       </>
     )
   }

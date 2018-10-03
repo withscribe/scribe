@@ -9,7 +9,6 @@ import Input, {
 @inject('storyEditorStore', 'userStore')
 @observer
 class StoryEditor extends React.Component {
-
   componentDidMount() {
     const { storyEditorStore, history } = this.props
 

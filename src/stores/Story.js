@@ -5,12 +5,6 @@ import StoryByIdQuery from 'Queries/storyById'
 import cloneStoryMutation from 'Mutations/clone'
 import AllStories from 'Queries/allStories'
 
-const ErrorModel = types
-  .model('ErrorModel', {
-    id: types.string,
-    message: types.string,
-  })
-
 const StoryModel = types
   .model('StoryModel', {
     content: types.maybe(types.string),
@@ -25,7 +19,6 @@ const StoryStore = types
   .model('StoryStore', {
     fetchingStory: types.optional(types.boolean, false),
     fetchingStories: types.optional(types.boolean, false),
-    errors: types.optional(types.array(ErrorModel), []),
     story: types.maybeNull(StoryModel),
     stories: types.optional(types.array(StoryModel), []),
     selectedStory: types.optional(types.string, ''),
