@@ -9,10 +9,19 @@ import Input, {
 @inject('storyEditorStore', 'userStore')
 @observer
 class StoryEditor extends React.Component {
-  componentDidMount() {
-    const { storyEditorStore, userStore } = this.props
 
-    if (!storyEditorStore.isValid()) { storyEditorStore.init() }
+  componentDidMount() {
+    const { storyEditorStore, history } = this.props
+
+    const id = history.location.pathname.split('/').pop()
+
+    if (id !== 'new') {
+      storyEditorStore.loadStory(id)
+    }
+
+    if (!storyEditorStore.isValid()) {
+      storyEditorStore.init()
+    }
   }
 
   handleSubmitClick = () => {
@@ -28,6 +37,19 @@ class StoryEditor extends React.Component {
     }
   }
 
+  handleUpdateClick = () => {
+    const { storyEditorStore } = this.props
+
+    if (storyEditorStore.isValid) {
+      storyEditorStore.updateStory()
+        .then((res) => {
+          console.log(`UpdateStory Response: ${res}`)
+        }).catch((err) => {
+          console.log(`UpdateStory Error: ${err}`)
+        })
+    }
+  }
+
   render() {
     const { storyEditorStore } = this.props
     return (
@@ -36,7 +58,7 @@ class StoryEditor extends React.Component {
         <Input
           type="text"
           value={storyEditorStore.title}
-          onChange={e => storyEditorStore.changeTitle(e.target.value)} 
+          onChange={e => storyEditorStore.changeTitle(e.target.value)}
           style={{ width: '90%' }} />
         <Label>Story Description</Label>
         <Input
@@ -65,10 +87,12 @@ class StoryEditor extends React.Component {
           value={storyEditorStore.content}
           onChange={e => storyEditorStore.changeContent(e.target.value)} />
 
-        {
-          storyEditorStore.saveInProgress
-            ? <Button type="button" onClick={(e) => { e.preventDefault() }}>Saving</Button>
-            : <Button type="button" onClick={this.handleSubmitClick}>Submit</Button>
+        {storyEditorStore.saveInProgress
+          && <Button type="button" onClick={(e) => { e.preventDefault() }}>Saving</Button>
+        }
+        {!storyEditorStore.saveInProgress && storyEditorStore.storyId === ''
+          ? <Button type="button" onClick={this.handleSubmitClick}>Submit</Button>
+          : <Button type="button" onClick={this.handleUpdateClick}>Update</Button>
         }
       </>
     )
@@ -78,7 +102,7 @@ class StoryEditor extends React.Component {
 StoryEditor.propTypes = {
   storyEditorStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
-  profileStore: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 export default StoryEditor

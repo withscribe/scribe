@@ -29,6 +29,8 @@ const StoryStore = types
     story: types.maybeNull(StoryModel),
     stories: types.optional(types.array(StoryModel), []),
     selectedStory: types.optional(types.string, ''),
+    cloningStory: types.optional(types.boolean, false),
+    currentCloneId: types.maybe(types.string),
   })
   .actions((self) => {
     const setStories = (stories) => {
@@ -48,10 +50,6 @@ const StoryStore = types
       self.setStories(allStories)
       self.fetchingStories = false
     })
-
-    const changeTitle = (newTitle) => {
-      self.title = newTitle
-    }
 
     const getStory = flow(function* (storyId) {
       console.log(`[storyStore] getStory: (storyId) ${storyId}`)
@@ -77,20 +75,27 @@ const StoryStore = types
     }
 
     const clone = flow(function* (parentStoryId, profileId) {
-      const { data: { cloneStory } } = yield client.mutate({
+      self.cloningStory = true
+      const { data: { cloneStory: { id } } } = yield client.mutate({
         mutation: cloneStoryMutation,
         variables: ({ parentStoryId, profileId }),
       })
+      self.cloningStory = false
+      self.setCurrentCloneId(id)
     })
+
+    const setCurrentCloneId = (cloneId) => {
+      self.currentCloneId = cloneId
+    }
 
     return {
       setStories,
       setActiveStory,
       getAllStories,
-      changeTitle,
       getStory,
       setStory,
       clone,
+      setCurrentCloneId,
     }
   })
   .views(self => ({
