@@ -11,7 +11,7 @@ import Input, {
 class StoryEditor extends React.Component {
 
   componentDidMount() {
-    const { storyEditorStore } = this.props
+    const { storyEditorStore, history } = this.props
 
     const id = history.location.pathname.split('/').pop()
 
