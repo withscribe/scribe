@@ -1,17 +1,16 @@
-import { types, flow } from 'mobx-state-tree'
+import { types, flow, destroy } from 'mobx-state-tree'
 
-import { client } from 'Services/Client'
-import { addError } from 'Services/Errors'
-import ProfileByIdQuery from 'Queries/userProfileById'
-import { errorStore } from 'Components/App'
 import StoryModel from './Story'
 
-const ErrorModel = types
-  .model('ErrorModel', {
-    id: types.string,
-    message: types.string,
-  })
+import { client } from 'Services/Client'
+import ProfileByIdQuery from 'Queries/userProfileById'
+import UpdateProfileMutation from 'Mutations/updateProfile'
+import { errorStore } from 'Components/App'
 
+const FieldsModel = types
+  .model('FieldsModel', {
+
+  })
 
 const UserModel = types
   .model('UserModel', {
@@ -31,8 +30,10 @@ const UserStore = types
     pullingLoginData: types.optional(types.boolean, false),
     updatingUser: types.optional(types.boolean, false),
     loadingUser: types.optional(types.boolean, false),
-    errors: types.optional(types.array(ErrorModel), []),
+    updatingProfile: types.optional(types.boolean, false),
+    isEditingProfile: types.optional(types.boolean, false),
     me: types.maybeNull(UserModel),
+    // updatedFields: types.optional(types.map, {}),
   })
   .actions((self) => {
     /**
@@ -84,22 +85,62 @@ const UserStore = types
     const refreshMeById = flow(function* (id) {
       console.log(`[userStore] refreshMeById: (account_id) ${id}`)
       self.updatingUser = true
-      const { data: { accountById } } = yield client.query({
-        query: ProfileByIdQuery,
-        variables: ({ id }),
-        fetchPolicy: 'network-only',
-      })
-
-      const testError = {
-        id: '182461823',
-        message: 'Timeout from cDM',
+      try {
+        const { data: { accountById } } = yield client.query({
+          query: ProfileByIdQuery,
+          variables: ({ id }),
+          fetchPolicy: 'network-only',
+        })
+        self.updatingUser = false
+        self.setMe(accountById)
+      } catch (err) {
+        self.updatingUser = false
+        errorStore.addError({
+          id: '009090',
+          message: 'error in refreshMeById',
+        })
       }
-
-      errorStore.addError(testError)
-
-      self.updatingUser = false
-      self.setMe(accountById)
     })
+
+    /**
+     * User store function that saves the edited users profile information
+     * @async
+     * @function saveProfileChanges
+     */
+    const saveProfileChanges = flow(function* () {
+      self.isEditingProfile = false
+      self.updatingProfile = true
+      const values = self.me
+      try {
+        yield client.mutate({
+          mutation: UpdateProfileMutation,
+          variables: ({ ...values, accountId: values.account_id }),
+        })
+      } catch (err) {
+        self.updatingProfile = false
+        self.isEditingProfile = true
+        errorStore.addError({
+          id: '123123',
+          message: 'error in saveProfileChanges',
+        })
+      }
+    })
+
+    const changeEmail = (newEmail) => {
+      self.me.email = newEmail
+    }
+    const changefirstName = (newfirstName) => {
+      self.me.firstName = newfirstName
+    }
+    const changelastName = (newlastName) => {
+      self.me.lastName = newlastName
+    }
+    const changeOccupation = (newOccupation) => {
+      self.me.occupation = newOccupation
+    }
+    const changeuserName = (newuserName) => {
+      self.me.userName = newuserName
+    }
 
     /**
      * Clears the User store of the current user (me)
@@ -107,10 +148,13 @@ const UserStore = types
      * @param {boolean} flag - Return value (Success/Fail) from resolving authStore.logoutUser
      */
     const removeMe = (flag) => {
-      if (flag) self.me = null
+      if (flag) destroy(self.me)
     }
 
-    return { pullMeById, refreshMeById, setMe, removeMe }
+    return {
+      pullMeById, refreshMeById, setMe, removeMe, saveProfileChanges,
+      changeEmail, changefirstName, changelastName, changeOccupation, changeuserName,
+    }
   })
   .views(self => ({
     get concatenatedName() {

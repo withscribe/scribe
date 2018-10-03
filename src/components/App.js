@@ -21,7 +21,6 @@ import StoryPreview from 'Pages/StoryPreview'
 /* Import Stores Start */
 import UserStore from 'Stores/User'
 import AuthStore from 'Stores/Auth'
-import ProfileStore from 'Stores/Profile'
 import StoreEditorStore from 'Stores/StoryEditor'
 import StoryStore from 'Stores/Story'
 import ErrorStore from 'Stores/Errors'
@@ -68,7 +67,6 @@ injectGlobal`
 
 const userStore = UserStore.create()
 const authStore = AuthStore.create()
-const profileStore = ProfileStore.create()
 const storyEditorStore = StoreEditorStore.create()
 const storyStore = StoryStore.create()
 const errorStore = ErrorStore.create()
@@ -94,7 +92,6 @@ if (localStorage.getItem('token')) {
 const store = {
   userStore,
   authStore,
-  profileStore,
   storyEditorStore,
   storyStore,
   errorStore,
