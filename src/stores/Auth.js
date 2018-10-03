@@ -1,7 +1,6 @@
 import { types, flow } from 'mobx-state-tree'
 
 import { client } from 'Services/Client'
-
 import loginMutation from 'Mutations/login'
 import registerMutation from 'Mutations/register'
 
@@ -52,6 +51,7 @@ const AuthStore = types
       } catch (err) {
         console.log(err)
         self.inProgress = false
+        return false
       }
     })
     /**
