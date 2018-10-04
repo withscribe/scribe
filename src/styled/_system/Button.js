@@ -1,48 +1,112 @@
 import styled, { css } from 'react-emotion'
-import { Link } from 'react-router-dom'
 
-const Button = styled.button`
-  /* height: 48px; */
-  padding: 0.5em 1em;
-  font-size: 1rem;
-  position: relative;
-  display: inline-flex;
-  justify-content: center;
-  align-self: flex-start;
+import { colors, typography } from '_system/Theme'
+
+const disabledStyles = css`
+  opacity: 0.4;
+  pointer-events: none;
+  user-selectable: none;
+`
+
+const baseStyles = css`
+  height: 40px;
+  width: auto;
+  background-color: ${colors.g300};
   border: 0;
   outline: 0;
-  background: rgb(28,36,128);
-  color: #fff;
-  border-radius: 3px;
+  color: #FFF;
+  border-radius: 4px;
+  ${typography.text.small};
+  padding: 0 1em;
   cursor: pointer;
-  line-height: 1;
+  display: inline-block;
   text-decoration: none;
-  transition: .2s all ease-out;
+  transition: all 200ms ease-in-out;
+  max-width: 220px;
+  text-align: center;
 
-  &:hover {
-    background: rgb(20, 28, 102);
+  &:active {
+    background-color: ${colors.g200};
   }
 
- ${props => props.fillWhite ? css`
-    background: rgb(255, 255, 255);
-    color: rgb(26, 36, 128);
-    &:hover {
-      background: rgb(220, 220, 220);
-    }` :
-    null
-  };
+  &:hover {
+    background-color: ${colors.g400};
+  }
 
-  border: ${props => props.border ? '1px solid white' : null};
+  &[disabled],
+  &:disabled {
+    ${disabledStyles};
+  }
+`
 
-  height: ${props => props.withHeight ? '48px' : null};
+const primaryStyles = css`
+  background-color: ${colors.b500};
+  color: ${colors.white};
 
-  margin-top: ${props => props.withHeight ? '2em' : null};
+  &:active {
+    background-color: ${colors.b700};
+  }
 
-  width: ${props => props.full ? '100%' : 'auto'};
+  &:hover {
+    background-color: ${colors.b700};
+  }
+
+  &:hover,
+  &:active {
+    background-color: ${colors.b900};
+  }
+`
+
+const secondaryStyles = css`
+  background-color: transparent;
+  border-color: ${colors.b500};
+  border-width: 1px;
+  border-style: solid;
+  color: ${colors.g500};
+
+  &:active {
+    border-color: ${colors.b700};
+  }
+
+  &:hover {
+    background-color: transparent;
+    border-color: ${colors.b700};
+  }
+
+  &:hover,
+  &:active {
+    border-color: ${colors.b900};
+  }
+`
+
+const inlayStyles = css`
+  background-color: transparent;
+  color: ${colors.white};
+
+  &:hover {
+    background-color: ${colors.g300};
+  }
+`
+
+const Button = styled.button`
+  ${baseStyles};
+`
+
+const ButtonPrimary = styled('button')`
+  ${baseStyles};
+  ${primaryStyles}
+`
+
+const ButtonSecondary = styled('button')`
+  ${baseStyles};
+  ${secondaryStyles};
+`
+
+const ButtonInlay = styled('button')`
+  ${baseStyles};
+  ${inlayStyles};
 `
 
 const ButtonFill = Button
 
-// const ButtonLink = Button.withComponent(Link)
-
-export { Button, ButtonFill }
+export { Button, ButtonPrimary, ButtonSecondary, ButtonInlay, ButtonFill }

@@ -1,5 +1,7 @@
 import styled from 'react-emotion'
 
+import { colors } from '_system/Theme'
+
 const DropdownWrapper = styled.div`
   width: 274px;
   display: flex;
@@ -23,13 +25,12 @@ const DropdownMenu = styled.div`
   min-width: 274px;
   top: 69px;
   position: absolute;
-  /* border: 1px solid #dfdfdf; */
   margin: 0;
   line-height: 1rem;
-  right: 10vw;
+  right: 0;
   z-index: 4;
-  color: #333;
-  background-color: #fff;
+  color: ${colors.g300};
+  background-color: ${colors.white};
   user-select: none;
   overflow: hidden;
 `
@@ -40,7 +41,7 @@ const DropdownContext = styled.div`
   padding: 5px;
   display: inline-flex;
   align-items: center;
-  background-color: rgb(28,36,128);
+  background-color: ${colors.g400};
   color: #fff;
 `
 
@@ -63,7 +64,7 @@ const DropdownItem = styled.li`
   cursor: pointer;
 
   &:hover {
-    background-color: rgb(220,220,220);
+    background-color: ${colors.g100};
   }
 `
 

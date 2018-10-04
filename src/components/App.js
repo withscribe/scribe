@@ -10,6 +10,7 @@ import Header from 'Components/Header'
 import PrivateRoute from 'Components/PrivateRoute'
 import PublicRoute from 'Components/PublicRoute'
 import ToastProvider from 'Components/Toast/ToastProvider'
+import { Wrapper, Container } from '_system/Container'
 /* Import Pages Start */
 import Register from 'Pages/Register'
 import Login from 'Pages/Login'
@@ -102,23 +103,27 @@ const App = () => (
     <>
       <ToastProvider />
       <Router>
-      <>
+        <>
         <Header />
-        <Switch>
-          <PublicRoute exact path="/login" redirectTo="/start" component={Login} />
-          <PublicRoute exact path="/register" redirectTo="/start" component={Register} />
+        <Wrapper>
+          <Container>
+          <Switch>
+            <PublicRoute exact path="/login" redirectTo="/start" component={Login} />
+            <PublicRoute exact path="/register" redirectTo="/start" component={Register} />
 
-          <PrivateRoute exact path="/home" redirectTo="/login" component={Home} />
-          <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={StoryPreview} />
-          <PrivateRoute exact path="/editor/create" redirectTo="/login" component={StoryEditor} />
-          <PrivateRoute exact path="/editor/:id" redirectTo="/login" component={StoryEditor} />
-          <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
-          <PrivateRoute exact path="/profile" redirectTo="/login" component={ProfileSettings} />
-          <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={ProfileSettings} />
-        </Switch>
-      </>
+            <PrivateRoute exact path="/home" redirectTo="/login" component={Home} />
+            <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={StoryPreview} />
+            <PrivateRoute exact path="/editor/create" redirectTo="/login" component={StoryEditor} />
+            <PrivateRoute exact path="/editor/:id" redirectTo="/login" component={StoryEditor} />
+            <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
+            <PrivateRoute exact path="/profile" redirectTo="/login" component={ProfileSettings} />
+            <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={ProfileSettings} />
+          </Switch>
+          </Container>
+        </Wrapper>
+        </>
       </Router>
-  </>
+    </>
   </Provider>
 )
 

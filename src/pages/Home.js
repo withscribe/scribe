@@ -4,9 +4,9 @@ import { inject, observer } from 'mobx-react'
 import { Link, withRouter } from 'react-router-dom'
 
 import Input, {
-  Label, InlineLabel, InlineInput, TextArea, Button,
-} from '../styled/_system/Input'
-
+  Label, InlineLabel, InlineInput, TextArea,
+} from '_system/Input'
+import { Button } from '_system/Button'
 
 @inject('storyStore')
 @observer
@@ -41,7 +41,7 @@ class Home extends React.Component {
                   storyStore.nonClonedStories.map(story => (
                     <div key={story.id}>
                       <li>{story.title}</li>
-                      <Button onClick={() => this.setActiveStory(story.id)}>View</Button>
+                      <Button primary onClick={() => this.setActiveStory(story.id)}>View</Button>
                     </div>
                   ))
                 }

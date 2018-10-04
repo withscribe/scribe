@@ -1,7 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 
-import Container from '_system/Container'
 import { ChoiceBox, ChoiceWrapper, ChoiceLink } from 'Styled/Choose'
 
 @inject('userStore', 'authStore')
@@ -16,16 +15,14 @@ class Choose extends React.Component {
     const { authStore } = this.props
 
     return (
-      <Container>
-        <ChoiceWrapper flexWrap="wrap">
-          <ChoiceBox width={[1, 1 / 2]}>
-            <ChoiceLink to="/editor/create">WRITE YOUR OWN</ChoiceLink>
-          </ChoiceBox>
-          <ChoiceBox width={[1, 1 / 2]}>
-            <ChoiceLink to="/home">LIBRARY</ChoiceLink>
-          </ChoiceBox>
-        </ChoiceWrapper>
-      </Container>
+      <ChoiceWrapper flexWrap="wrap">
+        <ChoiceBox width={[1, 1 / 2]}>
+          <ChoiceLink to="/editor/create">WRITE YOUR OWN</ChoiceLink>
+        </ChoiceBox>
+        <ChoiceBox width={[1, 1 / 2]}>
+          <ChoiceLink to="/home">LIBRARY</ChoiceLink>
+        </ChoiceBox>
+      </ChoiceWrapper>
     )
   }
 }
