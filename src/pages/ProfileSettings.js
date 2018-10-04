@@ -8,12 +8,11 @@ import Input, { Label } from '_system/Input'
 import { Button } from '_system/Button'
 import { ProfileSettingsHeader, ProfileWrapper } from 'Styled/ProfileSettings.js'
 
-@inject('userStore', 'profileStore')
+@inject('userStore')
 @observer
 class Choose extends React.Component {
   state = {
     dataclone: null,
-    changes: null,
   }
 
   componentDidMount() {
@@ -27,7 +26,11 @@ class Choose extends React.Component {
     const { userStore } = this.props
     const { dataclone } = this.state
 
-    if (userStore.saveProfileChanges()) {
+    /*
+      We want to make sure that no error is thrown before we apply
+      the snapshot to the userStore
+    */
+    if (dataclone.saveProfileChanges()) {
       applySnapshot(userStore, getSnapshot(dataclone))
     }
   }
