@@ -14,7 +14,7 @@ class StoryEditor extends React.Component {
 
     const id = history.location.pathname.split('/').pop()
 
-    if (id !== 'new') {
+    if (id !== 'create') {
       storyEditorStore.loadStory(id)
     }
 

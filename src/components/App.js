@@ -110,6 +110,7 @@ const App = () => (
 
           <PrivateRoute exact path="/home" redirectTo="/login" component={Home} />
           <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={StoryPreview} />
+          <PrivateRoute exact path="/editor/create" redirectTo="/login" component={StoryEditor} />
           <PrivateRoute exact path="/editor/:id" redirectTo="/login" component={StoryEditor} />
           <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
           <PrivateRoute exact path="/profile" redirectTo="/login" component={ProfileSettings} />
