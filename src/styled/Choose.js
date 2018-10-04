@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 const ChoiceWrapper = styled(Flex)`
   height: calc(100vh - 69px);
   padding-top: 10vh;
+  width: 100%;
 `
 
 const ChoiceBox = styled(Box)`

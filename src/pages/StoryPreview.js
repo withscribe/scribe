@@ -5,9 +5,9 @@ import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
 import Input, {
-  Label, InlineLabel, InlineInput, TextArea, Button,
+  Label, InlineLabel, InlineInput, TextArea,
 } from '_system/Input'
-
+import { Button } from '_system/Button'
 
 @inject('storyStore', 'userStore')
 @observer

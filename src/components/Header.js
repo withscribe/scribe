@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import HeaderDropdown from 'Components/HeaderDropdown'
-import { Button } from '_system/Button'
+import { Button, ButtonInlay } from '_system/Button'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import {
   HeaderWrapper,
@@ -53,14 +53,14 @@ class Header extends React.Component {
             && <>
               <NavItem>
                 <Link to="/login">
-                  <Button border>
+                  <ButtonInlay>
                     Login
-                  </Button>
+                  </ButtonInlay>
                 </Link>
               </NavItem>
               <NavItem>
                 <Link to="/register">
-                  <Button fillWhite>
+                  <Button>
                     Sign Up
                   </Button>
                 </Link>

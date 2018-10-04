@@ -1,19 +1,21 @@
 import styled from 'react-emotion'
 import { Link } from 'react-router-dom'
 
+import { colors } from '_system/Theme'
+
 const HeaderWrapper = styled.header`
-  padding: 0 10vw 0 10vw;
   display: flex;
   flex-align: center;
   justify-content: space-between;
-  background: rgb(28, 36, 128);
-  color: #FFF;
+  background: ${colors.g500};
+  color: ${colors.white};
   position: relative;
+  width: 100vw;
+  justify-content: center;
 `
 
 const HeaderContainer = styled.nav`
-  width: 100%;
-  margin: 0 auto;
+  width: 80em;
 `
 
 const NavList = styled.ul`
@@ -23,6 +25,7 @@ const NavList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+  position: relative;
 `
 
 const NavItem = styled.li`
@@ -43,21 +46,21 @@ const NavItem = styled.li`
 
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: #fff;
+  color: ${colors.white};
   font-size: 1.25rem;
 `
 
 const HeaderBar = styled.div`
   width: 80vw;
   height: 1px;
-  background: #FFF;
+  background: ${colors.white};
   position: absolute;
   bottom: 2rem;
 `
 
 const HeaderLogo = styled.span`
   font-size: 1.25rem;
-  color: #fff;
+  color: ${colors.white};
   text-decoration: none;
   font-family: Theinhardt-Bold;
   font-weight: 300;

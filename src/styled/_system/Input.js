@@ -1,6 +1,8 @@
-import styled from 'react-emotion'
+import styled, { css } from 'react-emotion'
 
-const Input = styled.input`
+import { colors, typography } from '_system/Theme'
+
+const oldInput = styled.input`
   padding: 0 0.5em;
   margin: 1em 0 0 0;
   height: 56px;
@@ -13,10 +15,72 @@ const Input = styled.input`
   outline: 0;
 `
 
+const inputBaseStyles = css`
+  label: input;
+  background-color: #FBFBFB;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #D8DDE1;
+  border-radius: 4px;
+  /* box-shadow: rgba(8, 35, 51, 0.05) 0px 3px 6px; */
+  padding: 0.90rem 0.75rem;
+  transition: border-color 200ms ease-in-out;
+  width: 100%;
+  font-size: ${typography.text.small};
+
+  &:focus,
+  &:active {
+    border: 1px solid #3388FF;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #9DA7B1;
+    transition: color 200ms ease-in-out;
+  }
+`
+
+const inputWarningStyles = css`
+  &:not(:focus) {
+    border-color: #FFC859;
+
+    &::placeholder {
+      color: #FFC859;
+    }
+  }
+`
+
+const inputOptionalStyles = css`
+  background-color: #FAFAFA;
+  border-style: dashed;
+  box-shadow: none;
+`
+
+const inputInvalidStyles = css`
+  &:not(:focus) {
+    border-color: #FFAF9F;
+
+    &::placeholder {
+      color: #FFAF9F;
+    }
+  }
+`
+
+const Input = styled('input')`
+  ${inputBaseStyles};
+  ${p => p.warn ? `${inputWarningStyles}` : null};
+  ${p => p.optional ? `${inputOptionalStyles}` : null};
+  ${p => p.invalid ? `${inputInvalidStyles}` : null};
+`
+
 const Label = styled.label`
   label: form-label;
   /* margin-bottom: 0.25em; */
   display: block
+`
+
+const LabelTip = styled('sup')`
+  color: #7D7D7D;
 `
 
 const InlineLabel = styled.label`
@@ -51,19 +115,8 @@ const TextArea = styled.textarea`
   outline: 0;
 `
 
-const Button = styled.button`
-  display: block;
-  padding: 0.5em;
-  margin: 1em 0 0 1em;
-  border: 0;
-  font-size: 1rem;
-  background: #f3f3f3;
-  border-radius: 3px;
-  outline: 0;
-`
-
 export default Input
 
 export {
-  Label, InlineLabel, InlineInput, TextArea, Button,
+  Label, LabelTip, InlineLabel, InlineInput, TextArea,
 }

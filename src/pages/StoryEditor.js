@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 
 import Input, {
-  Label, InlineLabel, InlineInput, TextArea, Button,
-} from '../styled/_system/Input'
+  Label, InlineLabel, InlineInput, TextArea,
+} from '_system/Input'
+import { ButtonPrimary } from '_system/Button'
 
 @inject('storyEditorStore', 'userStore')
 @observer
@@ -66,7 +67,7 @@ class StoryEditor extends React.Component {
           onChange={e => storyEditorStore.changeDesc(e.target.value)} />
         <Label>Story Audience</Label>
         <InlineLabel>Min Age</InlineLabel>
-        <InlineInput
+        <Input
           type="number"
           min="1"
           max={storyEditorStore.maxAge}
@@ -74,7 +75,7 @@ class StoryEditor extends React.Component {
           value={storyEditorStore.minAge}
           onChange={e => storyEditorStore.changeMinAge(e.target.value)} />
         <InlineLabel>Max Age</InlineLabel>
-        <InlineInput
+        <Input
           type="number"
           min={storyEditorStore.minAge}
           max="100"
@@ -87,11 +88,11 @@ class StoryEditor extends React.Component {
           onChange={e => storyEditorStore.changeContent(e.target.value)} />
 
         {storyEditorStore.saveInProgress
-          && <Button type="button" onClick={(e) => { e.preventDefault() }}>Saving</Button>
+          && <ButtonPrimary type="button" onClick={(e) => { e.preventDefault() }}>Saving</ButtonPrimary>
         }
         {!storyEditorStore.saveInProgress && storyEditorStore.storyId === ''
-          ? <Button type="button" onClick={this.handleSubmitClick}>Submit</Button>
-          : <Button type="button" onClick={this.handleUpdateClick}>Update</Button>
+          ? <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
+          : <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
         }
       </>
     )

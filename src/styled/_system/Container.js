@@ -3,9 +3,20 @@ import PropTypes from 'prop-types'
 import { Flex } from 'grid-styled/emotion'
 
 const Container = styled.div`
-  padding: 0 10vw 0 10vw;
-  /* height: 100vh; */
-  background: rgb(28,36,128);
+  width: 100%;
+  display: flex;
+  max-width: 80em;
+  flex-direction: column;
 `
 
-export default Container
+const Wrapper = styled('main')`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+`
+
+export {
+  Wrapper,
+  Container,
+}

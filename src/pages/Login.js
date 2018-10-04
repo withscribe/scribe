@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react'
 import PropTypes from 'prop-types'
 
 import Input from '_system/Input'
-import { Button } from '_system/Button'
+import { Button, ButtonPrimary } from '_system/Button'
 import { FormWrapper, FormContainer, FormTitle } from 'Styled/LRForm'
 
 @inject('userStore', 'authStore')
@@ -44,12 +44,10 @@ class Login extends React.Component {
             placeholder="password"
             type="text"
             onChange={e => authStore.changePassword(e.target.value)} />
-          <Button
-            full
-            g
+          <ButtonPrimary
             onClick={this.onLogin}>
             Login
-          </Button>
+          </ButtonPrimary>
           <Link to="/register">Don't have an account? <b>Sign Up</b></Link>
         </FormContainer>
       </FormWrapper>
