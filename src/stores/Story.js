@@ -102,6 +102,9 @@ const StoryStore = types
     get nonClonedStories() {
       return self.stories.filter(story => !story.parentStoryId)
     },
+    usersStories(id) {
+      return self.stories.filter(story => story.profileId == id)
+    }
   }))
 
 export default StoryStore

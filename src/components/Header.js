@@ -37,12 +37,12 @@ class Header extends React.Component {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/start">
+              <NavLink to="/editor/create">
                 Create
               </NavLink>
             </NavItem>
             <NavItem spaceRight>
-              <NavLink to="/start">
+              <NavLink to="/user/stories">
                 My Stories
               </NavLink>
             </NavItem>
