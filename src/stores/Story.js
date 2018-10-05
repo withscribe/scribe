@@ -13,6 +13,8 @@ const StoryModel = types
     parentStoryId: types.maybeNull(types.string),
     profileId: types.maybeNull(types.string),
     title: types.maybe(types.string),
+    isCloned: types.maybe(types.boolean),
+    author: types.maybe(types.string)
   })
 
 const StoryStore = types

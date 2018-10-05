@@ -63,16 +63,18 @@ class StoryPreview extends React.Component {
         <>
           {story && (
             <>
-              <Label> I Preview</Label>
               <Label>
                 {story.title}
               </Label>
               <Label>
-                {story.description}
+                
               </Label>
               <Label>
-                {story.content}
+                {story.description}
               </Label>
+              <p>
+                {story.content}
+              </p>
               {!cloningStory
                 ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
                 : <Button onClick={() => {}}>Cloning Story</Button>
