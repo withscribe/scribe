@@ -24,28 +24,27 @@ class MyStories extends React.Component {
         const { storyStore, userStore } = this.props
         return (
             <>
-            {storyStore.fetchingStories
-            ? <span>Stories Loading</span>
-            : <span>Stories Loaded</span>
-          }
-          {storyStore.stories.length > 0
-            ? (
-              <ul>
-                {
-                    storyStore.usersStories(userStore.me.id).map(story => (
-                    <div key={story.id}>
-                      <li>{story.title}</li>
-                      <Button primary onClick={() => this.previewStory(story.id)}>View</Button>
-                    </div>
-                  ))
-                }
-              </ul>
-            )
-            : <span>nothing to see here</span>
-          }
-            </>
+              {storyStore.fetchingStories ? 
+                <span>Stories Loading</span> :
+                <span>Stories Loaded</span>
+              }
+              {storyStore.stories.length > 0 ? (
+                <ul>
+                    {storyStore.usersStories(userStore.me.id).map(story => (
+                        <div key={story.id}>
+                            <li>{story.title}</li>
+                            <Button primary onClick={() => this.previewStory(story.id)}>
+                                View
+                            </Button>
+                        </div>
+                    ))}
+                </ul>
+              ) : 
+                <span>nothing to see here</span>
+              }
+          </>
         )
-    }
+      }
 }
 
 MyStories.propTypes = {
