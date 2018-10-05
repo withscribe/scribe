@@ -13,7 +13,7 @@ class MyStories extends React.Component {
         storyStore.getAllStories()
     }
 
-    previewStory(storyId) {
+    previewStory = (storyId) => {
         const { storyStore } = this.props
         console.log(storyId)
         storyStore.setActiveStory(storyId)
