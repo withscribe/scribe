@@ -38,22 +38,25 @@ class MyStories extends React.Component {
             <ul>
               {storyStore.usersStories(userStore.me.id).map(story => (
                 <div key={story.id}>
-                  {
-                    story.isCloned ? <>
+                  {story.isCloned
+                    ? <>
                       <li>{story.title}<small><b>CLONE</b></small></li>
                       <Button onClick={() => this.previewStory(story.id)}>
                           View
                       </Button>
                       <Button onClick={() => this.editStory(story.id)}>
                           Edit
-                      </Button> </>
-                      : <><li>{story.title}</li>
+                      </Button>
+                    </>
+                    : <>
+                      <li>{story.title}</li>
                       <Button onClick={() => this.previewStory(story.id)}>
                           View
                       </Button>
                       <Button onClick={() => this.editStory(story.id)}>
                           Edit
-                      </Button></>
+                      </Button>
+                    </>
                   }
                   
                 </div>
