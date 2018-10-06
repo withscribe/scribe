@@ -119,13 +119,13 @@ const StoryEditorStore = types
      * @function submitStory
      * @param {number} profileId - The ProfileId of the user submitting the Story
      */
-    const submitStory = flow(function* (profileId) {
+    const submitStory = flow(function* (profileId, author) {
       self.saveInProgress = true
       const { title, description, content } = self
       const { data: { submitStory: { id } } } = yield client.mutate({
         mutation: submitStoryMutation,
         variables: ({
-          title, description, content, profileId,
+          title, author, description, content, profileId,
         }),
       })
       console.log(`[storyEditorStore] submitStory: (resulting id) ${id}`)

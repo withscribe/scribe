@@ -14,7 +14,8 @@ const StoryModel = types
     profileId: types.maybeNull(types.string),
     title: types.maybe(types.string),
     isCloned: types.maybe(types.boolean),
-    author: types.maybe(types.string)
+    author: types.maybeNull(types.string),
+    likes: types.maybeNull(types.integer)
   })
 
 const StoryStore = types
@@ -28,15 +29,28 @@ const StoryStore = types
     currentCloneId: types.maybe(types.string),
   })
   .actions((self) => {
+    /**
+     * Story store function used to attach array of
+     * stories to the store
+     * @function setStories
+     * @param {Array} StoryModel - The Array of StoryModels returned from getAllStories
+    */
     const setStories = (stories) => {
       self.stories = stories
     }
-
+    /**
+     * Story store function used to alter the selected story
+     * @function setActiveStory
+     * @param {String} storyId - The ID of the selected story
+    */
     const setActiveStory = (storyId) => {
-      console.log(`[storyStore] setActiveStory: (storyId) ${storyId}`)
       self.selectedStory = storyId
     }
-
+    /**
+     * Story store function used to retrieve the list of
+     * all public stories
+     * @function getAllStories
+    */
     const getAllStories = flow(function* () {
       self.fetchingStories = true
       const { data: { allStories } } = yield client.query({
@@ -45,18 +59,26 @@ const StoryStore = types
       self.setStories(allStories)
       self.fetchingStories = false
     })
-
+    /**
+     * Story store function used to retrieve a specific story
+     * by passing the requested story's ID
+     * @function getStory
+     * @param {String} storyId - The ID of the request story
+    */
     const getStory = flow(function* (storyId) {
-      console.log(`[storyStore] getStory: (storyId) ${storyId}`)
       const { data: { storyById } } = yield client.query({
         query: StoryByIdQuery,
         variables: ({ storyId }),
       })
       self.setStory(storyById)
     })
-
-    const setStory = (data) => {
-      console.log(`[storyStore] setStory: (data) ${data}`)
+    /**
+     * Story store function used to attach a single requested
+     * story to the store
+     * @function setStory
+     * @param {String} story - StoryModel returned from getStory
+    */
+    const setStory = (story) => {
       if (self.story == null) {
         self.story = StoryModel.create({
           ...data,
@@ -68,7 +90,13 @@ const StoryStore = types
         ...data,
       }
     }
-
+    /**
+     * Story store function used to clone (make a copy) of an existing story
+     * and attaching it to the user who initiated the clone
+     * @function clone
+     * @param {String} parentStoryId - The ID of the original story
+     * @param {String} profileId - The ID of the user who initiated the clone
+    */
     const clone = flow(function* (parentStoryId, profileId) {
       self.cloningStory = true
       const { data: { cloneStory: { id } } } = yield client.mutate({
@@ -78,7 +106,12 @@ const StoryStore = types
       self.cloningStory = false
       self.setCurrentCloneId(id)
     })
-
+    /**
+     * Story store function used to attach the current
+     * ID of the cloned story
+     * @function setCurrentCloneId
+     * @param {String} cloneId - The ID of the new cloned story
+    */
     const setCurrentCloneId = (cloneId) => {
       self.currentCloneId = cloneId
     }
@@ -98,7 +131,6 @@ const StoryStore = types
       return self.stories.length
     },
     get getActiveStory() {
-      console.log('[storyStore] getActiveStory')
       return self.selectedStory
     },
     get nonClonedStories() {

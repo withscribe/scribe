@@ -59,6 +59,7 @@ class StoryPreview extends React.Component {
   render() {
     const { storyStore: { story, cloningStory } } = this.props
     const { showCloneModal } = this.state
+    console.log(story)
     return (
         <>
           {story && (
@@ -71,6 +72,9 @@ class StoryPreview extends React.Component {
               </Label>
               <Label>
                 {story.description}
+              </Label>
+              <Label>
+                {story.author ? story.author : "No Author Assigned."}
               </Label>
               <p>
                 {story.content}
