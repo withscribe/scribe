@@ -14,13 +14,16 @@ import { Button } from '_system/Button'
 class StoryPreview extends React.Component {
   state = {
     showCloneModal: false,
+    liked: false
   }
 
   componentDidMount() {
-    const { storyStore } = this.props
+    const { storyStore, userStore } = this.props
     const id = storyStore.selectedStory
     // find the story to display
     storyStore.getStory(id)
+    const hasLiked = storyStore.hasUserLiked(id, userStore.me.id)
+    this.setState({ liked: hasLiked })
   }
 
   closeModal = () => {
@@ -56,9 +59,16 @@ class StoryPreview extends React.Component {
     history.push(`/editor/${id}`)
   }
 
+  likeStory = (storyId, profileId) => {
+    const { storyStore } = this.props
+    storyStore.likeStory(storyId, profileId)
+    this.setState({ liked: true })
+
+  }
+
   render() {
-    const { storyStore: { story, cloningStory } } = this.props
-    const { showCloneModal } = this.state
+    const { storyStore: { story, cloningStory }, userStore, storyStore } = this.props
+    const { showCloneModal, liked } = this.state
     console.log(story)
     return (
         <>
@@ -82,6 +92,11 @@ class StoryPreview extends React.Component {
               {!cloningStory
                 ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
                 : <Button onClick={() => {}}>Cloning Story</Button>
+              }
+              {liked
+                ? <Button onClick={() => {}}>Liked!</Button>
+                : <Button onClick={() => this.likeStory(story.id, userStore.me.id)}>Like</Button>
+
               }
 
             </>

@@ -120,6 +120,7 @@ const StoryEditorStore = types
      * @param {number} profileId - The ProfileId of the user submitting the Story
      */
     const submitStory = flow(function* (profileId, author) {
+      console.log(profileId)
       self.saveInProgress = true
       const { title, description, content } = self
       const { data: { submitStory: { id } } } = yield client.mutate({

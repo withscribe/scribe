@@ -9,6 +9,9 @@ const StoryByIdQuery = gql`
             description
             content
             profileId
+            usersWhoLiked {
+                profileId
+            }
         }
     }
 

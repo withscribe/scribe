@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 
 import { Button } from '_system/Button'
+import Input, {
+  Label, InlineLabel, InlineInput, TextArea,
+} from '_system/Input'
 
 @inject('userStore', 'storyStore')
 @observer
@@ -47,6 +50,7 @@ class MyStories extends React.Component {
                       <Button onClick={() => this.editStory(story.id)}>
                           Edit
                       </Button>
+                      <Label>Likes: {story.likes}</Label> 
                     </>
                     : <>
                       <li>{story.title}</li>
@@ -56,9 +60,9 @@ class MyStories extends React.Component {
                       <Button onClick={() => this.editStory(story.id)}>
                           Edit
                       </Button>
+                      <Label>Likes: {story.likes ?story.likes : 0}</Label> 
                     </>
-                  }
-                  
+                  } 
                 </div>
               ))}
             </ul>

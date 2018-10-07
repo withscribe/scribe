@@ -3,7 +3,13 @@ import { types, flow } from 'mobx-state-tree'
 import { client } from 'Services/Client'
 import StoryByIdQuery from 'Queries/storyById'
 import cloneStoryMutation from 'Mutations/clone'
+import likeStoryMutation from 'Mutations/likeStory'
 import AllStories from 'Queries/allStories'
+
+const LikesModel = types
+  .model("LikesModel", {
+    profileId: types.maybeNull(types.string),
+  })
 
 const StoryModel = types
   .model('StoryModel', {
@@ -15,7 +21,8 @@ const StoryModel = types
     title: types.maybe(types.string),
     isCloned: types.maybe(types.boolean),
     author: types.maybeNull(types.string),
-    likes: types.maybeNull(types.integer)
+    likes: types.maybeNull(types.integer),
+    usersWhoLiked: types.optional(types.array(LikesModel), [])
   })
 
 const StoryStore = types
@@ -81,13 +88,13 @@ const StoryStore = types
     const setStory = (story) => {
       if (self.story == null) {
         self.story = StoryModel.create({
-          ...data,
+          ...story,
         })
         return
       }
 
       self.story = {
-        ...data,
+        ...story,
       }
     }
     /**
@@ -115,6 +122,34 @@ const StoryStore = types
     const setCurrentCloneId = (cloneId) => {
       self.currentCloneId = cloneId
     }
+    /**
+     * Story store function set likes to a specific story
+     * @function likeStory
+     * @param {String} storyId - The ID of the story to be liked
+     * @param {String} profileId - The ID of the user who liked the story
+    */
+   const likeStory = flow(function* (storyId, profileId) {
+      const { data: { likeStory } } = yield client.mutate({
+        mutation: likeStoryMutation,
+        variables: ({ storyId, profileId })
+      })
+   })
+  //   /**
+  //    * Story store function used set the user who liked the story
+  //    * to the list of users who have also
+  //    * @function setUserLike
+  //    * @param {String} profileId - The ID of the user who liked the story
+  //   */
+  //  const setUserLike = (profileId) => {
+  //    if(self.usersWhoLiked == null) {
+  //      self.usersWhoLiked = []
+  //    }
+
+  //    if(!self.usersWhoLiked.includes(profileId)) {
+  //      self.usersWhoLiked.push(profileId)
+  //    }
+  //    console.log(self.usersWhoLiked)
+  //  }
 
     return {
       setStories,
@@ -124,6 +159,7 @@ const StoryStore = types
       setStory,
       clone,
       setCurrentCloneId,
+      likeStory
     }
   })
   .views(self => ({
@@ -133,11 +169,21 @@ const StoryStore = types
     get getActiveStory() {
       return self.selectedStory
     },
-    get nonClonedStories() {
+    nonClonedStories() {
       return self.stories.filter(story => !story.parentStoryId)
     },
     usersStories(id) {
       return self.stories.filter(story => story.profileId == id)
+    },
+    hasUserLiked(storyId, profileId) {
+      const story = self.stories.filter(story => story.id == storyId)
+      let hasLiked = false
+      story[0].usersWhoLiked.map(item => {
+        if(item.profileId == profileId) {
+          hasLiked = true 
+        }
+      })
+      return hasLiked
     }
   }))
 

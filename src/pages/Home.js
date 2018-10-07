@@ -38,10 +38,11 @@ class Home extends React.Component {
             ? (
               <ul>
                 {
-                  storyStore.nonClonedStories.map(story => (
+                  storyStore.nonClonedStories().map(story => (
                     <div key={story.id}>
                       <li>{story.title}</li>
                       <Button primary onClick={() => this.setActiveStory(story.id)}>View</Button>
+                      <Label>Likes: {story.likes}</Label>
                     </div>
                   ))
                 }

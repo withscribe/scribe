@@ -10,6 +10,10 @@ const AllStories = gql`
       profileId
       parentStoryId
       isCloned
+      likes
+      usersWhoLiked {
+        profileId
+      }
     } 
   }
 `
