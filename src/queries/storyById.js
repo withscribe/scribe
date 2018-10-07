@@ -5,8 +5,13 @@ const StoryByIdQuery = gql`
         storyById(storyID: $storyId) {
             id
             title
+            author
             description
             content
+            profileId
+            usersWhoLiked {
+                profileId
+            }
         }
     }
 

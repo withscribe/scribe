@@ -28,7 +28,11 @@ class StoryEditor extends React.Component {
     const { storyEditorStore, userStore } = this.props
 
     if (storyEditorStore.isValid) {
-      storyEditorStore.submitStory(userStore.me.id)
+      console.log(`First Name: ${userStore.me.firstName}`)
+      console.log(`Last Name: ${userStore.me.lastName}`)
+      const author = userStore.me.firstName + " " + userStore.me.lastName
+      console.log(`Author: ${author}`)
+      storyEditorStore.submitStory(userStore.me.id, author)
         .then((res) => {
           console.log(`SubmitStory Response: ${res}`)
         }).catch((err) => {
