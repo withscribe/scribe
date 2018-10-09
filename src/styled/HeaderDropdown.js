@@ -23,7 +23,7 @@ const DropdownWrapper = styled.div`
 const DropdownMenu = styled.div`
   max-width: 274px;
   min-width: 274px;
-  top: 69px;
+  top: 60px;
   position: absolute;
   margin: 0;
   line-height: 1rem;

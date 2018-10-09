@@ -3,7 +3,7 @@ const black = '#0F131A'
 
 const greys = {
   g100: '#DCDCDC',
-  g200: '#ffffff1a',
+  g200: '#ffff1a',
   g300: '#333333',
   g400: '#282828',
   g500: '#151515',

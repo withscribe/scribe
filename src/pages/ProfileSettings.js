@@ -5,8 +5,9 @@ import { clone, getSnapshot, applySnapshot } from 'mobx-state-tree'
 import { Flex, Box } from 'grid-styled/emotion'
 
 import Input, { Label, LabelTip } from '_system/Input'
+import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
-import { ProfileSettingsHeader, ProfileWrapper } from 'Styled/ProfileSettings.js'
+import { ProfileWrapper } from 'Styled/ProfileSettings.js'
 
 @inject('userStore')
 @observer
@@ -42,7 +43,7 @@ class Choose extends React.Component {
       <>
         {dataclone && (
           <ProfileWrapper>
-            <ProfileSettingsHeader>Profile Settings</ProfileSettingsHeader>
+            <TitleText>Profile Settings</TitleText>
             <Flex>
               <Box width={0.7 / 2} pr="2em">
                 <Label>First Name <LabelTip>optional</LabelTip></Label>

@@ -1,4 +1,4 @@
-import { types, flow } from 'mobx-state-tree'
+import { types, flow, destroy, applySnapshot } from 'mobx-state-tree'
 
 import { client } from 'Services/Client'
 import StoryByIdQuery from 'Queries/storyById'
@@ -7,7 +7,7 @@ import likeStoryMutation from 'Mutations/likeStory'
 import AllStories from 'Queries/allStories'
 
 const LikesModel = types
-  .model("LikesModel", {
+  .model('LikesModel', {
     profileId: types.maybeNull(types.string),
   })
 
@@ -22,7 +22,7 @@ const StoryModel = types
     isCloned: types.maybe(types.boolean),
     author: types.maybeNull(types.string),
     likes: types.maybeNull(types.integer),
-    usersWhoLiked: types.optional(types.array(LikesModel), [])
+    usersWhoLiked: types.array(LikesModel),
   })
 
 const StoryStore = types
@@ -30,7 +30,7 @@ const StoryStore = types
     fetchingStory: types.optional(types.boolean, false),
     fetchingStories: types.optional(types.boolean, false),
     story: types.maybeNull(StoryModel),
-    stories: types.optional(types.array(StoryModel), []),
+    stories: types.array(StoryModel),
     selectedStory: types.optional(types.string, ''),
     cloningStory: types.optional(types.boolean, false),
     currentCloneId: types.maybe(types.string),
@@ -43,7 +43,8 @@ const StoryStore = types
      * @param {Array} StoryModel - The Array of StoryModels returned from getAllStories
     */
     const setStories = (stories) => {
-      self.stories = stories
+      applySnapshot(self.stories, stories)
+      // self.stories = stories
     }
     /**
      * Story store function used to alter the selected story
@@ -62,9 +63,10 @@ const StoryStore = types
       self.fetchingStories = true
       const { data: { allStories } } = yield client.query({
         query: AllStories,
+        fetchPolicy: 'network-only',
       })
-      self.setStories(allStories)
       self.fetchingStories = false
+      self.setStories(allStories)
     })
     /**
      * Story store function used to retrieve a specific story
@@ -76,6 +78,7 @@ const StoryStore = types
       const { data: { storyById } } = yield client.query({
         query: StoryByIdQuery,
         variables: ({ storyId }),
+        fetchPolicy: 'network-only',
       })
       self.setStory(storyById)
     })
@@ -128,28 +131,28 @@ const StoryStore = types
      * @param {String} storyId - The ID of the story to be liked
      * @param {String} profileId - The ID of the user who liked the story
     */
-   const likeStory = flow(function* (storyId, profileId) {
+    const likeStory = flow(function* (storyId, profileId) {
       const { data: { likeStory } } = yield client.mutate({
         mutation: likeStoryMutation,
-        variables: ({ storyId, profileId })
+        variables: ({ storyId, profileId }),
       })
-   })
-  //   /**
-  //    * Story store function used set the user who liked the story
-  //    * to the list of users who have also
-  //    * @function setUserLike
-  //    * @param {String} profileId - The ID of the user who liked the story
-  //   */
-  //  const setUserLike = (profileId) => {
-  //    if(self.usersWhoLiked == null) {
-  //      self.usersWhoLiked = []
-  //    }
+    })
+    //   /**
+    //    * Story store function used set the user who liked the story
+    //    * to the list of users who have also
+    //    * @function setUserLike
+    //    * @param {String} profileId - The ID of the user who liked the story
+    //   */
+    //  const setUserLike = (profileId) => {
+    //    if(self.usersWhoLiked == null) {
+    //      self.usersWhoLiked = []
+    //    }
 
-  //    if(!self.usersWhoLiked.includes(profileId)) {
-  //      self.usersWhoLiked.push(profileId)
-  //    }
-  //    console.log(self.usersWhoLiked)
-  //  }
+    //    if(!self.usersWhoLiked.includes(profileId)) {
+    //      self.usersWhoLiked.push(profileId)
+    //    }
+    //    console.log(self.usersWhoLiked)
+    //  }
 
     return {
       setStories,
@@ -159,32 +162,33 @@ const StoryStore = types
       setStory,
       clone,
       setCurrentCloneId,
-      likeStory
+      likeStory,
     }
   })
   .views(self => ({
-    get storyLength() {
-      return self.stories.length
-    },
     get getActiveStory() {
       return self.selectedStory
     },
-    nonClonedStories() {
+    get nonClonedStories() {
       return self.stories.filter(story => !story.parentStoryId)
     },
     usersStories(id) {
-      return self.stories.filter(story => story.profileId == id)
+      return self.stories.filter(story => story.profileId === id)
     },
-    hasUserLiked(storyId, profileId) {
-      const story = self.stories.filter(story => story.id == storyId)
-      let hasLiked = false
-      story[0].usersWhoLiked.map(item => {
-        if(item.profileId == profileId) {
-          hasLiked = true 
-        }
-      })
-      return hasLiked
-    }
+    // hasUserLiked(storyId, profileId) {
+    //   const filteredStories = self.stories.filter(story => story.id === storyId)
+    //   let hasLiked = false
+    //   console.log(self.stories)
+    //   console.log(filteredStories)
+    //   // we are assuming that filteredStories has the lenght of 1
+    //   // i dont think this will be necessary when we keep likes on the users object
+    //   filteredStories[0].usersWhoLiked.map((item) => {
+    //     if (item.profileId === profileId) {
+    //       hasLiked = true
+    //     }
+    //   })
+    //   return hasLiked
+    // },
   }))
 
 export default StoryStore

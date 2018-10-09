@@ -99,7 +99,7 @@ class HeaderDropdown extends React.Component {
             ? `${userStore.concatenatedName}`
             : 'Anonymous Moose'
           }
-          <DropdownArrow flipped={showMenu}/>
+          <DropdownArrow flipped={showMenu} />
         </DropdownWrapper>
         <Transition from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
           { showMenu && (styles => (
@@ -108,7 +108,7 @@ class HeaderDropdown extends React.Component {
                 <DropdownContext>
                   <span>
                     <ContextDetail>{me.email}</ContextDetail>
-                    <ContextDetail>{me.id}</ContextDetail>
+                    <ContextDetail>{me.userName}</ContextDetail>
                   </span>
                 </DropdownContext>
                 <DropdownLast>

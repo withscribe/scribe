@@ -15,12 +15,12 @@ const HeaderWrapper = styled.header`
 `
 
 const HeaderContainer = styled.nav`
-  width: 80em;
+  width: 70em;
 `
 
 const NavList = styled.ul`
   display: flex;
-  height: 69px;
+  height: 60px;
   align-items: center;
   list-style: none;
   margin: 0;
@@ -32,7 +32,7 @@ const NavItem = styled.li`
   display: inline-block;
   flex: 0 0 auto;
   position: relative;
-  margin-left: 2em;
+  margin-left: 1em;
   margin-right: ${props => props.spaceRight ? 'auto' : null};
 
   &:hover {
@@ -51,7 +51,7 @@ const NavLink = styled(Link)`
 `
 
 const HeaderBar = styled.div`
-  width: 80vw;
+  /* width: 80vw; */
   height: 1px;
   background: ${colors.white};
   position: absolute;

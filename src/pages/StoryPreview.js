@@ -14,16 +14,18 @@ import { Button } from '_system/Button'
 class StoryPreview extends React.Component {
   state = {
     showCloneModal: false,
-    liked: false
+    liked: false,
   }
 
   componentDidMount() {
     const { storyStore, userStore } = this.props
-    const id = storyStore.selectedStory
-    // find the story to display
-    storyStore.getStory(id)
-    const hasLiked = storyStore.hasUserLiked(id, userStore.me.id)
-    this.setState({ liked: hasLiked })
+    const storyId = this.props.match.params.id
+    storyStore.getStory(storyId)
+    /*
+      removed due to bug
+     */
+    // const hasLiked = storyStore.hasUserLiked(storyId, userStore.me.id)
+    // this.setState({ liked: hasLiked })
   }
 
   closeModal = () => {
@@ -63,11 +65,10 @@ class StoryPreview extends React.Component {
     const { storyStore } = this.props
     storyStore.likeStory(storyId, profileId)
     this.setState({ liked: true })
-
   }
 
   render() {
-    const { storyStore: { story, cloningStory }, userStore, storyStore } = this.props
+    const { storyStore: { story, cloningStory }, userStore } = this.props
     const { showCloneModal, liked } = this.state
     console.log(story)
     return (
@@ -78,13 +79,13 @@ class StoryPreview extends React.Component {
                 {story.title}
               </Label>
               <Label>
-                
+
               </Label>
               <Label>
                 {story.description}
               </Label>
               <Label>
-                {story.author ? story.author : "No Author Assigned."}
+                {story.author ? story.author : 'No Author Assigned.'}
               </Label>
               <p>
                 {story.content}

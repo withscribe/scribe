@@ -32,19 +32,25 @@ class Header extends React.Component {
               </Link>
             </NavItem>
             <NavItem>
-              <NavLink to="/start">
-                Discover
-              </NavLink>
+              <Link to="/home">
+                <ButtonInlay>
+                  Discover
+                </ButtonInlay>
+              </Link>
             </NavItem>
             <NavItem>
-              <NavLink to="/editor/create">
-                Create
-              </NavLink>
+              <Link to="/editor/create">
+                <ButtonInlay>
+                  Create
+                </ButtonInlay>
+              </Link>
             </NavItem>
             <NavItem spaceRight>
-              <NavLink to="/user/stories">
-                My Stories
-              </NavLink>
+              <Link to="/profile">
+                <ButtonInlay>
+                  Discover
+                </ButtonInlay>
+              </Link>
             </NavItem>
             <GhostWrapper isDoneRendering={pullingLoginData}>
               <GhostSmall />
