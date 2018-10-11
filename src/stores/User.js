@@ -43,6 +43,11 @@ const UserStore = types
      */
     const setMe = (data) => {
       const { profile } = data
+      errorStore.addError({
+        id: "" + Math.random(1) + "",
+        message: 'sent in setMe',
+        display: true,
+      })
       console.log(`[userStore] setMe was called ${data}`)
       if (self.me === null) {
         console.log(`[userStore] 'me' isn't created yet... creating`)

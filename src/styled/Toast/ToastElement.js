@@ -15,7 +15,7 @@ function getDefaultProps(width) {
   return {
     'aria-hidden': true,
     height: 16,
-    width,
+    width: `${width}`,
     viewBox: `0 0 ${width} 16`,
     style: {
       display: 'inline-block',
@@ -129,14 +129,68 @@ const Content = styled.div`
 
 const Countdown = styled.div`
   animation: ${shrink} 5000ms linear;
-  background-color: 'rgba(0, 0, 0, .1)';
+  background-color: rgba(0, 0, 0, .1);
   bottom: 0;
   height: 0;
   left: 0;
-  opacity: ${props => props.opacity ? 1 : 0};
+  position: absolute;
   width: 100%;
 `
+const Icon = ({ appearance }) => {
+  const meta = types[appearance]
+  const Glyph = meta.icon
+  return (
+    <div
+      css={{
+        borderTopLeftRadius: '4px',
+        borderBottomLeftRadius: '4px',
+        backgroundColor: meta.fg,
+        color: meta.bg,
+        flexShrink: 0,
+        paddingBottom: '8px',
+        paddingTop: '8px',
+        position: 'relative',
+        overflow: 'hidden',
+        textAlign: 'center',
+        width: 30,
+      }}>
+      <Countdown />
+      <Glyph css={{ position: 'relative', zIndex: 1 }} />
+    </div>
+  )
+}
 
+const ToastElement = styled('div')(
+  ({ appearance }) => ({
+    backgroundColor: types[appearance].bg,
+    borderRadius: '4px',
+    boxShadow: '0 3px 8px rgba(0, 0, 0, 0.175)',
+    color: types[appearance].text,
+    display: 'flex',
+    marginBottom: '8px',
+    width: '360px',
+  }),
+)
+
+export const DefaultToast = ({
+  appearance,
+  autoDismiss,
+  onDismiss,
+  children,
+  style,
+}) => (
+  <ToastElement
+    style={style}
+    appearance={appearance}>
+    <Icon
+      appearance={appearance}
+      autoDismiss={autoDismiss} />
+    <Content>{children}</Content>
+    <Button onClick={onDismiss} role="button">
+      <CloseIcon />
+    </Button>
+  </ToastElement>
+)
 
 export {
   Button,
