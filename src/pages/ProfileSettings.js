@@ -44,7 +44,7 @@ class Choose extends React.Component {
         {dataclone && (
           <ProfileWrapper>
             <TitleText>Profile Settings</TitleText>
-            <Flex>
+            <Flex width={1}>
               <Box width={0.7 / 2} pr="2em">
                 <Label>First Name <LabelTip>optional</LabelTip></Label>
                 <Input

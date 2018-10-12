@@ -125,18 +125,6 @@ const StoryStore = types
     const setCurrentCloneId = (cloneId) => {
       self.currentCloneId = cloneId
     }
-    /**
-     * Story store function set likes to a specific story
-     * @function likeStory
-     * @param {String} storyId - The ID of the story to be liked
-     * @param {String} profileId - The ID of the user who liked the story
-    */
-    const likeStory = flow(function* (storyId, profileId) {
-      const { data: { likeStory } } = yield client.mutate({
-        mutation: likeStoryMutation,
-        variables: ({ storyId, profileId }),
-      })
-    })
     //   /**
     //    * Story store function used set the user who liked the story
     //    * to the list of users who have also
@@ -162,7 +150,6 @@ const StoryStore = types
       setStory,
       clone,
       setCurrentCloneId,
-      likeStory,
     }
   })
   .views(self => ({
