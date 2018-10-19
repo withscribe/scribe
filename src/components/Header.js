@@ -48,7 +48,7 @@ class Header extends React.Component {
             <NavItem spaceRight>
               <Link to="/profile">
                 <ButtonInlay>
-                  Discover
+                  My Stories
                 </ButtonInlay>
               </Link>
             </NavItem>
