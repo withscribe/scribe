@@ -147,12 +147,12 @@ const StoryStore = types
      * @param {String} storyId - The ID of the story to be liked
      * @param {String} profileId - The ID of the user who liked the story
     */
-   const likeStory = flow(function* (storyId) {
+    const likeStory = flow(function* (storyId) {
       const { data: { likeStory } } = yield client.mutate({
         mutation: likeStoryMutation,
-        variables: ({ storyId })
+        variables: ({ storyId }),
       })
-   })
+    })
 
     return {
       setStories,
@@ -162,6 +162,7 @@ const StoryStore = types
       setStory,
       clone,
       setCurrentCloneId,
+      likeStory,
     }
   })
   .views(self => ({
@@ -174,23 +175,6 @@ const StoryStore = types
     usersStories(id) {
       return self.stories.filter(story => story.profileId === id)
     },
-<<<<<<< HEAD
-    // hasUserLiked(storyId, profileId) {
-    //   const filteredStories = self.stories.filter(story => story.id === storyId)
-    //   let hasLiked = false
-    //   console.log(self.stories)
-    //   console.log(filteredStories)
-    //   // we are assuming that filteredStories has the lenght of 1
-    //   // i dont think this will be necessary when we keep likes on the users object
-    //   filteredStories[0].usersWhoLiked.map((item) => {
-    //     if (item.profileId === profileId) {
-    //       hasLiked = true
-    //     }
-    //   })
-    //   return hasLiked
-    // },
-=======
->>>>>>> c254fd88dc51c0adf7af5d605e90d4439ab28a62
   }))
 
 export default StoryStore
