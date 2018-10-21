@@ -3,7 +3,7 @@ import { types, flow } from 'mobx-state-tree'
 import { client } from 'Services/Client'
 import StoryByIdQuery from 'Queries/storyById'
 import cloneStoryMutation from 'Mutations/clone'
-import likeStoryMutation from 'Mutations/likeStory'
+import likeStoryMutation from 'Mutations/like'
 import AllStories from 'Queries/allStories'
 
 const LikesModel = types
@@ -22,7 +22,6 @@ const StoryModel = types
     isCloned: types.maybe(types.boolean),
     author: types.maybeNull(types.string),
     likes: types.maybeNull(types.integer),
-    usersWhoLiked: types.optional(types.array(LikesModel), [])
   })
 
 const StoryStore = types
@@ -128,28 +127,12 @@ const StoryStore = types
      * @param {String} storyId - The ID of the story to be liked
      * @param {String} profileId - The ID of the user who liked the story
     */
-   const likeStory = flow(function* (storyId, profileId) {
+   const likeStory = flow(function* (storyId) {
       const { data: { likeStory } } = yield client.mutate({
         mutation: likeStoryMutation,
-        variables: ({ storyId, profileId })
+        variables: ({ storyId })
       })
    })
-  //   /**
-  //    * Story store function used set the user who liked the story
-  //    * to the list of users who have also
-  //    * @function setUserLike
-  //    * @param {String} profileId - The ID of the user who liked the story
-  //   */
-  //  const setUserLike = (profileId) => {
-  //    if(self.usersWhoLiked == null) {
-  //      self.usersWhoLiked = []
-  //    }
-
-  //    if(!self.usersWhoLiked.includes(profileId)) {
-  //      self.usersWhoLiked.push(profileId)
-  //    }
-  //    console.log(self.usersWhoLiked)
-  //  }
 
     return {
       setStories,
@@ -175,16 +158,6 @@ const StoryStore = types
     usersStories(id) {
       return self.stories.filter(story => story.profileId == id)
     },
-    hasUserLiked(storyId, profileId) {
-      const story = self.stories.filter(story => story.id == storyId)
-      let hasLiked = false
-      story[0].usersWhoLiked.map(item => {
-        if(item.profileId == profileId) {
-          hasLiked = true 
-        }
-      })
-      return hasLiked
-    }
   }))
 
 export default StoryStore

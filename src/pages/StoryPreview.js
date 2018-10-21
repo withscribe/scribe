@@ -22,8 +22,8 @@ class StoryPreview extends React.Component {
     const id = storyStore.selectedStory
     // find the story to display
     storyStore.getStory(id)
-    const hasLiked = storyStore.hasUserLiked(id, userStore.me.id)
-    this.setState({ liked: hasLiked })
+    //const hasLiked = storyStore.hasUserLiked(id, userStore.me.id)
+    //this.setState({ liked: hasLiked })
   }
 
   closeModal = () => {
@@ -59,11 +59,10 @@ class StoryPreview extends React.Component {
     history.push(`/editor/${id}`)
   }
 
-  likeStory = (storyId, profileId) => {
+  likeStory = (storyId) => {
     const { storyStore } = this.props
-    storyStore.likeStory(storyId, profileId)
+    storyStore.likeStory(storyId)
     this.setState({ liked: true })
-
   }
 
   render() {
@@ -95,7 +94,7 @@ class StoryPreview extends React.Component {
               }
               {liked
                 ? <Button onClick={() => {}}>Liked!</Button>
-                : <Button onClick={() => this.likeStory(story.id, userStore.me.id)}>Like</Button>
+                : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
 
               }
 
