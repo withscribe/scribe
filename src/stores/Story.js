@@ -3,7 +3,7 @@ import { types, flow, destroy, applySnapshot } from 'mobx-state-tree'
 import { client } from 'Services/Client'
 import StoryByIdQuery from 'Queries/storyById'
 import cloneStoryMutation from 'Mutations/clone'
-import likeStoryMutation from 'Mutations/likeStory'
+import likeStoryMutation from 'Mutations/like'
 import AllStories from 'Queries/allStories'
 
 const LikesModel = types
@@ -22,7 +22,6 @@ const StoryModel = types
     isCloned: types.maybe(types.boolean),
     author: types.maybeNull(types.string),
     likes: types.maybeNull(types.integer),
-    usersWhoLiked: types.array(LikesModel),
   })
 
 const StoryStore = types
@@ -142,6 +141,19 @@ const StoryStore = types
     //    console.log(self.usersWhoLiked)
     //  }
 
+    /**
+     * Story store function set likes to a specific story
+     * @function likeStory
+     * @param {String} storyId - The ID of the story to be liked
+     * @param {String} profileId - The ID of the user who liked the story
+    */
+   const likeStory = flow(function* (storyId) {
+      const { data: { likeStory } } = yield client.mutate({
+        mutation: likeStoryMutation,
+        variables: ({ storyId })
+      })
+   })
+
     return {
       setStories,
       setActiveStory,
@@ -162,6 +174,7 @@ const StoryStore = types
     usersStories(id) {
       return self.stories.filter(story => story.profileId === id)
     },
+<<<<<<< HEAD
     // hasUserLiked(storyId, profileId) {
     //   const filteredStories = self.stories.filter(story => story.id === storyId)
     //   let hasLiked = false
@@ -176,6 +189,8 @@ const StoryStore = types
     //   })
     //   return hasLiked
     // },
+=======
+>>>>>>> c254fd88dc51c0adf7af5d605e90d4439ab28a62
   }))
 
 export default StoryStore

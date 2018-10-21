@@ -12,6 +12,10 @@ const ProfileByIdQuery = gql`
         firstName
         lastName
         occupation
+        storiesLiked {
+          id
+          guid
+        }
       }
     }
   }
