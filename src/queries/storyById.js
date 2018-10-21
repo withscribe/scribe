@@ -6,12 +6,10 @@ const StoryByIdQuery = gql`
             id
             title
             author
+            isCloned
             description
             content
             profileId
-            usersWhoLiked {
-                profileId
-            }
         }
     }
 

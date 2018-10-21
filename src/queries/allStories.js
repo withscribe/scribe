@@ -11,9 +11,6 @@ const AllStories = gql`
       parentStoryId
       isCloned
       likes
-      usersWhoLiked {
-        profileId
-      }
     } 
   }
 `
