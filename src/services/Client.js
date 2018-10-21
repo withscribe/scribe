@@ -1,9 +1,11 @@
+import React from 'react'
 import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { onError } from 'apollo-link-error'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { Redirect } from 'react-router-dom'
 // import fetch from 'unfetch'
 
 const httpLink = new HttpLink({
@@ -16,6 +18,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
       console.log('[GraphQL error]', message)
+      if (message === 'jwt expired') {
+        localStorage.removeItem('token')
+        return <Redirect to="/" />
+      }
     })
     if (networkError) {
       console.log('[Network error]', networkError)

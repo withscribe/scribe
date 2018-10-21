@@ -44,7 +44,6 @@ const AuthStore = types
           mutation: loginMutation,
           variables: ({ email, password }),
         })
-        console.log(login)
         localStorage.setItem('token', login.token)
         self.inProgress = false
         return login
