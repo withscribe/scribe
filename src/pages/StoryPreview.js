@@ -19,11 +19,11 @@ class StoryPreview extends React.Component {
 
   componentDidMount() {
     const { storyStore, userStore } = this.props
-    const id = storyStore.selectedStory
-    // find the story to display
-    storyStore.getStory(id)
-    //const hasLiked = storyStore.hasUserLiked(id, userStore.me.id)
-    //this.setState({ liked: hasLiked })
+    const storyId = this.props.match.params.id
+    storyStore.getStory(storyId)
+    // check whether this story has been liked or not
+    const hasLiked = userStore.hasUserLiked(id)
+    this.setState({ liked: hasLiked })
   }
 
   closeModal = () => {
@@ -66,7 +66,7 @@ class StoryPreview extends React.Component {
   }
 
   render() {
-    const { storyStore: { story, cloningStory }, userStore, storyStore } = this.props
+    const { storyStore: { story, cloningStory } } = this.props
     const { showCloneModal, liked } = this.state
     console.log(story)
     return (

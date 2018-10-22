@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 const likeStoryMutation = gql`
-   mutation likeStory($storyId: ID!, $profileId: ID!) {
+   mutation likeStory($storyId: ID!) {
        like(storyId: $storyId) {
            id
            likes
