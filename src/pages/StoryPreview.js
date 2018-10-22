@@ -22,8 +22,9 @@ class StoryPreview extends React.Component {
     const id = storyStore.selectedStory
     // find the story to display
     storyStore.getStory(id)
-    //const hasLiked = storyStore.hasUserLiked(id, userStore.me.id)
-    //this.setState({ liked: hasLiked })
+    // check whether this story has been liked or no
+    const hasLiked = userStore.hasUserLiked(id)
+    this.setState({ liked: hasLiked })
   }
 
   closeModal = () => {
@@ -66,7 +67,7 @@ class StoryPreview extends React.Component {
   }
 
   render() {
-    const { storyStore: { story, cloningStory }, userStore, storyStore } = this.props
+    const { storyStore: { story, cloningStory } } = this.props
     const { showCloneModal, liked } = this.state
     console.log(story)
     return (

@@ -7,6 +7,12 @@ import ProfileByIdQuery from 'Queries/userProfileById'
 import UpdateProfileMutation from 'Mutations/updateProfile'
 import { errorStore } from 'Components/App'
 
+const LikesModel = types
+  .model('LikesModel', {
+    id: types.string,
+    guid: types.string
+  })
+
 const FieldsModel = types
   .model('FieldsModel', {
 
@@ -22,6 +28,7 @@ const UserModel = types
     userName: types.string,
     occupation: types.maybeNull(types.string),
     stories: types.optional(types.array(StoryModel), []),
+    storiesLiked: types.optional(types.array(LikesModel), [])
   })
 
 const UserStore = types
@@ -165,13 +172,13 @@ const UserStore = types
       return self.errors
     },
     hasUserLiked(storyId) {
-      // let hasLiked = false
-      // self[0].usersWhoLiked.map(item => {
-      //   if(item.profileId == profileId) {
-      //     hasLiked = true 
-      //   }
-      // })
-      // return hasLiked
+      let hasLiked = false
+      self.me.storiesLiked.map(item => {
+        if(item.guid == storyId+self.me.id) {
+          hasLiked = true 
+        }
+      })
+      return hasLiked
     }
   }))
 
