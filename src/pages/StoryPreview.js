@@ -20,9 +20,7 @@ class StoryPreview extends React.Component {
   componentDidMount() {
     const { storyStore, userStore } = this.props
     const id = storyStore.selectedStory
-    // find the story to display
-    storyStore.getStory(id)
-    // check whether this story has been liked or no
+    // check whether this story has been liked or not
     const hasLiked = userStore.hasUserLiked(id)
     this.setState({ liked: hasLiked })
   }
