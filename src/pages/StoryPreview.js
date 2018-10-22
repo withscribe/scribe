@@ -18,7 +18,9 @@ class StoryPreview extends React.Component {
   }
 
   componentDidMount() {
-    const { userStore } = this.props
+    const { storyStore, userStore } = this.props
+    const storyId = this.props.match.params.id
+    storyStore.getStory(storyId)
     // check whether this story has been liked or not
     const hasLiked = userStore.hasUserLiked(id)
     this.setState({ liked: hasLiked })
