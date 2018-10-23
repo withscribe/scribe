@@ -47,7 +47,7 @@ injectGlobal`
   body {
     font-family: Theinhardt;
     letter-spacing: auto;
-    line-height: 1.5em;
+    line-height: 1;
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
     font-smoothing: antialiased;

@@ -19,7 +19,7 @@ const StoryModel = types
     parentStoryId: types.maybeNull(types.string),
     profileId: types.maybeNull(types.string),
     title: types.maybe(types.string),
-    isCloned: types.maybe(types.boolean),
+    isCloned: types.maybeNull(types.boolean),
     author: types.maybeNull(types.string),
     likes: types.maybeNull(types.integer),
   })
@@ -170,7 +170,7 @@ const StoryStore = types
       return self.selectedStory
     },
     get nonClonedStories() {
-      return self.stories.filter(story => !story.parentStoryId)
+      return self.stories.filter(story => !story.isCloned)
     },
     usersStories(id) {
       return self.stories.filter(story => story.profileId === id)

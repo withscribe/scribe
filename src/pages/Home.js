@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import StoryCard from 'Components/StoryCard'
 import { HomeGrid } from '_system/Grid'
-import { Card } from '_system/Card'
+import { Card, CardImage } from '_system/Card'
 import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
@@ -37,23 +37,13 @@ class Home extends React.Component {
           {storyStore.stories && !storyStore.fetchingStories
             ? <>
               {storyStore.nonClonedStories.map((story) => {
-                // <StoryCard story={story} key={story.id} />
                 // ^^^ this makes mst bitch
                 // You are trying to read or write to an object that is no longer part of a state tree.
                 // Putting the contents of the function (instead of the function) seems to fix it....
                 // https://github.com/mobxjs/mobx-state-tree/issues/912
-                const wide = story.id.includes('q4')
+                const wide = story.id.includes('4e')
                 return (
-                  <Card wide={wide} key={story.id}>
-                    <span>{story.title}</span>
-                    <span>{story.id}</span>
-                    <h5>Likes: {story.likes}</h5>
-                    <Link to={`/story/preview/${story.id}`}>
-                      <ButtonPrimary>
-                        View
-                      </ButtonPrimary>
-                    </Link>
-                  </Card>
+                  <StoryCard story={story} key={story.id} />
                 )
               })}
             </>
