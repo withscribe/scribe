@@ -7,9 +7,12 @@ const AllStories = gql`
       title
       description
       content
-      profileId
+      author
+      authorId
+      nonAuthorId
       parentStoryId
       isCloned
+      isForked
       likes
     } 
   }

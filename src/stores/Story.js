@@ -6,22 +6,20 @@ import cloneStoryMutation from 'Mutations/clone'
 import likeStoryMutation from 'Mutations/like'
 import AllStories from 'Queries/allStories'
 
-const LikesModel = types
-  .model('LikesModel', {
-    profileId: types.maybeNull(types.string),
-  })
-
 const StoryModel = types
   .model('StoryModel', {
     content: types.maybe(types.string),
     description: types.maybe(types.string),
     id: types.maybeNull(types.string),
     parentStoryId: types.maybeNull(types.string),
-    profileId: types.maybeNull(types.string),
+    authorId: types.string,
+    nonAuthorId: types.maybeNull(types.string),
     title: types.maybe(types.string),
-    isCloned: types.maybeNull(types.boolean),
+    isCloned: types.boolean,
+    isForked: types.boolean,
     author: types.maybeNull(types.string),
     likes: types.maybeNull(types.integer),
+    contributionPending: types.maybeNull(types.boolean)
   })
 
 const StoryStore = types
@@ -104,13 +102,13 @@ const StoryStore = types
      * and attaching it to the user who initiated the clone
      * @function clone
      * @param {String} parentStoryId - The ID of the original story
-     * @param {String} profileId - The ID of the user who initiated the clone
+     * @param {String} nonAuthorId - The ID of the user who initiated the clone
     */
-    const clone = flow(function* (parentStoryId, profileId) {
+    const clone = flow(function* (parentStoryId, nonAuthorId) {
       self.cloningStory = true
       const { data: { cloneStory: { id } } } = yield client.mutate({
         mutation: cloneStoryMutation,
-        variables: ({ parentStoryId, profileId }),
+        variables: ({ parentStoryId, nonAuthorId }),
       })
       self.cloningStory = false
       self.setCurrentCloneId(id)
@@ -145,7 +143,6 @@ const StoryStore = types
      * Story store function set likes to a specific story
      * @function likeStory
      * @param {String} storyId - The ID of the story to be liked
-     * @param {String} profileId - The ID of the user who liked the story
     */
     const likeStory = flow(function* (storyId) {
       const { data: { likeStory } } = yield client.mutate({
@@ -173,7 +170,7 @@ const StoryStore = types
       return self.stories.filter(story => !story.isCloned)
     },
     usersStories(id) {
-      return self.stories.filter(story => story.profileId === id)
+      return self.stories.filter(story => story.authorId === id || story.nonAuthorId == id)
     },
   }))
 

@@ -28,6 +28,8 @@ class StoryEditor extends React.Component {
     const { storyEditorStore, userStore } = this.props
 
     if (storyEditorStore.isValid) {
+      // TODO: remove console logs and use username as author if
+      // firstname and lastname == null
       console.log(`First Name: ${userStore.me.firstName}`)
       console.log(`Last Name: ${userStore.me.lastName}`)
       const author = userStore.me.firstName + " " + userStore.me.lastName
