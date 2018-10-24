@@ -1,4 +1,4 @@
-import { types, flow } from 'mobx-state-tree'
+import { types, flow, destroy, applySnapshot } from 'mobx-state-tree'
 
 import { client } from 'Services/Client'
 import StoryByIdQuery from 'Queries/storyById'
@@ -7,7 +7,7 @@ import likeStoryMutation from 'Mutations/like'
 import AllStories from 'Queries/allStories'
 
 const LikesModel = types
-  .model("LikesModel", {
+  .model('LikesModel', {
     profileId: types.maybeNull(types.string),
   })
 
@@ -19,7 +19,7 @@ const StoryModel = types
     parentStoryId: types.maybeNull(types.string),
     profileId: types.maybeNull(types.string),
     title: types.maybe(types.string),
-    isCloned: types.maybe(types.boolean),
+    isCloned: types.maybeNull(types.boolean),
     author: types.maybeNull(types.string),
     likes: types.maybeNull(types.integer),
   })
@@ -29,7 +29,7 @@ const StoryStore = types
     fetchingStory: types.optional(types.boolean, false),
     fetchingStories: types.optional(types.boolean, false),
     story: types.maybeNull(StoryModel),
-    stories: types.optional(types.array(StoryModel), []),
+    stories: types.array(StoryModel),
     selectedStory: types.optional(types.string, ''),
     cloningStory: types.optional(types.boolean, false),
     currentCloneId: types.maybe(types.string),
@@ -42,7 +42,8 @@ const StoryStore = types
      * @param {Array} StoryModel - The Array of StoryModels returned from getAllStories
     */
     const setStories = (stories) => {
-      self.stories = stories
+      applySnapshot(self.stories, stories)
+      // self.stories = stories
     }
     /**
      * Story store function used to alter the selected story
@@ -61,9 +62,10 @@ const StoryStore = types
       self.fetchingStories = true
       const { data: { allStories } } = yield client.query({
         query: AllStories,
+        fetchPolicy: 'network-only',
       })
-      self.setStories(allStories)
       self.fetchingStories = false
+      self.setStories(allStories)
     })
     /**
      * Story store function used to retrieve a specific story
@@ -75,6 +77,7 @@ const StoryStore = types
       const { data: { storyById } } = yield client.query({
         query: StoryByIdQuery,
         variables: ({ storyId }),
+        fetchPolicy: 'network-only',
       })
       self.setStory(storyById)
     })
@@ -121,18 +124,35 @@ const StoryStore = types
     const setCurrentCloneId = (cloneId) => {
       self.currentCloneId = cloneId
     }
+    //   /**
+    //    * Story store function used set the user who liked the story
+    //    * to the list of users who have also
+    //    * @function setUserLike
+    //    * @param {String} profileId - The ID of the user who liked the story
+    //   */
+    //  const setUserLike = (profileId) => {
+    //    if(self.usersWhoLiked == null) {
+    //      self.usersWhoLiked = []
+    //    }
+
+    //    if(!self.usersWhoLiked.includes(profileId)) {
+    //      self.usersWhoLiked.push(profileId)
+    //    }
+    //    console.log(self.usersWhoLiked)
+    //  }
+
     /**
      * Story store function set likes to a specific story
      * @function likeStory
      * @param {String} storyId - The ID of the story to be liked
      * @param {String} profileId - The ID of the user who liked the story
     */
-   const likeStory = flow(function* (storyId) {
+    const likeStory = flow(function* (storyId) {
       const { data: { likeStory } } = yield client.mutate({
         mutation: likeStoryMutation,
-        variables: ({ storyId })
+        variables: ({ storyId }),
       })
-   })
+    })
 
     return {
       setStories,
@@ -142,21 +162,18 @@ const StoryStore = types
       setStory,
       clone,
       setCurrentCloneId,
-      likeStory
+      likeStory,
     }
   })
   .views(self => ({
-    get storyLength() {
-      return self.stories.length
-    },
     get getActiveStory() {
       return self.selectedStory
     },
-    nonClonedStories() {
-      return self.stories.filter(story => !story.parentStoryId)
+    get nonClonedStories() {
+      return self.stories.filter(story => !story.isCloned)
     },
     usersStories(id) {
-      return self.stories.filter(story => story.profileId == id)
+      return self.stories.filter(story => story.profileId === id)
     },
   }))
 

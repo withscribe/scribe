@@ -5,7 +5,7 @@ import { Flex } from 'grid-styled/emotion'
 const Container = styled.div`
   width: 100%;
   display: flex;
-  max-width: 80em;
+  max-width: 70em;
   flex-direction: column;
 `
 

@@ -1,5 +1,5 @@
 import styled from 'react-emotion'
-import { Flex, Box } from 'grid-styled/emotion'
+import { Flex } from 'grid-styled/emotion'
 
 
 const ProfileSettingsHeader = styled.h1`
@@ -10,9 +10,9 @@ const ProfileSettingsHeader = styled.h1`
 const ProfileWrapper = styled(Flex)`
   margin: auto;
   justify-content: center;
-  /* align-items: center; */
+  align-items: flex-start;
   flex-direction: column;
-  width: 80vw;
+  width: 100%;
 `
 
 

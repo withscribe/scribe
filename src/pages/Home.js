@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import Input, {
-  Label, InlineLabel, InlineInput, TextArea,
-} from '_system/Input'
-import { Button } from '_system/Button'
+import StoryCard from 'Components/StoryCard'
+import { HomeGrid } from '_system/Grid'
+import { Card, CardImage } from '_system/Card'
+import { TitleText } from '_system/Typography'
+import { ButtonPrimary } from '_system/Button'
+import { GhostWrapper, GhostSmall } from '_system/Ghost'
 
 @inject('storyStore')
 @observer
@@ -18,40 +20,37 @@ class Home extends React.Component {
     storyStore.getAllStories()
   }
 
-  setActiveStory = (storyId) => {
-    const { storyStore } = this.props
-    console.log(storyId)
-    storyStore.setActiveStory(storyId)
-    this.props.history.push(`/story/preview/${storyId}`)
-  }
-
   render() {
     const { storyStore } = this.props
-    console.log(storyStore.nonClonedStories)
     return (
-        <>
-          {storyStore.fetchingStories
-            ? <span>Stories Loading</span>
-            : <span>Stories Loaded</span>
-          }
-          {storyStore.stories.length > 0
-            ? (
-              <ul>
-                {
-                  storyStore.nonClonedStories().map(story => (
-                    <div key={story.id}>
-                      <li>{story.title}</li>
-                      <Button primary onClick={() => this.setActiveStory(story.id)}>View</Button>
-                      <Label>Likes: {story.likes}</Label>
-                    </div>
-                  ))
-                }
-              </ul>
-            )
+      <>
+        <TitleText>Discover</TitleText>
+        <GhostWrapper isDoneRendering={storyStore.fetchingStories}>
+          <HomeGrid>
+            <GhostSmall style={{ backgroundColor: '#efefef' }} />
+            <GhostSmall style={{ backgroundColor: '#efefef' }} />
+            <GhostSmall style={{ backgroundColor: '#efefef' }} />
+            <GhostSmall style={{ backgroundColor: '#efefef' }} />
+          </HomeGrid>
+        </GhostWrapper>
+        <HomeGrid>
+          {storyStore.stories && !storyStore.fetchingStories
+            ? <>
+              {storyStore.nonClonedStories.map((story) => {
+                // ^^^ this makes mst bitch
+                // You are trying to read or write to an object that is no longer part of a state tree.
+                // Putting the contents of the function (instead of the function) seems to fix it....
+                // https://github.com/mobxjs/mobx-state-tree/issues/912
+                const wide = story.id.includes('4e')
+                return (
+                  <StoryCard story={story} key={story.id} />
+                )
+              })}
+            </>
             : <span>nothing to see here</span>
           }
-
-        </>
+        </HomeGrid>
+      </>
     )
   }
 }

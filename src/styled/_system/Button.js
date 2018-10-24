@@ -14,7 +14,7 @@ const baseStyles = css`
   background-color: ${colors.g300};
   border: 0;
   outline: 0;
-  color: #FFF;
+  color: ${colors.white};
   border-radius: 4px;
   ${typography.text.small};
   padding: 0 1em;
@@ -22,7 +22,6 @@ const baseStyles = css`
   display: inline-block;
   text-decoration: none;
   transition: all 200ms ease-in-out;
-  max-width: 220px;
   text-align: center;
 
   &:active {

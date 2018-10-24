@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'mobx-react'
+import { setLivelynessChecking } from 'mobx-state-tree'
 import makeInspectable from 'mobx-devtools-mst'
 import { injectGlobal } from 'react-emotion'
 import decode from 'jwt-decode'
@@ -46,7 +47,7 @@ injectGlobal`
   body {
     font-family: Theinhardt;
     letter-spacing: auto;
-    line-height: 1.5em;
+    line-height: 1;
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
     font-smoothing: antialiased;
@@ -72,6 +73,8 @@ const authStore = AuthStore.create()
 const storyEditorStore = StoreEditorStore.create()
 const storyStore = StoryStore.create()
 const errorStore = ErrorStore.create()
+
+setLivelynessChecking('error')
 /*
  * Let the stores be accessable to the browser plugin
  */
@@ -117,9 +120,9 @@ const App = () => (
             <PrivateRoute exact path="/editor/create" redirectTo="/login" component={StoryEditor} />
             <PrivateRoute exact path="/editor/:id" redirectTo="/login" component={StoryEditor} />
             <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
-            <PrivateRoute exact path="/profile" redirectTo="/login" component={ProfileSettings} />
+            <PrivateRoute exact path="/profile" redirectTo="/login" component={MyStories} />
             <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={ProfileSettings} />
-            <PrivateRoute exact path="/user/stories" redirectTo="/login" component={MyStories} />
+            {/* <PrivateRoute exact path="/user/stories" redirectTo="/login" component={MyStories} /> */}
           </Switch>
           </Container>
         </Wrapper>

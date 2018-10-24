@@ -14,7 +14,7 @@ import { Button } from '_system/Button'
 class StoryPreview extends React.Component {
   state = {
     showCloneModal: false,
-    liked: false
+    liked: false,
   }
 
   componentDidMount() {
@@ -22,7 +22,7 @@ class StoryPreview extends React.Component {
     const storyId = this.props.match.params.id
     storyStore.getStory(storyId)
     // check whether this story has been liked or not
-    const hasLiked = userStore.hasUserLiked(id)
+    const hasLiked = userStore.hasUserLiked(storyId)
     this.setState({ liked: hasLiked })
   }
 
@@ -77,13 +77,13 @@ class StoryPreview extends React.Component {
                 {story.title}
               </Label>
               <Label>
-                
+
               </Label>
               <Label>
                 {story.description}
               </Label>
               <Label>
-                {story.author ? story.author : "No Author Assigned."}
+                {story.author ? story.author : 'No Author Assigned.'}
               </Label>
               <p>
                 {story.content}
