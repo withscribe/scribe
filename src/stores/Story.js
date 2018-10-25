@@ -4,6 +4,7 @@ import { client } from 'Services/Client'
 import StoryByIdQuery from 'Queries/storyById'
 import cloneStoryMutation from 'Mutations/clone'
 import likeStoryMutation from 'Mutations/like'
+import forkStoryMutation from 'Mutations/fork'
 import AllStories from 'Queries/allStories'
 
 const StoryModel = types
@@ -122,23 +123,6 @@ const StoryStore = types
     const setCurrentCloneId = (cloneId) => {
       self.currentCloneId = cloneId
     }
-    //   /**
-    //    * Story store function used set the user who liked the story
-    //    * to the list of users who have also
-    //    * @function setUserLike
-    //    * @param {String} profileId - The ID of the user who liked the story
-    //   */
-    //  const setUserLike = (profileId) => {
-    //    if(self.usersWhoLiked == null) {
-    //      self.usersWhoLiked = []
-    //    }
-
-    //    if(!self.usersWhoLiked.includes(profileId)) {
-    //      self.usersWhoLiked.push(profileId)
-    //    }
-    //    console.log(self.usersWhoLiked)
-    //  }
-
     /**
      * Story store function set likes to a specific story
      * @function likeStory
@@ -150,6 +134,18 @@ const StoryStore = types
         variables: ({ storyId }),
       })
     })
+    /**
+     * Story store function that forks the requested story
+     * @function forkStory
+     * @param {String} parentStoryId - The ID of the story to be forked
+     * @param {String} nonAuthorId - The ID of the user profile that requested the fork
+    */
+   const forkStory = flow(function* (parentStoryId, nonAuthorId) {
+    const { data: { forkStory } } = yield client.mutate({
+      mutation: forkStoryMutation,
+      variables: ({ parentStoryId, nonAuthorId }),
+    })
+  })
 
     return {
       setStories,
@@ -160,6 +156,7 @@ const StoryStore = types
       clone,
       setCurrentCloneId,
       likeStory,
+      forkStory
     }
   })
   .views(self => ({
@@ -170,7 +167,7 @@ const StoryStore = types
       return self.stories.filter(story => !story.isCloned)
     },
     usersStories(id) {
-      return self.stories.filter(story => story.authorId === id || story.nonAuthorId == id)
+      return self.stories.filter(story => story.authorId === id)
     },
   }))
 

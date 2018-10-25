@@ -28,11 +28,11 @@ class StoryEditor extends React.Component {
     const { storyEditorStore, userStore } = this.props
 
     if (storyEditorStore.isValid) {
-      // TODO: remove console logs and use username as author if
-      // firstname and lastname == null
-      console.log(`First Name: ${userStore.me.firstName}`)
-      console.log(`Last Name: ${userStore.me.lastName}`)
-      const author = userStore.me.firstName + " " + userStore.me.lastName
+      const author = this.getAuthorName(
+        userStore.me.firstName,
+        userStore.me.lastName, 
+        userStore.me.userName
+      )
       console.log(`Author: ${author}`)
       storyEditorStore.submitStory(userStore.me.id, author)
         .then((res) => {
@@ -41,6 +41,13 @@ class StoryEditor extends React.Component {
           console.log(`SubmitStory Error: ${err}`)
         })
     }
+  }
+
+  getAuthorName = (firstName, lastName, userName) => {
+    if(firstName != null && lastName != null)
+      return firstName + " " + lastName
+    else
+      return userName
   }
 
   handleUpdateClick = () => {

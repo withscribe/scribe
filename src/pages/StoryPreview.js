@@ -8,6 +8,7 @@ import Input, {
   Label, InlineLabel, InlineInput, TextArea,
 } from '_system/Input'
 import { Button } from '_system/Button'
+import Typography, { TitleText, StoryText } from '_system/Typography'
 
 @inject('storyStore', 'userStore')
 @observer
@@ -15,6 +16,7 @@ class StoryPreview extends React.Component {
   state = {
     showCloneModal: false,
     liked: false,
+    forked: false
   }
 
   componentDidMount() {
@@ -23,7 +25,9 @@ class StoryPreview extends React.Component {
     storyStore.getStory(storyId)
     // check whether this story has been liked or not
     const hasLiked = userStore.hasUserLiked(storyId)
-    this.setState({ liked: hasLiked })
+    //const hasBeenForked = storyStore.isForked(storyId)
+    this.setState({ liked: hasLiked})
+    //this.setState({ liked: hasLiked, forked: hasBeenForked })
   }
 
   closeModal = () => {
@@ -65,29 +69,29 @@ class StoryPreview extends React.Component {
     this.setState({ liked: true })
   }
 
+  forkStory = (parentStoryId) => {
+    const { storyStore, userStore } = this.props
+    storyStore.forkStory(parentStoryId, userStore.me.id)
+    this.setState({ forked: true})
+  }
+
   render() {
     const { storyStore: { story, cloningStory } } = this.props
-    const { showCloneModal, liked } = this.state
+    const { showCloneModal, liked, forked } = this.state
     console.log(story)
     return (
         <>
           {story && (
             <>
-              <Label>
+              <TitleText>
                 {story.title}
-              </Label>
+              </TitleText>
               <Label>
-
+                By: {story.author ? story.author : 'No Author Assigned.'}
               </Label>
-              <Label>
-                {story.description}
-              </Label>
-              <Label>
-                {story.author ? story.author : 'No Author Assigned.'}
-              </Label>
-              <p>
+              <StoryText>
                 {story.content}
-              </p>
+              </StoryText>
               {!cloningStory
                 ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
                 : <Button onClick={() => {}}>Cloning Story</Button>
@@ -95,9 +99,11 @@ class StoryPreview extends React.Component {
               {liked
                 ? <Button onClick={() => {}}>Liked!</Button>
                 : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
-
               }
-
+              {forked
+                ? <Button onClick={() => {}}>Contributed!</Button>
+                : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
+              }
             </>
           )}
 
