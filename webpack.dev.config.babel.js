@@ -33,7 +33,7 @@ export default {
     }),
     new HtmlWebpackPlugin({
       // inject: false,
-      title: 'webpack4 Boiler',
+      title: 'Scribe.',
       // favicon: path.join(__dirname, 'src', 'assets', 'img', 'favicon.ico'),
       template: path.join(__dirname, 'src', 'index.ejs'),
       minify: {
