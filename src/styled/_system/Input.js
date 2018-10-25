@@ -24,6 +24,7 @@ const inputBaseStyles = css`
   border-radius: 4px;
   /* box-shadow: rgba(8, 35, 51, 0.05) 0px 3px 6px; */
   padding: 0.90rem 0.75rem;
+  margin-bottom: 2em;
   transition: border-color 200ms ease-in-out;
   width: 100%;
   font-size: ${typography.text.small};
@@ -75,12 +76,16 @@ const Input = styled('input')`
 
 const Label = styled.label`
   label: form-label;
-  /* margin-bottom: 0.25em; */
+  margin-bottom: 0.25em;
   display: block
 `
 
 const LabelTip = styled('sup')`
   color: #7D7D7D;
+`
+
+const LabelConstraint = styled('sup')`
+  color: ${colors.r100};
 `
 
 const InlineLabel = styled.label`
@@ -106,7 +111,7 @@ const TextArea = styled.textarea`
   display: block;
   padding: 0 0.5em;
   margin: 1em 0 0 1em;
-  width: 90vw;
+  /* width: 90vw; */
   height: 100%;
   border: 0;
   font-size: 1rem;
@@ -118,5 +123,5 @@ const TextArea = styled.textarea`
 export default Input
 
 export {
-  Label, LabelTip, InlineLabel, InlineInput, TextArea,
+  Label, LabelTip, LabelConstraint, InlineLabel, InlineInput, TextArea,
 }

@@ -62,6 +62,9 @@ export const typography = {
     },
   },
   text: {
+    xsmall: {
+      fontSize: '0.75rem',
+    },
     small: {
       fontSize: '1rem',
     },

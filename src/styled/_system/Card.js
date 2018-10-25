@@ -1,5 +1,8 @@
 import styled, { css } from 'react-emotion'
-import { gradients, transitions, colors } from '_system/Theme'
+
+import {
+  gradients, transitions, colors, typography,
+} from '_system/Theme'
 
 const randomColor = () => {
   let keys = Object.keys(gradients)
@@ -10,7 +13,6 @@ const randomColor = () => {
 
 const baseStyles = css`
   display: flex;
-  align-items: flex-start;
   flex-direction: column;
   border-radius: 6px;
   grid-column-start: auto;
@@ -47,11 +49,49 @@ const CardImage = styled('div')`
   flex-direction: column;
   height: 10em;
   width: 100%;
-  align-items: flex-start;
+  justify-content:  space-between;
   background-color: #efefef;
+  align-items: flex-start;
+`
+
+const CardBadgeWrapper = styled('div')`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding: 0 1em;
+  margin: 1em 0;
+`
+
+const CardLikeWrapper = styled('div')`
+  display: inline-flex;
+  background-color: ${colors.white};
+  border-radius: 4px;
+  justify-content: center;
+  align-items: initial;
+  padding: 0.25em;
+  margin: 1em;
+  cursor: pointer;
+  transition: ${transitions.default};
+  border: 1px solid ${colors.white};
+
+  &:hover {
+    border: 1px solid ${colors.g100};
+  }
+`
+
+const CardLikeAction = styled('div')`
+  display: inline;
+  ${typography.text.xsmall};
+`
+const CardLikeText = styled('span')`
+  ${typography.text.small};
 `
 
 export {
   Card,
   CardImage,
+  CardBadgeWrapper,
+  CardLikeWrapper,
+  CardLikeAction,
+  CardLikeText,
 }

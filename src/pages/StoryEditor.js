@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
+import { Box } from 'grid-styled/emotion'
 
 import Input, {
-  Label, InlineLabel, InlineInput, TextArea,
+  Label,  LabelConstraint, TextArea,
 } from '_system/Input'
+import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
+import { EditorWrapper } from 'Styled/Editor'
 
 @inject('storyEditorStore', 'userStore')
 @observer
@@ -30,8 +33,8 @@ class StoryEditor extends React.Component {
     if (storyEditorStore.isValid) {
       const author = this.getAuthorName(
         userStore.me.firstName,
-        userStore.me.lastName, 
-        userStore.me.userName
+        userStore.me.lastName,
+        userStore.me.userName,
       )
       console.log(`Author: ${author}`)
       storyEditorStore.submitStory(userStore.me.id, author)
@@ -44,10 +47,10 @@ class StoryEditor extends React.Component {
   }
 
   getAuthorName = (firstName, lastName, userName) => {
-    if(firstName != null && lastName != null)
+    if (firstName != null && lastName != null) {
       return firstName + " " + lastName
-    else
-      return userName
+    }
+    return userName
   }
 
   handleUpdateClick = () => {
@@ -66,35 +69,23 @@ class StoryEditor extends React.Component {
   render() {
     const { storyEditorStore } = this.props
     return (
-      <>
+      <EditorWrapper>
+        <TitleText>Create a new Story</TitleText>
         <Label>Story Title</Label>
-        <Input
-          type="text"
-          value={storyEditorStore.title}
-          onChange={e => storyEditorStore.changeTitle(e.target.value)}
-          style={{ width: '90%' }} />
-        <Label>Story Description</Label>
-        <Input
-          type="text"
-          value={storyEditorStore.description}
-          onChange={e => storyEditorStore.changeDesc(e.target.value)} />
-        <Label>Story Audience</Label>
-        <InlineLabel>Min Age</InlineLabel>
-        <Input
-          type="number"
-          min="1"
-          max={storyEditorStore.maxAge}
-          step="1"
-          value={storyEditorStore.minAge}
-          onChange={e => storyEditorStore.changeMinAge(e.target.value)} />
-        <InlineLabel>Max Age</InlineLabel>
-        <Input
-          type="number"
-          min={storyEditorStore.minAge}
-          max="100"
-          step="1"
-          value={storyEditorStore.maxAge}
-          onChange={e => storyEditorStore.changeMaxAge(e.target.value)} />
+        <Box width={1 / 2}>
+          <Input
+            type="text"
+            value={storyEditorStore.title}
+            onChange={e => storyEditorStore.changeTitle(e.target.value)} />
+        </Box>
+        <Label>Story Description <LabelConstraint>Max 140 characters</LabelConstraint></Label>
+        <Box width={ 3 / 4}>
+          <Input
+            type="text"
+            maxlength="140"
+            value={storyEditorStore.description}
+            onChange={e => storyEditorStore.changeDesc(e.target.value)} />
+        </Box>
         <Label>Content</Label>
         <TextArea
           value={storyEditorStore.content}
@@ -107,7 +98,7 @@ class StoryEditor extends React.Component {
           ? <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
           : <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
         }
-      </>
+      </EditorWrapper>
     )
   }
 }

@@ -112,7 +112,7 @@ class HeaderDropdown extends React.Component {
                   </span>
                 </DropdownContext>
                 <DropdownLast>
-                  <Link to="/contributions">
+                  <Link to="/profile/contributions">
                     <DropdownItem>
                       Contributions
                     </DropdownItem>
