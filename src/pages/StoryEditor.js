@@ -9,6 +9,7 @@ import Input, {
 import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
 import { EditorWrapper } from 'Styled/Editor'
+import TextEditor from 'Components/Editor/TextEditor'
 
 @inject('storyEditorStore', 'userStore')
 @observer
@@ -82,14 +83,15 @@ class StoryEditor extends React.Component {
         <Box width={ 3 / 4}>
           <Input
             type="text"
-            maxlength="140"
+            maxLength="140"
             value={storyEditorStore.description}
             onChange={e => storyEditorStore.changeDesc(e.target.value)} />
         </Box>
         <Label>Content</Label>
-        <TextArea
-          value={storyEditorStore.content}
-          onChange={e => storyEditorStore.changeContent(e.target.value)} />
+        {/* <TextArea */}
+        {/*   value={storyEditorStore.content} */}
+        {/*   onChange={e => storyEditorStore.changeContent(e.target.value)} /> */}
+        <TextEditor />
 
         {storyEditorStore.saveInProgress
           && <ButtonPrimary type="button" onClick={(e) => { e.preventDefault() }}>Saving</ButtonPrimary>

@@ -68,6 +68,13 @@ injectGlobal`
     text-decoration: none;
     color: #333;
   }
+  .editor {
+    width: 100%;
+    background-color: #efefef;
+    min-height: 30vh;
+    border-radius: 4px;
+    padding: 1em;
+  }
 `
 
 const userStore = UserStore.create()

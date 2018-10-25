@@ -64,7 +64,8 @@ const CardBadgeWrapper = styled('div')`
 
 const CardLikeWrapper = styled('div')`
   display: inline-flex;
-  background-color: ${colors.white};
+  /* background-color: ${colors.g100}; */
+  background-color: rgba(0, 0, 0, .04);
   border-radius: 4px;
   justify-content: center;
   align-items: initial;
@@ -72,10 +73,9 @@ const CardLikeWrapper = styled('div')`
   margin: 1em;
   cursor: pointer;
   transition: ${transitions.default};
-  border: 1px solid ${colors.white};
 
   &:hover {
-    border: 1px solid ${colors.g100};
+    background-color: ${colors.white};
   }
 `
 
@@ -83,6 +83,7 @@ const CardLikeAction = styled('div')`
   display: inline;
   ${typography.text.xsmall};
 `
+
 const CardLikeText = styled('span')`
   ${typography.text.small};
 `
