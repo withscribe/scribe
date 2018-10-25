@@ -11,6 +11,22 @@ const randomColor = () => {
   return style
 }
 
+const gradOneStyle = css`
+  ${gradients[1]};
+`
+
+const gradTwoStyle = css`
+  ${gradients[2]};
+`
+
+const gradThreeStyle = css`
+  ${gradients[3]};
+`
+
+const gradFourStyle = css`
+  ${gradients[4]};
+`
+
 const baseStyles = css`
   display: flex;
   flex-direction: column;
@@ -52,6 +68,11 @@ const CardImage = styled('div')`
   justify-content:  space-between;
   background-color: #efefef;
   align-items: flex-start;
+
+  ${p => p.grad == 1 ? `${gradOneStyle}` : null};
+  ${p => p.grad == 2 ? `${gradTwoStyle}` : null};
+  ${p => p.grad == 3 ? `${gradThreeStyle}` : null};
+  ${p => p.grad == 4 ? `${gradFourStyle}` : null};
 `
 
 const CardBadgeWrapper = styled('div')`

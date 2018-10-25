@@ -7,10 +7,10 @@ import {
 import { CardTitle, CardDesc } from '_system/Typography'
 import Badge from '_system/Badge'
 
-const StoryCard = ({ story, wide }) => (
+const StoryCard = ({ story, wide, grad }) => (
   <Card wide={wide} key={story.id}>
     <Link to={`/story/preview/${story.id}`}>
-      <CardImage>
+      <CardImage grad={grad}>
         <CardBadgeWrapper>
           <Badge>New</Badge>
         </CardBadgeWrapper>

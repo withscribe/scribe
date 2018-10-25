@@ -42,8 +42,10 @@ class Home extends React.Component {
                 // Putting the contents of the function (instead of the function) seems to fix it....
                 // https://github.com/mobxjs/mobx-state-tree/issues/912
                 const wide = story.id.includes('4e')
+                const num = Math.floor(Math.random() * (5 - 1) + 1)
+                console.log(num)
                 return (
-                  <StoryCard story={story} key={story.id} />
+                  <StoryCard story={story} grad={num} key={story.id} />
                 )
               })}
             </>
