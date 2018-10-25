@@ -101,8 +101,8 @@ class HeaderDropdown extends React.Component {
           }
           <DropdownArrow flipped={showMenu} />
         </DropdownWrapper>
-        <Transition from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
-          { showMenu && (styles => (
+        <Transition items={showMenu} from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
+          {show => show && (styles => (
             <DropdownMenu style={styles}>
               <DropdownItems>
                 <DropdownContext>

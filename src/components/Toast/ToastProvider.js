@@ -19,19 +19,20 @@ class ToastProvider extends React.Component {
         {errors && (
           <ToastContainer>
             <Transition
-              keys={errorStore.errorList.map(e => e.id)}
+              items={errorStore.errorList}
+              keys={error => error.id}
               from={{ opacity: 0 }}
               enter={{ opacity: 1 }}
               leave={{ opacity: 0, pointerEvents: 'none' }}>
-              {errorStore.errorList.map(error => styles => (
+              {toast => props => (
                 <DefaultToast
-                  style={styles}
+                  style={props}
                   autoDismiss
                   appearance="success"
-                  onDismiss={() => errorStore.removeError(error.id)}>
-                  {error.message}
+                  onDismiss={() => errorStore.removeError(toast.id)}>
+                  {toast.message}
                 </DefaultToast>
-              ))}
+              )}
             </Transition>
           </ToastContainer>
         )}
