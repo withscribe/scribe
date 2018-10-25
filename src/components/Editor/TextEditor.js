@@ -1,28 +1,9 @@
 import React from 'react'
 import { Editor } from 'slate-react'
-import { Value } from 'slate'
+import Plain from 'slate-plain-serializer'
 import isKeyHotkey from 'is-hotkey'
 
-const initialValue = Value.fromJSON({
-  document: {
-    nodes: [
-      {
-        object: 'block',
-        type: 'paragraph',
-        nodes: [
-          {
-            object: 'text',
-            leaves: [
-              {
-                text: '',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-})
+const initialValue = Plain.deserialize('')
 
 const isBoldHotkey = isKeyHotkey('mod+b')
 const isItalicHotkey = isKeyHotkey('mod+i')
@@ -39,6 +20,7 @@ class TextEditor extends React.Component {
   }
 
   onChange = ({ value }) => {
+    this.props.get(Plain.serialize(this.state.value))
     this.setState({ value })
   }
 

@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react'
 import { Box } from 'grid-styled/emotion'
 
 import Input, {
-  Label,  LabelConstraint, TextArea,
+  Label, LabelConstraint,
 } from '_system/Input'
 import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
@@ -54,6 +54,13 @@ class StoryEditor extends React.Component {
     return userName
   }
 
+  getSerializedStoryContent = (som) => {
+    const { storyEditorStore, userStore } = this.props
+    console.log(som)
+    storyEditorStore.changeContent(som)
+    // return som
+  }
+
   handleUpdateClick = () => {
     const { storyEditorStore } = this.props
 
@@ -80,7 +87,7 @@ class StoryEditor extends React.Component {
             onChange={e => storyEditorStore.changeTitle(e.target.value)} />
         </Box>
         <Label>Story Description <LabelConstraint>Max 140 characters</LabelConstraint></Label>
-        <Box width={ 3 / 4}>
+        <Box width={3 / 4}>
           <Input
             type="text"
             maxLength="140"
@@ -91,7 +98,7 @@ class StoryEditor extends React.Component {
         {/* <TextArea */}
         {/*   value={storyEditorStore.content} */}
         {/*   onChange={e => storyEditorStore.changeContent(e.target.value)} /> */}
-        <TextEditor />
+        <TextEditor get={this.getSerializedStoryContent} />
 
         {storyEditorStore.saveInProgress
           && <ButtonPrimary type="button" onClick={(e) => { e.preventDefault() }}>Saving</ButtonPrimary>
