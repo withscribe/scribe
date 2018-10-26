@@ -25,7 +25,8 @@ class StoryPreview extends React.Component {
     storyStore.getStory(storyId)
     // check whether this story has been liked or not
     const hasLiked = userStore.hasUserLiked(storyId)
-    this.setState({ liked: hasLiked})
+    const hasForked = storyStore.isForked
+    this.setState({ liked: hasLiked, forked: hasForked })
   }
 
   closeModal = () => {
@@ -79,7 +80,8 @@ class StoryPreview extends React.Component {
     console.log(story)
     return (
         <>
-          {story && (
+          {story && (!storyStore.isAuthor(userStore.me.id)
+            ?
             <>
               <TitleText>
                 {story.title}
@@ -90,24 +92,30 @@ class StoryPreview extends React.Component {
               <StoryText>
                 {story.content}
               </StoryText>
-              {!storyStore.isAuthor(userStore.me.id)
-              ?
-                ((!cloningStory
+              {!cloningStory
                   ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
                   : <Button onClick={() => {}}>Cloning Story</Button>
-                ),
-                (liked
+              }
+              {liked
                   ? <Button onClick={() => {}}>Liked!</Button>
                   : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
-                ),
-                (storyStore.isForked()
-                  ? <Button onClick={() => {}}>Contributed!</Button>
-                  : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
-                ))
-                :
-                <>
-                </>
               }
+              {forked
+                ? <Button onClick={() => {}}>Contributed!</Button>
+                : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
+              }
+            </>
+            :
+            <>
+              <TitleText>
+                {story.title}
+              </TitleText>
+              <Label>
+                By: {story.author ? story.author : 'No Author Assigned.'}
+              </Label>
+              <StoryText>
+                {story.content}
+              </StoryText>
             </>
           )}
 

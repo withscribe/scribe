@@ -21,6 +21,7 @@ class StoryEditor extends React.Component {
 
     if (id !== 'create') {
       storyEditorStore.loadStory(id)
+      console.log(storyEditorStore.isForked)
     }
 
     if (!storyEditorStore.isValid()) {
@@ -112,11 +113,18 @@ class StoryEditor extends React.Component {
         {/*   onChange={e => storyEditorStore.changeContent(e.target.value)} /> */}
         <TextEditor get={this.getSerializedStoryContent} />
         {/* 
+          ******************** PLEASE READ, EVAN, NEEDS FIXING ****************************
+          ********************   BLESS US WITH YOUR WISDOM!    ****************************
           So below is for is the story is forked you should only be able to update/send contribution
           if it's a clone or original render the submit, update buttons
         */}
-        {storyEditorStore.isForked
+        {storyEditorStore.isForked && storyEditorStore.storyId !== ''
           ?
+          <>
+            <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
+            <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
+          </>
+          :
           ((storyEditorStore.saveInProgress
             && <ButtonPrimary type="button" onClick={(e) => { e.preventDefault() }}>Saving</ButtonPrimary>
           ),
@@ -124,12 +132,6 @@ class StoryEditor extends React.Component {
             ? <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
             : <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
           ))
-          :
-          <>
-            <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
-            <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
-          </>
-          
         }
       </EditorWrapper>
     )
