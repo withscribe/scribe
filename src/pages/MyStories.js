@@ -52,6 +52,16 @@ class MyStories extends React.Component {
                       </Button>
                       <Label>Likes: {story.likes}</Label> 
                     </>
+                    : story.isForked ? <>
+                      <li>{story.title}<small><b>Fork</b></small></li>
+                      <Button onClick={() => this.previewStory(story.id)}>
+                          View
+                      </Button>
+                      <Button onClick={() => this.editStory(story.id)}>
+                          Edit
+                      </Button>
+                      <Label>Likes: {story.likes ?story.likes : 0}</Label> 
+                    </>
                     : <>
                       <li>{story.title}</li>
                       <Button onClick={() => this.previewStory(story.id)}>

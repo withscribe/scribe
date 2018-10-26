@@ -164,11 +164,23 @@ const StoryStore = types
       return self.selectedStory
     },
     get nonClonedStories() {
-      return self.stories.filter(story => !story.isCloned)
+      return self.stories.filter(story => !story.isCloned && !story.isForked)
     },
     usersStories(id) {
-      return self.stories.filter(story => story.authorId === id)
+      return self.stories.filter(story => story.authorId === id || story.nonAuthorId === id)
     },
+    isForked() {
+      if(self.story.isForked) {
+        return true
+      }
+      return false
+    },
+    isAuthor(profileId) {
+      if(self.story.authorId == profileId) {
+        return true
+      }
+      return false
+    }
   }))
 
 export default StoryStore

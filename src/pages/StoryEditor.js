@@ -37,7 +37,6 @@ class StoryEditor extends React.Component {
         userStore.me.lastName,
         userStore.me.userName,
       )
-      console.log(`Author: ${author}`)
       storyEditorStore.submitStory(userStore.me.id, author)
         .then((res) => {
           console.log(`SubmitStory Response: ${res}`)
@@ -74,6 +73,19 @@ class StoryEditor extends React.Component {
     }
   }
 
+  sendContributionRequest = () => {
+    const { storyEditorStore } = this.props
+
+    if (storyEditorStore.isValid) {
+      storyEditorStore.sendContribution(storyEditorStore.storyId)
+        .then((res) => {
+          console.log(`UpdateStory Response: ${res}`)
+        }).catch((err) => {
+          console.log(`UpdateStory Error: ${err}`)
+        })
+    }
+  }
+
   render() {
     const { storyEditorStore } = this.props
     return (
@@ -99,13 +111,25 @@ class StoryEditor extends React.Component {
         {/*   value={storyEditorStore.content} */}
         {/*   onChange={e => storyEditorStore.changeContent(e.target.value)} /> */}
         <TextEditor get={this.getSerializedStoryContent} />
-
-        {storyEditorStore.saveInProgress
-          && <ButtonPrimary type="button" onClick={(e) => { e.preventDefault() }}>Saving</ButtonPrimary>
-        }
-        {!storyEditorStore.saveInProgress && storyEditorStore.storyId === ''
-          ? <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
-          : <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
+        {/* 
+          So below is for is the story is forked you should only be able to update/send contribution
+          if it's a clone or original render the submit, update buttons
+        */}
+        {storyEditorStore.isForked
+          ?
+          ((storyEditorStore.saveInProgress
+            && <ButtonPrimary type="button" onClick={(e) => { e.preventDefault() }}>Saving</ButtonPrimary>
+          ),
+          (!storyEditorStore.saveInProgress && storyEditorStore.storyId === ''
+            ? <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
+            : <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
+          ))
+          :
+          <>
+            <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
+            <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
+          </>
+          
         }
       </EditorWrapper>
     )

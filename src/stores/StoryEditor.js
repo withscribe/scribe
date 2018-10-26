@@ -3,6 +3,7 @@ import { types, flow } from 'mobx-state-tree'
 import { client } from 'Services/Client'
 import submitStoryMutation from 'Mutations/submitStory'
 import updateStoryMutation from 'Mutations/updateStory'
+import contributeRequestMutation from 'Mutations/contributeRequest'
 import StoryByIdQuery from 'Queries/storyById'
 
 const StoryEditorStore = types
@@ -12,6 +13,8 @@ const StoryEditorStore = types
     title: types.maybe(types.string),
     description: types.maybe(types.string),
     content: types.maybe(types.string),
+    isForked: types.optional(types.boolean, false),
+    isCloned: types.optional(types.boolean, false),
     minAge: types.maybe(types.integer),
     maxAge: types.maybe(types.integer),
   })
@@ -95,6 +98,7 @@ const StoryEditorStore = types
         query: StoryByIdQuery,
         variables: ({ storyId }),
       })
+      console.log(storyById)
       self.setData(storyById)
     })
 
@@ -106,12 +110,14 @@ const StoryEditorStore = types
      */
     const setData = (data) => {
       const {
-        id, title, description, content,
+        id, title, description, content, isForked, isCloned
       } = data
       self.storyId = id
       self.title = title
       self.description = description
       self.content = content
+      self.isForked = isForked
+      self.isCloned = isCloned
     }
 
     /**
@@ -153,6 +159,20 @@ const StoryEditorStore = types
       self.saveInProgress = false
     })
 
+    const sendContribution = flow(function* () {
+      const {
+        storyId
+      } = self
+      const { data: { contributeRequest: { id } } } = yield client.mutate({
+        mutation: contributeRequestMutation,
+        variables: ({
+         storyId
+        }),
+      })
+
+      console.log(`[storyEditorStore] contributeRequest: (resulting id) ${id}`)
+    })
+
     return {
       changeStoryId,
       changeTitle,
@@ -165,6 +185,7 @@ const StoryEditorStore = types
       updateStory,
       loadStory,
       setData,
+      sendContribution
     }
   })
   .views((self) => {

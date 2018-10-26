@@ -25,9 +25,7 @@ class StoryPreview extends React.Component {
     storyStore.getStory(storyId)
     // check whether this story has been liked or not
     const hasLiked = userStore.hasUserLiked(storyId)
-    //const hasBeenForked = storyStore.isForked(storyId)
     this.setState({ liked: hasLiked})
-    //this.setState({ liked: hasLiked, forked: hasBeenForked })
   }
 
   closeModal = () => {
@@ -76,7 +74,7 @@ class StoryPreview extends React.Component {
   }
 
   render() {
-    const { storyStore: { story, cloningStory } } = this.props
+    const { storyStore: { story, cloningStory }, storyStore, userStore } = this.props
     const { showCloneModal, liked, forked } = this.state
     console.log(story)
     return (
@@ -92,17 +90,23 @@ class StoryPreview extends React.Component {
               <StoryText>
                 {story.content}
               </StoryText>
-              {!cloningStory
-                ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
-                : <Button onClick={() => {}}>Cloning Story</Button>
-              }
-              {liked
-                ? <Button onClick={() => {}}>Liked!</Button>
-                : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
-              }
-              {forked
-                ? <Button onClick={() => {}}>Contributed!</Button>
-                : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
+              {!storyStore.isAuthor(userStore.me.id)
+              ?
+                ((!cloningStory
+                  ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
+                  : <Button onClick={() => {}}>Cloning Story</Button>
+                ),
+                (liked
+                  ? <Button onClick={() => {}}>Liked!</Button>
+                  : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
+                ),
+                (storyStore.isForked()
+                  ? <Button onClick={() => {}}>Contributed!</Button>
+                  : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
+                ))
+                :
+                <>
+                </>
               }
             </>
           )}

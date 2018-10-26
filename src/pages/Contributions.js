@@ -11,18 +11,18 @@ class Contributions extends React.Component {
   state = {}
 
   componentDidMount() {
-    
-    
+    const { contributionsStore, userStore } = this.props
+    contributionsStore.getContributionRequests(userStore.me.id)
   }
 
   render() {
-    const { contributionsStore } = this.props
+    const { contributionsStore, userStore } = this.props
     return (
       <>
         <Label>Your Contribution Requests</Label>
         {contributionsStore.contributions.length > 0 ? (
             <ul>
-              {contributionsStore.getContributionRequests(userStore.me.id).map(contribution => (
+              {contributionsStore.contributions.map(contribution => (
                 <div key={contribution.id}>
                   {contribution.content}
                 </div>

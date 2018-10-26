@@ -27,7 +27,6 @@ const ContributionsStore = types
     */
     const setContributions = (contributions) => {
       applySnapshot(self.contributions, contributions)
-      // self.stories = stories
     }
     /**
      * Contributions store function that gets all of the authors story's 
@@ -35,17 +34,20 @@ const ContributionsStore = types
      * @function getContributionReequests
      * @param {String} authorId - The ID of the user profile who wrote the original story
     */
-    const getContributionRequests = flow(function* (authorId) {
+    const getContributionRequests = flow(function* (authorProfileId) {
       const { data: { getContributionsById } } = yield client.query({
           query: ContributionsByIdQuery,
-          variables: ({ authorId }),
+          variables: ({ authorProfileId }),
       })
       self.setContributions(getContributionsById)
+      console.log("Contributions")
+      console.log(self.contributions)
     })
     
 
     return {
-        getContributionRequests
+        getContributionRequests,
+        setContributions
     }
   })
   .views(self => ({
