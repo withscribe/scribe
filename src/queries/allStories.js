@@ -14,6 +14,10 @@ const AllStories = gql`
       isCloned
       isForked
       likes
+      usersWhoLiked {
+          id
+          guid
+      }
     } 
   }
 `

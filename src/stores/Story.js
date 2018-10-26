@@ -7,6 +7,12 @@ import likeStoryMutation from 'Mutations/like'
 import forkStoryMutation from 'Mutations/fork'
 import AllStories from 'Queries/allStories'
 
+const LikesModel = types
+  .model('LikesModel', {
+    id: types.string,
+    guid: types.string
+  })
+
 const StoryModel = types
   .model('StoryModel', {
     content: types.maybe(types.string),
@@ -20,7 +26,8 @@ const StoryModel = types
     isForked: types.boolean,
     author: types.maybeNull(types.string),
     likes: types.maybeNull(types.integer),
-    contributionPending: types.maybeNull(types.boolean)
+    contributionPending: types.maybeNull(types.boolean),
+    usersWhoLiked: types.optional(types.array(LikesModel), [])
   })
 
 const StoryStore = types
@@ -79,6 +86,7 @@ const StoryStore = types
         fetchPolicy: 'network-only',
       })
       self.setStory(storyById)
+      console.log(self.story.usersWhoLiked)
     })
     /**
      * Story store function used to attach a single requested
@@ -180,6 +188,18 @@ const StoryStore = types
         return true
       }
       return false
+    },
+    hasUserLiked(profileId) {
+      let hasLiked = false
+      console.log(self.story.id)
+      // self.story.usersWhoLiked.map(item => {
+      //   if(item.guid == self.story.id+profileId) {
+      //     hasLiked = true 
+      //   }
+      // })
+      
+
+      return hasLiked
     }
   }))
 

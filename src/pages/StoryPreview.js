@@ -9,6 +9,7 @@ import Input, {
 } from '_system/Input'
 import { Button } from '_system/Button'
 import Typography, { TitleText, StoryText } from '_system/Typography'
+import { storeKeyNameFromField } from 'apollo-utilities';
 
 @inject('storyStore', 'userStore')
 @observer
@@ -24,9 +25,14 @@ class StoryPreview extends React.Component {
     const storyId = this.props.match.params.id
     storyStore.getStory(storyId)
     // check whether this story has been liked or not
-    const hasLiked = userStore.hasUserLiked(storyId)
+    // story.usersWhoLiked.map(like => {
+    //   if(like.guid == storyId+userStore.me.id) {
+    //     this.setState({ liked: true })
+    //   }
+    // })
+
     const hasForked = storyStore.isForked
-    this.setState({ liked: hasLiked, forked: hasForked })
+    this.setState({ forked: hasForked })
   }
 
   closeModal = () => {
@@ -80,7 +86,7 @@ class StoryPreview extends React.Component {
     console.log(story)
     return (
         <>
-          {story && (!storyStore.isAuthor(userStore.me.id)
+          {story && (!storyStore.isAuthor(userStore.me.id) || !forked
             ?
             <>
               <TitleText>

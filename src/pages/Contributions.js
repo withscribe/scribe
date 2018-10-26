@@ -1,6 +1,7 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 
+import { Button } from '_system/Button'
 import Input, {
     Label
 } from '_system/Input'
@@ -25,6 +26,7 @@ class Contributions extends React.Component {
               {contributionsStore.contributions.map(contribution => (
                 <div key={contribution.id}>
                   {contribution.content}
+                  
                 </div>
               ))}
             </ul>

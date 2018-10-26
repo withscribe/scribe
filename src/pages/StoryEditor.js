@@ -112,12 +112,6 @@ class StoryEditor extends React.Component {
         {/*   value={storyEditorStore.content} */}
         {/*   onChange={e => storyEditorStore.changeContent(e.target.value)} /> */}
         <TextEditor get={this.getSerializedStoryContent} />
-        {/* 
-          ******************** PLEASE READ, EVAN, NEEDS FIXING ****************************
-          ********************   BLESS US WITH YOUR WISDOM!    ****************************
-          So below is for is the story is forked you should only be able to update/send contribution
-          if it's a clone or original render the submit, update buttons
-        */}
         {storyEditorStore.isForked && storyEditorStore.storyId !== ''
           ?
           <>

@@ -196,15 +196,6 @@ const UserStore = types
     get geterrors() {
       return self.errors
     },
-    hasUserLiked(storyId) {
-      let hasLiked = false
-      self.me.storiesLiked.map(item => {
-        if(item.guid == storyId+self.me.id) {
-          hasLiked = true 
-        }
-      })
-      return hasLiked
-    }
   }))
 
 export default UserStore

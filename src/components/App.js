@@ -22,6 +22,7 @@ import Home from 'Pages/Home'
 import StoryPreview from 'Pages/StoryPreview'
 import MyStories from 'Pages/MyStories'
 import Contributions from 'Pages/Contributions'
+import DiffReview from 'Pages/DiffReview'
 /* Import Stores Start */
 import UserStore from 'Stores/User'
 import AuthStore from 'Stores/Auth'
@@ -135,6 +136,7 @@ const App = () => (
                 <PrivateRoute exact path="/profile" redirectTo="/login" component={MyStories} />
                 <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={ProfileSettings} />
                 <PrivateRoute exact path="/profile/contributions" redirectTo="/login" component={Contributions} />
+                <PrivateRoute exact path="/profile/contributions/diff/:id" redirectTo="/login" component={DiffReview} />
                 {/* <PrivateRoute exact path="/user/stories" redirectTo="/login" component={MyStories} /> */}
               </Switch>
             </Container>
