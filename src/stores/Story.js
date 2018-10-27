@@ -188,18 +188,6 @@ const StoryStore = types
       }
       return false
     },
-    hasUserLiked(profileId) {
-      let hasLiked = false
-      console.log(self.story.id)
-      // self.story.usersWhoLiked.map(item => {
-      //   if(item.guid == self.story.id+profileId) {
-      //     hasLiked = true
-      //   }
-      // })
-
-
-      return hasLiked
-    },
   }))
 
 export default StoryStore

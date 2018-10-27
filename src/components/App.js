@@ -76,6 +76,20 @@ injectGlobal`
     border-radius: 4px;
     padding: 1em;
   }
+
+  .Difference {
+    font-family: monospace;
+  }
+  
+  .Difference > del {
+    background-color: rgb(255, 224, 224);
+    text-decoration: none;
+  }
+  
+  .Difference > ins {
+    background-color: rgb(201, 238, 211);
+    text-decoration: none;
+  }
 `
 
 const userStore = UserStore.create()

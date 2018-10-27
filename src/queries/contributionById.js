@@ -1,10 +1,11 @@
 import gql from 'graphql-tag'
 
-const ContributeRequestMutation = gql`
-    mutation contributeRequest($storyId: ID!) {
-        contributeRequest(storyId: $storyId) {
+const ContributionByIdQuery = gql`
+    query getContributionById($id: ID!) {
+        getContributionById(id: $id) {
             id
             forkId
+            originalStoryId
             contributorProfileId
             authorProfileId
             originalContent
@@ -12,6 +13,7 @@ const ContributeRequestMutation = gql`
             comment
         }
     }
+
 `
 
-export default ContributeRequestMutation
+export default ContributionByIdQuery
