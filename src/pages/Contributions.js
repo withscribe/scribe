@@ -16,8 +16,12 @@ class Contributions extends React.Component {
     contributionsStore.getContributionRequests(userStore.me.id)
   }
 
+  reviewContribution = (contributionId) => {
+    this.props.history.push(`/profile/contributions/diff/${contributionId}`)
+  }
+
   render() {
-    const { contributionsStore, userStore } = this.props
+    const { contributionsStore } = this.props
     return (
       <>
         <Label>Your Contribution Requests</Label>
@@ -25,8 +29,8 @@ class Contributions extends React.Component {
             <ul>
               {contributionsStore.contributions.map(contribution => (
                 <div key={contribution.id}>
-                  {contribution.content}
-                  
+                  {contribution.id}
+                  <Button onClick={() => {this.reviewContribution(contribution.id)}}>Review</Button>
                 </div>
               ))}
             </ul>

@@ -106,7 +106,7 @@ class StoryPreview extends React.Component {
                   ? <Button onClick={() => {}}>Liked!</Button>
                   : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
               }
-              {forked
+              {!forked
                 ? <Button onClick={() => {}}>Contributed!</Button>
                 : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
               }

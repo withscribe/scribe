@@ -1,15 +1,20 @@
 import { types, flow, destroy, applySnapshot } from 'mobx-state-tree'
 
-import ContributionsByIdQuery from 'Queries/getContributionsById'
+import ContributionsByIdQuery from 'Queries/contributionsById'
+import ContributionByIdQuery from 'Queries/contributionById'
+import ApproveChangesMutation from 'Mutations/approveChanges'
+import RejectChangesMutation from 'Mutations/rejectChanges'
 import { client } from 'Services/Client'
 
 const ContributionsModel = types
   .model('ContributionsModel', {
     id: types.string,
     forkId: types.string,
+    originalStoryId: types.string,
     contributorProfileId: types.string,
     authorProfileId: types.string,
-    content: types.string,
+    originalContent: types.string,
+    contributionContent: types.string,
     comment: types.maybeNull(types.string)
   })
 
@@ -26,12 +31,21 @@ const ContributionsStore = types
      * @param {Array} ContributionsModel - The Array of ContributionModels returned from getContributionsById
     */
     const setContributions = (contributions) => {
-      applySnapshot(self.contributions, contributions)
+      self.contributions = contributions
+    }
+    /**
+     * Contributions store function used to attach model of
+     * contribution to the store
+     * @function setContributions
+     * @param ContributionsModel - The ContributionModels returned from getContributionById
+    */
+    const setContribution = (contribution) => {
+      self.contribution = contribution
     }
     /**
      * Contributions store function that gets all of the authors story's 
      * contribution requests
-     * @function getContributionReequests
+     * @function getContributionRequests
      * @param {String} authorId - The ID of the user profile who wrote the original story
     */
     const getContributionRequests = flow(function* (authorProfileId) {
@@ -40,14 +54,40 @@ const ContributionsStore = types
           variables: ({ authorProfileId }),
       })
       self.setContributions(getContributionsById)
-      console.log("Contributions")
-      console.log(self.contributions)
     })
-    
+    /**
+     * Contributions store function that gets the contribution by the given id
+     * @function getContribution
+     * @param {String} id - The ID of the contribution object
+    */
+    const getContribution = flow(function* (id) {
+      const { data: { getContributionById } } = yield client.query({
+        query: ContributionByIdQuery,
+        variables: ({ id }),
+      })
+      self.setContribution(getContributionById)
+    })
 
+    const approveContribution = flow(function* (contributionId) {
+      const { data: { approveChanges } } = yield client.mutate({
+        mutation: ApproveChangesMutation,
+        variables: ({ contributionId }),
+      })
+    })
+
+    const rejectContribution = flow(function* (contributionId) {
+      const { data: { rejectChanges } } = yield client.mutate({
+        mutation: RejectChangesMutation,
+        variables: ({ contributionId }),
+      })
+    })
     return {
         getContributionRequests,
-        setContributions
+        setContributions,
+        getContribution,
+        setContribution,
+        approveContribution,
+        rejectContribution
     }
   })
   .views(self => ({

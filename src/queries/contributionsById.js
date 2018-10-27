@@ -5,9 +5,11 @@ const ContributionsByIdQuery = gql`
         getContributionsById(authorProfileId: $authorProfileId) {
             id
             forkId
+            originalStoryId
             contributorProfileId
             authorProfileId
-            content
+            originalContent
+            contributionContent
             comment
         }
     }
