@@ -1,21 +1,23 @@
-import { types, flow, destroy } from 'mobx-state-tree'
-
-import StoryModel from './Story'
+import { types, flow, destroy, getSnapshot, applySnapshot } from 'mobx-state-tree'
 
 import { client } from 'Services/Client'
 import ProfileByIdQuery from 'Queries/userProfileById'
 import UpdateProfileMutation from 'Mutations/updateProfile'
 import { errorStore } from 'Components/App'
 
+const StoryModel = types
+  .model('StoryModel', {
+    id: types.string,
+    title: types.string,
+    description: types.string,
+    isForked: types.optional(types.boolean, false),
+    isCloned: types.optional(types.boolean, false),
+  })
+
 const LikesModel = types
   .model('LikesModel', {
     id: types.string,
-    guid: types.string
-  })
-
-const FieldsModel = types
-  .model('FieldsModel', {
-
+    guid: types.string,
   })
 
 const UserModel = types
@@ -27,8 +29,9 @@ const UserModel = types
     lastName: types.maybeNull(types.string),
     userName: types.string,
     occupation: types.maybeNull(types.string),
-    stories: types.optional(types.array(StoryModel), []),
-    storiesLiked: types.optional(types.array(LikesModel), [])
+    originalStories: types.array(StoryModel),
+    nonOriginalStories: types.array(StoryModel),
+    storiesLiked: types.array(LikesModel),
   })
 
 const UserStore = types
@@ -40,7 +43,6 @@ const UserStore = types
     updatingProfile: types.optional(types.boolean, false),
     isEditingProfile: types.optional(types.boolean, false),
     me: types.maybeNull(UserModel),
-    // updatedFields: types.optional(types.map, {}),
   })
   .actions((self) => {
     /**
@@ -50,11 +52,6 @@ const UserStore = types
      */
     const setMe = (data) => {
       const { profile } = data
-      errorStore.addError({
-        id: "" + Math.random(1) + "",
-        message: 'sent in setMe',
-        display: true,
-      })
       console.log(`[userStore] setMe was called ${data}`)
       if (self.me === null) {
         console.log(`[userStore] 'me' isn't created yet... creating`)
@@ -189,10 +186,15 @@ const UserStore = types
     }
   })
   .views(self => ({
+    get forkedStories() {
+      return self.me.nonOriginalStories.filter(story => story.isForked)
+    },
+    get clonedStories() {
+      return self.me.nonOriginalStories.filter(story => story.isCloned)
+    },
     get concatenatedName() {
       return self.me && self.me.firstName !== null && self.me.lastName != null ? `${self.me.firstName} ${self.me.lastName}` : '?'
     },
-
     get geterrors() {
       return self.errors
     },

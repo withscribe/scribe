@@ -113,13 +113,11 @@ class StoryEditor extends React.Component {
         {/*   onChange={e => storyEditorStore.changeContent(e.target.value)} /> */}
         <TextEditor get={this.getSerializedStoryContent} />
         {storyEditorStore.isForked && storyEditorStore.storyId !== ''
-          ?
-          <>
+          ? <>
             <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
             <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
           </>
-          :
-          ((storyEditorStore.saveInProgress
+          : ((storyEditorStore.saveInProgress
             && <ButtonPrimary type="button" onClick={(e) => { e.preventDefault() }}>Saving</ButtonPrimary>
           ),
           (!storyEditorStore.saveInProgress && storyEditorStore.storyId === ''

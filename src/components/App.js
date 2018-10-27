@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'mobx-react'
 import { setLivelynessChecking } from 'mobx-state-tree'
-import makeInspectable from 'mobx-devtools-mst'
 import { injectGlobal } from 'react-emotion'
 import decode from 'jwt-decode'
 
@@ -80,12 +79,12 @@ injectGlobal`
   .Difference {
     font-family: monospace;
   }
-  
+
   .Difference > del {
     background-color: rgb(255, 224, 224);
     text-decoration: none;
   }
-  
+
   .Difference > ins {
     background-color: rgb(201, 238, 211);
     text-decoration: none;
@@ -101,10 +100,6 @@ const errorStore = ErrorStore.create()
 
 
 setLivelynessChecking('error')
-/*
- * Let the stores be accessable to the browser plugin
- */
-makeInspectable(userStore, authStore)
 
 /*
  * Check if a token exists in localstorage, if it does

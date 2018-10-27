@@ -16,6 +16,18 @@ const ProfileByIdQuery = gql`
           id
           guid
         }
+        nonOriginalStories {
+          id
+          title
+          description
+          isForked
+          isCloned
+        }
+        originalStories {
+          id
+          title
+          description
+        }
       }
     }
   }

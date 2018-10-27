@@ -25,4 +25,27 @@ const StoryCard = ({ story, wide, grad }) => (
   </Card>
 )
 
+const ProfileStoryCard = ({ story }) => (
+  <Card key={story.id}>
+    <Link to={`/story/preview/${story.id}`}>
+      <CardImage>
+        <CardBadgeWrapper>
+          {story.isForked
+            && <Badge>Fork</Badge>
+          }
+          {story.isCloned
+            && <Badge>Clone</Badge>
+          }
+        </CardBadgeWrapper>
+      </CardImage>
+    </Link>
+    <CardTitle>{story.title}</CardTitle>
+    <CardDesc>{story.description}</CardDesc>
+  </Card>
+)
+
 export default StoryCard
+
+export {
+  ProfileStoryCard,
+}

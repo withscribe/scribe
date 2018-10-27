@@ -7,7 +7,8 @@ import Input, {
   Label, InlineLabel, InlineInput, TextArea,
 } from '_system/Input'
 import { Button } from '_system/Button'
-import { TitleText, StoryText } from '_system/Typography'
+import { TitleText } from '_system/Typography'
+import TextEditor from 'Components/Editor/TextEditor'
 
 @inject('storyStore', 'userStore')
 @observer
@@ -33,7 +34,8 @@ class StoryPreview extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('clear storyStore story here')
+    const { storyStore } = this.props
+    storyStore.destroyLoadedStory()
   }
 
   closeModal = () => {
@@ -84,7 +86,7 @@ class StoryPreview extends React.Component {
   render() {
     const { storyStore: { story, cloningStory }, storyStore, userStore } = this.props
     const { showCloneModal, liked, forked } = this.state
-    console.log(story)
+
     return (
         <>
           {story && (!storyStore.isAuthor(userStore.me.id) || !forked
@@ -95,9 +97,9 @@ class StoryPreview extends React.Component {
               <Label>
                 By: {story.author ? story.author : 'No Author Assigned.'}
               </Label>
-              <StoryText>
-                {story.content}
-              </StoryText>
+
+              <TextEditor readOnly content={story.content} />
+
               {!cloningStory
                 ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
                 : <Button>Cloning Story</Button>
@@ -118,9 +120,7 @@ class StoryPreview extends React.Component {
               <Label>
                 By: {story.author ? story.author : 'No Author Assigned.'}
               </Label>
-              <StoryText>
-                {story.content}
-              </StoryText>
+              <TextEditor readOnly content={story.content} />
             </>
           )}
 

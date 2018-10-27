@@ -1,9 +1,28 @@
 import React from 'react'
 import { Editor } from 'slate-react'
-import Plain from 'slate-plain-serializer'
+import { Value } from 'slate'
 import isKeyHotkey from 'is-hotkey'
 
-const initialValue = Plain.deserialize('')
+const initialValue = Value.fromJSON({
+  document: {
+    nodes: [
+      {
+        object: 'block',
+        type: 'paragraph',
+        nodes: [
+          {
+            object: 'text',
+            leaves: [
+              {
+                text: '',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+})
 
 const isBoldHotkey = isKeyHotkey('mod+b')
 const isItalicHotkey = isKeyHotkey('mod+i')
@@ -20,7 +39,10 @@ class TextEditor extends React.Component {
   }
 
   onChange = ({ value }) => {
-    this.props.get(Plain.serialize(this.state.value))
+    const { get } = this.props
+    if (get) {
+      get(JSON.stringify(value.toJSON()))
+    }
     this.setState({ value })
   }
 
@@ -70,6 +92,13 @@ class TextEditor extends React.Component {
 
   render() {
     const { value } = this.state
+    const { content } = this.props
+    const { readOnly } = this.props
+    let init
+    if (content !== undefined) {
+      const existing = JSON.parse(content)
+      init = Value.fromJSON(existing)
+    }
     return (
       <>
         <button
@@ -89,7 +118,8 @@ class TextEditor extends React.Component {
         </button>
         <Editor
           spellCheck
-          value={value}
+          value={init !== undefined ? init : value}
+          readOnly={readOnly}
           ref={this.ref}
           className="editor"
           placeholder="Start writing your story..."

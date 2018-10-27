@@ -154,6 +154,10 @@ const StoryStore = types
       })
     })
 
+    const destroyLoadedStory = () => {
+      destroy(self.story)
+    }
+
     return {
       setStories,
       setActiveStory,
@@ -164,6 +168,7 @@ const StoryStore = types
       setCurrentCloneId,
       likeStory,
       forkStory,
+      destroyLoadedStory,
     }
   })
   .views(self => ({

@@ -7,10 +7,9 @@ const TitleText = styled('h1')`
   font-family: Theinhardt-Bold;
 `
 
-const StoryText = styled('p')`
-  ${typography.text.medium};
-  font-family: Helvetica;
-  margin: 1em 2em 1em 2em
+const TitleSecondary = styled('h2')`
+  ${typography.headings.large};
+  font-family: Theinhardt-Bold;
 `
 
 const CardTitle = styled('h1')`
@@ -28,7 +27,7 @@ const CardDesc = styled('p')`
 
 export {
   TitleText,
-  StoryText,
+  TitleSecondary,
   CardTitle,
   CardDesc,
 }
