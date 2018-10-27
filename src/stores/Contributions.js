@@ -10,7 +10,7 @@ const ContributionsModel = types
     contributorProfileId: types.string,
     authorProfileId: types.string,
     content: types.string,
-    comment: types.maybeNull(types.string)
+    comment: types.maybeNull(types.string),
   })
 
 const ContributionsStore = types
@@ -29,25 +29,25 @@ const ContributionsStore = types
       applySnapshot(self.contributions, contributions)
     }
     /**
-     * Contributions store function that gets all of the authors story's 
+     * Contributions store function that gets all of the authors story's
      * contribution requests
      * @function getContributionReequests
      * @param {String} authorId - The ID of the user profile who wrote the original story
     */
     const getContributionRequests = flow(function* (authorProfileId) {
       const { data: { getContributionsById } } = yield client.query({
-          query: ContributionsByIdQuery,
-          variables: ({ authorProfileId }),
+        query: ContributionsByIdQuery,
+        variables: ({ authorProfileId }),
       })
       self.setContributions(getContributionsById)
       console.log("Contributions")
       console.log(self.contributions)
     })
-    
+
 
     return {
-        getContributionRequests,
-        setContributions
+      getContributionRequests,
+      setContributions,
     }
   })
   .views(self => ({

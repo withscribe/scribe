@@ -2,14 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-modal'
 import { inject, observer } from 'mobx-react'
-import { Link } from 'react-router-dom'
 
 import Input, {
   Label, InlineLabel, InlineInput, TextArea,
 } from '_system/Input'
 import { Button } from '_system/Button'
-import Typography, { TitleText, StoryText } from '_system/Typography'
-import { storeKeyNameFromField } from 'apollo-utilities';
+import { TitleText, StoryText } from '_system/Typography'
 
 @inject('storyStore', 'userStore')
 @observer
@@ -17,22 +15,25 @@ class StoryPreview extends React.Component {
   state = {
     showCloneModal: false,
     liked: false,
-    forked: false
+    forked: false,
   }
 
   componentDidMount() {
     const { storyStore, userStore } = this.props
     const storyId = this.props.match.params.id
-    storyStore.getStory(storyId)
-    // check whether this story has been liked or not
-    // story.usersWhoLiked.map(like => {
-    //   if(like.guid == storyId+userStore.me.id) {
-    //     this.setState({ liked: true })
-    //   }
-    // })
+    const guid = storyId + userStore.id
 
-    const hasForked = storyStore.isForked
-    this.setState({ forked: hasForked })
+    storyStore.getStory(storyId).then(() => {
+      if (storyStore.story.usersWhoLiked.length >= 1 && storyStore.story.usersWhoLiked.filter(e => e.guid === guid)) {
+        this.setState({ liked: true })
+      }
+      const hasForked = storyStore.story.isForked
+      this.setState({ forked: hasForked })
+    })
+  }
+
+  componentWillUnmount() {
+    console.log('clear storyStore story here')
   }
 
   closeModal = () => {
@@ -77,7 +78,7 @@ class StoryPreview extends React.Component {
   forkStory = (parentStoryId) => {
     const { storyStore, userStore } = this.props
     storyStore.forkStory(parentStoryId, userStore.me.id)
-    this.setState({ forked: true})
+    this.setState({ forked: true })
   }
 
   render() {
@@ -87,8 +88,7 @@ class StoryPreview extends React.Component {
     return (
         <>
           {story && (!storyStore.isAuthor(userStore.me.id) || !forked
-            ?
-            <>
+            ? <>
               <TitleText>
                 {story.title}
               </TitleText>
@@ -99,20 +99,19 @@ class StoryPreview extends React.Component {
                 {story.content}
               </StoryText>
               {!cloningStory
-                  ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
-                  : <Button onClick={() => {}}>Cloning Story</Button>
+                ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
+                : <Button>Cloning Story</Button>
               }
               {liked
-                  ? <Button onClick={() => {}}>Liked!</Button>
-                  : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
+                ? <Button>Liked!</Button>
+                : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
               }
               {forked
-                ? <Button onClick={() => {}}>Contributed!</Button>
+                ? <Button>Contributed!</Button>
                 : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
               }
             </>
-            :
-            <>
+            : <>
               <TitleText>
                 {story.title}
               </TitleText>

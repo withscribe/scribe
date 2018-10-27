@@ -10,7 +10,7 @@ import AllStories from 'Queries/allStories'
 const LikesModel = types
   .model('LikesModel', {
     id: types.string,
-    guid: types.string
+    guid: types.string,
   })
 
 const StoryModel = types
@@ -27,7 +27,7 @@ const StoryModel = types
     author: types.maybeNull(types.string),
     likes: types.maybeNull(types.integer),
     contributionPending: types.maybeNull(types.boolean),
-    usersWhoLiked: types.optional(types.array(LikesModel), [])
+    usersWhoLiked: types.array(LikesModel),
   })
 
 const StoryStore = types
@@ -86,7 +86,6 @@ const StoryStore = types
         fetchPolicy: 'network-only',
       })
       self.setStory(storyById)
-      console.log(self.story.usersWhoLiked)
     })
     /**
      * Story store function used to attach a single requested
@@ -148,12 +147,12 @@ const StoryStore = types
      * @param {String} parentStoryId - The ID of the story to be forked
      * @param {String} nonAuthorId - The ID of the user profile that requested the fork
     */
-   const forkStory = flow(function* (parentStoryId, nonAuthorId) {
-    const { data: { forkStory } } = yield client.mutate({
-      mutation: forkStoryMutation,
-      variables: ({ parentStoryId, nonAuthorId }),
+    const forkStory = flow(function* (parentStoryId, nonAuthorId) {
+      const { data: { forkStory } } = yield client.mutate({
+        mutation: forkStoryMutation,
+        variables: ({ parentStoryId, nonAuthorId }),
+      })
     })
-  })
 
     return {
       setStories,
@@ -164,7 +163,7 @@ const StoryStore = types
       clone,
       setCurrentCloneId,
       likeStory,
-      forkStory
+      forkStory,
     }
   })
   .views(self => ({
@@ -178,13 +177,13 @@ const StoryStore = types
       return self.stories.filter(story => story.authorId === id || story.nonAuthorId === id)
     },
     isForked() {
-      if(self.story.isForked) {
+      if (self.story.isForked) {
         return true
       }
       return false
     },
     isAuthor(profileId) {
-      if(self.story.authorId == profileId) {
+      if (self.story.authorId === profileId) {
         return true
       }
       return false
@@ -194,13 +193,13 @@ const StoryStore = types
       console.log(self.story.id)
       // self.story.usersWhoLiked.map(item => {
       //   if(item.guid == self.story.id+profileId) {
-      //     hasLiked = true 
+      //     hasLiked = true
       //   }
       // })
-      
+
 
       return hasLiked
-    }
+    },
   }))
 
 export default StoryStore
