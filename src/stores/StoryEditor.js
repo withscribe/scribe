@@ -15,8 +15,6 @@ const StoryEditorStore = types
     content: types.maybe(types.string),
     isForked: types.optional(types.boolean, false),
     isCloned: types.optional(types.boolean, false),
-    minAge: types.maybe(types.integer),
-    maxAge: types.maybe(types.integer),
   })
   .actions((self) => {
     /**
@@ -189,15 +187,9 @@ const StoryEditorStore = types
     }
   })
   .views((self) => {
-    const isAgeRangeValid = () => {
-      const { minAge, maxAge } = self
-      return !(minAge < 0 || maxAge > 150 || minAge > maxAge || maxAge < minAge)
-    }
-
     const isValid = () => !self.title && !self.description && !self.content
-      && !self.content && !self.minAge && !self.maxAge && !isAgeRangeValid()
 
-    return { isAgeRangeValid, isValid }
+    return { isValid }
   })
 
 export default StoryEditorStore

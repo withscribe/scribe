@@ -38,45 +38,39 @@ class ViewFork extends React.Component {
   handleSubmitClick = () => {
     const { storyEditorStore, userStore } = this.props
 
-    if (storyEditorStore.isValid) {
-      const author = this.getAuthorName(
-        userStore.me.firstName,
-        userStore.me.lastName,
-        userStore.me.userName,
-      )
-      storyEditorStore.submitStory(userStore.me.id, author)
-        .then((res) => {
-          console.log(`SubmitStory Response: ${res}`)
-        }).catch((err) => {
-          console.log(`SubmitStory Error: ${err}`)
-        })
-    }
+    const author = this.getAuthorName(
+      userStore.me.firstName,
+      userStore.me.lastName,
+      userStore.me.userName,
+    )
+    storyEditorStore.submitStory(userStore.me.id, author)
+      .then((res) => {
+        console.log(`SubmitStory Response: ${res}`)
+      }).catch((err) => {
+        console.log(`SubmitStory Error: ${err}`)
+      })
   }
 
   handleUpdateClick = () => {
     const { storyEditorStore } = this.props
 
-    if (storyEditorStore.isValid) {
-      storyEditorStore.updateStory()
-        .then((res) => {
-          console.log(`UpdateStory Response: ${res}`)
-        }).catch((err) => {
-          console.log(`UpdateStory Error: ${err}`)
-        })
-    }
+    storyEditorStore.updateStory()
+      .then((res) => {
+        console.log(`UpdateStory Response: ${res}`)
+      }).catch((err) => {
+        console.log(`UpdateStory Error: ${err}`)
+      })
   }
 
   sendContributionRequest = () => {
     const { storyEditorStore } = this.props
 
-    if (storyEditorStore.isValid) {
-      storyEditorStore.sendContribution(storyEditorStore.storyId)
-        .then((res) => {
-          console.log(`UpdateStory Response: ${res}`)
-        }).catch((err) => {
-          console.log(`UpdateStory Error: ${err}`)
-        })
-    }
+    storyEditorStore.sendContribution(storyEditorStore.storyId)
+      .then((res) => {
+        console.log(`UpdateStory Response: ${res}`)
+      }).catch((err) => {
+        console.log(`UpdateStory Error: ${err}`)
+      })
   }
 
   serializedStoryUpdateCallback = (update) => {
@@ -86,14 +80,14 @@ class ViewFork extends React.Component {
 
   render() {
     const { storyEditorStore } = this.props
-    console.log(storyEditorStore.content)
     return (
       <EditorWrapper>
         <ButtonPrimary type="button" disabled={storyEditorStore.saveInProgress} onClick={this.handleUpdateClick}>
           {storyEditorStore.saveInProgress ? 'Saving' : 'Update'}
         </ButtonPrimary>
-        {storyEditorStore.content &&
-        <TextEditor content={storyEditorStore.content} get={this.serializedStoryUpdateCallback} />}
+        {storyEditorStore.content
+          && <TextEditor content={storyEditorStore.content} get={this.serializedStoryUpdateCallback} />
+        }
         <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
         <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
       </EditorWrapper>
