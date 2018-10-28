@@ -82,7 +82,6 @@
     "html-webpack-plugin": "3.2.0",
     "image-webpack-loader": "^4.4.0",
     "jest": "^23.6.0",
-    "mobx-devtools-mst": "^0.9.18",
     "raw-loader": "^0.5.1",
     "react-testing-library": "^5.2.1",
     "svg-url-loader": "^2.3.2",
