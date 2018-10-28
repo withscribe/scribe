@@ -50,7 +50,7 @@ class MyStories extends React.Component {
           : 'no original stories'
         }
         <TitleSecondary>Cloned Stories</TitleSecondary>
-        {userStore.clonedStories >= 1 && !userStore.updatingUser
+        {userStore.clonedStories.length >= 1 && !userStore.updatingUser
           ? <HomeGrid>
             {userStore.clonedStories.map(story => (
               <ProfileStoryCard story={story} />
