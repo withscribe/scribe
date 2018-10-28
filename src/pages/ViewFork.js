@@ -30,8 +30,9 @@ class ViewFork extends React.Component {
   }
 
   componentWillUnmount() {
-    // const { storyEditorStore } = this.props
-    // storyEditorStore.destroyLoadedStory()
+    // TODO: Fix this monkeypatch with an action using destroy()
+    const { storyEditorStore } = this.props
+    storyEditorStore.init()
   }
 
   handleSubmitClick = () => {

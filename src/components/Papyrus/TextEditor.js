@@ -31,7 +31,8 @@ const isCodeHotkey = isKeyHotkey('mod+`')
 
 class TextEditor extends React.Component {
   state = {
-    value: null,
+    value: initialValue,
+    hasFinishedWorking: false,
   }
 
   componentDidMount() {
@@ -40,7 +41,9 @@ class TextEditor extends React.Component {
     if (content !== undefined) {
       const existing = JSON.parse(content)
       init = Value.fromJSON(existing)
-      this.setState({ value: init })
+      this.setState({ value: init, hasFinishedWorking: true })
+    } else {
+      this.setState({ hasFinishedWorking: true })
     }
   }
 
@@ -101,7 +104,7 @@ class TextEditor extends React.Component {
   }
 
   render() {
-    const { value } = this.state
+    const { value, hasFinishedWorking } = this.state
     return (
       <>
         <button
@@ -119,7 +122,7 @@ class TextEditor extends React.Component {
           onPointerDown={e => this.onMarkClick(e, 'underlined')}>
             U
         </button>
-        {value !== null &&
+        {hasFinishedWorking &&
         <Editor
           spellCheck
           value={value}
@@ -129,7 +132,7 @@ class TextEditor extends React.Component {
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark} />
-          }
+        }
       </>
     )
   }
