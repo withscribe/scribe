@@ -42,30 +42,33 @@ class MyStories extends React.Component {
         }
         <TitleSecondary>Original Stories</TitleSecondary>
         {originalStories && !userStore.updatingUser
-          ? <HomeGrid>
-            {originalStories.map(story => (
-              <ProfileStoryCard story={story} />
-            ))}
-          </HomeGrid>
-          : 'no original stories'
+          ? (
+            <HomeGrid>
+              {originalStories.map(story => (
+                <ProfileStoryCard story={story} key={story.id} />
+              ))}
+            </HomeGrid>
+          ) : 'no original stories'
         }
         <TitleSecondary>Cloned Stories</TitleSecondary>
         {userStore.clonedStories.length >= 1 && !userStore.updatingUser
-          ? <HomeGrid>
-            {userStore.clonedStories.map(story => (
-              <ProfileStoryCard story={story} />
-            ))}
-          </HomeGrid>
-          : 'no cloned stories'
+          ? (
+            <HomeGrid>
+              {userStore.clonedStories.map(story => (
+                <ProfileStoryCard story={story} key={story.id} />
+              ))}
+            </HomeGrid>
+          ) : 'no cloned stories'
         }
         <TitleSecondary>Forked Stories</TitleSecondary>
         {userStore.forkedStories.length >= 1 && !userStore.updatingUser
-          ? <HomeGrid>
-            {userStore.forkedStories.map(story => (
-              <ProfileStoryCard story={story} />
-            ))}
-          </HomeGrid>
-          : 'no forked stories'
+          ? (
+            <HomeGrid>
+              {userStore.forkedStories.map(story => (
+                <ProfileStoryCard story={story} key={story.id}/>
+              ))}
+            </HomeGrid>
+          ) : 'no forked stories'
         }
         {/* {storyStore.stories.length > 0 ? ( */}
         {/*   <ul> */}

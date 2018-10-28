@@ -33,7 +33,7 @@ const ProfileStoryCard = ({ story }) => {
     generatedLink = `story/preview/clone/${story.id}`
   }
   return (
-    <Card key={story.id}>
+    <Card>
       <Link to={generatedLink}>
         <CardImage>
           <CardBadgeWrapper>
