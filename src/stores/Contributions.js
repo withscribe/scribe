@@ -1,10 +1,13 @@
 import { types, flow, destroy, applySnapshot } from 'mobx-state-tree'
+import Plain from 'slate-plain-serializer'
+import { Value } from 'slate'
 
 import ContributionsByIdQuery from 'Queries/contributionsById'
 import ContributionByIdQuery from 'Queries/contributionById'
 import ApproveChangesMutation from 'Mutations/approveChanges'
 import RejectChangesMutation from 'Mutations/rejectChanges'
 import { client } from 'Services/Client'
+import { serialize } from 'uri-js';
 
 const ContributionsModel = types
   .model('ContributionsModel', {
@@ -52,6 +55,7 @@ const ContributionsStore = types
       const { data: { getContributionsById } } = yield client.query({
         query: ContributionsByIdQuery,
         variables: ({ authorProfileId }),
+        fetchPolicy: 'network-only',
       })
       self.setContributions(getContributionsById)
     })
@@ -65,6 +69,7 @@ const ContributionsStore = types
       const { data: { getContributionById } } = yield client.query({
         query: ContributionByIdQuery,
         variables: ({ id }),
+        fetchPolicy: 'network-only',
       })
       self.setContribution(getContributionById)
     })
@@ -82,13 +87,21 @@ const ContributionsStore = types
         variables: ({ contributionId }),
       })
     })
+
+    const deserializeContent = (content) => {
+      const json = JSON.parse(content)
+      const temp = Value.fromJSON(json)
+      const plainText = Plain.serialize(temp)
+      return plainText
+    }
     return {
       getContributionRequests,
       setContributions,
       getContribution,
       setContribution,
       approveContribution,
-      rejectContribution
+      rejectContribution,
+      deserializeContent
     }
   })
   .views(self => ({

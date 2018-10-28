@@ -1,6 +1,6 @@
 import React from 'react'
 import { inject, observer, } from 'mobx-react'
-import Diff from 'react-stylable-diff';
+import Diff from 'react-stylable-diff'
 
 import Input, {
     Label
@@ -11,7 +11,10 @@ import { ButtonPrimary } from '_system/Button'
 @inject('userStore', 'storyStore', 'contributionsStore')
 @observer
 class DiffReview extends React.Component {
-  state = {}
+  state = {
+    beforeText: "",
+    afterText: ""
+  }
 
   componentDidMount() {
     const { contributionsStore, userStore, storyStore } = this.props
@@ -19,26 +22,27 @@ class DiffReview extends React.Component {
     contributionsStore.getContribution(contributionId)
   }
 
-  approveChanges(contributionId) {
+  approveChanges = (contributionId) => {
     const { contributionsStore } = this.props
     contributionsStore.approveContribution(contributionId)
+    this.props.history.push(`/profile`)
   }
 
-  rejectChanges(contributionId) {
+  rejectChanges = (contributionId) => {
     const { contributionsStore } = this.props
     contributionsStore.rejectContribution(contributionId)
+    this.props.history.push(`/profile`)
   }
 
   render() {
-    const { contributionsStore: { contribution } } = this.props
-    console.log(contribution)
+    const { contributionsStore: { contribution }, contributionsStore } = this.props
     return (
       <>
       {contribution &&
         <>
-          <Diff inputA={contribution.originalContent} inputB={contribution.contributionContent} />
-          <ButtonPrimary type="button" onClick={this.approveChanges(contribution.id)}>Approve & Update Story</ButtonPrimary>
-          <ButtonPrimary type="button" onClick={this.rejectChanges(contribution.id)}>Reject</ButtonPrimary>
+          <Diff inputA={contributionsStore.deserializeContent(contribution.originalContent)} inputB={contributionsStore.deserializeContent(contribution.contributionContent)} />
+          <ButtonPrimary type="button" onClick={() => this.approveChanges(contribution.id)}>Approve & Update Story</ButtonPrimary>
+          <ButtonPrimary type="button" onClick={() => this.rejectChanges(contribution.id)}>Reject</ButtonPrimary>
         </>
       }
       </>

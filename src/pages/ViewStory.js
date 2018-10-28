@@ -89,7 +89,7 @@ class ViewStory extends React.Component {
 
     return (
         <>
-          {story && (!storyStore.isAuthor(userStore.me.id) || !forked
+          {story && (!storyStore.isAuthor(userStore.me.id) 
             ? <>
               <TitleText>
                 {story.title}

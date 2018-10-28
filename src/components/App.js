@@ -79,6 +79,7 @@ injectGlobal`
 
   .Difference {
     font-family: monospace;
+    white-space:pre-wrap;
   }
 
   .Difference > del {
