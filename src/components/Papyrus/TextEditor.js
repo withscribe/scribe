@@ -31,7 +31,17 @@ const isCodeHotkey = isKeyHotkey('mod+`')
 
 class TextEditor extends React.Component {
   state = {
-    value: initialValue,
+    value: null,
+  }
+
+  componentDidMount() {
+    const { content } = this.props
+    let init
+    if (content !== undefined) {
+      const existing = JSON.parse(content)
+      init = Value.fromJSON(existing)
+      this.setState({ value: init })
+    }
   }
 
   ref = (editor) => {
@@ -92,13 +102,6 @@ class TextEditor extends React.Component {
 
   render() {
     const { value } = this.state
-    const { content } = this.props
-    const { readOnly } = this.props
-    let init
-    if (content !== undefined) {
-      const existing = JSON.parse(content)
-      init = Value.fromJSON(existing)
-    }
     return (
       <>
         <button
@@ -116,16 +119,17 @@ class TextEditor extends React.Component {
           onPointerDown={e => this.onMarkClick(e, 'underlined')}>
             U
         </button>
+        {value !== null &&
         <Editor
           spellCheck
-          value={init !== undefined ? init : value}
-          readOnly={readOnly}
+          value={value}
           ref={this.ref}
           className="editor"
           placeholder="Start writing your story..."
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark} />
+          }
       </>
     )
   }
