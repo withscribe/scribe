@@ -8,11 +8,11 @@ import Input, {
 } from '_system/Input'
 import { Button } from '_system/Button'
 import { TitleText } from '_system/Typography'
-import TextEditor from 'Components/Editor/TextEditor'
+import StoryViewer from 'Components/Papyrus/StoryViewer'
 
 @inject('storyStore', 'userStore')
 @observer
-class StoryPreview extends React.Component {
+class ViewStory extends React.Component {
   state = {
     showCloneModal: false,
     liked: false,
@@ -98,7 +98,7 @@ class StoryPreview extends React.Component {
                 By: {story.author ? story.author : 'No Author Assigned.'}
               </Label>
 
-              <TextEditor readOnly content={story.content} />
+              <StoryViewer content={story.content} />
 
               {!cloningStory
                 ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
@@ -120,7 +120,7 @@ class StoryPreview extends React.Component {
               <Label>
                 By: {story.author ? story.author : 'No Author Assigned.'}
               </Label>
-              <TextEditor readOnly content={story.content} />
+              <StoryViewer content={story.content} />
             </>
           )}
 
@@ -140,10 +140,10 @@ class StoryPreview extends React.Component {
   }
 }
 
-StoryPreview.propTypes = {
+ViewStory.propTypes = {
   storyStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 }
 
-export default StoryPreview
+export default ViewStory

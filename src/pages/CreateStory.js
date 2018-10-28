@@ -9,11 +9,11 @@ import Input, {
 import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
 import { EditorWrapper } from 'Styled/Editor'
-import TextEditor from 'Components/Editor/TextEditor'
+import TextEditor from 'Components/Papyrus/TextEditor'
 
 @inject('storyEditorStore', 'userStore')
 @observer
-class StoryEditor extends React.Component {
+class CreateStory extends React.Component {
   componentDidMount() {
     const { storyEditorStore, history } = this.props
 
@@ -108,9 +108,6 @@ class StoryEditor extends React.Component {
             onChange={e => storyEditorStore.changeDesc(e.target.value)} />
         </Box>
         <Label>Content</Label>
-        {/* <TextArea */}
-        {/*   value={storyEditorStore.content} */}
-        {/*   onChange={e => storyEditorStore.changeContent(e.target.value)} /> */}
         <TextEditor get={this.getSerializedStoryContent} />
         {storyEditorStore.isForked && storyEditorStore.storyId !== ''
           ? <>
@@ -130,10 +127,10 @@ class StoryEditor extends React.Component {
   }
 }
 
-StoryEditor.propTypes = {
+CreateStory.propTypes = {
   storyEditorStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 }
 
-export default StoryEditor
+export default CreateStory
