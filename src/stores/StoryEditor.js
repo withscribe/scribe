@@ -110,7 +110,7 @@ const StoryEditorStore = types
      */
     const setData = (data) => {
       const {
-        id, title, description, content, isForked, isCloned
+        id, title, description, content, isForked, isCloned,
       } = data
       self.storyId = id
       self.title = title
@@ -161,12 +161,12 @@ const StoryEditorStore = types
 
     const sendContribution = flow(function* () {
       const {
-        storyId
+        storyId,
       } = self
       const { data: { contributeRequest: { id } } } = yield client.mutate({
         mutation: contributeRequestMutation,
         variables: ({
-         storyId
+          storyId,
         }),
       })
 
@@ -185,7 +185,7 @@ const StoryEditorStore = types
       updateStory,
       loadStory,
       setData,
-      sendContribution
+      sendContribution,
     }
   })
   .views((self) => {

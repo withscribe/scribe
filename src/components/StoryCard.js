@@ -25,24 +25,32 @@ const StoryCard = ({ story, wide, grad }) => (
   </Card>
 )
 
-const ProfileStoryCard = ({ story }) => (
-  <Card key={story.id}>
-    <Link to={`/story/preview/${story.id}`}>
-      <CardImage>
-        <CardBadgeWrapper>
-          {story.isForked
-            && <Badge>Fork</Badge>
-          }
-          {story.isCloned
-            && <Badge>Clone</Badge>
-          }
-        </CardBadgeWrapper>
-      </CardImage>
-    </Link>
-    <CardTitle>{story.title}</CardTitle>
-    <CardDesc>{story.description}</CardDesc>
-  </Card>
-)
+const ProfileStoryCard = ({ story }) => {
+  let generatedLink = `/story/preview/${story.id}`
+  if (story.isForked) {
+    generatedLink = `/story/preview/fork/${story.id}`
+  } else if (story.isCloned) {
+    generatedLink = `story/preview/clone/${story.id}`
+  }
+  return (
+    <Card key={story.id}>
+      <Link to={generatedLink}>
+        <CardImage>
+          <CardBadgeWrapper>
+            {story.isForked
+              && <Badge>Fork</Badge>
+            }
+            {story.isCloned
+              && <Badge>Clone</Badge>
+            }
+          </CardBadgeWrapper>
+        </CardImage>
+      </Link>
+      <CardTitle>{story.title}</CardTitle>
+      <CardDesc>{story.description}</CardDesc>
+    </Card>
+  )
+}
 
 export default StoryCard
 

@@ -33,7 +33,6 @@ class MyStories extends React.Component {
 
   render() {
     const { userStore, userStore: { me: { originalStories } } } = this.props
-    console.log(originalStories)
     return (
       <>
         <TitleText>My Library</TitleText>
@@ -48,25 +47,25 @@ class MyStories extends React.Component {
               <ProfileStoryCard story={story} />
             ))}
           </HomeGrid>
-          : 'no originalStores'
+          : 'no original stories'
         }
         <TitleSecondary>Cloned Stories</TitleSecondary>
-        {userStore.clonedStories && !userStore.updatingUser
+        {userStore.clonedStories >= 1 && !userStore.updatingUser
           ? <HomeGrid>
             {userStore.clonedStories.map(story => (
               <ProfileStoryCard story={story} />
             ))}
           </HomeGrid>
-          : 'no originalStores'
+          : 'no cloned stories'
         }
         <TitleSecondary>Forked Stories</TitleSecondary>
-        {userStore.forkedStories && !userStore.updatingUser
+        {userStore.forkedStories.length >= 1 && !userStore.updatingUser
           ? <HomeGrid>
             {userStore.forkedStories.map(story => (
               <ProfileStoryCard story={story} />
             ))}
           </HomeGrid>
-          : 'no originalStores'
+          : 'no forked stories'
         }
         {/* {storyStore.stories.length > 0 ? ( */}
         {/*   <ul> */}

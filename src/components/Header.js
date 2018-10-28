@@ -39,7 +39,7 @@ class Header extends React.Component {
               </Link>
             </NavItem>
             <NavItem>
-              <Link to="/editor/create">
+              <Link to="/story/create">
                 <ButtonInlay>
                   Create
                 </ButtonInlay>
