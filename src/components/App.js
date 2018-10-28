@@ -14,14 +14,15 @@ import { Wrapper, Container } from '_system/Container'
 /* Import Pages Start */
 import Register from 'Pages/Register'
 import Login from 'Pages/Login'
-import Choose from 'Pages/Choose'
-import ProfileSettings from 'Pages/ProfileSettings'
-import StoryEditor from 'Pages/StoryEditor'
 import Home from 'Pages/Home'
-import StoryPreview from 'Pages/StoryPreview'
 import MyStories from 'Pages/MyStories'
 import Contributions from 'Pages/Contributions'
+import ProfileSettings from 'Pages/ProfileSettings'
+import CreateStory from 'Pages/CreateStory'
+import ViewStory from 'Pages/ViewStory'
+import ViewFork from 'Pages/ViewFork'
 import DiffReview from 'Pages/DiffReview'
+import Choose from 'Pages/Choose'
 /* Import Stores Start */
 import UserStore from 'Stores/User'
 import AuthStore from 'Stores/Auth'
@@ -134,19 +135,24 @@ const App = () => (
           <Wrapper>
             <Container>
               <Switch>
-                <PublicRoute exact path="/login" redirectTo="/start" component={Login} />
-                <PublicRoute exact path="/register" redirectTo="/start" component={Register} />
+                <PublicRoute exact path="/login" redirectTo="/home" component={Login} />
+                <PublicRoute exact path="/register" redirectTo="/home" component={Register} />
 
                 <PrivateRoute exact path="/home" redirectTo="/login" component={Home} />
-                <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={StoryPreview} />
-                <PrivateRoute exact path="/editor/create" redirectTo="/login" component={StoryEditor} />
-                <PrivateRoute exact path="/editor/:id" redirectTo="/login" component={StoryEditor} />
+
+                <PrivateRoute exact path="/story/preview/fork/:id" redirectTo="/login" component={ViewFork} />
+                {/* <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewClone} /> */}
+                <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={ViewStory} />
+
+                <PrivateRoute exact path="/story/create" redirectTo="/login" component={CreateStory} />
+                <PrivateRoute exact path="/story/edit/:id" redirectTo="/login" component={CreateStory} />
+
                 <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
+
                 <PrivateRoute exact path="/profile" redirectTo="/login" component={MyStories} />
                 <PrivateRoute exact path="/profile/settings" redirectTo="/login" component={ProfileSettings} />
                 <PrivateRoute exact path="/profile/contributions" redirectTo="/login" component={Contributions} />
                 <PrivateRoute exact path="/profile/contributions/diff/:id" redirectTo="/login" component={DiffReview} />
-                {/* <PrivateRoute exact path="/user/stories" redirectTo="/login" component={MyStories} /> */}
               </Switch>
             </Container>
           </Wrapper>
