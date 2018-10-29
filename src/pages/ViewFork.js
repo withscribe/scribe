@@ -81,16 +81,20 @@ class ViewFork extends React.Component {
   render() {
     const { storyEditorStore } = this.props
     return (
-      <EditorWrapper>
-        <ButtonPrimary type="button" disabled={storyEditorStore.saveInProgress} onClick={this.handleUpdateClick}>
-          {storyEditorStore.saveInProgress ? 'Saving' : 'Update'}
-        </ButtonPrimary>
-        {storyEditorStore.content
-          && <TextEditor content={storyEditorStore.content} get={this.serializedStoryUpdateCallback} />
-        }
-        <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
-        <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
-      </EditorWrapper>
+      <>
+        <TitleText>
+          {storyEditorStore.title}
+        </TitleText>
+        <EditorWrapper>
+          {storyEditorStore.content
+            && <TextEditor content={storyEditorStore.content} get={this.serializedStoryUpdateCallback} />
+          }
+          <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
+          <ButtonPrimary type="button" disabled={storyEditorStore.saveInProgress} onClick={this.handleUpdateClick}>
+            {storyEditorStore.saveInProgress ? 'Saving' : 'Update'}
+          </ButtonPrimary>
+        </EditorWrapper>
+      </>
     )
   }
 }
