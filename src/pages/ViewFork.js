@@ -10,7 +10,7 @@ import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
 import TextEditor from 'Components/Papyrus/TextEditor'
 
-@inject('storyEditorStore', 'userStore')
+@inject('storyEditorStore', 'userStore', 'toastStore')
 @observer
 class ViewFork extends React.Component {
   state = {}
@@ -52,7 +52,13 @@ class ViewFork extends React.Component {
   }
 
   handleUpdateClick = () => {
-    const { storyEditorStore } = this.props
+    const { storyEditorStore, toastStore } = this.props
+
+    toastStore.addToast({
+      id: "" + Math.random(1) + "",
+      message: 'Your contribution has been sent!',
+      display: true,
+    })
 
     storyEditorStore.updateStory()
       .then((res) => {
@@ -63,11 +69,12 @@ class ViewFork extends React.Component {
   }
 
   sendContributionRequest = () => {
-    const { storyEditorStore } = this.props
+    const { storyEditorStore, userStore } = this.props
 
-    storyEditorStore.sendContribution(storyEditorStore.storyId)
+    storyEditorStore.sendContribution(userStore.me.userName)
       .then((res) => {
         console.log(`UpdateStory Response: ${res}`)
+
       }).catch((err) => {
         console.log(`UpdateStory Error: ${err}`)
       })

@@ -7,6 +7,12 @@ import likeStoryMutation from 'Mutations/like'
 import forkStoryMutation from 'Mutations/fork'
 import AllStories from 'Queries/allStories'
 
+// const AuthorModel = types
+//   .model('AuthorModel', {
+//     id: types.string,
+//     userName: types.string,
+//   })
+
 const LikesModel = types
   .model('LikesModel', {
     id: types.string,
@@ -28,6 +34,7 @@ const StoryModel = types
     likes: types.maybeNull(types.integer),
     contributionPending: types.maybeNull(types.boolean),
     usersWhoLiked: types.array(LikesModel),
+    // nonAuthorProfile: types.maybe(AuthorModel)
   })
 
 const StoryStore = types

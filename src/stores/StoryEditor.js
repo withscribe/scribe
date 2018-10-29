@@ -156,7 +156,7 @@ const StoryEditorStore = types
       self.saveInProgress = false
     })
 
-    const sendContribution = flow(function* () {
+    const sendContribution = flow(function* (contributorName) {
       const {
         storyId, content,
       } = self
@@ -164,7 +164,8 @@ const StoryEditorStore = types
         mutation: contributeRequestMutation,
         variables: ({
           storyId,
-          content
+          content,
+          contributorName,
         }),
       })
 
