@@ -1,6 +1,6 @@
 import styled, { css } from 'react-emotion'
 
-import { colors, typography } from '_system/Theme'
+import { colors, typography, transitions } from '_system/Theme'
 
 const disabledStyles = css`
   opacity: 0.4;
@@ -21,7 +21,7 @@ const baseStyles = css`
   cursor: pointer;
   display: inline-block;
   text-decoration: none;
-  transition: all 200ms ease-in-out;
+  transition: ${transitions.default};
   text-align: center;
 
   &:active {

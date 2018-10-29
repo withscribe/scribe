@@ -3,6 +3,8 @@ import { Editor } from 'slate-react'
 import { Value } from 'slate'
 import isKeyHotkey from 'is-hotkey'
 
+import Toolbar, { ToolbarButton } from 'Styled/Papyrus/Toolbar'
+
 const initialValue = Value.fromJSON({
   document: {
     nodes: [
@@ -107,31 +109,35 @@ class TextEditor extends React.Component {
     const { value, hasFinishedWorking } = this.state
     return (
       <>
-        <button
-          type="button"
-          onPointerDown={e => this.onMarkClick(e, 'bold')}>
-            B
-        </button>
-        <button
-          type="button"
-          onPointerDown={e => this.onMarkClick(e, 'italic')}>
-            I
-        </button>
-        <button
-          type="button"
-          onPointerDown={e => this.onMarkClick(e, 'underlined')}>
-            U
-        </button>
-        {hasFinishedWorking &&
-        <Editor
-          spellCheck
-          value={value}
-          ref={this.ref}
-          className="editor"
-          placeholder="Start writing your story..."
-          onChange={this.onChange}
-          onKeyDown={this.onKeyDown}
-          renderMark={this.renderMark} />
+        <Toolbar>
+          <ToolbarButton
+            type="button"
+            onPointerDown={e => this.onMarkClick(e, 'bold')}>
+              B
+          </ToolbarButton>
+          <ToolbarButton
+            type="button"
+            onPointerDown={e => this.onMarkClick(e, 'italic')}>
+              I
+          </ToolbarButton>
+          <ToolbarButton
+            type="button"
+            onPointerDown={e => this.onMarkClick(e, 'underlined')}>
+              U
+          </ToolbarButton>
+        </Toolbar>
+        {hasFinishedWorking
+          && (
+            <Editor
+              spellCheck
+              value={value}
+              ref={this.ref}
+              className="editor"
+              placeholder="Start writing your story..."
+              onChange={this.onChange}
+              onKeyDown={this.onKeyDown}
+              renderMark={this.renderMark} />
+          )
         }
       </>
     )
