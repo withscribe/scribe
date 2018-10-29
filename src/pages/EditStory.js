@@ -10,7 +10,7 @@ import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
 import TextEditor from 'Components/Papyrus/TextEditor'
 
-@inject('storyEditorStore', 'userStore')
+@inject('storyEditorStore', 'userStore', 'toastStore')
 @observer
 class EditStory extends React.Component {
   state = {
@@ -47,11 +47,16 @@ class EditStory extends React.Component {
   }
 
   sendContributionRequest = () => {
-    const { storyEditorStore } = this.props
+    const { storyEditorStore, toastStore } = this.props
 
     storyEditorStore.sendContribution(storyEditorStore.storyId)
       .then((res) => {
         console.log(`UpdateStory Response: ${res}`)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Your Contribution Request has been sent!',
+          display: true,
+        })
       }).catch((err) => {
         console.log(`UpdateStory Error: ${err}`)
       })
