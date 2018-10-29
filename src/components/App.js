@@ -19,8 +19,10 @@ import MyStories from 'Pages/MyStories'
 import Contributions from 'Pages/Contributions'
 import ProfileSettings from 'Pages/ProfileSettings'
 import CreateStory from 'Pages/CreateStory'
+import EditStory from 'Pages/EditStory'
 import ViewStory from 'Pages/ViewStory'
 import ViewFork from 'Pages/ViewFork'
+import ViewClone from 'Pages/ViewClone'
 import DiffReview from 'Pages/DiffReview'
 import Choose from 'Pages/Choose'
 /* Import Stores Start */
@@ -29,7 +31,7 @@ import AuthStore from 'Stores/Auth'
 import StoreEditorStore from 'Stores/StoryEditor'
 import StoryStore from 'Stores/Story'
 import ContributionsStore from 'Stores/Contributions'
-import ErrorStore from 'Stores/Errors'
+import ToastStore from 'Stores/Toasts'
 
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
 import TB from '../assets/fonts/Theinhardt-Bold.woff'
@@ -98,7 +100,7 @@ const authStore = AuthStore.create()
 const storyEditorStore = StoreEditorStore.create()
 const storyStore = StoryStore.create()
 const contributionsStore = ContributionsStore.create()
-const errorStore = ErrorStore.create()
+const toastStore = ToastStore.create()
 
 
 setLivelynessChecking('error')
@@ -123,7 +125,7 @@ const store = {
   storyEditorStore,
   storyStore,
   contributionsStore,
-  errorStore,
+  toastStore,
 }
 
 const App = () => (
@@ -142,11 +144,11 @@ const App = () => (
                 <PrivateRoute exact path="/home" redirectTo="/login" component={Home} />
 
                 <PrivateRoute exact path="/story/preview/fork/:id" redirectTo="/login" component={ViewFork} />
-                {/* <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewClone} /> */}
+                <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewClone} />
                 <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={ViewStory} />
 
                 <PrivateRoute exact path="/story/create" redirectTo="/login" component={CreateStory} />
-                <PrivateRoute exact path="/story/edit/:id" redirectTo="/login" component={CreateStory} />
+                <PrivateRoute exact path="/story/edit/:id" redirectTo="/login" component={EditStory} />
 
                 <PrivateRoute exact path="/start" redirectTo="/login" component={Choose} />
 

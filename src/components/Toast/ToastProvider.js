@@ -6,31 +6,30 @@ import { Transition } from 'react-spring'
 import ToastContainer from 'Styled/Toast/ToastContainer'
 import { DefaultToast } from 'Styled/Toast/ToastElement'
 
-@inject('errorStore')
+@inject('toastStore')
 @observer
 class ToastProvider extends React.Component {
   state = {}
 
   render() {
-    const { errorStore: { errors }, errorStore } = this.props
-    console.log(errorStore.errorList)
+    const { toastStore: { toasts }, toastStore } = this.props
     return (
       <>
-        {errors && (
+        {toasts && (
           <ToastContainer>
             <Transition
-              items={errorStore.errorList}
-              keys={error => error.id}
+              items={toastStore.toastList}
+              keys={toast => toast.id}
               from={{ opacity: 0 }}
               enter={{ opacity: 1 }}
               leave={{ opacity: 0, pointerEvents: 'none' }}>
-              {toast => props => (
+              {t => props => (
                 <DefaultToast
                   style={props}
                   autoDismiss
                   appearance="success"
-                  onDismiss={() => errorStore.removeError(toast.id)}>
-                  {toast.message}
+                  onDismiss={() => toastStore.removeError(t.id)}>
+                  {t.message}
                 </DefaultToast>
               )}
             </Transition>
