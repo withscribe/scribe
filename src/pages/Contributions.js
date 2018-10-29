@@ -23,7 +23,7 @@ class Contributions extends React.Component {
   getContributorName = (storyId) => {
     const { storyStore: { story }, storyStore } = this.props
     storyStore.getStory(storyId)
-    console.log(story)
+    //console.log(story)
   }
 
   render() {

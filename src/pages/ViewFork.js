@@ -54,12 +54,6 @@ class ViewFork extends React.Component {
   handleUpdateClick = () => {
     const { storyEditorStore, toastStore } = this.props
 
-    toastStore.addToast({
-      id: "" + Math.random(1) + "",
-      message: 'Your contribution has been sent!',
-      display: true,
-    })
-
     storyEditorStore.updateStory()
       .then((res) => {
         console.log(`UpdateStory Response: ${res}`)
@@ -70,6 +64,12 @@ class ViewFork extends React.Component {
 
   sendContributionRequest = () => {
     const { storyEditorStore, userStore } = this.props
+
+    toastStore.addToast({
+      id: "" + Math.random(1) + "",
+      message: 'Your contribution has been sent!',
+      display: true,
+    })
 
     storyEditorStore.sendContribution(userStore.me.userName)
       .then((res) => {
