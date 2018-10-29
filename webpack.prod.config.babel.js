@@ -5,7 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import WebpackChunkHash from 'webpack-chunk-hash'
 import CompressionWebpackPlugin from 'compression-webpack-plugin'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 export default {
@@ -123,13 +123,8 @@ export default {
   optimization: {
     concatenateModules: true,
     minimizer: [
-      new UglifyJSPlugin({
+      new TerserPlugin({
         sourceMap: false,
-        uglifyOptions: {
-          compress: {
-            inline: false,
-          },
-        },
       }),
     ],
     runtimeChunk: false,

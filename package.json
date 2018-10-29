@@ -84,7 +84,7 @@
     "raw-loader": "^0.5.1",
     "react-testing-library": "^5.2.1",
     "svg-url-loader": "^2.3.2",
-    "uglifyjs-webpack-plugin": "^2.0.1",
+    "terser-webpack-plugin": "^1.1.0",
     "unfetch": "^4.0.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.23.1",
