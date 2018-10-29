@@ -15,22 +15,24 @@ import TextEditor from 'Components/Papyrus/TextEditor'
 @observer
 class CreateStory extends React.Component {
   componentDidMount() {
-    const { storyEditorStore, history } = this.props
+    const { storyEditorStore } = this.props
 
-    const id = history.location.pathname.split('/').pop()
-
-    if (id !== 'create') {
-      storyEditorStore.loadStory(id)
-      console.log(storyEditorStore.isForked)
-    }
-
-    if (!storyEditorStore.isValid()) {
+    if (storyEditorStore.isValid()) {
+      // do something to ask the user if they would like to reset
+    } else {
+      // should init on all runs since this component is made for create only
       storyEditorStore.init()
     }
   }
 
+  componentWillUnmount() {
+    // TODO: replace with proper destroy
+    const { storyEditorStore } = this.props
+    storyEditorStore.init()
+  }
+
   handleSubmitClick = () => {
-    const { storyEditorStore, userStore } = this.props
+    const { storyEditorStore, userStore, history} = this.props
 
     if (storyEditorStore.isValid) {
       const author = this.getAuthorName(
@@ -41,6 +43,7 @@ class CreateStory extends React.Component {
       storyEditorStore.submitStory(userStore.me.id, author)
         .then((res) => {
           console.log(`SubmitStory Response: ${res}`)
+          history.push(`/story/preview/${storyEditorStore.storyId}`)
         }).catch((err) => {
           console.log(`SubmitStory Error: ${err}`)
         })
@@ -55,36 +58,10 @@ class CreateStory extends React.Component {
   }
 
   getSerializedStoryContent = (som) => {
-    const { storyEditorStore, userStore } = this.props
+    const { storyEditorStore } = this.props
     console.log(som)
     storyEditorStore.changeContent(som)
     // return som
-  }
-
-  handleUpdateClick = () => {
-    const { storyEditorStore } = this.props
-
-    if (storyEditorStore.isValid) {
-      storyEditorStore.updateStory()
-        .then((res) => {
-          console.log(`UpdateStory Response: ${res}`)
-        }).catch((err) => {
-          console.log(`UpdateStory Error: ${err}`)
-        })
-    }
-  }
-
-  sendContributionRequest = () => {
-    const { storyEditorStore } = this.props
-
-    if (storyEditorStore.isValid) {
-      storyEditorStore.sendContribution(storyEditorStore.storyId)
-        .then((res) => {
-          console.log(`UpdateStory Response: ${res}`)
-        }).catch((err) => {
-          console.log(`UpdateStory Error: ${err}`)
-        })
-    }
   }
 
   render() {
@@ -109,19 +86,11 @@ class CreateStory extends React.Component {
         </Box>
         <Label>Content</Label>
         <TextEditor get={this.getSerializedStoryContent} />
-        {storyEditorStore.isForked && storyEditorStore.storyId !== ''
-          ? <>
-            <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
-            <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
-          </>
-          : ((storyEditorStore.saveInProgress
-            && <ButtonPrimary type="button" onClick={(e) => { e.preventDefault() }}>Saving</ButtonPrimary>
-          ),
-          (!storyEditorStore.saveInProgress && storyEditorStore.storyId === ''
-            ? <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
-            : <ButtonPrimary type="button" onClick={this.handleUpdateClick}>Update</ButtonPrimary>
-          ))
+        { storyEditorStore.saveInProgress
+          ? <ButtonPrimary type="button" onClick={(e) => { e.preventDefault() }}>Saving</ButtonPrimary>
+          : <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
         }
+
       </EditorWrapper>
     )
   }
