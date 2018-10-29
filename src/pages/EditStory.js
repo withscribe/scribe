@@ -15,6 +15,7 @@ import TextEditor from 'Components/Papyrus/TextEditor'
 class EditStory extends React.Component {
   state = {
     permission: false,
+    showForkDetails: false,
   }
 
   componentDidMount() {
@@ -31,6 +32,11 @@ class EditStory extends React.Component {
           <Redirect to={`/story/preview/${storyId}`} />
         )
       }
+
+      if (storyEditorStore.isForked) {
+        console.log('hello')
+        this.setState({ showForkDetails: true })
+      }
     })
   }
 
@@ -38,6 +44,17 @@ class EditStory extends React.Component {
     // TODO: Fix this monkeypatch with an action using destroy()
     const { storyEditorStore } = this.props
     storyEditorStore.init()
+  }
+
+  sendContributionRequest = () => {
+    const { storyEditorStore } = this.props
+
+    storyEditorStore.sendContribution(storyEditorStore.storyId)
+      .then((res) => {
+        console.log(`UpdateStory Response: ${res}`)
+      }).catch((err) => {
+        console.log(`UpdateStory Error: ${err}`)
+      })
   }
 
   handleUpdateClick = () => {
@@ -58,6 +75,7 @@ class EditStory extends React.Component {
 
   render() {
     const { storyEditorStore } = this.props
+    const { showForkDetails } = this.state
     return (
       <EditorWrapper>
         <TitleText>{storyEditorStore.title}</TitleText>
@@ -67,6 +85,9 @@ class EditStory extends React.Component {
         <ButtonPrimary type="button" disabled={storyEditorStore.saveInProgress} onClick={this.handleUpdateClick}>
           {storyEditorStore.saveInProgress ? 'Saving' : 'Update'}
         </ButtonPrimary>
+        {showForkDetails
+          && <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
+        }
       </EditorWrapper>
     )
   }

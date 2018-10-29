@@ -69,9 +69,9 @@ class ViewFork extends React.Component {
   }
 
   sendContributionRequest = () => {
-    const { storyEditorStore } = this.props
+    const { storyEditorStore, userStore } = this.props
 
-    storyEditorStore.sendContribution(storyEditorStore.storyId)
+    storyEditorStore.sendContribution(userStore.me.userName)
       .then((res) => {
         console.log(`UpdateStory Response: ${res}`)
       }).catch((err) => {
@@ -97,8 +97,6 @@ class ViewFork extends React.Component {
             <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
           )
         }
-        {/* <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary> */}
-        {/* <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary> */}
       </EditorWrapper>
     )
   }

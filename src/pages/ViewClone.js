@@ -8,9 +8,9 @@ import Input, {
 } from '_system/Input'
 import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
-import TextEditor from 'Components/Papyrus/TextEditor'
+import StoryViewer from 'Components/Papyrus/StoryViewer'
 
-@inject('storyEditorStore', 'userStore', 'storyStore')
+@inject('userStore', 'storyStore')
 @observer
 class ViewClone extends React.Component {
   state = {
@@ -41,44 +41,6 @@ class ViewClone extends React.Component {
   //   storyEditorStore.init()
   // }
 
-  handleSubmitClick = () => {
-    const { storyEditorStore, userStore } = this.props
-
-    const author = this.getAuthorName(
-      userStore.me.firstName,
-      userStore.me.lastName,
-      userStore.me.userName,
-    )
-    storyEditorStore.submitStory(userStore.me.id, author)
-      .then((res) => {
-        console.log(`SubmitStory Response: ${res}`)
-      }).catch((err) => {
-        console.log(`SubmitStory Error: ${err}`)
-      })
-  }
-
-  handleUpdateClick = () => {
-    const { storyEditorStore } = this.props
-
-    storyEditorStore.updateStory()
-      .then((res) => {
-        console.log(`UpdateStory Response: ${res}`)
-      }).catch((err) => {
-        console.log(`UpdateStory Error: ${err}`)
-      })
-  }
-
-  sendContributionRequest = () => {
-    const { storyEditorStore } = this.props
-
-    storyEditorStore.sendContribution(storyEditorStore.storyId)
-      .then((res) => {
-        console.log(`UpdateStory Response: ${res}`)
-      }).catch((err) => {
-        console.log(`UpdateStory Error: ${err}`)
-      })
-  }
-
   serializedStoryUpdateCallback = (update) => {
     const { storyEditorStore } = this.props
     storyEditorStore.changeContent(update)
@@ -90,7 +52,7 @@ class ViewClone extends React.Component {
     return (
       <EditorWrapper>
         {storyStore.story
-          && <TextEditor content={storyStore.story.content} get={this.serializedStoryUpdateCallback} />
+          && <StoryViewer content={storyStore.story.content} get={this.serializedStoryUpdateCallback} />
         }
         {isAuthor
           && (

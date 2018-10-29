@@ -13,7 +13,7 @@ const StoryEditorStore = types
     title: types.maybe(types.string),
     description: types.maybe(types.string),
     content: types.maybe(types.string),
-    nonAuthorId: types.maybe(types.string),
+    nonAuthorId: types.maybeNull(types.string),
     authorId: types.maybe(types.string),
     isForked: types.optional(types.boolean, false),
     isCloned: types.optional(types.boolean, false),
@@ -143,14 +143,14 @@ const StoryEditorStore = types
       self.saveInProgress = false
     })
 
-    const sendContribution = flow(function* () {
+    const sendContribution = flow(function* (contributorName) {
       const {
-        storyId,
+        storyId, content,
       } = self
       const { data: { contributeRequest: { id } } } = yield client.mutate({
         mutation: contributeRequestMutation,
         variables: ({
-          storyId,
+          storyId, content, contributorName
         }),
       })
 

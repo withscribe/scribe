@@ -28,7 +28,7 @@ class ToastProvider extends React.Component {
                   style={props}
                   autoDismiss
                   appearance="success"
-                  onDismiss={() => toastStore.removeError(t.id)}>
+                  onDismiss={() => toastStore.removeToast(t.id)}>
                   {t.message}
                 </DefaultToast>
               )}
