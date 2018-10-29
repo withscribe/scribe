@@ -20,6 +20,7 @@ const ProfileByIdQuery = gql`
           id
           title
           description
+          content
           isForked
           isCloned
         }
@@ -27,6 +28,7 @@ const ProfileByIdQuery = gql`
           id
           title
           description
+          content
         }
       }
     }
