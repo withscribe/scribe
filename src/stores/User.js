@@ -3,7 +3,7 @@ import { types, flow, destroy, getSnapshot, applySnapshot } from 'mobx-state-tre
 import { client } from 'Services/Client'
 import ProfileByIdQuery from 'Queries/userProfileById'
 import UpdateProfileMutation from 'Mutations/updateProfile'
-import { errorStore } from 'Components/App'
+import { toastStore } from 'Components/App'
 
 const StoryModel = types
   .model('StoryModel', {
@@ -124,7 +124,7 @@ const UserStore = types
         self.setMe(accountById)
       } catch (err) {
         self.updatingUser = false
-        errorStore.addError({
+        toastStore.addToast({
           id: '009090',
           message: 'error in refreshMeById',
         })
@@ -148,7 +148,7 @@ const UserStore = types
       } catch (err) {
         self.updatingProfile = false
         self.isEditingProfile = true
-        errorStore.addError({
+        toastStore.addToast({
           id: '123123',
           message: 'error in saveProfileChanges',
         })

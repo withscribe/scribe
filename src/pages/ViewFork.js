@@ -52,7 +52,7 @@ class ViewFork extends React.Component {
   }
 
   handleUpdateClick = () => {
-    const { storyEditorStore, toastStore } = this.props
+    const { storyEditorStore } = this.props
 
     storyEditorStore.updateStory()
       .then((res) => {
@@ -63,7 +63,7 @@ class ViewFork extends React.Component {
   }
 
   sendContributionRequest = () => {
-    const { storyEditorStore, userStore } = this.props
+    const { storyEditorStore, userStore, toastStore } = this.props
 
     toastStore.addToast({
       id: "" + Math.random(1) + "",
