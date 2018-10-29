@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import { EditorWrapper } from 'Styled/Editor'
@@ -8,32 +8,38 @@ import Input, {
 } from '_system/Input'
 import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
-import TextEditor from 'Components/Papyrus/TextEditor'
+import StoryViewer from 'Components/Papyrus/StoryViewer'
 
-@inject('storyEditorStore', 'userStore')
+@inject('storyStore', 'userStore')
 @observer
 class ViewFork extends React.Component {
-  state = {}
+  state = {
+    isAuthor: false,
+  }
 
   componentDidMount() {
-    const { storyEditorStore, userStore } = this.props
+    const { userStore, storyStore } = this.props
     const storyId = this.props.match.params.id
 
-    storyEditorStore.loadStory(storyId).then(() => {
-      if (!storyEditorStore.isForked) {
+    storyStore.getStory(storyId).then(() => {
+      if (!storyStore.story.isForked) {
         return (
           <Redirect
-            to={`/story/preview/${storyEditorStore.story.id}`} />
+            to={`/story/preview/${storyStore.story.id}`} />
         )
+      }
+      if (storyStore.story.authorId === userStore.me.id
+      || storyStore.story.nonAuthorId === userStore.me.id) {
+        this.setState({ isAuthor: true })
       }
     })
   }
 
-  componentWillUnmount() {
-    // TODO: Fix this monkeypatch with an action using destroy()
-    const { storyEditorStore } = this.props
-    storyEditorStore.init()
-  }
+  // componentWillUnmount() {
+  //   // TODO: Fix this monkeypatch with an action using destroy()
+  //   const { storyEditorStore } = this.props
+  //   storyEditorStore.init()
+  // }
 
   handleSubmitClick = () => {
     const { storyEditorStore, userStore } = this.props
@@ -79,17 +85,20 @@ class ViewFork extends React.Component {
   }
 
   render() {
-    const { storyEditorStore } = this.props
+    const { storyStore } = this.props
+    const { isAuthor } = this.state
     return (
       <EditorWrapper>
-        <ButtonPrimary type="button" disabled={storyEditorStore.saveInProgress} onClick={this.handleUpdateClick}>
-          {storyEditorStore.saveInProgress ? 'Saving' : 'Update'}
-        </ButtonPrimary>
-        {storyEditorStore.content
-          && <TextEditor content={storyEditorStore.content} get={this.serializedStoryUpdateCallback} />
+        {storyStore.story
+          && <StoryViewer content={storyStore.story.content} />
         }
-        <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
-        <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
+        {isAuthor && storyStore.story
+          && (
+            <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
+          )
+        }
+        {/* <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary> */}
+        {/* <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary> */}
       </EditorWrapper>
     )
   }

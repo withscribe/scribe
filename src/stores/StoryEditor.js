@@ -13,6 +13,8 @@ const StoryEditorStore = types
     title: types.maybe(types.string),
     description: types.maybe(types.string),
     content: types.maybe(types.string),
+    nonAuthorId: types.maybe(types.string),
+    authorId: types.maybe(types.string),
     isForked: types.optional(types.boolean, false),
     isCloned: types.optional(types.boolean, false),
   })
@@ -55,24 +57,6 @@ const StoryEditorStore = types
     }
 
     /**
-     * Story store function used to alter the Story Minimum Age
-     * @function changeMinAge
-     * @param {number} newMinAge - The value provided from the StoryEditor minAge input
-     */
-    const changeMinAge = (newMinAge) => {
-      self.minAge = parseInt(newMinAge, 10)
-    }
-
-    /**
-     * Story store function used to alter the Story Maximum
-     * @function changeMaxAge
-     * @param {number} newMaxAge - The value provided from the StoryEditor maxAge input
-     */
-    const changeMaxAge = (newMaxAge) => {
-      self.maxAge = parseInt(newMaxAge, 10)
-    }
-
-    /**
      * Story store function used to initialise the Store to prevent input with null values
      * @function init
      */
@@ -81,8 +65,8 @@ const StoryEditorStore = types
       self.title = ''
       self.description = ''
       self.content = ''
-      self.minAge = 1
-      self.maxAge = 100
+      self.authorId = ''
+      self.nonAuthorId = ''
       self.saveInProgress = false
     }
 
@@ -109,6 +93,7 @@ const StoryEditorStore = types
     const setData = (data) => {
       const {
         id, title, description, content, isForked, isCloned,
+        authorId, nonAuthorId,
       } = data
       self.storyId = id
       self.title = title
@@ -116,6 +101,8 @@ const StoryEditorStore = types
       self.content = content
       self.isForked = isForked
       self.isCloned = isCloned
+      self.authorId = authorId
+      self.nonAuthorId = nonAuthorId
     }
 
     /**
@@ -175,8 +162,6 @@ const StoryEditorStore = types
       changeTitle,
       changeDesc,
       changeContent,
-      changeMinAge,
-      changeMaxAge,
       init,
       submitStory,
       updateStory,

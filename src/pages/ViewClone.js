@@ -28,8 +28,8 @@ class ViewClone extends React.Component {
             to={`/story/preview/${storyStore.story.id}`} />
         )
       }
-
-      if (userStore.me.id === storyStore.story.nonAuthorId) {
+      if (storyStore.story.authorId === userStore.me.id
+      || storyStore.story.nonAuthorId === userStore.me.id) {
         this.setState({ isAuthor: true })
       }
     })
@@ -97,9 +97,6 @@ class ViewClone extends React.Component {
             <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
           )
         }
-        {/* <ButtonPrimary type="button" disabled={storyEditorStore.saveInProgress} onClick={this.handleUpdateClick}> */}
-        {/*   {storyEditorStore.saveInProgress ? 'Saving' : 'Update'} */}
-        {/* </ButtonPrimary> */}
       </EditorWrapper>
     )
   }

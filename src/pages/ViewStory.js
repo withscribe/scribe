@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-modal'
 import { inject, observer } from 'mobx-react'
+import { Link } from 'react-router-dom'
 
 import Input, {
   Label, InlineLabel, InlineInput, TextArea,
@@ -17,6 +18,7 @@ class ViewStory extends React.Component {
     showCloneModal: false,
     liked: false,
     forked: false,
+    isAuthor: false,
   }
 
   componentDidMount() {
@@ -30,6 +32,11 @@ class ViewStory extends React.Component {
       }
       const hasForked = storyStore.story.isForked
       this.setState({ forked: hasForked })
+
+      if (storyStore.story.authorId === userStore.me.id
+      || storyStore.story.nonAuthorId === userStore.me.id) {
+        this.setState({ isAuthor: true })
+      }
     })
   }
 
@@ -85,12 +92,12 @@ class ViewStory extends React.Component {
 
   render() {
     const { storyStore: { story, cloningStory }, storyStore, userStore } = this.props
-    const { showCloneModal, liked, forked } = this.state
+    const { showCloneModal, liked, forked, isAuthor } = this.state
 
     return (
         <>
-          {story && (!storyStore.isAuthor(userStore.me.id) 
-            ? <>
+          {story
+            && <>
               <TitleText>
                 {story.title}
               </TitleText>
@@ -112,17 +119,13 @@ class ViewStory extends React.Component {
                 ? <Button>Contributed!</Button>
                 : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
               }
+              {isAuthor
+                && (
+                  <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
+                )
+              }
             </>
-            : <>
-              <TitleText>
-                {story.title}
-              </TitleText>
-              <Label>
-                By: {story.author ? story.author : 'No Author Assigned.'}
-              </Label>
-              <StoryViewer content={story.content} />
-            </>
-          )}
+          }
 
           <Modal
             isOpen={showCloneModal}
@@ -134,7 +137,6 @@ class ViewStory extends React.Component {
             <button type="button" onClick={this.viewClone}>View</button>
             <button type="button" onClick={this.editClone}>Edit</button>
           </Modal>
-
       </>
     )
   }
