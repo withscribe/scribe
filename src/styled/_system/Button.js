@@ -108,4 +108,10 @@ const ButtonInlay = styled('button')`
 
 const ButtonFill = Button
 
-export { Button, ButtonPrimary, ButtonSecondary, ButtonInlay, ButtonFill }
+export {
+  Button,
+  ButtonPrimary,
+  ButtonSecondary,
+  ButtonInlay,
+  ButtonFill,
+}

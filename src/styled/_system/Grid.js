@@ -8,6 +8,15 @@ const HomeGrid = styled('div')`
   /* grid-auto-rows: 150px; */
 `
 
+const ContributionsGrid = styled('div')`
+  display: grid;
+  grid-template-columns: repeat(1, minmax(250px, 100vw) );
+  grid-gap: 2rem;
+  grid-auto-flow: row;
+  /* grid-auto-rows: 150px; */
+`
+
 export {
   HomeGrid,
+  ContributionsGrid,
 }

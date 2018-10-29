@@ -159,12 +159,13 @@ const StoryEditorStore = types
 
     const sendContribution = flow(function* () {
       const {
-        storyId,
+        storyId, content,
       } = self
       const { data: { contributeRequest: { id } } } = yield client.mutate({
         mutation: contributeRequestMutation,
         variables: ({
           storyId,
+          content
         }),
       })
 

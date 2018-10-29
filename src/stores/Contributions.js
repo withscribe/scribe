@@ -101,7 +101,7 @@ const ContributionsStore = types
       setContribution,
       approveContribution,
       rejectContribution,
-      deserializeContent
+      deserializeContent,
     }
   })
   .views(self => ({
