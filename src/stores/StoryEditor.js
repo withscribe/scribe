@@ -163,7 +163,7 @@ const StoryEditorStore = types
       const { data: { contributeRequest: { id } } } = yield client.mutate({
         mutation: contributeRequestMutation,
         variables: ({
-          storyId, content, contributorName,
+          storyId, content, contributorName
         }),
       })
 
