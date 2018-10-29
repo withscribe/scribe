@@ -1,9 +1,9 @@
 import React from 'react'
-import { inject, observer, } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 import Diff from 'react-stylable-diff'
 
 import Input, {
-    Label
+  Label
 } from '_system/Input'
 import { ButtonPrimary } from '_system/Button'
 
@@ -11,13 +11,10 @@ import { ButtonPrimary } from '_system/Button'
 @inject('userStore', 'storyStore', 'contributionsStore')
 @observer
 class DiffReview extends React.Component {
-  state = {
-    beforeText: "",
-    afterText: ""
-  }
+  state = {}
 
   componentDidMount() {
-    const { contributionsStore, userStore, storyStore } = this.props
+    const { contributionsStore } = this.props
     const contributionId = this.props.match.params.id
     contributionsStore.getContribution(contributionId)
   }
@@ -38,13 +35,13 @@ class DiffReview extends React.Component {
     const { contributionsStore: { contribution }, contributionsStore } = this.props
     return (
       <>
-      {contribution &&
-        <>
-          <Diff inputA={contributionsStore.deserializeContent(contribution.originalContent)} inputB={contributionsStore.deserializeContent(contribution.contributionContent)} />
-          <ButtonPrimary type="button" onClick={() => this.approveChanges(contribution.id)}>Approve & Update Story</ButtonPrimary>
-          <ButtonPrimary type="button" onClick={() => this.rejectChanges(contribution.id)}>Reject</ButtonPrimary>
+        {contribution
+          && <>
+            <Diff inputA={contributionsStore.deserializeContent(contribution.originalContent)} inputB={contributionsStore.deserializeContent(contribution.contributionContent)} />
+            <ButtonPrimary type="button" onClick={() => this.approveChanges(contribution.id)}>Approve & Update Story</ButtonPrimary>
+            <ButtonPrimary type="button" onClick={() => this.rejectChanges(contribution.id)}>Reject</ButtonPrimary>
         </>
-      }
+        }
       </>
     )
   }
