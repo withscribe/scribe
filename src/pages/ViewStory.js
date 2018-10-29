@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Modal from 'react-modal'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
@@ -11,11 +10,10 @@ import { Button } from '_system/Button'
 import { TitleText } from '_system/Typography'
 import StoryViewer from 'Components/Papyrus/StoryViewer'
 
-@inject('storyStore', 'userStore')
+@inject('storyStore', 'userStore', 'toastStore')
 @observer
 class ViewStory extends React.Component {
   state = {
-    showCloneModal: false,
     liked: false,
     forked: false,
     isAuthor: false,
@@ -50,11 +48,13 @@ class ViewStory extends React.Component {
   }
 
   cloneStory = (parentStoryId) => {
-    const { storyStore, userStore } = this.props
+    const { storyStore, userStore, toastStore } = this.props
     storyStore.clone(parentStoryId, userStore.me.id)
-      .then(() => {
-        this.setState({ showCloneModal: true })
-      })
+    toastStore.addToast({
+      id: '' + Math.random() + '',
+      message: "Story Cloned Successfully",
+      display: true,
+    })
   }
 
   viewClone = () => {
@@ -92,8 +92,8 @@ class ViewStory extends React.Component {
 
   render() {
     const { storyStore: { story, cloningStory }, storyStore, userStore } = this.props
-    const { showCloneModal, liked, forked, isAuthor } = this.state
-
+    const { liked, forked, isAuthor } = this.state
+    console.log(isAuthor)
     return (
         <>
           {story
@@ -107,17 +107,20 @@ class ViewStory extends React.Component {
 
               <StoryViewer content={story.content} />
 
-              {!cloningStory
-                ? <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
-                : <Button>Cloning Story</Button>
+              {!isAuthor
+                && <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
               }
-              {liked
-                ? <Button>Liked!</Button>
-                : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
+              {!isAuthor
+                && (liked
+                  ? <Button>Liked!</Button>
+                  : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
+                )
               }
-              {forked
-                ? <Button>Contributed!</Button>
-                : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
+              {!isAuthor
+                && (forked
+                  ? <Button>Contributed!</Button>
+                  : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
+                )
               }
               {isAuthor
                 && (
@@ -126,17 +129,6 @@ class ViewStory extends React.Component {
               }
             </>
           }
-
-          <Modal
-            isOpen={showCloneModal}
-            onRequestClose={this.closeModal}
-            contentLabel="Clone Success Modal">
-
-            <h2>Story Cloned!</h2>
-            <button type="button" onClick={this.closeModal}>close</button>
-            <button type="button" onClick={this.viewClone}>View</button>
-            <button type="button" onClick={this.editClone}>Edit</button>
-          </Modal>
       </>
     )
   }
@@ -145,6 +137,7 @@ class ViewStory extends React.Component {
 ViewStory.propTypes = {
   storyStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
+  toastStore: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 }
 

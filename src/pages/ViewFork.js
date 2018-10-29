@@ -90,7 +90,16 @@ class ViewFork extends React.Component {
     return (
       <EditorWrapper>
         {storyStore.story
-          && <StoryViewer content={storyStore.story.content} />
+          && (<>
+            <TitleText>
+              {storyStore.story.title}
+            </TitleText>
+            <Label>
+              By: {storyStore.story.author ? storyStore.story.author : 'No Author Assigned.'}
+            </Label>
+
+            <StoryViewer content={storyStore.story.content} />
+          </>)
         }
         {isAuthor && storyStore.story
           && (
