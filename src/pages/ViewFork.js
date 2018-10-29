@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import { EditorWrapper } from 'Styled/Editor'
@@ -8,32 +8,38 @@ import Input, {
 } from '_system/Input'
 import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
-import TextEditor from 'Components/Papyrus/TextEditor'
+import StoryViewer from 'Components/Papyrus/StoryViewer'
 
-@inject('storyEditorStore', 'userStore', 'toastStore')
+@inject('storyStore', 'userStore')
 @observer
 class ViewFork extends React.Component {
-  state = {}
+  state = {
+    isAuthor: false,
+  }
 
   componentDidMount() {
-    const { storyEditorStore, userStore } = this.props
+    const { userStore, storyStore } = this.props
     const storyId = this.props.match.params.id
 
-    storyEditorStore.loadStory(storyId).then(() => {
-      if (!storyEditorStore.isForked) {
+    storyStore.getStory(storyId).then(() => {
+      if (!storyStore.story.isForked) {
         return (
           <Redirect
-            to={`/story/preview/${storyEditorStore.story.id}`} />
+            to={`/story/preview/${storyStore.story.id}`} />
         )
+      }
+      if (storyStore.story.authorId === userStore.me.id
+      || storyStore.story.nonAuthorId === userStore.me.id) {
+        this.setState({ isAuthor: true })
       }
     })
   }
 
-  componentWillUnmount() {
-    // TODO: Fix this monkeypatch with an action using destroy()
-    const { storyEditorStore } = this.props
-    storyEditorStore.init()
-  }
+  // componentWillUnmount() {
+  //   // TODO: Fix this monkeypatch with an action using destroy()
+  //   const { storyEditorStore } = this.props
+  //   storyEditorStore.init()
+  // }
 
   handleSubmitClick = () => {
     const { storyEditorStore, userStore } = this.props
@@ -63,18 +69,11 @@ class ViewFork extends React.Component {
   }
 
   sendContributionRequest = () => {
-    const { storyEditorStore, userStore, toastStore } = this.props
-
-    toastStore.addToast({
-      id: "" + Math.random(1) + "",
-      message: 'Your contribution has been sent!',
-      display: true,
-    })
+    const { storyEditorStore, userStore } = this.props
 
     storyEditorStore.sendContribution(userStore.me.userName)
       .then((res) => {
         console.log(`UpdateStory Response: ${res}`)
-
       }).catch((err) => {
         console.log(`UpdateStory Error: ${err}`)
       })
@@ -86,22 +85,19 @@ class ViewFork extends React.Component {
   }
 
   render() {
-    const { storyEditorStore } = this.props
+    const { storyStore } = this.props
+    const { isAuthor } = this.state
     return (
-      <>
-        <TitleText>
-          {storyEditorStore.title}
-        </TitleText>
-        <EditorWrapper>
-          {storyEditorStore.content
-            && <TextEditor content={storyEditorStore.content} get={this.serializedStoryUpdateCallback} />
-          }
-          <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
-          <ButtonPrimary type="button" disabled={storyEditorStore.saveInProgress} onClick={this.handleUpdateClick}>
-            {storyEditorStore.saveInProgress ? 'Saving' : 'Update'}
-          </ButtonPrimary>
-        </EditorWrapper>
-      </>
+      <EditorWrapper>
+        {storyStore.story
+          && <StoryViewer content={storyStore.story.content} />
+        }
+        {isAuthor && storyStore.story
+          && (
+            <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
+          )
+        }
+      </EditorWrapper>
     )
   }
 }
