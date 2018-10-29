@@ -20,12 +20,6 @@ class Contributions extends React.Component {
     contributionsStore.getContributionRequests(userStore.me.id)
   }
 
-  getContributorName = (storyId) => {
-    const { storyStore: { story }, storyStore } = this.props
-    storyStore.getStory(storyId)
-    //console.log(story)
-  }
-
   render() {
     const { contributionsStore, storyStore } = this.props
     return (
@@ -37,8 +31,7 @@ class Contributions extends React.Component {
               <ListCard key={contribution.id}>
                 <Link to={`/profile/contributions/diff/${contribution.id}`}>
                   <div style={{ width: '100%', height: '15vh' }}>
-                    Review
-                    {this.getContributorName(contribution.forkId)}
+                    {contribution.id}
                   </div>
                 </Link>
               </ListCard>
