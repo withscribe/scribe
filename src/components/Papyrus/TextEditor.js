@@ -88,6 +88,23 @@ class TextEditor extends React.Component {
     })
   }
 
+  hasMark = (type) => {
+    const { value } = this.state
+    return value.activeMarks.some(mark => mark.type === type)
+  }
+
+  renderMarkButton = (type, icon) => {
+    const isActive = this.hasMark(type)
+    return (
+      <ToolbarButton
+        active={isActive}
+        type="button"
+        onPointerDown={e => this.onMarkClick(e, type)}>
+        {icon}
+      </ToolbarButton>
+    )
+  }
+
   renderMark = (props, next) => {
     const { children, mark, attributes } = props
 
@@ -110,21 +127,9 @@ class TextEditor extends React.Component {
     return (
       <>
         <Toolbar>
-          <ToolbarButton
-            type="button"
-            onPointerDown={e => this.onMarkClick(e, 'bold')}>
-              B
-          </ToolbarButton>
-          <ToolbarButton
-            type="button"
-            onPointerDown={e => this.onMarkClick(e, 'italic')}>
-              I
-          </ToolbarButton>
-          <ToolbarButton
-            type="button"
-            onPointerDown={e => this.onMarkClick(e, 'underlined')}>
-              U
-          </ToolbarButton>
+          {this.renderMarkButton('bold', 'B')}
+          {this.renderMarkButton('italic', 'I')}
+          {this.renderMarkButton('underlined', 'U')}
         </Toolbar>
         {hasFinishedWorking
           && (

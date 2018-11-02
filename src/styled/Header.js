@@ -7,11 +7,13 @@ const HeaderWrapper = styled.header`
   display: flex;
   flex-align: center;
   justify-content: space-between;
-  background: ${colors.g500};
-  color: ${colors.white};
+  /* background: ${colors.g500}; */
+  background: ${colors.white};
+  color: ${colors.g300};
   position: relative;
   width: 100vw;
   justify-content: center;
+  box-shadow: 0px -3px 20px 4px #efefef;
 `
 
 const HeaderContainer = styled.nav`
@@ -46,7 +48,7 @@ const NavItem = styled.li`
 
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: ${colors.white};
+  color: ${colors.g300};
   font-size: 1.25rem;
 `
 
@@ -60,7 +62,7 @@ const HeaderBar = styled.div`
 
 const HeaderLogo = styled.span`
   font-size: 1.25rem;
-  color: ${colors.white};
+  color: ${colors.g500};
   text-decoration: none;
   font-family: Theinhardt-Bold;
   font-weight: 300;

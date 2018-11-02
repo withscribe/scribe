@@ -15,7 +15,7 @@ const DropdownArrow = ({ flipped }) => (
   <figure style={{ margin: '0 0 0 6em', display: 'inline-flex', color: 'rgb(218, 216, 222)' }}>
     <svg
       style={{
-        fill: '#fff',
+        fill: '#151515',
         transform: flipped ? 'rotate(180deg)' : 'none',
         transition: 'all .2s ease-in',
       }}

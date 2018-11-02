@@ -18,19 +18,6 @@ class MyStories extends React.Component {
     userStore.refreshMeById(userStore.me.account_id)
   }
 
-  previewStory = (storyId) => {
-    const { storyStore } = this.props
-    console.log(storyId)
-    this.props.history.push(`/story/preview/${storyId}`)
-  }
-
-  editStory = (storyId) => {
-    const { storyStore } = this.props
-    console.log(storyId)
-    storyStore.setActiveStory(storyId)
-    this.props.history.push(`/editor/${storyId}`)
-  }
-
   render() {
     const { userStore, userStore: { me: { originalStories } } } = this.props
     return (
@@ -41,7 +28,7 @@ class MyStories extends React.Component {
           : <span>Stories Loaded</span>
         }
         <TitleSecondary>Original Stories</TitleSecondary>
-        {originalStories && !userStore.updatingUser
+        {originalStories.length >= 1 && !userStore.updatingUser
           ? (
             <HomeGrid>
               {originalStories.map(story => (
@@ -65,52 +52,11 @@ class MyStories extends React.Component {
           ? (
             <HomeGrid>
               {userStore.forkedStories.map(story => (
-                <ProfileStoryCard story={story} key={story.id}/>
+                <ProfileStoryCard story={story} key={story.id} />
               ))}
             </HomeGrid>
           ) : 'no forked stories'
         }
-        {/* {storyStore.stories.length > 0 ? ( */}
-        {/*   <ul> */}
-        {/*     {storyStore.usersStories(userStore.me.id).map(story => ( */}
-        {/*       <div key={story.id}> */}
-        {/*         {story.isCloned */}
-        {/*           ? <> */}
-        {/*             <li>{story.title}<small><b>CLONE</b></small></li> */}
-        {/*             <Button onClick={() => this.previewStory(story.id)}> */}
-        {/*                 View */}
-        {/*             </Button> */}
-        {/*             <Button onClick={() => this.editStory(story.id)}> */}
-        {/*                 Edit */}
-        {/*             </Button> */}
-        {/*             <Label>Likes: {story.likes}</Label> */}
-        {/*           </> */}
-        {/*           : story.isForked ? <> */}
-        {/*             <li>{story.title}<small><b>Fork</b></small></li> */}
-        {/*             <Button onClick={() => this.previewStory(story.id)}> */}
-        {/*                 View */}
-        {/*             </Button> */}
-        {/*             <Button onClick={() => this.editStory(story.id)}> */}
-        {/*                 Edit */}
-        {/*             </Button> */}
-        {/*             <Label>Likes: {story.likes ?story.likes : 0}</Label> */}
-        {/*           </> */}
-        {/*           : <> */}
-        {/*             <li>{story.title}</li> */}
-        {/*             <Button onClick={() => this.previewStory(story.id)}> */}
-        {/*                 View */}
-        {/*             </Button> */}
-        {/*             <Button onClick={() => this.editStory(story.id)}> */}
-        {/*                 Edit */}
-        {/*             </Button> */}
-        {/*             <Label>Likes: {story.likes ?story.likes : 0}</Label> */}
-        {/*           </> */}
-        {/*         } */}
-        {/*       </div> */}
-        {/*     ))} */}
-        {/*   </ul> */}
-        {/* ) : <span>nothing to see here</span> */}
-        {/* } */}
       </>
     )
   }

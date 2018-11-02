@@ -8,6 +8,8 @@ import Input, {
 } from '_system/Input'
 import { Button } from '_system/Button'
 import { TitleText } from '_system/Typography'
+import { HomeGrid } from '_system/Grid'
+import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import StoryViewer from 'Components/Papyrus/StoryViewer'
 
 @inject('storyStore', 'userStore', 'toastStore')
@@ -22,9 +24,9 @@ class ViewStory extends React.Component {
   componentDidMount() {
     const { storyStore, userStore } = this.props
     const storyId = this.props.match.params.id
-    const guid = storyId + userStore.id
 
     storyStore.getStory(storyId).then(() => {
+      const guid = storyId + userStore.id
       if (storyStore.story.usersWhoLiked.length >= 1 && storyStore.story.usersWhoLiked.filter(e => e.guid === guid)) {
         this.setState({ liked: true })
       }
@@ -43,39 +45,14 @@ class ViewStory extends React.Component {
     storyStore.destroyLoadedStory()
   }
 
-  closeModal = () => {
-    this.setState({ showCloneModal: false })
-  }
-
   cloneStory = (parentStoryId) => {
     const { storyStore, userStore, toastStore } = this.props
     storyStore.clone(parentStoryId, userStore.me.id)
     toastStore.addToast({
       id: '' + Math.random() + '',
-      message: "Story Cloned Successfully",
+      message: 'Story Cloned Successfully',
       display: true,
     })
-  }
-
-  viewClone = () => {
-    const { storyStore, history } = this.props
-    const id = storyStore.currentCloneId
-
-    this.closeModal()
-
-    storyStore.setActiveStory(id)
-    storyStore.getStory(id) // need to get this bc it doesn't mount again
-    history.push(`/story/preview/${id}`)
-  }
-
-  editClone = () => {
-    const { storyStore, history } = this.props
-    const id = storyStore.currentCloneId
-
-    this.closeModal()
-
-    storyStore.setActiveStory(id)
-    history.push(`/editor/${id}`)
   }
 
   likeStory = (storyId) => {
@@ -91,12 +68,21 @@ class ViewStory extends React.Component {
   }
 
   render() {
-    const { storyStore: { story, cloningStory }, storyStore, userStore } = this.props
+    const { storyStore: { story }, storyStore } = this.props
     const { liked, forked, isAuthor } = this.state
-    console.log(isAuthor)
+    // console.log('fetchingStory — ', storyStore.fetchingStory, 'story —', storyStore.story)
+    // console.log('res:', storyStore.fetchingStory !== true && storyStore.story !== null)
     return (
         <>
-          {story
+          <GhostWrapper isDoneRendering={storyStore.fetchingStory}>
+            <HomeGrid>
+              <GhostSmall style={{ backgroundColor: '#efefef' }} />
+              <GhostSmall style={{ backgroundColor: '#efefef' }} />
+              <GhostSmall style={{ backgroundColor: '#efefef' }} />
+              <GhostSmall style={{ backgroundColor: '#efefef' }} />
+            </HomeGrid>
+          </GhostWrapper>
+          {!storyStore.fetchingStory && storyStore.story
             && <>
               <TitleText>
                 {story.title}
@@ -138,7 +124,6 @@ ViewStory.propTypes = {
   storyStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
   toastStore: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
 }
 
 export default ViewStory

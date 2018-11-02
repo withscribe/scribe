@@ -7,12 +7,13 @@ const DropdownWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
-  /* margin: 0 -1vw 0 1em; */
   cursor: pointer;
   user-select: none;
+  /* background-color: ${colors.g100}; */
 
   &:hover {
-    background-color: hsla(0, 0% ,100%, .1);
+    /* background-color: hsla(0, 0% ,100%, .1); */
+    background-color: ${colors.g100};
   }
 
   &:active {
@@ -33,6 +34,7 @@ const DropdownMenu = styled.div`
   background-color: ${colors.white};
   user-select: none;
   overflow: hidden;
+  box-shadow: 0px -3px 20px 4px #efefef;
 `
 
 const DropdownContext = styled.div`

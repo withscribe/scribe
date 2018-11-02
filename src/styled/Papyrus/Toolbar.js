@@ -4,8 +4,7 @@ import { colors, typography, transitions } from '_system/Theme'
 
 const Toolbar = styled('div')`
   position: relative;
-  border-bottom: 2px solid #efefef;
-  margin-bottom: .5em;
+  margin: 1em 1.5em 1em 0;
 `
 
 const ToolbarButton = styled('button')`
@@ -15,8 +14,13 @@ const ToolbarButton = styled('button')`
   transition: ${transitions.default};
   border-radius: 4px;
   width: 2em;
+  height: 2em;
   text-align: center;
   cursor: pointer;
+  ${p => p.active
+    ? `background-color: ${colors.g100};`
+    : null
+  };
 
   &:not(:last-of-type) {
     margin-right: .5em;

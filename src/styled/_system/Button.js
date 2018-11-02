@@ -80,10 +80,10 @@ const secondaryStyles = css`
 
 const inlayStyles = css`
   background-color: transparent;
-  color: ${colors.white};
+  color: ${colors.g300};
 
   &:hover {
-    background-color: ${colors.g300};
+    background-color: ${colors.g100};
   }
 `
 

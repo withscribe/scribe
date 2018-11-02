@@ -1,13 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
-import { Link } from 'react-router-dom'
 
 import StoryCard from 'Components/StoryCard'
 import { HomeGrid } from '_system/Grid'
-import { Card, CardImage } from '_system/Card'
 import { TitleText } from '_system/Typography'
-import { ButtonPrimary } from '_system/Button'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 
 @inject('storyStore')
@@ -34,7 +31,7 @@ class Home extends React.Component {
           </HomeGrid>
         </GhostWrapper>
         <HomeGrid>
-          {storyStore.stories && !storyStore.fetchingStories
+          {!storyStore.fetchingStories
             ? <>
               {storyStore.nonClonedStories.map((story) => {
                 // ^^^ this makes mst bitch
@@ -43,7 +40,6 @@ class Home extends React.Component {
                 // https://github.com/mobxjs/mobx-state-tree/issues/912
                 const wide = story.id.includes('4e')
                 const num = Math.floor(Math.random() * (5 - 1) + 1)
-                console.log(num)
                 return (
                   <StoryCard story={story} grad={num} key={story.id} />
                 )

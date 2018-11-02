@@ -27,7 +27,7 @@ const inputBaseStyles = css`
   margin-bottom: 2em;
   transition: border-color 200ms ease-in-out;
   width: 100%;
-  font-size: ${typography.text.small};
+  ${typography.text.small};
 
   &:focus,
   &:active {
