@@ -56,7 +56,6 @@ const StoryStore = types
     */
     const setStories = (stories) => {
       applySnapshot(self.stories, stories)
-      // self.stories = stories
     }
     /**
      * Story store function used to alter the selected story
@@ -72,13 +71,19 @@ const StoryStore = types
      * @function getAllStories
     */
     const getAllStories = flow(function* () {
-      self.fetchingStories = true
-      const { data: { allStories } } = yield client.query({
-        query: AllStories,
-        fetchPolicy: 'network-only',
-      })
-      self.fetchingStories = false
-      self.setStories(allStories)
+      try {
+        self.fetchingStories = true
+        const { data: { allStories } } = yield client.query({
+          query: AllStories,
+          fetchPolicy: 'network-only',
+        })
+        self.setStories(allStories)
+        // self.fetchingStories = false
+      } catch (err) {
+        console.log('something went wrong inside of getAllStories')
+      } finally {
+        self.fetchingStories = false
+      }
     })
     /**
      * Story store function used to retrieve a specific story
@@ -87,12 +92,19 @@ const StoryStore = types
      * @param {String} storyId - The ID of the request story
     */
     const getStory = flow(function* (storyId) {
-      const { data: { storyById } } = yield client.query({
-        query: StoryByIdQuery,
-        variables: ({ storyId }),
-        fetchPolicy: 'network-only',
-      })
-      self.setStory(storyById)
+      try {
+        self.fetchingStory = true
+        const { data: { storyById } } = yield client.query({
+          query: StoryByIdQuery,
+          variables: ({ storyId }),
+          fetchPolicy: 'network-only',
+        })
+        self.setStory(storyById)
+      } catch (err) {
+        console.log('somethign went wrong inside of getStory')
+      } finally {
+        self.fetchingStory = false
+      }
     })
     /**
      * Story store function used to attach a single requested
@@ -101,16 +113,15 @@ const StoryStore = types
      * @param {String} story - StoryModel returned from getStory
     */
     const setStory = (story) => {
-      if (self.story == null) {
-        self.story = StoryModel.create({
-          ...story,
-        })
-        return
-      }
+      // if (self.story == null) {
+      //   self.story = StoryModel.create({
+      //     ...story,
+      //   })
+      //   return
+      // }
+      self.story = { ...story }
 
-      self.story = {
-        ...story,
-      }
+      // applySnapshot(self.story, ...story)
     }
     /**
      * Story store function used to clone (make a copy) of an existing story
