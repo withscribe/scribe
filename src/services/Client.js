@@ -9,7 +9,7 @@ import { Redirect } from 'react-router-dom'
 // import fetch from 'unfetch'
 
 const httpLink = new HttpLink({
-  uri: 'http://138.197.130.167/unravel',
+  uri: 'http://138.197.130.167/scribe',
   credentials: 'same-origin',
   // fetch,
 })
