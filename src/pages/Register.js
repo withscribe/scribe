@@ -4,9 +4,11 @@ import { inject, observer } from 'mobx-react'
 
 import withValidation from '../hoc/withValidation'
 
-import Input from '_system/Input'
+import Input, { Label } from '_system/Input'
 import { Button } from '_system/Button'
-import { FormWrapper, FormContainer, FormTitle } from 'Styled/LRForm'
+import {
+  FormWrapper, FormContainer, FormTitle, FormDesc,
+} from 'Styled/LRForm'
 
 @inject('userStore', 'authStore')
 @observer
@@ -35,26 +37,39 @@ class Register extends React.Component {
 
     return (
       <FormWrapper>
-        <FormContainer width={[1.1 / 3, 1 / 4]}>
+        <FormContainer width={1 / 2}>
+          <FormTitle>Get Started on Scribe.</FormTitle>
+          <FormDesc>Enjoy these fucking sick benefits of having an account...</FormDesc>
+          <ul>
+            <li>perk 1</li>
+            <li>free stories man</li>
+            <li>we are giving them away</li>
+          </ul>
+        </FormContainer>
+        <FormContainer width={1 / 3} ml="auto" mt="10em">
           <form>
+            <Label>Username</Label>
             <Input
               placeholder="username"
               type="text"
               onBlur={() => single('USERNAME')}
               onChange={e => authStore.changeUsername(e.target.value)} />
             {errors.USERNAME && <span style={{ color: 'red' }}>{errors.USERNAME}</span>}
+            <Label>Email</Label>
             <Input
               placeholder="email"
               type="email"
               onBlur={() => single('EMAIL')}
               onChange={e => authStore.changeEmail(e.target.value)} />
             {errors.EMAIL && <span style={{ color: 'red' }}>{errors.EMAIL}</span>}
+            <Label>Password</Label>
             <Input
               placeholder="password"
               type="password"
               onBlur={() => single('PASSWORD')}
               onChange={e => authStore.changePassword(e.target.value)} />
             {errors.PASSWORD && <span style={{ color: 'red' }}>{errors.PASSWORD}</span>}
+            <Label>Confirm Password</Label>
             <Input
               placeholder="confirm password"
               type="password"
@@ -64,12 +79,10 @@ class Register extends React.Component {
             <Button
               type="submit"
               disabled={valid === false}
-              full
-              withHeight
               onClick={e => this.onRegister(e)}>
-              Register Account
+              Register
             </Button>
-            <Link to="/login">Already have an account? Log in.</Link>
+            <Link to="/login">Already have an account? <u>Log in.</u></Link>
           </form>
         </FormContainer>
       </FormWrapper>

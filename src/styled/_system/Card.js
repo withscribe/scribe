@@ -4,13 +4,6 @@ import {
   gradients, transitions, colors, typography,
 } from '_system/Theme'
 
-const randomColor = () => {
-  let keys = Object.keys(gradients)
-  const res = gradients[keys[keys.length * Math.random() << 0]]
-  const style = css`${res}`
-  return style
-}
-
 const gradOneStyle = css`
   ${gradients[1]};
 `
@@ -57,7 +50,7 @@ const largeCardStyles = css`
 
 const Card = styled('div')`
   ${baseStyles};
-  ${p => p.wide ? `${largeCardStyles}` : null};
+  ${p => p.wide ? `${largeCardStyles};` : null};
 `
 
 const CardImage = styled('div')`
@@ -68,11 +61,12 @@ const CardImage = styled('div')`
   justify-content:  space-between;
   background-color: #efefef;
   align-items: flex-start;
+  border-radius: 4px 4px 0 0;
 
-  ${p => p.grad == 1 ? `${gradOneStyle}` : null};
-  ${p => p.grad == 2 ? `${gradTwoStyle}` : null};
-  ${p => p.grad == 3 ? `${gradThreeStyle}` : null};
-  ${p => p.grad == 4 ? `${gradFourStyle}` : null};
+  ${p => p.grad === 1 ? `${gradOneStyle};` : null};
+  ${p => p.grad === 2 ? `${gradTwoStyle};` : null};
+  ${p => p.grad === 3 ? `${gradThreeStyle};` : null};
+  ${p => p.grad === 4 ? `${gradFourStyle};` : null};
 `
 
 const CardBadgeWrapper = styled('div')`

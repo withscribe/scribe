@@ -32,7 +32,7 @@ class CreateStory extends React.Component {
   }
 
   handleSubmitClick = () => {
-    const { storyEditorStore, userStore, history} = this.props
+    const { storyEditorStore, userStore, history } = this.props
 
     if (storyEditorStore.isValid) {
       const author = this.getAuthorName(

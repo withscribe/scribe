@@ -3,9 +3,13 @@ import { Redirect, Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 import PropTypes from 'prop-types'
 
-import Input from '_system/Input'
+import Input, {
+  Label, LabelConstraint,
+} from '_system/Input'
 import { Button, ButtonPrimary } from '_system/Button'
-import { FormWrapper, FormContainer, FormTitle } from 'Styled/LRForm'
+import {
+  FormWrapper, FormContainer, FormTitle, FormDesc,
+} from 'Styled/LRForm'
 
 @inject('userStore', 'authStore')
 @observer
@@ -35,20 +39,28 @@ class Login extends React.Component {
 
     return (
       <FormWrapper>
-        <FormContainer width={[1.1 / 3, 1 / 4]}>
-          <Input
-            placeholder="email"
-            type="text"
-            onChange={e => authStore.changeEmail(e.target.value)} />
-          <Input
-            placeholder="password"
-            type="text"
-            onChange={e => authStore.changePassword(e.target.value)} />
-          <ButtonPrimary
-            onClick={this.onLogin}>
-            Login
-          </ButtonPrimary>
-          <Link to="/register">Don't have an account? <b>Sign Up</b></Link>
+        <FormContainer width={[1 / 2, 1 / 2]}>
+          <FormTitle>Welcome back!</FormTitle>
+          <FormDesc>Login to continue with Scribe.</FormDesc>
+        </FormContainer>
+        <FormContainer width={[1 / 2, 1 / 3]} ml="auto">
+          <form>
+            <Label>Email</Label>
+            <Input
+              placeholder="email"
+              type="text"
+              onChange={e => authStore.changeEmail(e.target.value)} />
+            <Label>Password</Label>
+            <Input
+              placeholder="password"
+              type="text"
+              onChange={e => authStore.changePassword(e.target.value)} />
+            <ButtonPrimary
+              onClick={this.onLogin}>
+              Login
+            </ButtonPrimary>
+            <Link to="/register">Don't have an account? <u>Sign Up</u></Link>
+          </form>
         </FormContainer>
       </FormWrapper>
     )

@@ -5,7 +5,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import Stylish from 'webpack-stylish'
 
 export default {
-  devtool: 'cheap-module-eval-source-map',
+  // devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval',
   mode: 'development',
   entry: {
     app: [
