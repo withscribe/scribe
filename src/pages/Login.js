@@ -18,7 +18,8 @@ class Login extends React.Component {
     redirectToReferrer: false,
   }
 
-  onLogin = () => {
+  onLogin = (e) => {
+    e.preventDefault()
     const { authStore, userStore } = this.props
     authStore.loginUser()
       .then((res) => {
@@ -56,7 +57,7 @@ class Login extends React.Component {
               type="text"
               onChange={e => authStore.changePassword(e.target.value)} />
             <ButtonPrimary
-              onClick={this.onLogin}>
+              onClick={e => this.onLogin(e)}>
               Login
             </ButtonPrimary>
             <Link to="/register">Don't have an account? <u>Sign Up</u></Link>
