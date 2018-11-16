@@ -2,6 +2,7 @@ import { types, flow, destroy, applySnapshot } from 'mobx-state-tree'
 
 import { client } from 'Services/Client'
 import StoryByIdQuery from 'Queries/storyById'
+import RevisionByIdQuery from 'Queries/revisionById'
 import cloneStoryMutation from 'Mutations/clone'
 import likeStoryMutation from 'Mutations/like'
 import forkStoryMutation from 'Mutations/fork'
@@ -19,6 +20,14 @@ const LikesModel = types
     guid: types.string,
   })
 
+const RevisionModel = types
+  .model('LikesModel', {
+    id: types.maybeNull(types.string),
+    title: types.maybe(types.string),
+    content: types.maybe(types.string),
+    description: types.maybe(types.string),
+  })
+
 const StoryModel = types
   .model('StoryModel', {
     content: types.maybe(types.string),
@@ -34,16 +43,18 @@ const StoryModel = types
     likes: types.maybeNull(types.integer),
     contributionPending: types.maybeNull(types.boolean),
     usersWhoLiked: types.array(LikesModel),
+    revisions: types.array(RevisionModel),
     // nonAuthorProfile: types.maybe(AuthorModel)
   })
 
 const StoryStore = types
   .model('StoryStore', {
-    fetchingStory: types.optional(types.boolean, false),
     fetchingStories: types.optional(types.boolean, false),
-    story: types.maybeNull(StoryModel),
+    fetchingStory: types.optional(types.boolean, false),
+    fetchingRevision: types.optional(types.boolean, false),
     stories: types.array(StoryModel),
-    selectedStory: types.optional(types.string, ''),
+    story: types.maybeNull(StoryModel),
+    revision: types.maybeNull(RevisionModel),
     cloningStory: types.optional(types.boolean, false),
     currentCloneId: types.maybe(types.string),
   })
@@ -58,14 +69,6 @@ const StoryStore = types
       applySnapshot(self.stories, stories)
     }
     /**
-     * Story store function used to alter the selected story
-     * @function setActiveStory
-     * @param {String} storyId - The ID of the selected story
-    */
-    const setActiveStory = (storyId) => {
-      self.selectedStory = storyId
-    }
-    /**
      * Story store function used to retrieve the list of
      * all public stories
      * @function getAllStories
@@ -78,7 +81,6 @@ const StoryStore = types
           fetchPolicy: 'network-only',
         })
         self.setStories(allStories)
-        // self.fetchingStories = false
       } catch (err) {
         console.log('something went wrong inside of getAllStories')
       } finally {
@@ -90,7 +92,7 @@ const StoryStore = types
      * by passing the requested story's ID
      * @function getStory
      * @param {String} storyId - The ID of the request story
-    */
+     */
     const getStory = flow(function* (storyId) {
       try {
         self.fetchingStory = true
@@ -107,11 +109,32 @@ const StoryStore = types
       }
     })
     /**
+     * Revision store function used to retrieve a specific revision
+     * by passing the requested revision's ID
+     * @function getRevision
+     * @param {String} revisionId - The ID of the request revision
+     */
+    const getRevision = flow(function* (revisionId) {
+      try {
+        self.fetchingRevision = true
+        const { data: { revisionById } } = yield client.query({
+          query: RevisionByIdQuery,
+          variables: ({ revisionId }),
+          fetchPolicy: 'network-only',
+        })
+        self.setRevision(revisionById)
+      } catch (err) {
+        console.log('somethign went wrong inside of getRevision')
+      } finally {
+        self.fetchingRevision = false
+      }
+    })
+    /**
      * Story store function used to attach a single requested
      * story to the store
      * @function setStory
      * @param {String} story - StoryModel returned from getStory
-    */
+     */
     const setStory = (story) => {
       // if (self.story == null) {
       //   self.story = StoryModel.create({
@@ -122,6 +145,23 @@ const StoryStore = types
       self.story = { ...story }
 
       // applySnapshot(self.story, ...story)
+    }
+    /**
+     * Revision store function used to attach a single requested
+     * revision to the store
+     * @function setRevision
+     * @param {String} revision - RevisionModel returned from getRevision
+     */
+    const setRevision = (revision) => {
+      // if (self.revision == null) {
+      //   self.revision = RevisionModel.create({
+      //     ...revision,
+      //   })
+      //   return
+      // }
+      self.revision = { ...revision }
+
+      // applySnapshot(self.revision, ...revision)
     }
     /**
      * Story store function used to clone (make a copy) of an existing story
@@ -178,10 +218,11 @@ const StoryStore = types
 
     return {
       setStories,
-      setActiveStory,
       getAllStories,
       getStory,
+      getRevision,
       setStory,
+      setRevision,
       clone,
       setCurrentCloneId,
       likeStory,

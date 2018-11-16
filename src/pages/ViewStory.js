@@ -11,6 +11,9 @@ import { TitleText } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import StoryViewer from 'Components/Papyrus/StoryViewer'
+import { ContributionWrapper } from 'Styled/Contributions'
+import { ListCard } from '_system/ListCard'
+import { ContributionsGrid } from '_system/Grid'
 
 @inject('storyStore', 'userStore', 'toastStore')
 @observer
@@ -113,6 +116,23 @@ class ViewStory extends React.Component {
                   <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
                 )
               }
+
+
+            <Label>Story Revisions</Label>
+              {story.revisions.length > 0 ? (
+                <ContributionsGrid>
+                  {story.revisions.map(revision => (
+                    <ListCard key={revision.id}>
+                      <Link to={`/story/preview/${story.id}/${revision.id}`}>
+                        <div style={{ width: '100%', height: '15vh' }}>
+                          {revision.id}
+                        </div>
+                      </Link>
+                    </ListCard>
+                  ))}
+                </ContributionsGrid>
+              ) : <span>Nothing to see here.</span>
+              }
             </>
           }
       </>
@@ -127,3 +147,6 @@ ViewStory.propTypes = {
 }
 
 export default ViewStory
+
+
+
