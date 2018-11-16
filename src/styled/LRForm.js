@@ -5,7 +5,7 @@ import { typography } from '_system/Theme'
 
 const FormWrapper = styled.div`
   display: flex;
-  height: 30vw;
+  /* height: 30vw; */
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;
@@ -24,7 +24,7 @@ const FormContainer = styled(Box)`
 `
 
 const FormTitle = styled('h1')`
-  ${typography.headings.xlarge};
+  ${typography.headings.large};
   font-family: Theinhardt-Bold;
   margin: 0;
 `

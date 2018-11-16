@@ -20,8 +20,8 @@ class Register extends React.Component {
 
   onRegister = (e) => {
     e.preventDefault()
-    // const canRegister = this.props.validate()
-    // if (canRegister) {
+    const { assert } = this.props
+    // assert(types.REGISTER)
       const { authStore } = this.props
       authStore.registerUser()
     // }

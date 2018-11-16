@@ -17,7 +17,7 @@ const HeaderWrapper = styled.header`
 `
 
 const HeaderContainer = styled.nav`
-  width: 70em;
+  width: 95vw;
 `
 
 const NavList = styled.ul`
