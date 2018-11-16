@@ -3,6 +3,9 @@ import { Redirect, Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 import PropTypes from 'prop-types'
 
+import withValidation from '../hoc/withValidation'
+
+import { types } from 'Services/Validation'
 import Input, {
   Label, LabelConstraint,
 } from '_system/Input'
@@ -32,7 +35,7 @@ class Login extends React.Component {
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/start' } }
     const { redirectToReferrer } = this.state
-    const { authStore } = this.props
+    const { authStore, errors, assert } = this.props
 
     if (redirectToReferrer) {
       return <Redirect to={from} />
@@ -44,18 +47,22 @@ class Login extends React.Component {
           <FormTitle>Welcome back!</FormTitle>
           <FormDesc>Login to continue with Scribe.</FormDesc>
         </FormContainer>
-        <FormContainer width={[1 / 2, 1 / 3]} ml="auto">
+        <FormContainer width={[1 / 2, 1 / 3]} ml="auto" mt="10em">
           <form>
             <Label>Email</Label>
             <Input
               placeholder="email"
               type="text"
+              onBlur={() => assert(types.EMAIL)}
               onChange={e => authStore.changeEmail(e.target.value)} />
+            {errors.EMAIL && <span style={{ color: 'red' }}>{errors.EMAIL}</span>}
             <Label>Password</Label>
             <Input
               placeholder="password"
               type="text"
+              onBlur={() => assert(types.PASSWORD)}
               onChange={e => authStore.changePassword(e.target.value)} />
+            {errors.PASSWORD && <span style={{ color: 'red' }}>{errors.PASSWORD}</span>}
             <ButtonPrimary
               onClick={e => this.onLogin(e)}>
               Login
@@ -73,4 +80,4 @@ Login.propTypes = {
   authStore: PropTypes.shape({}),
 }
 
-export default Login
+export default withValidation(Login)
