@@ -10,7 +10,9 @@ const withValidation = (WrappedComponent) => {
     state = {
       errors: {
         USERNAME: null,
-
+        EMAIL: null,
+        PASSWORD: null,
+        CONFIRM: null,
       },
       isFormValid: true,
     }
@@ -18,8 +20,8 @@ const withValidation = (WrappedComponent) => {
     assert = async (type) => {
       const { authStore } = this.props
       switch (type) {
-      case types.USERNAME: {
-        const res = await validate(type, authStore.username)
+      case types.USERNAME:
+        await validate(type, authStore.username)
           .then(() => {
             this.setState(prevState => (
               { errors: { ...prevState.errors, [type]: null } }))
@@ -28,14 +30,41 @@ const withValidation = (WrappedComponent) => {
             this.setState(prevState => (
               { errors: { ...prevState.errors, [type]: error.message } }))
           })
-        return res
+        return
+      case types.PASSWORD:
+        await validate(type, authStore.password)
+          .then(() => {
+            this.setState(prevState => (
+              { errors: { ...prevState.errors, [type]: null } }))
+          })
+          .catch((error) => {
+            this.setState(prevState => (
+              { errors: { ...prevState.errors, [type]: error.message } }))
+          })
+        return
+      case types.CONFIRM: {
+        const { authStore: { password, confirmPassword } } = this.props
+        await validate(type, { password, confirmPassword })
+          .then(() => {
+            this.setState(prevState => (
+              { errors: { ...prevState.errors, [type]: null } }))
+          })
+          .catch((error) => {
+            this.setState(prevState => (
+              { errors: { ...prevState.errors, [type]: error.message } }))
+          })
+        return
       }
-      case types.PASSOWORD:
-        return validate(type, authStore.password)
-      case types.CONFIRM:
-        return validate(type, authStore.confirmPassword)
       case types.EMAIL:
-        return validate(type, authStore.email)
+        await validate(type, authStore.email)
+          .then(() => {
+            this.setState(prevState => (
+              { errors: { ...prevState.errors, [type]: null } }))
+          })
+          .catch((error) => {
+            this.setState(prevState => (
+              { errors: { ...prevState.errors, [type]: error.message } }))
+          })
       default:
         return 'no valid type supplied'
       }

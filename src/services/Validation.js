@@ -1,29 +1,38 @@
-import * as yup from 'yup'
+import { string, object, ref } from 'yup'
 
-const loginSchema = yup.object().shape({
-  username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
+const loginSchema = object().shape({
+  username: string().required('Username is required'),
+  password: string().required('Password is required'),
 })
 
-const registerSchema = yup.object().shape({
-  username: yup.string().required('Username is required'),
-  email: yup.string().email().required('Email is required'),
-  password: yup.string().required('Password is required'),
-  confirmPassword: yup.string().oneOf([yup.ref('password'), null], "Passwords don't match").required('Confirm Password is required'),
+const registerSchema = object().shape({
+  username: string().required('Username is required'),
+  email: string().email().required('Email is required'),
+  password: string().required('Password is required'),
+  confirmPassword: string().oneOf([ref('password'), null], "Passwords don't match").required('Confirm Password is required'),
 })
 
-const usernameField = yup.object().shape({
-  username: yup.string().required('Username is required'),
+const passwordField = object().shape({
+  password: string().required('Password is required'),
 })
 
-const emailField = yup.object().shape({
-  email: yup.string().email().required('Email is required'),
+const confirmPasswordField = object().shape({
+  password: string().required('Password is required'),
+  confirmPassword: string().oneOf([ref('password'), null], "Passwords don't match").required('Confirm Password is required'),
+})
+
+const usernameField = object().shape({
+  username: string().required('Username is required'),
+})
+
+const emailField = object().shape({
+  email: string().email().required('Email is required'),
 })
 
 
 const types = {
   USERNAME: 'USERNAME',
-  PASSOWORD: 'PASSOWORD',
+  PASSWORD: 'PASSWORD',
   CONFIRM: 'CONFIRM',
   EMAIL: 'EMAIL',
   LOGIN: 'LOGIN',
@@ -36,12 +45,12 @@ const validate = async (type, value) => {
   case types.USERNAME:
     console.log(value)
     return usernameField.validate({ username: value })
-  // case types.PASSOWORD:
-  //   return password.checkPassword(value.password)
-  // case types.COPY:
-  //   return validators.checkCopy(value.password)
+  case types.PASSWORD:
+    return passwordField.validate({ password: value })
+  case types.CONFIRM:
+    return confirmPasswordField.validate({ value })
   case types.EMAIL:
-    return emailField.isValid(value)
+    return emailField.validate({ email: value })
   case types.LOGIN:
     return loginSchema.isValid(value)
   case types.REGISTER:

@@ -54,8 +54,6 @@ class Register extends React.Component {
             <Input
               placeholder="username"
               type="text"
-              name="username"
-              // onBlur={this.onBlur}
               onBlur={() => assert(types.USERNAME)}
               onChange={e => authStore.changeUsername(e.target.value)} />
             {errors.USERNAME && <span style={{ color: 'red' }}>{errors.USERNAME}</span>}
@@ -63,23 +61,23 @@ class Register extends React.Component {
             <Input
               placeholder="email"
               type="email"
-              // onBlur={() => try('EMAIL')}
+              onBlur={() => assert(types.EMAIL)}
               onChange={e => authStore.changeEmail(e.target.value)} />
             {errors.EMAIL && <span style={{ color: 'red' }}>{errors.EMAIL}</span>}
             <Label>Password</Label>
             <Input
               placeholder="password"
               type="password"
-              // onBlur={() => try('PASSWORD')}
+              onBlur={() => assert(types.PASSWORD)}
               onChange={e => authStore.changePassword(e.target.value)} />
             {errors.PASSWORD && <span style={{ color: 'red' }}>{errors.PASSWORD}</span>}
             <Label>Confirm Password</Label>
             <Input
               placeholder="confirm password"
               type="password"
-              // onBlur={() => single('COPY')}
+              onBlur={() => assert(types.CONFIRM)}
               onChange={e => authStore.changeConfirmPassword(e.target.value)} />
-            {errors.COPY && <span style={{ color: 'red' }}>{errors.COPY}</span>}
+            {errors.CONFIRM && <span style={{ color: 'red' }}>{errors.CONFIRM}</span>}
             <Button
               type="submit"
               disabled={valid === false}
