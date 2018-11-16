@@ -30,7 +30,7 @@ const withValidation = (WrappedComponent) => {
             this.setState(prevState => (
               { errors: { ...prevState.errors, [type]: error.message } }))
           })
-        return
+        break
       case types.PASSWORD:
         await validate(type, authStore.password)
           .then(() => {
@@ -41,7 +41,7 @@ const withValidation = (WrappedComponent) => {
             this.setState(prevState => (
               { errors: { ...prevState.errors, [type]: error.message } }))
           })
-        return
+        break
       case types.CONFIRM: {
         const { authStore: { password, confirmPassword } } = this.props
         await validate(type, { password, confirmPassword })
@@ -53,7 +53,7 @@ const withValidation = (WrappedComponent) => {
             this.setState(prevState => (
               { errors: { ...prevState.errors, [type]: error.message } }))
           })
-        return
+        break
       }
       case types.EMAIL:
         await validate(type, authStore.email)
@@ -65,8 +65,9 @@ const withValidation = (WrappedComponent) => {
             this.setState(prevState => (
               { errors: { ...prevState.errors, [type]: error.message } }))
           })
+        break
       default:
-        return 'no valid type supplied'
+        console.log('no valid type supplied')
       }
     }
 
