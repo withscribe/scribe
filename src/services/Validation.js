@@ -1,7 +1,7 @@
 import { string, object, ref } from 'yup'
 
 const loginSchema = object().shape({
-  username: string().required('Username is required'),
+  email: string().email().required('Email is required'),
   password: string().required('Password is required'),
 })
 
@@ -43,7 +43,6 @@ const validate = async (type, value) => {
   console.log(type)
   switch (type) {
   case types.USERNAME:
-    console.log(value)
     return usernameField.validate({ username: value })
   case types.PASSWORD:
     return passwordField.validate({ password: value })
@@ -52,7 +51,7 @@ const validate = async (type, value) => {
   case types.EMAIL:
     return emailField.validate({ email: value })
   case types.LOGIN:
-    return loginSchema.validate({ value })
+    return loginSchema.validate({ ...value })
   case types.REGISTER:
     return registerSchema.validate({ value })
   default:

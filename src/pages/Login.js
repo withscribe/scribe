@@ -23,8 +23,9 @@ class Login extends React.Component {
 
   onLogin = (e) => {
     e.preventDefault()
-    const { authStore, userStore, assert, isLoginValid } = this.props
+    const { authStore, userStore, assert } = this.props
     assert(types.LOGIN).then(() => {
+      const { isLoginValid } = this.props
       if (isLoginValid) {
         authStore.loginUser()
           .then((res) => {
