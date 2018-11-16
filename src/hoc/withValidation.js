@@ -1,42 +1,54 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import validate from '../services/Validation'
+
+import { validate, types } from 'Services/Validation'
 
 const withValidation = (WrappedComponent) => {
   @inject('authStore')
   @observer
   class HOC extends React.Component {
     state = {
-      errors: {},
+      errors: {
+        USERNAME: null,
+
+      },
       isFormValid: true,
     }
 
-    singleValidation = (type) => {
+    assert = async (type) => {
       const { authStore } = this.props
-      const res = validate(type, authStore)
-      this.setState(prevState => ({ errors: { ...prevState.errors, [type]: res.errors } }))
-    }
-
-    validate = () => {
-      const {
-        authStore: {
-          username, email, password, confirmPassword,
-        },
-      } = this.props
-
-      return false
+      switch (type) {
+      case types.USERNAME: {
+        const res = await validate(type, authStore.username)
+          .then(() => {
+            this.setState(prevState => (
+              { errors: { ...prevState.errors, [type]: null } }))
+          })
+          .catch((error) => {
+            this.setState(prevState => (
+              { errors: { ...prevState.errors, [type]: error.message } }))
+          })
+        return res
+      }
+      case types.PASSOWORD:
+        return validate(type, authStore.password)
+      case types.CONFIRM:
+        return validate(type, authStore.confirmPassword)
+      case types.EMAIL:
+        return validate(type, authStore.email)
+      default:
+        return 'no valid type supplied'
+      }
     }
 
     render() {
       const { props } = this
       const { isFormValid, errors } = this.state
-      console.log(errors)
       return (
         <WrappedComponent
           errors={errors}
           valid={isFormValid}
-          validate={this.validate}
-          single={this.singleValidation}
+          assert={this.assert}
           {...props} />
       )
     }

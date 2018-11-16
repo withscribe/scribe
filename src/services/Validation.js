@@ -1,102 +1,51 @@
+import * as yup from 'yup'
+
+const loginSchema = yup.object().shape({
+  username: yup.string().required('Username is required'),
+  password: yup.string().required('Password is required'),
+})
+
+const registerSchema = yup.object().shape({
+  username: yup.string().required('Username is required'),
+  email: yup.string().email().required('Email is required'),
+  password: yup.string().required('Password is required'),
+  confirmPassword: yup.string().oneOf([yup.ref('password'), null], "Passwords don't match").required('Confirm Password is required'),
+})
+
+const usernameField = yup.object().shape({
+  username: yup.string().required('Username is required'),
+})
+
+const emailField = yup.object().shape({
+  email: yup.string().email().required('Email is required'),
+})
+
+
 const types = {
   USERNAME: 'USERNAME',
   PASSOWORD: 'PASSOWORD',
-  COPY: 'COPY',
+  CONFIRM: 'CONFIRM',
   EMAIL: 'EMAIL',
+  LOGIN: 'LOGIN',
+  REGISTER: 'REGISTER',
 }
 
-const checkUsername = (username) => {
-  const report = {
-    errors: [],
-    isFieldValid: true,
-  }
-  if (username.length === 0) {
-    report.isFieldValid = false
-    report.errors = 'Username cannot be empty'
-  }
-
-  if (typeof username !== 'undefined' && report.errors.length === 0) {
-    if (!username.match(/^[a-zA-Z0-9]+$/)) {
-      report.isFieldValid = false
-      report.errors = 'Username can only contain letters and numbers'
-    }
-  }
-
-  // this.setState(prevState => ({ errors: { ...prevState.errors, username: errors } }))
-  return report
-}
-
-const checkEmail = (email) => {
-  const report = {
-    errors: [],
-    isFieldValid: true,
-  }
-
-  if (!email) {
-    report.isFieldValid = false
-    report.errors = 'Email cannot be empty'
-  }
-  if (typeof email !== 'undefined' && report.errors.length === 0) {
-    const lastAtPos = email.lastIndexOf('@')
-    const lastDotPos = email.lastIndexOf('.')
-
-    if (!(lastAtPos < lastDotPos && lastAtPos > 0 && email.indexOf('@@') === -1 && lastDotPos > 2 && (email.length - lastDotPos) > 2)) {
-      report.isFieldValid = false
-      report.errors = 'Email is not valid'
-    }
-  }
-  // this.setState(prevState => ({ errors: { ...prevState.errors, email: errors } }))
-  return report
-}
-
-const checkPassword = (password) => {
-  const report = {
-    errors: [],
-    isFieldValid: true,
-  }
-
-  if (password.length < 8 || password.length > 32) {
-    report.isFieldValid = false
-    report.errors = 'Password must be at between 8 and 32 characters long'
-  }
-  // this.setState(prevState => ({ errors: { ...prevState.errors, password: errors } }))
-  return report
-}
-
-const checkCopy = (password, copy) => {
-  const report = {
-    errors: [],
-    isFieldValid: true,
-  }
-
-  if (password !== copy) {
-    report.isFieldValid = false
-    report.errors = 'Passwords do not match'
-  }
-  // this.setState(prevState => ({ errors: { ...prevState.errors, copy: errors } }))
-  return report
-}
-
-const validators = {
-  checkUsername,
-  checkEmail,
-  checkPassword,
-  checkCopy,
-}
-
-
-const validate = (validatorType, value) => {
-  console.log(validatorType)
-  console.log(value)
-  switch (validatorType) {
+const validate = async (type, value) => {
+  console.log(type)
+  switch (type) {
   case types.USERNAME:
-    return validators.checkUsername(value.username)
-  case types.PASSOWORD:
-    return validators.checkPassword(value.password)
-  case types.COPY:
-    return validators.checkCopy(value.password)
+    console.log(value)
+    return usernameField.validate({ username: value })
+  // case types.PASSOWORD:
+  //   return password.checkPassword(value.password)
+  // case types.COPY:
+  //   return validators.checkCopy(value.password)
   case types.EMAIL:
-    return validators.checkEmail(value.confirmPassword)
+    return emailField.isValid(value)
+  case types.LOGIN:
+    return loginSchema.isValid(value)
+  case types.REGISTER:
+    return registerSchema.isValid(value)
   default:
     return value
   }
@@ -104,4 +53,4 @@ const validate = (validatorType, value) => {
 
 export default validate
 
-export { validators, types }
+export { validate, types }

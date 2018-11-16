@@ -3,7 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import withValidation from '../hoc/withValidation'
-
+import { validate, types } from 'Services/Validation'
 import Input, { Label } from '_system/Input'
 import { Button } from '_system/Button'
 import {
@@ -26,10 +26,14 @@ class Register extends React.Component {
     // }
   }
 
+  // this may be used for more logic in the future to replace
+  // onBlur={() => assert(types.USERNAME)}
+  onBlur = () => { }
+
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/start' } }
     const { redirectToReferrer } = this.state
-    const { authStore, errors, valid, validate, single } = this.props
+    const { authStore, errors, valid, assert } = this.props
 
     if (redirectToReferrer) {
       return <Redirect to={from} />
@@ -38,13 +42,11 @@ class Register extends React.Component {
     return (
       <FormWrapper>
         <FormContainer width={1 / 2}>
-          <FormTitle>Get Started on Scribe.</FormTitle>
-          <FormDesc>Enjoy these fucking sick benefits of having an account...</FormDesc>
-          <ul>
-            <li>perk 1</li>
-            <li>free stories man</li>
-            <li>we are giving them away</li>
-          </ul>
+          <FormTitle>Join the open writing community.</FormTitle>
+          <FormDesc>
+            With a Scribe account, you can create your own stories, expand your personal library,
+            and contribute to stories you love!
+          </FormDesc>
         </FormContainer>
         <FormContainer width={1 / 3} ml="auto" mt="10em">
           <form>
@@ -52,28 +54,30 @@ class Register extends React.Component {
             <Input
               placeholder="username"
               type="text"
-              onBlur={() => single('USERNAME')}
+              name="username"
+              // onBlur={this.onBlur}
+              onBlur={() => assert(types.USERNAME)}
               onChange={e => authStore.changeUsername(e.target.value)} />
             {errors.USERNAME && <span style={{ color: 'red' }}>{errors.USERNAME}</span>}
             <Label>Email</Label>
             <Input
               placeholder="email"
               type="email"
-              onBlur={() => single('EMAIL')}
+              // onBlur={() => try('EMAIL')}
               onChange={e => authStore.changeEmail(e.target.value)} />
             {errors.EMAIL && <span style={{ color: 'red' }}>{errors.EMAIL}</span>}
             <Label>Password</Label>
             <Input
               placeholder="password"
               type="password"
-              onBlur={() => single('PASSWORD')}
+              // onBlur={() => try('PASSWORD')}
               onChange={e => authStore.changePassword(e.target.value)} />
             {errors.PASSWORD && <span style={{ color: 'red' }}>{errors.PASSWORD}</span>}
             <Label>Confirm Password</Label>
             <Input
               placeholder="confirm password"
               type="password"
-              onBlur={() => single('COPY')}
+              // onBlur={() => single('COPY')}
               onChange={e => authStore.changeConfirmPassword(e.target.value)} />
             {errors.COPY && <span style={{ color: 'red' }}>{errors.COPY}</span>}
             <Button
