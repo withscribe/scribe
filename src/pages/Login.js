@@ -23,13 +23,17 @@ class Login extends React.Component {
 
   onLogin = (e) => {
     e.preventDefault()
-    const { authStore, userStore } = this.props
-    authStore.loginUser()
-      .then((res) => {
-        const { account } = res
-        userStore.pullMeById(account.id)
-        this.setState({ redirectToReferrer: true })
-      })
+    const { authStore, userStore, assert, isLoginValid } = this.props
+    assert(types.LOGIN).then(() => {
+      if (isLoginValid) {
+        authStore.loginUser()
+          .then((res) => {
+            const { account } = res
+            userStore.pullMeById(account.id)
+            this.setState({ redirectToReferrer: true })
+          })
+      }
+    })
   }
 
   render() {

@@ -48,13 +48,13 @@ const validate = async (type, value) => {
   case types.PASSWORD:
     return passwordField.validate({ password: value })
   case types.CONFIRM:
-    return confirmPasswordField.validate({ value })
+    return confirmPasswordField.validate({ ...value })
   case types.EMAIL:
     return emailField.validate({ email: value })
   case types.LOGIN:
-    return loginSchema.isValid(value)
+    return loginSchema.validate({ value })
   case types.REGISTER:
-    return registerSchema.isValid(value)
+    return registerSchema.validate({ value })
   default:
     return value
   }
