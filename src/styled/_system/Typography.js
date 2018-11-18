@@ -12,6 +12,12 @@ const TitleSecondary = styled('h2')`
   font-family: Theinhardt-Bold;
 `
 
+const AuthorLabel = styled('label')`
+  ${typography.text.small};
+  transition: ${transitions.default};
+  margin:0.5em;
+`
+
 const CardTitle = styled('h1')`
   ${typography.headings.small};
   transition: ${transitions.default};
@@ -22,7 +28,7 @@ const CardTitle = styled('h1')`
 const CardDesc = styled('p')`
   ${typography.text.small};
   transition: ${transitions.default};
-  margin: 0;
+  margin: 0.5em 0 0 0;
 `
 
 export {
@@ -30,4 +36,5 @@ export {
   TitleSecondary,
   CardTitle,
   CardDesc,
+  AuthorLabel,
 }

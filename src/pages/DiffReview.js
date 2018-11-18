@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { inject, observer } from 'mobx-react'
-import Diff from 'react-stylable-diff'
+import ReactDiffViewer from 'react-diff-viewer'
 
 import { ButtonPrimary } from '_system/Button'
 
 @inject('userStore', 'storyStore', 'contributionsStore', 'toastStore')
 @observer
-class DiffReview extends React.Component {
+class DiffReview extends PureComponent {
   state = {}
 
   componentDidMount() {
@@ -43,7 +43,11 @@ class DiffReview extends React.Component {
       <>
         {contribution
           && <>
-            <Diff inputA={contributionsStore.deserializeContent(contribution.originalContent)} inputB={contributionsStore.deserializeContent(contribution.contributionContent)} />
+            <ReactDiffViewer
+              oldValue={contributionsStore.deserializeContent(contribution.originalContent)}
+              newValue={contributionsStore.deserializeContent(contribution.contributionContent)}
+              splitView={true}
+            />
             <ButtonPrimary type="button" onClick={() => this.approveChanges(contribution.id)}>Approve & Update Story</ButtonPrimary>
             <ButtonPrimary type="button" onClick={() => this.rejectChanges(contribution.id)}>Reject</ButtonPrimary>
         </>

@@ -7,7 +7,6 @@ import ContributionByIdQuery from 'Queries/contributionById'
 import ApproveChangesMutation from 'Mutations/approveChanges'
 import RejectChangesMutation from 'Mutations/rejectChanges'
 import { client } from 'Services/Client'
-import { serialize } from 'uri-js';
 
 const ContributionsModel = types
   .model('ContributionsModel', {
@@ -49,7 +48,7 @@ const ContributionsStore = types
      * Contributions store function that gets all of the authors story's
      * contribution requests
      * @function getContributionRequests
-     * @param {String} authorId - The ID of the user profile who wrote the original story
+     * @param {String} authorProfileId - The ID of the user profile who wrote the original story
     */
     const getContributionRequests = flow(function* (authorProfileId) {
       const { data: { getContributionsById } } = yield client.query({

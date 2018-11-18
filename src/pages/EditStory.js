@@ -47,16 +47,11 @@ class EditStory extends React.Component {
   }
 
   sendContributionRequest = () => {
-    const { storyEditorStore, toastStore } = this.props
+    const { storyEditorStore } = this.props
 
     storyEditorStore.sendContribution(storyEditorStore.storyId)
       .then((res) => {
         console.log(`UpdateStory Response: ${res}`)
-        toastStore.addToast({
-          id: '' + Math.random() + '',
-          message: 'Your Contribution Request has been sent!',
-          display: true,
-        })
       }).catch((err) => {
         console.log(`UpdateStory Error: ${err}`)
       })
