@@ -18,7 +18,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { storyStore } = this.props
+    const { storyStore, history } = this.props
     return (
       <>
         <TitleText>Discover</TitleText>
@@ -33,17 +33,13 @@ class Home extends React.Component {
         <HomeGrid>
           {!storyStore.fetchingStories
             ? <>
-              {storyStore.nonClonedStories.map((story) => {
-                // ^^^ this makes mst bitch
-                // You are trying to read or write to an object that is no longer part of a state tree.
-                // Putting the contents of the function (instead of the function) seems to fix it....
-                // https://github.com/mobxjs/mobx-state-tree/issues/912
-                const wide = story.id.includes('4e')
-                const num = Math.floor(Math.random() * (5 - 1) + 1)
-                return (
-                  <StoryCard story={story} grad={num} key={story.id} />
-                )
-              })}
+              {storyStore.nonClonedStories.map(story => (
+                /* we pass the history prop down to each card so we avoid a ton of
+                  unnecessary working..
+                  (not sure if it would even be a performance problem)
+                */
+                <StoryCard history={history} story={story} key={story.id} />
+              ))}
             </>
             : <span>nothing to see here</span>
           }

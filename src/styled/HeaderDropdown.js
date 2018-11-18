@@ -34,7 +34,8 @@ const DropdownMenu = styled.div`
   background-color: ${colors.white};
   user-select: none;
   overflow: hidden;
-  box-shadow: 0px -3px 20px 4px #efefef;
+  /* box-shadow: 0px -3px 20px 4px #efefef; */
+  box-shadow: 0 3px 12px rgba(27,31,35,.15)
 `
 
 const DropdownContext = styled.div`

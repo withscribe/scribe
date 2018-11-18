@@ -3,6 +3,8 @@ import { types, flow, destroy, getSnapshot, applySnapshot } from 'mobx-state-tre
 import { client } from 'Services/Client'
 import ProfileByIdQuery from 'Queries/userProfileById'
 import UpdateProfileMutation from 'Mutations/updateProfile'
+import likeStoryMutation from 'Mutations/like'
+import removeStoryLikeMutation from 'Mutations/removeLike'
 import { toastStore } from 'Components/App'
 
 const StoryModel = types
@@ -155,6 +157,32 @@ const UserStore = types
       }
     })
 
+    /**
+     * User store function to like a story
+     * @function likeStory
+     * @async
+     * @param {String} storyId - The ID of the story to be liked
+    */
+    const likeStory = flow(function* (storyId) {
+      const { data: { likeStory } } = yield client.mutate({
+        mutation: likeStoryMutation,
+        variables: ({ storyId }),
+      })
+    })
+
+    /**
+     * User store function to remove a like on a story
+     * @function likeStory
+     * @async
+     * @param {String} storyId - The ID of the story to be liked
+    */
+    const unlikeStory = flow(function* (storyId) {
+      const { data: { removeLike } } = yield client.mutate({
+        mutation: removeStoryLikeMutation,
+        variables: ({ storyId }),
+      })
+    })
+
     const changeEmail = (newEmail) => {
       self.me.email = newEmail
     }
@@ -181,8 +209,18 @@ const UserStore = types
     }
 
     return {
-      pullMeById, refreshMeById, setMe, removeMe, saveProfileChanges,
-      changeEmail, changefirstName, changelastName, changeOccupation, changeuserName,
+      pullMeById,
+      refreshMeById,
+      setMe,
+      removeMe,
+      saveProfileChanges,
+      changeEmail,
+      changefirstName,
+      changelastName,
+      changeOccupation,
+      changeuserName,
+      likeStory,
+      unlikeStory,
     }
   })
   .views(self => ({

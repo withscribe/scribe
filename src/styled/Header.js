@@ -14,6 +14,7 @@ const HeaderWrapper = styled.header`
   width: 100vw;
   justify-content: center;
   box-shadow: 0px -3px 20px 4px #efefef;
+  border-bottom: 1px solid #dad8de;
 `
 
 const HeaderContainer = styled.nav`
