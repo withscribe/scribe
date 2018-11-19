@@ -33,7 +33,7 @@ class ViewStory extends React.Component {
     const storyId = this.props.match.params.id
 
     storyStore.getStory(storyId).then(() => {
-      const guid = storyId + userStore.id
+      const guid = storyId + userStore.me.id
       if (storyStore.story.usersWhoLiked.length >= 1 && storyStore.story.usersWhoLiked.filter(e => e.guid === guid)) {
         this.setState({ liked: true })
       }

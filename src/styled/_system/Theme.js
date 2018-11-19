@@ -63,7 +63,7 @@ export const typography = {
   },
   text: {
     xsmall: {
-      fontSize: '0.75rem',
+      fontSize: '0.85rem',
     },
     small: {
       fontSize: '1rem',

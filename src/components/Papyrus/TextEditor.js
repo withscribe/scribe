@@ -31,7 +31,7 @@ const isItalicHotkey = isKeyHotkey('mod+i')
 const isUnderlinedHotkey = isKeyHotkey('mod+u')
 const isCodeHotkey = isKeyHotkey('mod+`')
 
-class TextEditor extends React.Component {
+class TextEditor extends React.PureComponent {
   state = {
     value: initialValue,
     hasFinishedWorking: false,

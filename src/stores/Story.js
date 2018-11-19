@@ -8,11 +8,10 @@ import forkStoryMutation from 'Mutations/fork'
 import AllStories from 'Queries/allStories'
 import { toastStore } from 'Components/App'
 
-// const AuthorModel = types
-//   .model('AuthorModel', {
-//     id: types.string,
-//     userName: types.string,
-//   })
+const AuthorModel = types
+  .model('AuthorModel', {
+    userName: types.string,
+  })
 
 const LikesModel = types
   .model('LikesModel', {
@@ -32,6 +31,7 @@ const StoryModel = types
     isCloned: types.boolean,
     isForked: types.boolean,
     author: types.maybeNull(types.string),
+    authorProfile: types.maybe(AuthorModel),
     likes: types.maybeNull(types.integer),
     contributionPending: types.maybeNull(types.boolean),
     usersWhoLiked: types.array(LikesModel),
