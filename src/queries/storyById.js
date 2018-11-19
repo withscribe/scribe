@@ -19,6 +19,12 @@ const StoryByIdQuery = gql`
         id
         guid
       }
+      revisions {
+        id
+        title
+        description
+        content
+      }
     }
   }
 `
