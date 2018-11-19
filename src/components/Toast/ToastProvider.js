@@ -2,14 +2,13 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { Transition } from 'react-spring'
 
-// import { Button, Content, Countdown } from 'Styled/Toast/ToastElement'
 import ToastContainer from 'Styled/Toast/ToastContainer'
-import { DefaultToast } from 'Styled/Toast/ToastElement'
+import ControlledToast from 'Components/Toast/ControlledToast'
 
 @inject('toastStore')
 @observer
 class ToastProvider extends React.Component {
-  state = {}
+  state = { }
 
   render() {
     const { toastStore: { toasts }, toastStore } = this.props
@@ -24,13 +23,13 @@ class ToastProvider extends React.Component {
               enter={{ opacity: 1 }}
               leave={{ opacity: 0, pointerEvents: 'none' }}>
               {t => props => (
-                <DefaultToast
+                <ControlledToast
                   style={props}
                   autoDismiss
                   appearance="success"
                   onDismiss={() => toastStore.removeToast(t.id)}>
                   {t.message}
-                </DefaultToast>
+                </ControlledToast>
               )}
             </Transition>
           </ToastContainer>
