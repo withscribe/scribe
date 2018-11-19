@@ -1,6 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import {
   Card, CardTitle, CardAuthor, CardWrapper, CardBadgeWrapper, CardMetaWrapper, CardMetaAction,
@@ -34,7 +34,18 @@ class StoryCard extends React.Component {
     }
   }
 
-  likeStory = () => {
+  likeStory = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const { liked } = this.state
+    if (liked) {
+      const { userStore, story: { id } } = this.props
+      console.log('unlike')
+      userStore.unlikeStory(id)
+      this.setState({ liked: false })
+      return
+    }
+    console.log('like')
     const { userStore, story: { id } } = this.props
     userStore.likeStory(id)
     this.setState({ liked: true })
