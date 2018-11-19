@@ -4,6 +4,7 @@ import { client } from 'Services/Client'
 import submitStoryMutation from 'Mutations/submitStory'
 import updateStoryMutation from 'Mutations/updateStory'
 import contributeRequestMutation from 'Mutations/contributeRequest'
+import revertStoryMutation from 'Mutations/revertStory'
 import StoryByIdQuery from 'Queries/storyById'
 import { toastStore } from 'Components/App'
 
@@ -209,6 +210,27 @@ const StoryEditorStore = types
       }
     })
 
+    const revertStory = flow(function* (storyId, revisionId) {
+      try {
+        const { data: { revertStory: { id } } } = yield client.mutate({
+          mutation: revertStoryMutation,
+          variables: ({
+            storyId,
+            revisionId,
+          }),
+        })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Successfully Reverted Story.',
+          display: true,
+        })
+      } catch (err) {
+        console.log('revertStory Error', err)
+      } finally {
+        // do something
+      }
+    })
+
     return {
       changeStoryId,
       changeTitle,
@@ -220,6 +242,7 @@ const StoryEditorStore = types
       loadStory,
       setData,
       sendContribution,
+      revertStory,
     }
   })
   .views((self) => {

@@ -21,7 +21,13 @@ const AllStories = gql`
           id
           guid
       }
-    }
+      revisions {
+        id
+        title
+        description
+        content
+      }
+    } 
   }
 `
 

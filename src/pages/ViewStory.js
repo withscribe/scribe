@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
-import Input, {
-  Label,
-} from '_system/Input'
+import { Label } from '_system/Input'
 import { Button } from '_system/Button'
 import { TitleText, TitleSecondary, AuthorLabel } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
@@ -24,6 +22,7 @@ class ViewStory extends React.Component {
     liked: false,
     forked: false,
     isAuthor: false,
+    hasRevisions: false,
     showContributeTooltip: false,
     showCloneTooltip: false,
   }
@@ -44,6 +43,11 @@ class ViewStory extends React.Component {
       || storyStore.story.nonAuthorId === userStore.me.id) {
         this.setState({ isAuthor: true })
       }
+
+      if (storyStore.story.revisions != null && storyStore.story.revisions.length > 0) {
+        this.setState({ hasRevisions: true})
+      }
+
     })
   }
 
@@ -76,7 +80,7 @@ class ViewStory extends React.Component {
 
   render() {
     const { storyStore: { story }, storyStore } = this.props
-    const { liked, forked, isAuthor, showContributeTooltip } = this.state
+    const { liked, forked, isAuthor, hasRevisions, showContributeTooltip } = this.state
     // console.log('fetchingStory — ', storyStore.fetchingStory, 'story —', storyStore.story)
     // console.log('res:', storyStore.fetchingStory !== true && storyStore.story !== null)
     return (
@@ -162,6 +166,13 @@ class ViewStory extends React.Component {
                   && (
                     <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
                   )
+                }
+                {isAuthor && hasRevisions
+                && (
+                  <Link to={`/story/revisions/${story.id}/`}>
+                    <Button onClick={() => this.likeStory(story.id)}>View History</Button>
+                  </Link>
+                )
                 }
               </ViewStoryWrapper>
             </>
