@@ -6,7 +6,6 @@ import Plain from 'slate-plain-serializer'
 import { Value } from 'slate'
 
 import { Label } from '_system/Input'
-import { ButtonPrimary } from '_system/Button'
 import { TitleText } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
@@ -122,6 +121,3 @@ ViewRevision.propTypes = {
 }
 
 export default ViewRevision
-
-
-

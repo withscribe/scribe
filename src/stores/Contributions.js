@@ -78,7 +78,7 @@ const ContributionsStore = types
 
     const approveContribution = flow(function* (contributionId) {
       try {
-        this.approvingChanges = true
+        self.approvingChanges = true
         const { data: { approveChanges } } = yield client.mutate({
           mutation: ApproveChangesMutation,
           variables: ({ contributionId }),
@@ -89,7 +89,7 @@ const ContributionsStore = types
           display: true,
         })
       } catch (err) {
-        this.approvingChanges = false
+        self.approvingChanges = false
         console.log(err)
         toastStore.addToast({
           id: '' + Math.random() + '',
@@ -97,7 +97,7 @@ const ContributionsStore = types
           display: true,
         })
       } finally {
-        this.approvingChanges = false
+        self.approvingChanges = false
       }
     })
 
