@@ -4,15 +4,15 @@ const StoryByIdQuery = gql`
   query storyById($storyId: ID!) {
     storyById(storyID: $storyId) {
       id
-      parentStoryId
       title
+      description
+      content
       author
       authorId
       nonAuthorId
+      parentStoryId
       isCloned
       isForked
-      description
-      content
       contributionPending
       likes
       usersWhoLiked {

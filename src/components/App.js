@@ -27,6 +27,7 @@ import ViewFork from 'Pages/ViewFork'
 import ViewClone from 'Pages/ViewClone'
 import DiffReview from 'Pages/DiffReview'
 import Choose from 'Pages/Choose'
+import Community from 'Pages/Community'
 /* Import Stores Start */
 import UserStore from 'Stores/User'
 import AuthStore from 'Stores/Auth'
@@ -54,7 +55,7 @@ injectGlobal`
   body {
     font-family: Theinhardt;
     letter-spacing: auto;
-    line-height: 1;
+    line-height: normal;
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
     font-smoothing: antialiased;
@@ -67,7 +68,8 @@ injectGlobal`
     min-height: 100vh;
     max-height: 100vh;
     overflow-x: hidden;
-    background: #fff;
+    background-color: #fff;
+    /* background-color: #f6f8fa; */
   }
   a {
     text-decoration: none;
@@ -144,6 +146,8 @@ const App = () => (
                 <PublicRoute exact path="/register" redirectTo="/home" component={Register} />
 
                 <PrivateRoute exact path="/home" redirectTo="/login" component={Home} />
+
+                <PrivateRoute exact path="/c/:id" redirectTo="/login" component={Community} />
 
                 <PrivateRoute exact path="/story/preview/fork/:id" redirectTo="/login" component={ViewFork} />
                 <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewClone} />

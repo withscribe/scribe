@@ -9,6 +9,9 @@ const AllStories = gql`
       content
       author
       authorId
+      authorProfile {
+        userName
+      }
       nonAuthorId
       parentStoryId
       isCloned

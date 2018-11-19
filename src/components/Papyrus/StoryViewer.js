@@ -23,7 +23,7 @@ const initialValue = Value.fromJSON({
   },
 })
 
-class StoryViewer extends React.Component {
+class StoryViewer extends React.PureComponent {
   state = {
     value: initialValue,
   }
