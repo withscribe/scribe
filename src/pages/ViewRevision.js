@@ -50,14 +50,14 @@ class ViewRevision extends React.Component {
 
   handleRevertClick = () => {
     const {
-      storyEditorStore,
+      storyEditorStore, history,
       match: { params: { storyId } },
       match: { params: { revisionId } }
     } = this.props
 
     storyEditorStore.revertStory(storyId, revisionId)
       .then(() => {
-        console.log('revertStory success')
+        history.push(`/story/preview/${storyId}`)
       })
       .catch(() => {
         console.log('revertStory error')

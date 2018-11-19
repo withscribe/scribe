@@ -219,6 +219,11 @@ const StoryEditorStore = types
             revisionId,
           }),
         })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Successfully Reverted Story.',
+          display: true,
+        })
       } catch (err) {
         console.log('revertStory Error', err)
       } finally {
