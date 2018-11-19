@@ -7,6 +7,7 @@ import ContributionByIdQuery from 'Queries/contributionById'
 import ApproveChangesMutation from 'Mutations/approveChanges'
 import RejectChangesMutation from 'Mutations/rejectChanges'
 import { client } from 'Services/Client'
+import { toastStore } from 'Components/App'
 
 const ContributionsModel = types
   .model('ContributionsModel', {
@@ -24,6 +25,8 @@ const ContributionsStore = types
   .model('ContributionsStore', {
     contribution: types.maybeNull(ContributionsModel),
     contributions: types.array(ContributionsModel),
+    approvingChanges: types.optional(types.boolean),
+    rejectingChanges: types.optional(types.boolean),
   })
   .actions((self) => {
     /**
@@ -74,17 +77,53 @@ const ContributionsStore = types
     })
 
     const approveContribution = flow(function* (contributionId) {
-      const { data: { approveChanges } } = yield client.mutate({
-        mutation: ApproveChangesMutation,
-        variables: ({ contributionId }),
-      })
+      try {
+        this.approvingChanges = true
+        const { data: { approveChanges } } = yield client.mutate({
+          mutation: ApproveChangesMutation,
+          variables: ({ contributionId }),
+        })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Changes have been approved and added to the story!',
+          display: true,
+        })
+      } catch (err) {
+        this.approvingChanges = false
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Changes have failed to be approved. Please try again.',
+          display: true,
+        })
+      } finally {
+        this.approvingChanges = false
+      }
     })
 
     const rejectContribution = flow(function* (contributionId) {
-      const { data: { rejectChanges } } = yield client.mutate({
-        mutation: RejectChangesMutation,
-        variables: ({ contributionId }),
-      })
+      try {
+        this.rejectingChanges = true
+        const { data: { rejectChanges } } = yield client.mutate({
+          mutation: RejectChangesMutation,
+          variables: ({ contributionId }),
+        })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Changes have been rejected and contributor notified!',
+          display: true,
+        })
+      } catch (err) {
+        this.rejectingChanges = false
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Changes have failed to be rejected. Please try again.',
+          display: true,
+        })
+      } finally {
+        this.rejectingChanges = false
+      }
     })
 
     const deserializeContent = (content) => {

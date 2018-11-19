@@ -1,12 +1,12 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { inject, observer } from 'mobx-react'
 import ReactDiffViewer from 'react-diff-viewer'
 
 import { ButtonPrimary } from '_system/Button'
 
-@inject('userStore', 'storyStore', 'contributionsStore', 'toastStore')
+@inject('userStore', 'storyStore', 'contributionsStore')
 @observer
-class DiffReview extends PureComponent {
+class DiffReview extends React.Component {
   state = {}
 
   componentDidMount() {
@@ -16,24 +16,14 @@ class DiffReview extends PureComponent {
   }
 
   approveChanges = (contributionId) => {
-    const { contributionsStore, toastStore } = this.props
+    const { contributionsStore } = this.props
     contributionsStore.approveContribution(contributionId)
-    toastStore.addToast({
-      id: '' + Math.random() + '',
-      message: 'Contribution has been approved successfully',
-      display: true,
-    })
     this.props.history.push(`/profile`)
   }
 
   rejectChanges = (contributionId) => {
-    const { contributionsStore, toastStore } = this.props
+    const { contributionsStore } = this.props
     contributionsStore.rejectContribution(contributionId)
-    toastStore.addToast({
-      id: '' + Math.random() + '',
-      message: 'Contribution has been rejected successfully',
-      display: true,
-    })
     this.props.history.push(`/profile`)
   }
 
