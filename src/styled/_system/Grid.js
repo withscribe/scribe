@@ -2,11 +2,11 @@ import styled from 'react-emotion'
 
 const HomeGrid = styled('div')`
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(30%, 1fr)); */
   grid-template-columns: 1fr;
-  grid-gap: 0.5rem;
+  grid-gap: 0.5em 3em;
   grid-auto-flow: row dense;
-  /* grid-auto-rows: 150px; */
+  width: 50vw;
+  align-self: center;
 `
 
 const ContributionsGrid = styled('div')`

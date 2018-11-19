@@ -11,10 +11,10 @@ const baseStyles = css`
   grid-column-start: auto;
   grid-row-start: auto;
   transition: ${transitions.default};
-  border: 1px solid #d1d5da;
-  border-radius: 4px;
+  border-bottom: 1px solid #d1d5da;
+  /* border-radius: 4px; */
   padding: 1em;
-  background-color: #fbfdff;
+  /* background-color: #fbfbfb; */
 
   a {
     display: block;
@@ -29,7 +29,7 @@ const baseStyles = css`
 
 const largeCardStyles = css`
   grid-column-end: auto;
-  grid-column: 1 / -1;
+  grid-column: 1;
   /* grid-row-end: span 2; */
 `
 
@@ -81,6 +81,7 @@ const CardMetaWrapper = styled('div')`
   flex-direction: row;
   margin-top: 1em;
   align-items: center;
+  z-index: 5;
 `
 
 const CardMetaAction = styled('button')`
@@ -96,7 +97,7 @@ const CardMetaAction = styled('button')`
 
   &:hover {
     cursor: pointer;
-    background-color: ${colors.g200};
+    background-color: ${colors.b100};
   }
 `
 
