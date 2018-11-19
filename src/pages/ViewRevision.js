@@ -1,41 +1,37 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
-import { Link } from 'react-router-dom'
+import Diff from 'react-stylable-diff'
+import Plain from 'slate-plain-serializer'
+import { Value } from 'slate'
 
-import Input, {
-  Label, InlineLabel, InlineInput, TextArea,
-} from '_system/Input'
-import { Button } from '_system/Button'
+import { Label } from '_system/Input'
+import { ButtonPrimary } from '_system/Button'
 import { TitleText } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
-import StoryViewer from 'Components/Papyrus/StoryViewer'
-import { ContributionWrapper } from 'Styled/Contributions'
-import { ListCard } from '_system/ListCard'
-import { ContributionsGrid } from '_system/Grid'
 
 @inject('storyStore', 'userStore', 'toastStore')
 @observer
-class ViewStory extends React.Component {
+class ViewRevision extends React.Component {
   state = {
     isAuthor: false,
   }
 
   componentDidMount() {
-    const { storyStore, userStore } = this.props
-
-    const storyId = this.props.match.params.storyId
-    const revisionId = this.props.match.params.revisionId
+    const {
+      storyStore,
+      userStore,
+      match: { params: { storyId } },
+      match: { params: { revisionId } },
+    } = this.props
 
     storyStore.getStory(storyId).then(() => {
       if (storyStore.story.authorId === userStore.me.id || storyStore.story.nonAuthorId === userStore.me.id) {
         this.setState({ isAuthor: true })
       }
     })
-    storyStore.getRevision(revisionId).then(() => {
-      // do something
-    })
+    storyStore.getRevision(revisionId)
   }
 
   componentWillUnmount() {
@@ -43,11 +39,27 @@ class ViewStory extends React.Component {
     storyStore.destroyLoadedStory()
   }
 
+  deserializeContent = (content) => {
+    const json = JSON.parse(content)
+    const temp = Value.fromJSON(json)
+    return Plain.serialize(temp)
+  }
+
+  handleRevertClick = () => {
+    const { storyStore } = this.props
+
+    storyStore.revertStory()
+      .then(() => {
+        console.log('revertStory success')
+      })
+      .catch(() => {
+        console.log('revertStory error')
+      })
+  }
+
   render() {
     const { storyStore: { story, revision }, storyStore } = this.props
     const { isAuthor } = this.state
-    // console.log('fetchingStory — ', storyStore.fetchingStory, 'story —', storyStore.story)
-    // console.log('res:', storyStore.fetchingStory !== true && storyStore.story !== null)
     return (
         <>
           <GhostWrapper isDoneRendering={storyStore.fetchingStory}>
@@ -67,32 +79,29 @@ class ViewStory extends React.Component {
                 By: {story.author ? story.author : 'No Author Assigned.'}
               </Label>
 
+            {!storyStore.fetchingRevision && revision
+            && <Diff
+              inputA={this.deserializeContent(story.content)}
+              inputB={this.deserializeContent(revision.content)} />
+            }
           </>
           }
-          {!storyStore.fetchingRevision && revision
-          && <>
-              <StoryViewer content={revision.content} />
-
-              {isAuthor
-                && (
-                  <Link to={`/story/edit/${storyStore.story.id}`}>Revert</Link>
-                )
-              }
-            </>
+          {isAuthor
+          && <ButtonPrimary type="button" onClick={this.handleRevertClick}>Revert</ButtonPrimary>
           }
       </>
     )
   }
 }
 
-ViewStory.propTypes = {
+ViewRevision.propTypes = {
   storyStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
   toastStore: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
 }
 
-export default ViewStory
+export default ViewRevision
 
 
 

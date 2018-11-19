@@ -14,6 +14,7 @@ import StoryViewer from 'Components/Papyrus/StoryViewer'
 import { ContributionWrapper } from 'Styled/Contributions'
 import { ListCard } from '_system/ListCard'
 import { ContributionsGrid } from '_system/Grid'
+import { ButtonPrimary, ButtonSecondary } from '_system/Button'
 
 @inject('storyStore', 'userStore', 'toastStore')
 @observer
@@ -22,6 +23,7 @@ class ViewStory extends React.Component {
     liked: false,
     forked: false,
     isAuthor: false,
+    hasRevisions: false,
   }
 
   componentDidMount() {
@@ -40,6 +42,11 @@ class ViewStory extends React.Component {
       || storyStore.story.nonAuthorId === userStore.me.id) {
         this.setState({ isAuthor: true })
       }
+
+      if (storyStore.story.revisions != null && storyStore.story.revisions.length() > 0){
+        this.setState({ hasRevisions: true})
+      }
+
     })
   }
 
@@ -72,7 +79,7 @@ class ViewStory extends React.Component {
 
   render() {
     const { storyStore: { story }, storyStore } = this.props
-    const { liked, forked, isAuthor } = this.state
+    const { liked, forked, isAuthor, hasRevisions } = this.state
     // console.log('fetchingStory — ', storyStore.fetchingStory, 'story —', storyStore.story)
     // console.log('res:', storyStore.fetchingStory !== true && storyStore.story !== null)
     return (
@@ -116,22 +123,10 @@ class ViewStory extends React.Component {
                   <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
                 )
               }
-
-
-            <Label>Story Revisions</Label>
-              {story.revisions.length > 0 ? (
-                <ContributionsGrid>
-                  {story.revisions.map(revision => (
-                    <ListCard key={revision.id}>
-                      <Link to={`/story/preview/${story.id}/${revision.id}`}>
-                        <div style={{ width: '100%', height: '15vh' }}>
-                          {revision.id}
-                        </div>
-                      </Link>
-                    </ListCard>
-                  ))}
-                </ContributionsGrid>
-              ) : <span>Nothing to see here.</span>
+              {isAuthor && hasRevisions
+              && <Link to={`/story/revisions/${story.id}/`}>
+                <ButtonSecondary>Story History</ButtonSecondary>
+              </Link>
               }
             </>
           }

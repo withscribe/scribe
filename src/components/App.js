@@ -22,6 +22,7 @@ import CreateStory from 'Pages/CreateStory'
 import EditStory from 'Pages/EditStory'
 import ViewStory from 'Pages/ViewStory'
 import ViewRevision from 'Pages/ViewRevision'
+import ViewRevisions from 'Pages/ViewRevisions'
 import ViewFork from 'Pages/ViewFork'
 import ViewClone from 'Pages/ViewClone'
 import DiffReview from 'Pages/DiffReview'
@@ -147,7 +148,8 @@ const App = () => (
                 <PrivateRoute exact path="/story/preview/fork/:id" redirectTo="/login" component={ViewFork} />
                 <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewClone} />
                 <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={ViewStory} />
-                <PrivateRoute exact path="/story/preview/:storyId/:revision" redirectTo="/login" component={ViewRevision} />
+                <PrivateRoute exact path="/story/revisions/:storyId/" redirectTo="/login" component={ViewRevisions} />
+                <PrivateRoute exact path="/story/revisions/:storyId/:revision" redirectTo="/login" component={ViewRevision}/>
 
                 <PrivateRoute exact path="/story/create" redirectTo="/login" component={CreateStory} />
                 <PrivateRoute exact path="/story/edit/:id" redirectTo="/login" component={EditStory} />

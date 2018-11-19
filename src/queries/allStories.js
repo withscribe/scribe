@@ -23,6 +23,7 @@ const AllStories = gql`
         title
         description
         content
+        createdAt
       }
     } 
   }

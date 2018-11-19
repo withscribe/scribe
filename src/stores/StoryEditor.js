@@ -4,6 +4,7 @@ import { client } from 'Services/Client'
 import submitStoryMutation from 'Mutations/submitStory'
 import updateStoryMutation from 'Mutations/updateStory'
 import contributeRequestMutation from 'Mutations/contributeRequest'
+import revertStoryMutation from 'Mutations/revertStory'
 import StoryByIdQuery from 'Queries/storyById'
 
 const StoryEditorStore = types
@@ -157,6 +158,23 @@ const StoryEditorStore = types
       console.log(`[storyEditorStore] contributeRequest: (resulting id) ${id}`)
     })
 
+    const revertStory = flow(function* (revisionId) {
+      const { storyId } = self
+      try {
+        const { data: { revertStory: { id } } } = yield client.mutate({
+          mutation: revertStoryMutation,
+          variables: ({
+            storyId,
+            revisionId,
+          }),
+        })
+      } catch (err) {
+        console.log('revertStory Error', err)
+      } finally {
+        // do something
+      }
+    })
+
     return {
       changeStoryId,
       changeTitle,
@@ -168,6 +186,7 @@ const StoryEditorStore = types
       loadStory,
       setData,
       sendContribution,
+      revertStory,
     }
   })
   .views((self) => {

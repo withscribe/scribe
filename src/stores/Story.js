@@ -26,6 +26,7 @@ const RevisionModel = types
     title: types.maybe(types.string),
     content: types.maybe(types.string),
     description: types.maybe(types.string),
+    createdAt: types.Date,
   })
 
 const StoryModel = types
@@ -82,7 +83,7 @@ const StoryStore = types
         })
         self.setStories(allStories)
       } catch (err) {
-        console.log('something went wrong inside of getAllStories')
+        console.log('something went wrong inside of getAllStories', err)
       } finally {
         self.fetchingStories = false
       }
