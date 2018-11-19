@@ -54,6 +54,7 @@ const AuthStore = types
         return false
       }
     })
+
     /**
      * Auth store function for registering a new user
      * @async
@@ -74,7 +75,7 @@ const AuthStore = types
         })
       } catch (err) {
         console.log(err)
-        if(err.message.includes('Username')) {
+        if (err.message.includes('Username')) {
           toastStore.addToast({
             id: '' + Math.random() + '',
             message: 'Username has already been taken.',
