@@ -25,8 +25,8 @@ const ContributionsStore = types
   .model('ContributionsStore', {
     contribution: types.maybeNull(ContributionsModel),
     contributions: types.array(ContributionsModel),
-    approvingChanges: types.optional(types.boolean),
-    rejectingChanges: types.optional(types.boolean),
+    approvingChanges: types.optional(types.boolean, false),
+    rejectingChanges: types.optional(types.boolean, false),
   })
   .actions((self) => {
     /**
