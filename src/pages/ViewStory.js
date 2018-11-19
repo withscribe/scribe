@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
-import Input, {
-  Label,
-} from '_system/Input'
+import { Label } from '_system/Input'
 import { Button } from '_system/Button'
 import { TitleText, TitleSecondary, AuthorLabel } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
@@ -46,7 +44,7 @@ class ViewStory extends React.Component {
         this.setState({ isAuthor: true })
       }
 
-      if (storyStore.story.revisions != null && storyStore.story.revisions.length() > 0){
+      if (storyStore.story.revisions != null && storyStore.story.revisions.length > 0) {
         this.setState({ hasRevisions: true})
       }
 
@@ -172,7 +170,7 @@ class ViewStory extends React.Component {
                 {isAuthor && hasRevisions
                 && (
                   <Link to={`/story/revisions/${story.id}/`}>
-                    <Button onClick={() => this.likeStory(story.id)}>View Hostory</Button>
+                    <Button onClick={() => this.likeStory(story.id)}>View History</Button>
                   </Link>
                 )
                 }

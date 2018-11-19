@@ -153,7 +153,7 @@ const App = () => (
                 <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewClone} />
                 <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={ViewStory} />
                 <PrivateRoute exact path="/story/revisions/:storyId/" redirectTo="/login" component={ViewRevisions} />
-                <PrivateRoute exact path="/story/revisions/:storyId/:revision" redirectTo="/login" component={ViewRevision}/>
+                <PrivateRoute exact path="/story/revisions/:storyId/:revisionId" redirectTo="/login" component={ViewRevision}/>
 
                 <PrivateRoute exact path="/story/create" redirectTo="/login" component={CreateStory} />
                 <PrivateRoute exact path="/story/edit/:id" redirectTo="/login" component={EditStory} />

@@ -210,8 +210,7 @@ const StoryEditorStore = types
       }
     })
 
-    const revertStory = flow(function* (revisionId) {
-      const { storyId } = self
+    const revertStory = flow(function* (storyId, revisionId) {
       try {
         const { data: { revertStory: { id } } } = yield client.mutate({
           mutation: revertStoryMutation,

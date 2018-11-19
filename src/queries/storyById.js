@@ -24,7 +24,6 @@ const StoryByIdQuery = gql`
         title
         description
         content
-        createdAt
       }
     }
   }

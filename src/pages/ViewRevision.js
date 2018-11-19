@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
-import Diff from 'react-stylable-diff'
+import ReactDiffViewer from 'react-diff-viewer'
 import Plain from 'slate-plain-serializer'
 import { Value } from 'slate'
 
@@ -10,8 +10,11 @@ import { ButtonPrimary } from '_system/Button'
 import { TitleText } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
+import {
+  ContributeButton, ContributeGrid, ActionInfo,
+} from 'styled/ViewStory'
 
-@inject('storyStore', 'userStore', 'toastStore')
+@inject('storyStore', 'userStore', 'storyEditorStore')
 @observer
 class ViewRevision extends React.Component {
   state = {
@@ -46,9 +49,13 @@ class ViewRevision extends React.Component {
   }
 
   handleRevertClick = () => {
-    const { storyStore } = this.props
+    const {
+      storyEditorStore,
+      match: { params: { storyId } },
+      match: { params: { revisionId } }
+    } = this.props
 
-    storyStore.revertStory()
+    storyEditorStore.revertStory(storyId, revisionId)
       .then(() => {
         console.log('revertStory success')
       })
@@ -76,18 +83,31 @@ class ViewRevision extends React.Component {
                 {story.title}
               </TitleText>
               <Label>
-                By: {story.author ? story.author : 'No Author Assigned.'}
+                By:
+                {story.author ? story.author : 'No Author Assigned.'}
               </Label>
 
             {!storyStore.fetchingRevision && revision
-            && <Diff
-              inputA={this.deserializeContent(story.content)}
-              inputB={this.deserializeContent(revision.content)} />
+            && <ReactDiffViewer
+              oldValue={this.deserializeContent(story.content)}
+              newValue={this.deserializeContent(revision.content)}
+              splitView={true}
+            />
             }
           </>
           }
           {isAuthor
-          && <ButtonPrimary type="button" onClick={this.handleRevertClick}>Revert</ButtonPrimary>
+          &&
+          <ContributeGrid>
+            <ContributeButton onClick={this.handleRevertClick}>
+              Revert
+              <ActionInfo>
+                Restore this story to this specific state.
+              </ActionInfo>
+            </ContributeButton>
+            {/*<Tooltip hover={this.showTooltip} shouldShow={showContributeTooltip}/>*/}
+          </ContributeGrid>
+
           }
       </>
     )
@@ -97,7 +117,7 @@ class ViewRevision extends React.Component {
 ViewRevision.propTypes = {
   storyStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
-  toastStore: PropTypes.object.isRequired,
+  storyEditorStore: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
 }
 

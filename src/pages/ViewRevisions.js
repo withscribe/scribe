@@ -7,14 +7,23 @@ import { Label } from '_system/Input'
 import { TitleText } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
+import RevisionCard from 'Components/RevisionCard'
 
 @inject('storyStore', 'userStore', 'toastStore')
 @observer
 class ViewRevisions extends React.Component {
+  state = {
+    revisions: [],
+  }
+
   componentDidMount() {
     const { storyStore, match: { params: { storyId } } } = this.props
 
-    storyStore.getStory(storyId)
+    storyStore.getStory(storyId).then(() => {
+      const revisions = []
+      storyStore.story.revisions.map(revision => revisions.push(revision))
+      this.setState({ revisions })
+    })
   }
 
   componentWillUnmount() {
@@ -23,10 +32,8 @@ class ViewRevisions extends React.Component {
   }
 
   render() {
-    const { storyStore: { story }, storyStore: { story: { revisions } }, storyStore } = this.props
-    revisions.sort((r1, r2) => r1.createdAt > r2.createdAt)
-    // console.log('fetchingStory — ', storyStore.fetchingStory, 'story —', storyStore.story)
-    // console.log('res:', storyStore.fetchingStory !== true && storyStore.story !== null)
+    const { storyStore: { story }, storyStore, history } = this.props
+    const { revisions } = this.state
     return (
         <>
           <GhostWrapper isDoneRendering={storyStore.fetchingStory}>
@@ -49,13 +56,8 @@ class ViewRevisions extends React.Component {
 
             {revisions
             && <>
-              {revisions.map(revision => (
-                <Link key={revision.id} to={`/story/revisions/${storyStore.story.id}/${revision.id}`}>
-                  Revision ID:
-                  {revision.id}
-                  Revision Date:
-                  {revision.createdAt}
-                </Link>
+              {revisions.map( (revision, index) => (
+                <RevisionCard history={history} story={story} revision={revision} key={revision.id} pos={index} />
               ))}
             </>
             }

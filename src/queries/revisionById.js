@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 const RevisionByIdQuery = gql`
-  query revisionById($revisionId: ID!) {
-    revisionById(revisionID: $revisionId) {
+  query revisionById($id: ID!) {
+    revisionById(id: $id) {
       id
       title
       description

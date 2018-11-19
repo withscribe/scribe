@@ -97,7 +97,7 @@ const ProfileStoryCard = ({ story }) => {
   return (
     <Card>
       <Link to={generatedLink}>
-        <CardImage>
+        {/*<CardImage>*/}
           <CardBadgeWrapper>
             {story.isForked
               && <Badge>Fork</Badge>
@@ -106,7 +106,7 @@ const ProfileStoryCard = ({ story }) => {
               && <Badge>Clone</Badge>
             }
           </CardBadgeWrapper>
-        </CardImage>
+        {/*</CardImage>*/}
       </Link>
       <CardTitle>{story.title}</CardTitle>
       <CardDesc>{story.description}</CardDesc>

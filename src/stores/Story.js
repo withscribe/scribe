@@ -26,7 +26,7 @@ const RevisionModel = types
     title: types.maybe(types.string),
     content: types.maybe(types.string),
     description: types.maybe(types.string),
-    createdAt: types.Date,
+    // createdAt: types.Date,
   })
 
 const StoryModel = types
@@ -117,12 +117,12 @@ const StoryStore = types
      * @function getRevision
      * @param {String} revisionId - The ID of the request revision
      */
-    const getRevision = flow(function* (revisionId) {
+    const getRevision = flow(function* (id) {
       try {
         self.fetchingRevision = true
         const { data: { revisionById } } = yield client.query({
           query: RevisionByIdQuery,
-          variables: ({ revisionId }),
+          variables: ({ id }),
           fetchPolicy: 'network-only',
         })
         self.setRevision(revisionById)
