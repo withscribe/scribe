@@ -59,6 +59,7 @@ const StoryStore = types
     const setStories = (stories) => {
       applySnapshot(self.stories, stories)
     }
+
     /**
      * Story store function used to alter the selected story
      * @function setActiveStory
@@ -67,9 +68,11 @@ const StoryStore = types
     const setActiveStory = (storyId) => {
       self.selectedStory = storyId
     }
+
     /**
      * Story store function used to retrieve the list of
      * all public stories
+     * @async
      * @function getAllStories
     */
     const getAllStories = flow(function* () {
@@ -87,10 +90,12 @@ const StoryStore = types
         self.fetchingStories = false
       }
     })
+
     /**
      * Story store function used to retrieve a specific story
      * by passing the requested story's ID
      * @function getStory
+     * @async
      * @param {String} storyId - The ID of the request story
     */
     const getStory = flow(function* (storyId) {
@@ -108,6 +113,7 @@ const StoryStore = types
         self.fetchingStory = false
       }
     })
+
     /**
      * Story store function used to attach a single requested
      * story to the store
@@ -115,20 +121,14 @@ const StoryStore = types
      * @param {String} story - StoryModel returned from getStory
     */
     const setStory = (story) => {
-      // if (self.story == null) {
-      //   self.story = StoryModel.create({
-      //     ...story,
-      //   })
-      //   return
-      // }
       self.story = { ...story }
-
-      // applySnapshot(self.story, ...story)
     }
+
     /**
      * Story store function used to clone (make a copy) of an existing story
      * and attaching it to the user who initiated the clone
      * @function clone
+     * @async
      * @param {String} parentStoryId - The ID of the original story
      * @param {String} nonAuthorId - The ID of the user who initiated the clone
     */
@@ -158,8 +158,8 @@ const StoryStore = types
       } finally {
         self.cloningStory = false
       }
-
     })
+
     /**
      * Story store function used to attach the current
      * ID of the cloned story
@@ -169,9 +169,11 @@ const StoryStore = types
     const setCurrentCloneId = (cloneId) => {
       self.currentCloneId = cloneId
     }
+
     /**
      * Story store function set likes to a specific story
      * @function likeStory
+     * @async
      * @param {String} storyId - The ID of the story to be liked
     */
     const likeStory = flow(function* (storyId) {
@@ -180,9 +182,11 @@ const StoryStore = types
         variables: ({ storyId }),
       })
     })
+
     /**
      * Story store function that forks the requested story
      * @function forkStory
+     * @async
      * @param {String} parentStoryId - The ID of the story to be forked
      * @param {String} nonAuthorId - The ID of the user profile that requested the fork
     */
