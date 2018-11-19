@@ -51,7 +51,7 @@ class ViewRevision extends React.Component {
     const {
       storyEditorStore, history,
       match: { params: { storyId } },
-      match: { params: { revisionId } }
+      match: { params: { revisionId } },
     } = this.props
 
     storyEditorStore.revertStory(storyId, revisionId)

@@ -56,7 +56,7 @@ class ViewRevisions extends React.Component {
 
             {revisions
             && <>
-              {revisions.map( (revision, index) => (
+              {revisions.map((revision, index) => (
                 <RevisionCard history={history} story={story} revision={revision} key={revision.id} pos={index} />
               ))}
             </>
