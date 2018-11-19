@@ -5,10 +5,12 @@ import submitStoryMutation from 'Mutations/submitStory'
 import updateStoryMutation from 'Mutations/updateStory'
 import contributeRequestMutation from 'Mutations/contributeRequest'
 import StoryByIdQuery from 'Queries/storyById'
+import { toastStore } from 'Components/App'
 
 const StoryEditorStore = types
   .model('StoryEditorModel', {
     saveInProgress: types.optional(types.boolean, false),
+    sendingContributionRequest: types.optional(types.boolean, false),
     storyId: types.maybe(types.string),
     title: types.maybe(types.string),
     description: types.maybe(types.string),
@@ -111,17 +113,33 @@ const StoryEditorStore = types
      * @param {number} authorId - The ProfileId of the user submitting the Story
      */
     const submitStory = flow(function* (authorId, author) {
-      self.saveInProgress = true
-      const { title, description, content } = self
-      const { data: { submitStory: { id } } } = yield client.mutate({
-        mutation: submitStoryMutation,
-        variables: ({
-          title, author, description, content, authorId,
-        }),
-      })
-      console.log(`[storyEditorStore] submitStory: (resulting id) ${id}`)
-      self.changeStoryId(id)
-      self.saveInProgress = false
+      try {
+        self.saveInProgress = true
+        const { title, description, content } = self
+        const { data: { submitStory: { id } } } = yield client.mutate({
+          mutation: submitStoryMutation,
+          variables: ({
+            title, author, description, content, authorId,
+          }),
+        })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Story has been created!',
+          display: true,
+        })
+        self.changeStoryId(id)
+        self.saveInProgress = false
+      } catch (err) {
+        // TODO: actually log the errors
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Story failed to submit.',
+          display: true,
+        })
+      } finally {
+        self.saveInProgress = false
+      }
     })
 
     /**
@@ -129,32 +147,66 @@ const StoryEditorStore = types
      * @function updateStory
      */
     const updateStory = flow(function* () {
-      self.saveInProgress = true
-      const {
-        storyId, title, description, content,
-      } = self
-      const { data: { updateStory: { id } } } = yield client.mutate({
-        mutation: updateStoryMutation,
-        variables: ({
-          id: storyId, title, description, content,
-        }),
-      })
-      console.log(`[storyEditorStore] updateStory: (resulting id) ${id}`)
-      self.saveInProgress = false
+      try {
+        self.saveInProgress = true
+        const {
+          storyId, title, description, content,
+        } = self
+        const { data: { updateStory: { id } } } = yield client.mutate({
+          mutation: updateStoryMutation,
+          variables: ({
+            id: storyId, title, description, content,
+          }),
+        })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Story has been updated!',
+          display: true,
+        })
+        self.saveInProgress = false
+      } catch (err) {
+        self.saveInProgress = false
+        // TODO: actually log the errors
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Story failed to update.',
+          display: true,
+        })
+      } finally {
+        self.saveInProgress = false
+      }
     })
 
     const sendContribution = flow(function* (contributorName) {
-      const {
-        storyId, content,
-      } = self
-      const { data: { contributeRequest: { id } } } = yield client.mutate({
-        mutation: contributeRequestMutation,
-        variables: ({
-          storyId, content, contributorName
-        }),
-      })
-
-      console.log(`[storyEditorStore] contributeRequest: (resulting id) ${id}`)
+      try {
+        self.sendingContributionRequest = true
+        const {
+          storyId, content,
+        } = self
+        const { data: { contributeRequest: { id } } } = yield client.mutate({
+          mutation: contributeRequestMutation,
+          variables: ({
+            storyId, content, contributorName,
+          }),
+        })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Contribution has been sent!',
+          display: true,
+        })
+        self.sendingContributionRequest = false
+      } catch (err) {
+        self.sendingContributionRequest = false
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Failed to send contribution.',
+          display: true,
+        })
+      } finally {
+        self.sendingContributionRequest = false
+      }
     })
 
     return {

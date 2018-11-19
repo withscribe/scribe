@@ -4,13 +4,18 @@ import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
 import Input, {
-  Label, InlineLabel, InlineInput, TextArea,
+  Label,
 } from '_system/Input'
 import { Button } from '_system/Button'
-import { TitleText } from '_system/Typography'
+import { TitleText, TitleSecondary, AuthorLabel } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import StoryViewer from 'Components/Papyrus/StoryViewer'
+import {
+  ViewStoryWrapper, StoryGrid, ContributeButton,
+  CloneButton, SecondaryTitleGrid, CloneGrid, ContributeGrid, ActionInfo,
+} from 'styled/ViewStory'
+import Tooltip from 'Components/Tooltip'
 
 @inject('storyStore', 'userStore', 'toastStore')
 @observer
@@ -19,6 +24,8 @@ class ViewStory extends React.Component {
     liked: false,
     forked: false,
     isAuthor: false,
+    showContributeTooltip: false,
+    showCloneTooltip: false,
   }
 
   componentDidMount() {
@@ -46,13 +53,8 @@ class ViewStory extends React.Component {
   }
 
   cloneStory = (parentStoryId) => {
-    const { storyStore, userStore, toastStore } = this.props
+    const { storyStore, userStore } = this.props
     storyStore.clone(parentStoryId, userStore.me.id)
-    toastStore.addToast({
-      id: '' + Math.random() + '',
-      message: 'Story Cloned Successfully',
-      display: true,
-    })
   }
 
   likeStory = (storyId) => {
@@ -67,9 +69,14 @@ class ViewStory extends React.Component {
     this.setState({ forked: true })
   }
 
+  showTooltip = () => {
+    console.log("Hey you're here")
+    this.setState({ showContributeTooltip: true })
+  }
+
   render() {
     const { storyStore: { story }, storyStore } = this.props
-    const { liked, forked, isAuthor } = this.state
+    const { liked, forked, isAuthor, showContributeTooltip } = this.state
     // console.log('fetchingStory — ', storyStore.fetchingStory, 'story —', storyStore.story)
     // console.log('res:', storyStore.fetchingStory !== true && storyStore.story !== null)
     return (
@@ -86,33 +93,77 @@ class ViewStory extends React.Component {
             && <>
               <TitleText>
                 {story.title}
+                <AuthorLabel>
+                  By:
+                  {story.author
+                    ? story.author
+                    : 'No Author Assigned.'}
+                </AuthorLabel>
               </TitleText>
-              <Label>
-                By: {story.author ? story.author : 'No Author Assigned.'}
-              </Label>
-
-              <StoryViewer content={story.content} />
-
-              {!isAuthor
-                && <Button onClick={() => this.cloneStory(story.id)}>Clone Story</Button>
-              }
-              {!isAuthor
-                && (liked
-                  ? <Button>Liked!</Button>
-                  : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
-                )
-              }
-              {!isAuthor
-                && (forked
-                  ? <Button>Contributed!</Button>
-                  : <Button onClick={() => this.forkStory(story.id)}>Contribute</Button>
-                )
-              }
-              {isAuthor
-                && (
-                  <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
-                )
-              }
+              <ViewStoryWrapper>
+                <StoryGrid>
+                  <StoryViewer content={story.content} />
+                </StoryGrid>
+                {!isAuthor
+                  && (
+                    <SecondaryTitleGrid>
+                      <TitleSecondary>
+                        Have an idea?
+                      </TitleSecondary>
+                    </SecondaryTitleGrid>
+                  )
+                }
+                {!isAuthor
+                  && (
+                    <CloneGrid>
+                      <CloneButton onClick={() => this.cloneStory(story.id)}>
+                        Clone Story
+                        <ActionInfo>
+                          Make a personal copy of this story and use it as
+                          a starting point or to draw inspiration from.
+                        </ActionInfo>
+                      </CloneButton>
+                    </CloneGrid>
+                  )
+                }
+                {!isAuthor
+                  && (liked
+                    ? <Button>Liked!</Button>
+                    : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
+                  )
+                }
+                {!isAuthor
+                  && (forked
+                    ? (
+                      <ContributeGrid>
+                        <ContributeButton>
+                          Contributed!
+                          <ActionInfo>
+                            A Copy has been created. Check MyStories.
+                          </ActionInfo>
+                        </ContributeButton>
+                      </ContributeGrid>
+                    )
+                    : (
+                      <ContributeGrid>
+                        <ContributeButton onClick={() => this.forkStory(story.id)}>
+                          Contribute
+                          <ActionInfo>
+                            Make an editable copy of this story to suggest improvements
+                            or additions to the author of the story.
+                          </ActionInfo>
+                        </ContributeButton>
+                        <Tooltip hover={this.showTooltip} shouldShow={showContributeTooltip} />
+                      </ContributeGrid>
+                    )
+                  )
+                }
+                {isAuthor
+                  && (
+                    <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
+                  )
+                }
+              </ViewStoryWrapper>
             </>
           }
       </>
@@ -123,7 +174,6 @@ class ViewStory extends React.Component {
 ViewStory.propTypes = {
   storyStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
-  toastStore: PropTypes.object.isRequired,
 }
 
 export default ViewStory

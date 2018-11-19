@@ -6,6 +6,7 @@ import cloneStoryMutation from 'Mutations/clone'
 import likeStoryMutation from 'Mutations/like'
 import forkStoryMutation from 'Mutations/fork'
 import AllStories from 'Queries/allStories'
+import { toastStore } from 'Components/App'
 
 const AuthorModel = types
   .model('AuthorModel', {
@@ -45,6 +46,7 @@ const StoryStore = types
     stories: types.array(StoryModel),
     selectedStory: types.optional(types.string, ''),
     cloningStory: types.optional(types.boolean, false),
+    forkingStory: types.optional(types.boolean, false),
     currentCloneId: types.maybe(types.string),
   })
   .actions((self) => {
@@ -131,13 +133,32 @@ const StoryStore = types
      * @param {String} nonAuthorId - The ID of the user who initiated the clone
     */
     const clone = flow(function* (parentStoryId, nonAuthorId) {
-      self.cloningStory = true
-      const { data: { cloneStory: { id } } } = yield client.mutate({
-        mutation: cloneStoryMutation,
-        variables: ({ parentStoryId, nonAuthorId }),
-      })
-      self.cloningStory = false
-      self.setCurrentCloneId(id)
+      try {
+        self.cloningStory = true
+        const { data: { cloneStory: { id } } } = yield client.mutate({
+          mutation: cloneStoryMutation,
+          variables: ({ parentStoryId, nonAuthorId }),
+        })
+        self.cloningStory = false
+        self.setCurrentCloneId(id)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'A personal copy has been added to your library.',
+          display: true,
+        })
+      } catch (err) {
+        self.cloningStory = false
+        // TODO: actually log the errors
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Failed to clone this story.',
+          display: true,
+        })
+      } finally {
+        self.cloningStory = false
+      }
+
     })
     /**
      * Story store function used to attach the current
@@ -166,10 +187,30 @@ const StoryStore = types
      * @param {String} nonAuthorId - The ID of the user profile that requested the fork
     */
     const forkStory = flow(function* (parentStoryId, nonAuthorId) {
-      const { data: { forkStory } } = yield client.mutate({
-        mutation: forkStoryMutation,
-        variables: ({ parentStoryId, nonAuthorId }),
-      })
+      try {
+        self.forkingStory = true
+        const { data: { forkStory } } = yield client.mutate({
+          mutation: forkStoryMutation,
+          variables: ({ parentStoryId, nonAuthorId }),
+        })
+        self.forkingStory = false
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'A forked copy has been added to your library.',
+          display: true,
+        })
+      } catch (err) {
+        self.forkingStory = false
+        // TODO: actually log the errors
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Failed to fork this story.',
+          display: true,
+        })
+      } finally {
+        self.forkingStory = false
+      }
     })
 
     const destroyLoadedStory = () => {
