@@ -45,9 +45,8 @@ class ViewStory extends React.Component {
       }
 
       if (storyStore.story.revisions != null && storyStore.story.revisions.length > 0) {
-        this.setState({ hasRevisions: true})
+        this.setState({ hasRevisions: true })
       }
-
     })
   }
 
