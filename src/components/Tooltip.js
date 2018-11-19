@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { InfoIcon } from 'styled/Toast/ToastElement'
+
+import { InfoIcon } from '_system/Icons'
 
 const styles = {
   'aria-hidden': true,
