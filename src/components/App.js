@@ -69,6 +69,7 @@ injectGlobal`
     max-height: 100vh;
     overflow-x: hidden;
     background-color: #fff;
+    color: #0F131A;
     /* background-color: #f6f8fa; */
   }
   a {
