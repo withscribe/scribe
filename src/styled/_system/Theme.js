@@ -21,13 +21,6 @@ const yellows = {
   y100: '#FFC859',
 }
 
-export const gradients = {
-  1: 'background-color: #FFFFFF; background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 50%, #FF0000 100%);',
-  2: 'background-color: #FFE53B; background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);',
-  3: 'background-color: #FFE53B; background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);',
-  4: 'background-color: #8EC5FC; background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);',
-}
-
 const reds = {
   r100: '#FFAF9F',
 }
