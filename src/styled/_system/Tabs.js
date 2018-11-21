@@ -1,6 +1,14 @@
 import styled, { css } from 'react-emotion'
 
-import { colors } from '_system/Theme'
+import { colors, transitions } from '_system/Theme'
+
+const baseHoverStyles = css`
+  background-color: ${colors.g100};
+`
+
+const selectedHoverStyles = css`
+  background-color: ${colors.b300};
+`
 
 const baseTabStyles = css`
   display: inline-flex;
@@ -11,8 +19,9 @@ const baseTabStyles = css`
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: ${colors.g500};
+  color: ${colors.black};
   cursor: pointer;
+  transition: ${transitions.default};
 `
 
 const selectedTabStyles = css`
@@ -23,8 +32,27 @@ const selectedTabStyles = css`
 const TabButton = styled('span')`
   ${baseTabStyles};
   ${p => p.selected ? `${selectedTabStyles}` : null};
+
+  :hover {
+    ${p => p.selected ? null : `${baseHoverStyles}`};
+  }
 `
 
-// const TabContainer
+
+const baseTabListStyles = css`
+  display: flex;
+  flex-direction: row;
+  background-color: #fbfbfb;
+  border-radius: 4px;
+  width: 100%;
+`
+
+const TabList = styled('div')`
+  ${baseTabListStyles};
+`
 
 export default TabButton
+
+export {
+  TabList,
+}
