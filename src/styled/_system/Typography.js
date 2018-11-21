@@ -5,6 +5,7 @@ import { typography, transitions } from '_system/Theme'
 const TitleText = styled('h1')`
   ${typography.headings.xlarge};
   font-family: Theinhardt-Bold;
+  margin: 0;
 `
 
 const TitleSecondary = styled('h2')`
