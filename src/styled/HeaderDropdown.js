@@ -9,11 +9,10 @@ const DropdownWrapper = styled.div`
   height: 100%;
   cursor: pointer;
   user-select: none;
-  /* background-color: ${colors.g100}; */
+  color: ${colors.n300};
 
   &:hover {
-    /* background-color: hsla(0, 0% ,100%, .1); */
-    background-color: ${colors.g100};
+    background-color: ${colors.b200};
   }
 
   &:active {
@@ -30,12 +29,14 @@ const DropdownMenu = styled.div`
   line-height: 1rem;
   right: 0;
   z-index: 4;
-  color: ${colors.g300};
+  color: ${colors.intent.danger};
   background-color: ${colors.white};
   user-select: none;
   overflow: hidden;
-  /* box-shadow: 0px -3px 20px 4px #efefef; */
-  box-shadow: 0 3px 12px rgba(27,31,35,.15)
+  box-shadow: 0 3px 12px rgba(27,31,35,.15);
+  border: 1px solid ${colors.border.default};
+  border-top: none;
+  border-radius: 0 0 4px 4px;
 `
 
 const DropdownContext = styled.div`
@@ -44,8 +45,8 @@ const DropdownContext = styled.div`
   padding: 5px;
   display: inline-flex;
   align-items: center;
-  background-color: ${colors.g400};
-  color: #fff;
+  background-color: ${colors.b300};
+  color: ${colors.white};
 `
 
 const DropdownLast = styled.section`
@@ -67,7 +68,7 @@ const DropdownItem = styled.li`
   cursor: pointer;
 
   &:hover {
-    background-color: ${colors.g100};
+    background-color: ${colors.background.tint2};
   }
 `
 
