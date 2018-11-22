@@ -3,7 +3,7 @@ import styled, { css } from 'react-emotion'
 import { colors, transitions } from '_system/Theme'
 
 const baseHoverStyles = css`
-  background-color: ${colors.g100};
+  background-color: ${colors.n200};
 `
 
 const selectedHoverStyles = css`
@@ -25,8 +25,8 @@ const baseTabStyles = css`
 `
 
 const selectedTabStyles = css`
-  color: ${colors.b700};
-  background-color: ${colors.b100};
+  color: ${colors.b300};
+  background-color: ${colors.b200};
 `
 
 const TabButton = styled('span')`
@@ -42,7 +42,7 @@ const TabButton = styled('span')`
 const baseTabListStyles = css`
   display: flex;
   flex-direction: row;
-  background-color: #fbfbfb;
+  background-color: ${colors.background.tint2};
   border-radius: 4px;
   width: 100%;
 `

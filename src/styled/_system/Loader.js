@@ -15,7 +15,7 @@ const rotate = keyframes`
 const Spinner = styled('div')`
   height: 30px;
   width: 30px;
-  border: 4px solid ${colors.b300};
+  border: 2px solid ${colors.b300};
   border-right-color: transparent;
   border-radius: 50%;
   display: inline-block;

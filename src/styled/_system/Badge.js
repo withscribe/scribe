@@ -10,7 +10,7 @@ const defaultStyles = css`
   text-decoration: none;
   text-transform: uppercase;
   font-size: 0.8rem;
-  background-color: ${colors.b100};
+  background-color: ${colors.b200};
   font-family: Theinhardt-Bold;
   color: ${colors.white};
 `

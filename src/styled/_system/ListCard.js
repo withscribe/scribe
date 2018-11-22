@@ -26,10 +26,9 @@ const baseStyles = css`
   }
 
   &:hover {
-    background-color: ${colors.g100};
+    background-color: ${colors.n400};
     cursor: pointer;
     h1 {
-      /* color: ${colors.g300}; */
       text-decoration: underline;
     }
   }

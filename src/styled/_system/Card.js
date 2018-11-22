@@ -11,10 +11,8 @@ const baseStyles = css`
   grid-column-start: auto;
   grid-row-start: auto;
   transition: ${transitions.default};
-  border-bottom: 1px solid #d1d5da;
-  /* border-radius: 4px; */
+  border-bottom: 1px solid ${colors.border.default};
   padding: 1em;
-  /* background-color: #fbfbfb; */
 
   a {
     display: block;
@@ -23,14 +21,13 @@ const baseStyles = css`
 
   &:hover {
     cursor: pointer;
-    background-color: #fbfbfb;
+    background-color: ${colors.n100};
   }
 `
 
 const largeCardStyles = css`
   grid-column-end: auto;
   grid-column: 1;
-  /* grid-row-end: span 2; */
 `
 
 const Card = styled('div')`
@@ -40,7 +37,7 @@ const Card = styled('div')`
 
 const CardTitle = styled('h2')`
   ${typography.headings.medium};
-  color: ${colors.b500};
+  color: ${colors.b400};
   font-family: Theinhardt-Bold;
   margin: 0;
 
@@ -50,7 +47,7 @@ const CardTitle = styled('h2')`
 `
 
 const CardAuthor = styled('span')`
-  color: ${colors.g100};
+  color: ${colors.b300};
 
   :hover {
     text-decoration: underline;
@@ -87,7 +84,7 @@ const CardMetaWrapper = styled('div')`
 const CardMetaAction = styled('button')`
   outline: 0;
   border: 0;
-  color: ${colors.g300};
+  color: ${colors.n300};
   ${typography.text.xsmall};
   border-radius: 4px;
   background-color: transparent;
@@ -97,7 +94,7 @@ const CardMetaAction = styled('button')`
 
   &:hover {
     cursor: pointer;
-    background-color: ${colors.b100};
+    background-color: ${colors.b200};
   }
 `
 

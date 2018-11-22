@@ -11,7 +11,7 @@ const disabledStyles = css`
 const baseStyles = css`
   height: 40px;
   width: auto;
-  background-color: ${colors.g300};
+  background-color: ${colors.n300};
   border: 0;
   outline: 0;
   color: ${colors.white};
@@ -25,11 +25,11 @@ const baseStyles = css`
   text-align: center;
 
   &:active {
-    background-color: ${colors.g200};
+    background-color: ${colors.n300};
   }
 
   &:hover {
-    background-color: ${colors.g400};
+    background-color: ${colors.n400};
   }
 
   &[disabled],
@@ -39,51 +39,51 @@ const baseStyles = css`
 `
 
 const primaryStyles = css`
-  background-color: ${colors.b500};
+  background-color: ${colors.b300};
   color: ${colors.white};
 
   &:active {
-    background-color: ${colors.b700};
+    background-color: ${colors.b400};
   }
 
   &:hover {
-    background-color: ${colors.b700};
+    background-color: ${colors.b400};
   }
 
   &:hover,
   &:active {
-    background-color: ${colors.b900};
+    background-color: ${colors.b400};
   }
 `
 
 const secondaryStyles = css`
   background-color: transparent;
-  border-color: ${colors.b500};
+  border-color: ${colors.b300};
   border-width: 1px;
   border-style: solid;
-  color: ${colors.g500};
+  color: ${colors.n400};
 
   &:active {
-    border-color: ${colors.b700};
+    border-color: ${colors.b400};
   }
 
   &:hover {
     background-color: transparent;
-    border-color: ${colors.b700};
+    border-color: ${colors.b300};
   }
 
   &:hover,
   &:active {
-    border-color: ${colors.b900};
+    border-color: ${colors.b400};
   }
 `
 
 const inlayStyles = css`
   background-color: transparent;
-  color: ${colors.g300};
+  color: ${colors.black};
 
   &:hover {
-    background-color: ${colors.g100};
+    background-color: ${colors.n200};
   }
 `
 

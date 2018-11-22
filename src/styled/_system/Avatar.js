@@ -8,7 +8,7 @@ const AvatarBox = styled.div`
   height: ${props => props.size + 'px'};
   min-width: ${props => props.size + 'px'};
   border-radius: 50px;
-  border: 1px solid ${colors.g500};
+  border: 1px solid ${colors.n300};
   margin: 1em;
   user-select: none;
   display: ${props => props.inline ? 'inline' : null};
