@@ -60,7 +60,7 @@ class HeaderDropdown extends React.Component {
     // TODO: Get this from userStore.me
     // or send down as a prop from the Header component...
     // this doesnt really need to be state aware
-    const name = userStore.concatenatedName
+    const name = userStore.concatenatedName || userStore.me.userName
     if (!name || typeof name !== 'string' || name === null) return fallback
     return name
       .replace(/\s+/, ' ')
@@ -85,7 +85,6 @@ class HeaderDropdown extends React.Component {
 
   render() {
     const { showMenu } = this.state
-    console.log(`menu state: ${showMenu}`)
     const { userStore, userStore: { me } } = this.props
     const { initials } = this.state
     return (
@@ -97,7 +96,7 @@ class HeaderDropdown extends React.Component {
           </AvatarBox>
           {me.firstName && me.lastName
             ? `${userStore.concatenatedName}`
-            : 'Anonymous Moose'
+            : `${userStore.me.userName}`
           }
           <DropdownArrow flipped={showMenu} />
         </DropdownWrapper>
@@ -107,8 +106,8 @@ class HeaderDropdown extends React.Component {
               <DropdownItems>
                 <DropdownContext>
                   <span>
-                    <ContextDetail>{me.email}</ContextDetail>
                     <ContextDetail>{me.userName}</ContextDetail>
+                    <ContextDetail>{me.email}</ContextDetail>
                   </span>
                 </DropdownContext>
                 <DropdownLast>
