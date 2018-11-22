@@ -19,6 +19,20 @@ const neutrals = {
   n400: '#234361',
 }
 
+const teals = {
+  t100: '#F1FBFC',
+  t200: '#D2EEF3',
+  t300: '#14B5D0',
+  t400: '#007489',
+}
+
+const purples = {
+  p100: '#F8F7FC',
+  p200: '#EAE7F8',
+  p300: '#735DD0',
+  p400: '#37248F',
+}
+
 const blues = {
   b100: '#F7F9FD',
   b200: '#DDEBF7',
@@ -61,6 +75,8 @@ export const colors = {
   background,
   intent,
   ...neutrals,
+  ...teals,
+  ...purples,
   ...blues,
   ...yellows,
   ...reds,
