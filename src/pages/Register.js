@@ -56,6 +56,7 @@ class Register extends React.Component {
               placeholder="username"
               type="text"
               onBlur={() => assert(types.USERNAME)}
+              isInvalid={errors.USERNAME}
               onChange={e => authStore.changeUsername(e.target.value)} />
             {errors.USERNAME && <span style={{ color: 'red' }}>{errors.USERNAME}</span>}
             <Label>Email</Label>
@@ -63,6 +64,7 @@ class Register extends React.Component {
               placeholder="email"
               type="email"
               onBlur={() => assert(types.EMAIL)}
+              isInvalid={errors.EMAIL}
               onChange={e => authStore.changeEmail(e.target.value)} />
             {errors.EMAIL && <span style={{ color: 'red' }}>{errors.EMAIL}</span>}
             <Label>Password</Label>
@@ -70,6 +72,7 @@ class Register extends React.Component {
               placeholder="password"
               type="password"
               onBlur={() => assert(types.PASSWORD)}
+              isInvalid={errors.PASSWORD}
               onChange={e => authStore.changePassword(e.target.value)} />
             {errors.PASSWORD && <span style={{ color: 'red' }}>{errors.PASSWORD}</span>}
             <Label>Confirm Password</Label>
@@ -77,6 +80,7 @@ class Register extends React.Component {
               placeholder="confirm password"
               type="password"
               onBlur={() => assert(types.CONFIRM)}
+              isInvalid={errors.CONFIRM}
               onChange={e => authStore.changeConfirmPassword(e.target.value)} />
             {errors.CONFIRM && <span style={{ color: 'red' }}>{errors.CONFIRM}</span>}
             <Button

@@ -59,13 +59,15 @@ class Login extends React.Component {
               placeholder="email"
               type="text"
               onBlur={() => assert(types.EMAIL)}
+              isInvalid={errors.EMAIL}
               onChange={e => authStore.changeEmail(e.target.value)} />
             {errors.EMAIL && <span style={{ color: 'red' }}>{errors.EMAIL}</span>}
             <Label>Password</Label>
             <Input
               placeholder="password"
-              type="text"
+              type="password"
               onBlur={() => assert(types.PASSWORD)}
+              isInvalid={errors.PASSWORD}
               onChange={e => authStore.changePassword(e.target.value)} />
             {errors.PASSWORD && <span style={{ color: 'red' }}>{errors.PASSWORD}</span>}
             <ButtonPrimary
