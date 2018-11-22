@@ -5,6 +5,7 @@ import { Transition } from 'react-spring'
 import { withRouter, Link } from 'react-router-dom'
 
 import AvatarBox from '_system/Avatar'
+import { colors } from '_system/Theme'
 import {
   DropdownWrapper, DropdownMenu, DropdownContext, DropdownLast,
   DropdownItems, DropdownItem, ContextDetail,
@@ -12,10 +13,16 @@ import {
 
 
 const DropdownArrow = ({ flipped }) => (
-  <figure style={{ margin: '0 0 0 6em', display: 'inline-flex', color: 'rgb(218, 216, 222)' }}>
+  <figure
+    style={{
+      margin: '0 1em 0 0',
+      display: 'inline-flex',
+      justifyContent: 'flex-end',
+      width: '100%',
+    }}>
     <svg
       style={{
-        fill: '#151515',
+        fill: `${colors.n300}`,
         transform: flipped ? 'rotate(180deg)' : 'none',
         transition: 'all .2s ease-in',
       }}
