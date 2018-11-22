@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'mobx-react'
-import { setLivelynessChecking } from 'mobx-state-tree'
 import { injectGlobal } from 'react-emotion'
 import decode from 'jwt-decode'
 
@@ -34,6 +33,7 @@ import AuthStore from 'Stores/Auth'
 import StoreEditorStore from 'Stores/StoryEditor'
 import StoryStore from 'Stores/Story'
 import ContributionsStore from 'Stores/Contributions'
+import CommunityStore from 'Stores/Community'
 import ToastStore from 'Stores/Toasts'
 
 import TR from '../assets/fonts/Theinhardt-Regular.woff'
@@ -106,9 +106,7 @@ const storyEditorStore = StoreEditorStore.create()
 const storyStore = StoryStore.create()
 const contributionsStore = ContributionsStore.create()
 const toastStore = ToastStore.create()
-
-
-setLivelynessChecking('error')
+const communityStore = CommunityStore.create()
 
 /*
  * Check if a token exists in localstorage, if it does
@@ -117,7 +115,6 @@ setLivelynessChecking('error')
  */
 if (localStorage.getItem('token')) {
   const fromToken = decode(localStorage.getItem('token'))
-  console.log(`data from local token: ${fromToken}`)
   userStore.pullMeById(fromToken.accountId)
 }
 
@@ -131,6 +128,7 @@ const store = {
   storyStore,
   contributionsStore,
   toastStore,
+  communityStore,
 }
 
 const App = () => (
