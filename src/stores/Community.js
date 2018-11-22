@@ -2,27 +2,45 @@ import { types, flow, destroy, applySnapshot } from 'mobx-state-tree'
 
 import { client } from 'Services/Client'
 import { toastStore } from 'Components/App'
+import AllCommunities from 'Queries/allCommunities'
+import CommunityById from 'Queries/communityById'
 
 const IdModel = types
   .model('IdModel', {
     id: types.string,
   })
 
-const CommunityModel = types
-  .model('CommunityModel', {
+const temp__UserModel = types
+  .model('temp__UserModel', {
+    userName: types.string,
+  })
+
+const CommunitiesModel = types
+  .model('CommunitiesModel', {
+    id: types.string,
     name: types.string,
     description: types.string,
     memberIds: types.array(IdModel),
+    privacy: types.maybe(types.enumeration('Type', ['PUBLIC', 'PRIVATE', 'INVITE_ONLY'])),
     bannedMemberIds: types.array(IdModel),
+  })
+
+const CommunityModel = types
+  .model('CommunityModel', {
+    id: types.string,
+    name: types.string,
+    description: types.string,
+    members: types.array(temp__UserModel),
+    privacy: types.maybe(types.enumeration('Type', ['PUBLIC', 'PRIVATE', 'INVITE_ONLY'])),
+    bannedMembersIds: types.array(IdModel),
   })
 
 const CommunityStore = types
   .model('CommunityStore', {
     fetchingCommunities: types.optional(types.boolean, false),
     fetchingCommunity: types.optional(types.boolean, false),
-    community: types.array(CommunityModel),
-    communities: types.maybeNull(CommunityModel),
-    privacy: types.enurmation('Type', ['PUBLIC', 'PRIVATE', 'INVITE_ONLY']),
+    community: types.maybeNull(CommunityModel),
+    communities: types.array(CommunitiesModel),
   })
   .actions((self) => {
     /**
@@ -55,7 +73,7 @@ const CommunityStore = types
       try {
         self.fetchingCommunities = true
         const { data: { communities } } = yield client.query({
-          query: AllStories,
+          query: AllCommunities,
           fetchPolicy: 'network-only',
         })
         self.setCommunities(communities)
@@ -77,7 +95,7 @@ const CommunityStore = types
       try {
         self.fetchingCommunity = true
         const { data: { storyById } } = yield client.query({
-          query: StoryByIdQuery,
+          query: CommunityById,
           variables: ({ communityId }),
           fetchPolicy: 'network-only',
         })

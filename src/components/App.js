@@ -131,13 +131,13 @@ const App = () => (
 
                 <PrivateRoute exact path="/home" redirectTo="/login" component={Home} />
 
-                <PrivateRoute exact path="/c/:id" redirectTo="/login" component={Community} />
+                <PrivateRoute exact path="/~:name" redirectTo="/login" component={Community} />
 
                 <PrivateRoute exact path="/story/preview/fork/:id" redirectTo="/login" component={ViewFork} />
                 <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewClone} />
                 <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={ViewStory} />
                 <PrivateRoute exact path="/story/revisions/:storyId/" redirectTo="/login" component={ViewRevisions} />
-                <PrivateRoute exact path="/story/revisions/:storyId/:revisionId" redirectTo="/login" component={ViewRevision}/>
+                <PrivateRoute exact path="/story/revisions/:storyId/:revisionId" redirectTo="/login" component={ViewRevision} />
 
                 <PrivateRoute exact path="/story/create" redirectTo="/login" component={CreateStory} />
                 <PrivateRoute exact path="/story/edit/:id" redirectTo="/login" component={EditStory} />
