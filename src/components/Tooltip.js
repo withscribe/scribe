@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { InfoIcon } from '_system/Icons'
+import { colors } from '_system/Theme'
 
 const styles = {
   'aria-hidden': true,
@@ -11,17 +12,30 @@ const styles = {
   style: {
     display: 'block',
     verticalAlign: 'text-top',
-    fill: 'currentColor',
+    fill: colors.g300,
   },
+}
+
+const popoverStyles = {
+  boxShadow: '0 3px 12px rgba(27,31,35,.15)',
+  borderRadius: '4px',
+  padding: '1em',
+  zIndex: '100',
 }
 
 const Tooltip = ({ onHover, shouldShow, text }) => (
   <>
     <InfoIcon onMouseEnter={onHover} onMouseLeave={onHover} {...styles} />
     { shouldShow
-      && <span>{text}</span>
+      && <div style={popoverStyles}>{text}</div>
     }
   </>
 )
+
+Tooltip.propTypes = {
+  onHover: PropTypes.func.isRequired,
+  shouldShow: PropTypes.bool.isRequired,
+  text: PropTypes.string.isRequired,
+}
 
 export default Tooltip
