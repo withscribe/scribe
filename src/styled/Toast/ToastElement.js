@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'react-emotion'
 
+import { colors } from '_system/Theme'
 import {
   WarningIcon,
   CheckIcon,
@@ -17,44 +18,30 @@ const shrink = keyframes`
   }
 `
 
-export const colors = {
-  G50: '#E3FCEF',
-  G300: '#36B37E',
-  G500: '#006644',
-  R50: '#FFEBE6',
-  R300: '#FF5630',
-  R500: '#BF2600',
-  Y50: '#FFFAE6',
-  Y300: '#FFAB00',
-  Y500: '#FF8B00',
-  N400: '#505F79',
-  B200: '#2684FF',
-}
-
 export const types = {
   success: {
     icon: CheckIcon,
-    text: colors.G500,
-    fg: colors.G300,
-    bg: colors.G50,
+    text: colors.g400,
+    fg: colors.g300,
+    bg: colors.white,
   },
   error: {
     icon: DangerIcon,
-    text: colors.R500,
-    fg: colors.R300,
-    bg: colors.R50,
+    text: colors.r400,
+    fg: colors.r300,
+    bg: colors.white,
   },
   warning: {
     icon: WarningIcon,
-    text: colors.Y500,
-    fg: colors.Y300,
-    bg: colors.Y50,
+    text: colors.y400,
+    fg: colors.y300,
+    bg: colors.white,
   },
   info: {
     icon: InfoIcon,
-    text: colors.N400,
-    fg: colors.B200,
-    bg: 'white',
+    text: colors.b400,
+    fg: colors.b200,
+    bg: colors.white,
   },
 }
 
