@@ -19,7 +19,7 @@ class MyStories extends React.Component {
   }
 
   render() {
-    const { userStore, userStore: { me: { originalStories } } } = this.props
+    const { history, userStore, userStore: { me: { originalStories } } } = this.props
     return (
       <>
         <TitleText>My Library</TitleText>
@@ -32,7 +32,7 @@ class MyStories extends React.Component {
           ? (
             <HomeGrid>
               {originalStories.map(story => (
-                <ProfileStoryCard story={story} key={story.id} />
+                <ProfileStoryCard story={story} key={story.id} history={history} />
               ))}
             </HomeGrid>
           ) : 'no original stories'
@@ -42,7 +42,7 @@ class MyStories extends React.Component {
           ? (
             <HomeGrid>
               {userStore.clonedStories.map(story => (
-                <ProfileStoryCard story={story} key={story.id} />
+                <ProfileStoryCard story={story} key={story.id} history={history} />
               ))}
             </HomeGrid>
           ) : 'no cloned stories'
@@ -52,7 +52,7 @@ class MyStories extends React.Component {
           ? (
             <HomeGrid>
               {userStore.forkedStories.map(story => (
-                <ProfileStoryCard story={story} key={story.id} />
+                <ProfileStoryCard story={story} key={story.id} history={history} />
               ))}
             </HomeGrid>
           ) : 'no forked stories'
@@ -64,7 +64,6 @@ class MyStories extends React.Component {
 
 MyStories.propTypes = {
   userStore: PropTypes.object.isRequired,
-  storyStore: PropTypes.object.isRequired,
 }
 
 export default MyStories

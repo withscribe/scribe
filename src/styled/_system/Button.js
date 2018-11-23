@@ -2,6 +2,37 @@ import styled, { css } from 'react-emotion'
 
 import { colors, typography, transitions } from '_system/Theme'
 
+const intent = {
+  success: {
+    text: colors.white,
+    bg: colors.intent.success,
+    hover: colors.g400,
+  },
+  danger: {
+    text: colors.white,
+    bg: colors.intent.danger,
+    hover: colors.r400,
+  },
+  warning: {
+    text: colors.white,
+    bg: colors.intent.warning,
+    hover: colors.y400,
+  },
+}
+
+const style = {
+  white: {
+    text: colors.n300,
+    bg: colors.white,
+    hover: colors.background.tint1,
+  },
+  blue: {
+    text: colors.white,
+    bg: colors.b300,
+    hover: colors.b400,
+  },
+}
+
 const disabledStyles = css`
   opacity: 0.4;
   pointer-events: none;
@@ -87,10 +118,6 @@ const inlayStyles = css`
   }
 `
 
-const Button = styled.button`
-  ${baseStyles};
-`
-
 const ButtonPrimary = styled('button')`
   ${baseStyles};
   ${primaryStyles}
@@ -106,12 +133,32 @@ const ButtonInlay = styled('button')`
   ${inlayStyles};
 `
 
-const ButtonFill = Button
+const IntentButton = styled('button')(
+  baseStyles,
+  ({ appearance }) => `
+    background-color: ${intent[appearance].bg};
+    color: ${intent[appearance].bg};
+    :hover {
+      color: ${intent[appearance].hover};
+    }
+  `,
+)
+
+const Button = styled('button')(
+  baseStyles,
+  ({ appearance }) => `
+    background-color: ${style[appearance].bg};
+    color: ${style[appearance].text};
+    :hover {
+      background-color: ${style[appearance].hover};
+    }
+  `,
+)
 
 export {
   Button,
   ButtonPrimary,
   ButtonSecondary,
   ButtonInlay,
-  ButtonFill,
+  IntentButton,
 }

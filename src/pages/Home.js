@@ -7,7 +7,7 @@ import Tab from 'Components/Tabs/Tab'
 import StoryCard from 'Components/StoryCard'
 import { TabList } from '_system/Tabs'
 import { HomeGrid } from '_system/Grid'
-import { ButtonPrimary, ButtonSecondary } from '_system/Button'
+import { ButtonPrimary, Button } from '_system/Button'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 
@@ -37,7 +37,7 @@ class Home extends React.Component {
             alignSelf: 'center',
             flexDirection: 'column',
           }}>
-          <Hero>
+          <Hero appearance="purple">
             <HeroPrimaryText>Discover</HeroPrimaryText>
             <HeroSpanText>Find Content and Communities on Scribe.</HeroSpanText>
           </Hero>
@@ -82,10 +82,10 @@ class Home extends React.Component {
         <HomeGrid>
           {!communityStore.fetchingCommunities && selectedIndex === 1
             ? <>
-              <Hero>
+              <Hero appearance="teal">
                 <HeroPrimaryText>Can't find a community?</HeroPrimaryText>
                 <Link to="/community/create">
-                  <ButtonSecondary>Create it yourself</ButtonSecondary>
+                  <Button appearance="white">Create Community</Button>
                 </Link>
               </Hero>
               {communityStore.communities.map(community => (

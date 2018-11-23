@@ -98,31 +98,43 @@ class StoryCard extends React.Component {
   }
 }
 
-const ProfileStoryCard = ({ story }) => {
-  let generatedLink = `/story/preview/${story.id}`
-  if (story.isForked) {
-    generatedLink = `/story/preview/fork/${story.id}`
-  } else if (story.isCloned) {
-    generatedLink = `story/preview/clone/${story.id}`
+/* eslint-disable react/no-multi-comp */
+class ProfileStoryCard extends React.PureComponent {
+  redirectToStory = () => {
+    const { history, story } = this.props
+    let generatedLink = `/story/preview/${story.id}`
+    if (story.isForked) {
+      generatedLink = `/story/preview/fork/${story.id}`
+    } else if (story.isCloned) {
+      generatedLink = `story/preview/clone/${story.id}`
+    }
+    history.push(generatedLink)
   }
-  return (
-    <Card>
-      <Link to={generatedLink}>
-        {/*<CardImage>*/}
-          <CardBadgeWrapper>
-            {story.isForked
-              && <Badge>Fork</Badge>
-            }
-            {story.isCloned
-              && <Badge>Clone</Badge>
-            }
-          </CardBadgeWrapper>
-        {/*</CardImage>*/}
-      </Link>
-      <CardTitle>{story.title}</CardTitle>
-      <CardDesc>{story.description}</CardDesc>
-    </Card>
-  )
+
+  render() {
+    const { story } = this.props
+    return (
+      <Card key={story.id}>
+        <CardWrapper
+          onClick={() => this.redirectToStory(story.id)}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '100%',
+            }}>
+            <div style={{ display: 'inline-flex', flexDirection: 'column' }}>
+              <Link to={`/story/preview/${story.id}`}>
+                <CardTitle>{story.title}</CardTitle>
+              </Link>
+              <CardDesc>{story.description}</CardDesc>
+            </div>
+          </div>
+        </CardWrapper>
+      </Card>
+    )
+  }
 }
 
 export default StoryCard

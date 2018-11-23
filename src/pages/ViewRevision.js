@@ -9,9 +9,7 @@ import { Label } from '_system/Input'
 import { TitleText } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
-import {
-  ContributeButton, ContributeGrid, ActionInfo,
-} from 'styled/ViewStory'
+import { Button } from '_system/Button'
 
 @inject('storyStore', 'userStore', 'storyEditorStore')
 @observer
@@ -86,27 +84,24 @@ class ViewRevision extends React.Component {
                 {story.author ? story.author : 'No Author Assigned.'}
               </Label>
 
-            {!storyStore.fetchingRevision && revision
-            && <ReactDiffViewer
-              oldValue={this.deserializeContent(story.content)}
-              newValue={this.deserializeContent(revision.content)}
-              splitView={true}
-            />
-            }
+              {!storyStore.fetchingRevision && revision
+                && (
+                  <ReactDiffViewer
+                    oldValue={this.deserializeContent(story.content)}
+                    newValue={this.deserializeContent(revision.content)}
+                    splitView />
+                )
+              }
           </>
           }
           {isAuthor
-          &&
-          <ContributeGrid>
-            <ContributeButton onClick={this.handleRevertClick}>
-              Revert
-              <ActionInfo>
-                Restore this story to this specific state.
-              </ActionInfo>
-            </ContributeButton>
-            {/*<Tooltip hover={this.showTooltip} shouldShow={showContributeTooltip}/>*/}
-          </ContributeGrid>
-
+            && (
+              <Button
+                appearance="blue"
+                onClick={this.handleRevertClick}>
+                Revert
+              </Button>
+            )
           }
       </>
     )

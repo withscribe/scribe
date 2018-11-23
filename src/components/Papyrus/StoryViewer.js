@@ -47,7 +47,7 @@ class StoryViewer extends React.PureComponent {
 
   render() {
     const { value } = this.state
-    const { content } = this.props
+    const { content, ...rest } = this.props
     let init
     if (content !== undefined) {
       const existing = JSON.parse(content)
@@ -55,6 +55,7 @@ class StoryViewer extends React.PureComponent {
     }
     return (
       <Editor
+        {...rest}
         spellCheck
         value={init !== undefined ? init : value}
         readOnly

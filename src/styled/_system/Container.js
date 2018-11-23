@@ -3,7 +3,7 @@ import styled from 'react-emotion'
 const Container = styled.div`
   width: 100%;
   display: flex;
-  max-width: 80em;
+  max-width: 50vw;
   flex-direction: column;
   flex-wrap: wrap;
 `
@@ -18,5 +18,4 @@ const Wrapper = styled('main')`
 export {
   Wrapper,
   Container,
-  HomeContainer,
 }

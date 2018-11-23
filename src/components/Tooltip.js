@@ -9,17 +9,17 @@ const styles = {
   width: '16',
   viewBox: '0 0 16 16',
   style: {
-    display: 'inline-block',
+    display: 'block',
     verticalAlign: 'text-top',
     fill: 'currentColor',
   },
 }
 
-const Tooltip = ({ hover, shouldShow }) => (
+const Tooltip = ({ onHover, shouldShow, text }) => (
   <>
-    <InfoIcon onClick={hover} {...styles} />
+    <InfoIcon onMouseEnter={onHover} onMouseLeave={onHover} {...styles} />
     { shouldShow
-      && <span>I'm being shown</span>
+      && <span>{text}</span>
     }
   </>
 )

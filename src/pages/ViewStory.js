@@ -3,19 +3,19 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
-import { Label } from '_system/Input'
-import { Button } from '_system/Button'
+import { ButtonPrimary, Button } from '_system/Button'
 import { TitleText, TitleSecondary, AuthorLabel } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import StoryViewer from 'Components/Papyrus/StoryViewer'
 import {
-  ViewStoryWrapper, StoryGrid, ContributeButton,
-  CloneButton, SecondaryTitleGrid, CloneGrid, ContributeGrid, ActionInfo,
+  ViewStoryWrapper, ViewStoryWidthAdapter,
+  SecondaryTitleGridPosition, CloneGridPosition, ContributeGridPosition,
+  LikeButtonGridPosition,
 } from 'styled/ViewStory'
 import Tooltip from 'Components/Tooltip'
 
-@inject('storyStore', 'userStore', 'toastStore')
+@inject('storyStore', 'userStore')
 @observer
 class ViewStory extends React.Component {
   state = {
@@ -72,18 +72,21 @@ class ViewStory extends React.Component {
     this.setState({ forked: true })
   }
 
-  showTooltip = () => {
-    console.log("Hey you're here")
-    this.setState({ showContributeTooltip: true })
+  toggleContrbuteTooltip = () => {
+    this.setState(prevState => (
+      { showContributeTooltip: !prevState.showContributeTooltip }))
+  }
+
+  toggleCloneTooltip = () => {
+    this.setState(prevState => (
+      { showCloneTooltip: !prevState.showCloneTooltip }))
   }
 
   render() {
     const { storyStore: { story }, storyStore } = this.props
-    const { liked, forked, isAuthor, hasRevisions, showContributeTooltip } = this.state
-    // console.log('fetchingStory — ', storyStore.fetchingStory, 'story —', storyStore.story)
-    // console.log('res:', storyStore.fetchingStory !== true && storyStore.story !== null)
+    const { liked, forked, isAuthor, hasRevisions, showContributeTooltip, showCloneTooltip } = this.state
     return (
-        <>
+        <ViewStoryWidthAdapter>
           <GhostWrapper isDoneRendering={storyStore.fetchingStory}>
             <HomeGrid>
               <GhostSmall style={{ backgroundColor: '#efefef' }} />
@@ -100,66 +103,45 @@ class ViewStory extends React.Component {
                   By:
                   {story.author
                     ? story.author
-                    : 'No Author Assigned.'}
+                    : 'No Author Assigned.'
+                  }
                 </AuthorLabel>
               </TitleText>
               <ViewStoryWrapper>
-                <StoryGrid>
-                  <StoryViewer content={story.content} />
-                </StoryGrid>
+                <StoryViewer style={{ gridColumn: '1', gridRow: '1 / -1' }} content={story.content} />
                 {!isAuthor
-                  && (
-                    <SecondaryTitleGrid>
-                      <TitleSecondary>
-                        Have an idea?
-                      </TitleSecondary>
-                    </SecondaryTitleGrid>
-                  )
-                }
-                {!isAuthor
-                  && (
-                    <CloneGrid>
-                      <CloneButton onClick={() => this.cloneStory(story.id)}>
+                  && (<>
+                    <TitleSecondary className={SecondaryTitleGridPosition}>
+                      Have an idea?
+                    </TitleSecondary>
+
+                    <ContributeGridPosition>
+                      <Button
+                        appearance="blue"
+                        onClick={() => this.forkStory(story.id)}>
+                        {forked
+                          ? 'Contribute'
+                          : 'Contributed!'
+                        }
+                      </Button>
+                      <Tooltip
+                        onHover={this.toggleContrbuteTooltip}
+                        shouldShow={showContributeTooltip}
+                        text='Make an editable copy of this story to suggest improvements or additions to the author of the story.' />
+                    </ContributeGridPosition>
+
+                    <CloneGridPosition>
+                      <Button
+                        appearance="blue"
+                        onClick={() => this.cloneStory(story.id)}>
                         Clone Story
-                        <ActionInfo>
-                          Make a personal copy of this story and use it as
-                          a starting point or to draw inspiration from.
-                        </ActionInfo>
-                      </CloneButton>
-                    </CloneGrid>
-                  )
-                }
-                {!isAuthor
-                  && (liked
-                    ? <Button>Liked!</Button>
-                    : <Button onClick={() => this.likeStory(story.id)}>Like</Button>
-                  )
-                }
-                {!isAuthor
-                  && (forked
-                    ? (
-                      <ContributeGrid>
-                        <ContributeButton>
-                          Contributed!
-                          <ActionInfo>
-                            A Copy has been created. Check MyStories.
-                          </ActionInfo>
-                        </ContributeButton>
-                      </ContributeGrid>
-                    )
-                    : (
-                      <ContributeGrid>
-                        <ContributeButton onClick={() => this.forkStory(story.id)}>
-                          Contribute
-                          <ActionInfo>
-                            Make an editable copy of this story to suggest improvements
-                            or additions to the author of the story.
-                          </ActionInfo>
-                        </ContributeButton>
-                        <Tooltip hover={this.showTooltip} shouldShow={showContributeTooltip} />
-                      </ContributeGrid>
-                    )
-                  )
+                      </Button>
+                      <Tooltip
+                        onHover={this.toggleCloneTooltip}
+                        shouldShow={showCloneTooltip}
+                        text='Make a personal copy of this story and use it as a starting point or to draw inspiration from.' />
+                    </CloneGridPosition>
+                  </>)
                 }
                 {isAuthor
                   && (
@@ -167,16 +149,24 @@ class ViewStory extends React.Component {
                   )
                 }
                 {isAuthor && hasRevisions
-                && (
-                  <Link to={`/story/revisions/${story.id}/`}>
-                    <Button onClick={() => this.likeStory(story.id)}>View History</Button>
-                  </Link>
-                )
+                  && (
+                    <Link to={`/story/revisions/${story.id}/`}>
+                      <ButtonPrimary onClick={() => this.likeStory(story.id)}>View History</ButtonPrimary>
+                    </Link>
+                  )
                 }
               </ViewStoryWrapper>
+              <ButtonPrimary
+                className={LikeButtonGridPosition}
+                onClick={() => this.likeStory(story.id)}>
+                {liked
+                  ? 'Liked!'
+                  : 'Like'
+                }
+              </ButtonPrimary>
             </>
           }
-      </>
+      </ViewStoryWidthAdapter>
     )
   }
 }
