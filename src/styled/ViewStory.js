@@ -9,12 +9,12 @@ const ViewStoryWidthAdapter = styled('div')`
   align-items: flex-start;
 `
 
-const ViewStoryWrapper = styled('div')`
+const ViewStoryGrid = styled('div')`
   display: grid;
   grid-template-columns: 75% 25%;
-  grid-template-rows: repeat(4, 100px);
+  grid-template-rows: repeat(4, 100px) 1fr;
   grid-gap: 1em;
-  width: 70vw;
+  width: 100%;
   align-self: center;
 `
 
@@ -52,7 +52,7 @@ const LikeButtonGridPosition = css`
 
 export {
   ViewStoryWidthAdapter,
-  ViewStoryWrapper,
+  ViewStoryGrid,
   StoryGridPosition,
   SecondaryTitleGridPosition,
   ContributeGridPosition,
