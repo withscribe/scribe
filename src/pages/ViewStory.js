@@ -9,7 +9,7 @@ import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import StoryViewer from 'Components/Papyrus/StoryViewer'
 import {
-  ViewStoryWrapper, ViewStoryWidthAdapter,
+  ViewStoryGrid, ViewStoryWidthAdapter,
   SecondaryTitleGridPosition, CloneGridPosition, ContributeGridPosition,
   LikeButtonGridPosition,
 } from 'styled/ViewStory'
@@ -86,86 +86,86 @@ class ViewStory extends React.Component {
     const { storyStore: { story }, storyStore } = this.props
     const { liked, forked, isAuthor, hasRevisions, showContributeTooltip, showCloneTooltip } = this.state
     return (
-        <ViewStoryWidthAdapter>
-          <GhostWrapper isDoneRendering={storyStore.fetchingStory}>
-            <HomeGrid>
-              <GhostSmall style={{ backgroundColor: '#efefef' }} />
-              <GhostSmall style={{ backgroundColor: '#efefef' }} />
-              <GhostSmall style={{ backgroundColor: '#efefef' }} />
-              <GhostSmall style={{ backgroundColor: '#efefef' }} />
-            </HomeGrid>
-          </GhostWrapper>
-          {!storyStore.fetchingStory && storyStore.story
-            && <>
-              <TitleText>
-                {story.title}
-                <AuthorLabel>
-                  By:
-                  {story.author
-                    ? story.author
-                    : 'No Author Assigned.'
-                  }
-                </AuthorLabel>
-              </TitleText>
-              <ViewStoryWrapper>
-                <StoryViewer style={{ gridColumn: '1', gridRow: '1 / -1' }} content={story.content} />
-                {!isAuthor
-                  && (<>
-                    <TitleSecondary className={SecondaryTitleGridPosition}>
-                      Have an idea?
-                    </TitleSecondary>
+      <ViewStoryWidthAdapter>
+        <GhostWrapper isDoneRendering={storyStore.fetchingStory}>
+          <HomeGrid>
+            <GhostSmall style={{ backgroundColor: '#efefef' }} />
+            <GhostSmall style={{ backgroundColor: '#efefef' }} />
+            <GhostSmall style={{ backgroundColor: '#efefef' }} />
+            <GhostSmall style={{ backgroundColor: '#efefef' }} />
+          </HomeGrid>
+        </GhostWrapper>
+        {!storyStore.fetchingStory && storyStore.story
+          && <>
+            <TitleText>
+              {story.title}
+              <AuthorLabel>
+                By:
+                {story.author
+                  ? story.author
+                  : 'No Author Assigned.'
+                }
+              </AuthorLabel>
+            </TitleText>
+            <ViewStoryGrid>
+              <StoryViewer style={{ gridColumn: '1', gridRow: '1 / -1' }} content={story.content} />
+              {!isAuthor
+                && (<>
+                  <TitleSecondary className={SecondaryTitleGridPosition}>
+                    Have an idea?
+                  </TitleSecondary>
 
-                    <ContributeGridPosition>
-                      <Button
-                        appearance="blue"
-                        onClick={() => this.forkStory(story.id)}>
-                        {forked
-                          ? 'Contribute'
-                          : 'Contributed!'
-                        }
-                      </Button>
-                      <Tooltip
-                        onHover={this.toggleContrbuteTooltip}
-                        shouldShow={showContributeTooltip}
-                        text='Make an editable copy of this story to suggest improvements or additions to the author of the story.' />
-                    </ContributeGridPosition>
+                  <ContributeGridPosition>
+                    <Button
+                      appearance="blue"
+                      onClick={() => this.forkStory(story.id)}>
+                      {forked
+                        ? 'Contributed!'
+                        : 'Contribute'
+                      }
+                    </Button>
+                    <Tooltip
+                      onHover={this.toggleContrbuteTooltip}
+                      shouldShow={showContributeTooltip}
+                      text='Make an editable copy of this story to suggest improvements or additions to the author of the story.' />
+                  </ContributeGridPosition>
 
-                    <CloneGridPosition>
-                      <Button
-                        appearance="blue"
-                        onClick={() => this.cloneStory(story.id)}>
-                        Clone Story
-                      </Button>
-                      <Tooltip
-                        onHover={this.toggleCloneTooltip}
-                        shouldShow={showCloneTooltip}
-                        text='Make a personal copy of this story and use it as a starting point or to draw inspiration from.' />
-                    </CloneGridPosition>
-                  </>)
-                }
-                {isAuthor
-                  && (
-                    <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
-                  )
-                }
-                {isAuthor && hasRevisions
-                  && (
-                    <Link to={`/story/revisions/${story.id}/`}>
-                      <ButtonPrimary onClick={() => this.likeStory(story.id)}>View History</ButtonPrimary>
-                    </Link>
-                  )
-                }
-              </ViewStoryWrapper>
-              <ButtonPrimary
-                className={LikeButtonGridPosition}
-                onClick={() => this.likeStory(story.id)}>
-                {liked
-                  ? 'Liked!'
-                  : 'Like'
-                }
-              </ButtonPrimary>
-            </>
-          }
+                  <CloneGridPosition>
+                    <Button
+                      appearance="blue"
+                      onClick={() => this.cloneStory(story.id)}>
+                      Clone Story
+                    </Button>
+                    <Tooltip
+                      onHover={this.toggleCloneTooltip}
+                      shouldShow={showCloneTooltip}
+                      text='Make a personal copy of this story and use it as a starting point or to draw inspiration from.' />
+                  </CloneGridPosition>
+                </>)
+              }
+              {isAuthor
+                && (
+                  <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
+                )
+              }
+              {isAuthor && hasRevisions
+                && (
+                  <Link to={`/story/revisions/${story.id}/`}>
+                    <ButtonPrimary onClick={() => this.likeStory(story.id)}>View History</ButtonPrimary>
+                  </Link>
+                )
+              }
+            </ViewStoryGrid>
+            <ButtonPrimary
+              className={LikeButtonGridPosition}
+              onClick={() => this.likeStory(story.id)}>
+              {liked
+                ? 'Liked!'
+                : 'Like'
+              }
+            </ButtonPrimary>
+          </>
+        }
       </ViewStoryWidthAdapter>
     )
   }
