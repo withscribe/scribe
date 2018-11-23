@@ -66,7 +66,7 @@ class Header extends React.Component {
               </NavItem>
               <NavItem>
                 <Link to="/register">
-                  <Button>
+                  <Button appearance="white">
                     Sign Up
                   </Button>
                 </Link>

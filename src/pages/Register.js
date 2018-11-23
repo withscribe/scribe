@@ -6,7 +6,7 @@ import withValidation from '../hoc/withValidation'
 
 import { types } from 'Services/Validation'
 import Input, { Label } from '_system/Input'
-import { Button } from '_system/Button'
+import { ButtonPrimary } from '_system/Button'
 import {
   FormWrapper, FormContainer, FormTitle, FormDesc,
 } from 'Styled/LRForm'
@@ -83,12 +83,12 @@ class Register extends React.Component {
               isInvalid={errors.CONFIRM}
               onChange={e => authStore.changeConfirmPassword(e.target.value)} />
             {errors.CONFIRM && <span style={{ color: 'red' }}>{errors.CONFIRM}</span>}
-            <Button
+            <ButtonPrimary
               type="submit"
               disabled={valid === false}
               onClick={e => this.onRegister(e)}>
               Register
-            </Button>
+            </ButtonPrimary>
             <Link to="/login">Already have an account? <u>Log in.</u></Link>
           </form>
         </FormContainer>
