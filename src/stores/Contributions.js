@@ -103,7 +103,7 @@ const ContributionsStore = types
 
     const rejectContribution = flow(function* (contributionId) {
       try {
-        this.rejectingChanges = true
+        self.rejectingChanges = true
         const { data: { rejectChanges } } = yield client.mutate({
           mutation: RejectChangesMutation,
           variables: ({ contributionId }),
@@ -114,7 +114,7 @@ const ContributionsStore = types
           display: true,
         })
       } catch (err) {
-        this.rejectingChanges = false
+        self.rejectingChanges = false
         console.log(err)
         toastStore.addToast({
           id: '' + Math.random() + '',
@@ -122,7 +122,7 @@ const ContributionsStore = types
           display: true,
         })
       } finally {
-        this.rejectingChanges = false
+        self.rejectingChanges = false
       }
     })
 
