@@ -1,8 +1,14 @@
 import styled, { css } from 'react-emotion'
+import PropTypes from 'prop-types'
 
 import { colors, typography, transitions } from '_system/Theme'
 
 const intent = {
+  none: {
+    text: colors.white,
+    bg: colors.intent.none,
+    hover: colors.b400,
+  },
   success: {
     text: colors.white,
     bg: colors.intent.success,
@@ -18,6 +24,82 @@ const intent = {
     bg: colors.intent.warning,
     hover: colors.y400,
   },
+}
+
+const normal = {
+  none: {
+    text: colors.b300,
+    bg: colors.background.tint1,
+    hover: colors.background.tint2,
+  },
+  success: {
+    text: colors.g300,
+    bg: colors.background.tint1,
+    hover: colors.background.tint2,
+  },
+  warning: {
+    text: colors.y300,
+    bg: colors.background.tint1,
+    hover: colors.background.tint2,
+  },
+  danger: {
+    text: colors.r300,
+    bg: colors.background.tint1,
+    hover: colors.background.tint2,
+  },
+}
+
+const primary = {
+  none: {
+    text: colors.white,
+    bg: colors.b300,
+    hover: colors.b400,
+  },
+  success: {
+    text: colors.white,
+    bg: colors.g300,
+    hover: colors.g400,
+  },
+  warning: {
+    text: colors.white,
+    bg: colors.y300,
+    hover: colors.y400,
+  },
+  danger: {
+    text: colors.white,
+    bg: colors.r300,
+    hover: colors.r400,
+  },
+}
+
+const minimal = {
+  none: {
+    text: colors.b300,
+    hover: colors.background.tint1,
+    bg: 'transparent',
+  },
+  success: {
+    text: colors.g300,
+    hover: colors.background.tint1,
+    bg: 'transparent',
+  },
+  warning: {
+    text: colors.y300,
+    hover: colors.background.tint1,
+    bg: 'transparent',
+  },
+  danger: {
+    text: colors.r300,
+    hover: colors.background.tint1,
+    bg: 'transparent',
+  },
+}
+
+const bundle = {
+  intent,
+  primary,
+  minimal,
+  default: normal,
 }
 
 const style = {
@@ -155,8 +237,45 @@ const Button = styled('button')(
   `,
 )
 
+const unsafebaseStyles = css`
+  height: 40px;
+  width: auto;
+  border: 0;
+  outline: 0;
+  border-radius: 4px;
+  ${typography.text.small};
+  padding: 0 1em;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  transition: ${transitions.default};
+  text-align: center;
+`
+
+const UnsafeButton = styled('button')(
+  unsafebaseStyles,
+  ({ appearance, tent }) => `
+    background-color: ${bundle[appearance][tent].bg};
+    color: ${bundle[appearance][tent].text};
+    :hover {
+      background-color: ${bundle[appearance][tent].hover};
+    }
+  `,
+)
+
+UnsafeButton.propTypes = {
+  tent: PropTypes.oneOf(['none', 'success', 'warning', 'danger']),
+  appearance: PropTypes.oneOf(['default', 'minimal', 'primary']).isRequired,
+}
+
+UnsafeButton.defaultProps = {
+  tent: 'none',
+  appearance: 'default',
+}
+
 export {
   Button,
+  UnsafeButton,
   ButtonPrimary,
   ButtonSecondary,
   ButtonInlay,

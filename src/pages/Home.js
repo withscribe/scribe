@@ -7,7 +7,7 @@ import Tab from 'Components/Tabs/Tab'
 import StoryCard from 'Components/StoryCard'
 import { TabList } from '_system/Tabs'
 import { HomeGrid } from '_system/Grid'
-import { ButtonPrimary, Button } from '_system/Button'
+import { ButtonPrimary, Button, UnsafeButton } from '_system/Button'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 
@@ -56,16 +56,29 @@ class Home extends React.Component {
         <HomeGrid>
           {!storyStore.fetchingStories && selectedIndex === 0
             ? <>
-              <div>
-                <h1>New Stories</h1>
-              </div>
-              {storyStore.nonClonedStories.map(story => (
-                /* we pass the history prop down to each card so we avoid a ton of
-                  unnecessary working..
-                  (not sure if it would even be a performance problem)
-                */
-                <StoryCard history={history} story={story} key={story.id} />
-              ))}
+              {storyStore.nonClonedStories.map((story, idx) => {
+                if (idx === 3) {
+                  return (
+                    <Hero appearance="green" key="hero_2018aabda">
+                      <HeroPrimaryText>Feeling Creative?</HeroPrimaryText>
+                      <Link to="/story/create">
+                        <UnsafeButton
+                          appearance="default"
+                          tent="success">
+                          Write your own Story
+                        </UnsafeButton>
+                      </Link>
+                    </Hero>
+                  )
+                }
+                return (
+                  /* we pass the history prop down to each card so we avoid a ton of
+                    unnecessary working..
+                    (not sure if it would even be a performance problem)
+                  */
+                  <StoryCard history={history} story={story} key={story.id} />
+                )
+              })}
             </>
             : (
               <GhostWrapper isDoneRendering={storyStore.fetchingStories}>
@@ -85,7 +98,8 @@ class Home extends React.Component {
               <Hero appearance="teal">
                 <HeroPrimaryText>Can't find a community?</HeroPrimaryText>
                 <Link to="/community/create">
-                  <Button appearance="white">Create Community</Button>
+                  {/* <Button appearance="white">Create Community</Button> */}
+                  <UnsafeButton appearance="default">Create Community</UnsafeButton>
                 </Link>
               </Hero>
               {communityStore.communities.map(community => (
