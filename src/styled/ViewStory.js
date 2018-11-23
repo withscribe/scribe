@@ -12,7 +12,7 @@ const ViewStoryWidthAdapter = styled('div')`
 const ViewStoryGrid = styled('div')`
   display: grid;
   grid-template-columns: 75% 25%;
-  grid-template-rows: repeat(4, 100px) 1fr;
+  grid-template-rows: repeat(4, min-content) 1fr;
   grid-gap: 1em;
   width: 100%;
   align-self: center;
