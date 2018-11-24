@@ -7,13 +7,15 @@ import Input, {
   Label, LabelConstraint,
 } from '_system/Input'
 import { TitleText } from '_system/Typography'
-import { ButtonPrimary } from '_system/Button'
+import { Button } from '_system/Button'
 import StoryViewer from 'Components/Papyrus/StoryViewer'
 
 @inject('userStore', 'storyStore')
 @observer
 class ViewClone extends React.Component {
   state = {
+    liked: false,
+    forked: false,
     isAuthor: false,
   }
 
@@ -35,15 +37,10 @@ class ViewClone extends React.Component {
     })
   }
 
-  // componentWillUnmount() {
-  //   // TODO: Fix this monkeypatch with an action using destroy()
-  //   const { storyEditorStore } = this.props
-  //   storyEditorStore.init()
-  // }
-
-  serializedStoryUpdateCallback = (update) => {
-    const { storyEditorStore } = this.props
-    storyEditorStore.changeContent(update)
+  componentWillUnmount() {
+    // TODO: Fix this monkeypatch with an action using destroy()
+    const { storyStore } = this.props
+    storyStore.destroyLoadedStory()
   }
 
   render() {
@@ -59,7 +56,7 @@ class ViewClone extends React.Component {
             <Label>
               By: {storyStore.story.author ? storyStore.story.author : 'No Author Assigned.'}
             </Label>
-            <StoryViewer content={storyStore.story.content} get={this.serializedStoryUpdateCallback} />
+            <StoryViewer content={storyStore.story.content} />
           </>)
         }
         {isAuthor

@@ -7,8 +7,8 @@ import Tab from 'Components/Tabs/Tab'
 import StoryCard from 'Components/StoryCard'
 import { TabList } from '_system/Tabs'
 import { HomeGrid } from '_system/Grid'
-import { ButtonPrimary, Button, UnsafeButton } from '_system/Button'
-import { GhostWrapper, GhostSmall } from '_system/Ghost'
+import { Button } from '_system/Button'
+import { GhostWrapper, GhostCard } from '_system/Ghost'
 import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 
 @inject('storyStore', 'communityStore')
@@ -62,11 +62,11 @@ class Home extends React.Component {
                     <Hero appearance="green" key="hero_2018aabda">
                       <HeroPrimaryText>Feeling Creative?</HeroPrimaryText>
                       <Link to="/story/create">
-                        <UnsafeButton
+                        <Button
                           appearance="default"
-                          tent="success">
+                          intent="success">
                           Write your own Story
-                        </UnsafeButton>
+                        </Button>
                       </Link>
                     </Hero>
                   )
@@ -83,10 +83,10 @@ class Home extends React.Component {
             : (
               <GhostWrapper isDoneRendering={storyStore.fetchingStories}>
                 <HomeGrid>
-                  <GhostSmall style={{ backgroundColor: '#efefef' }} />
-                  <GhostSmall style={{ backgroundColor: '#efefef' }} />
-                  <GhostSmall style={{ backgroundColor: '#efefef' }} />
-                  <GhostSmall style={{ backgroundColor: '#efefef' }} />
+                  <GhostCard />
+                  <GhostCard />
+                  <GhostCard />
+                  <GhostCard />
                 </HomeGrid>
               </GhostWrapper>
             )
@@ -99,7 +99,7 @@ class Home extends React.Component {
                 <HeroPrimaryText>Can't find a community?</HeroPrimaryText>
                 <Link to="/community/create">
                   {/* <Button appearance="white">Create Community</Button> */}
-                  <UnsafeButton appearance="default">Create Community</UnsafeButton>
+                  <Button appearance="default">Create Community</Button>
                 </Link>
               </Hero>
               {communityStore.communities.map(community => (
@@ -111,10 +111,10 @@ class Home extends React.Component {
             : (
               <GhostWrapper isDoneRendering={communityStore.fetchingCommunities}>
                 <HomeGrid>
-                  <GhostSmall style={{ backgroundColor: '#efefef' }} />
-                  <GhostSmall style={{ backgroundColor: '#efefef' }} />
-                  <GhostSmall style={{ backgroundColor: '#efefef' }} />
-                  <GhostSmall style={{ backgroundColor: '#efefef' }} />
+                  <GhostCard />
+                  <GhostCard />
+                  <GhostCard />
+                  <GhostCard />
                 </HomeGrid>
               </GhostWrapper>
             )

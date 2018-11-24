@@ -3,25 +3,27 @@ import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
 import {
-  Card, CardTitle, CardAuthor, CardWrapper, CardBadgeWrapper, CardMetaWrapper, CardMetaAction,
+  Card, CardTitle, CardAuthor, CardWrapper,
+  CardMetaWrapper, CardMetaAction,
 } from '_system/Card'
 import { CardDesc } from '_system/Typography'
+import { ContributeIcon, BookmarkIcon, HeartIcon } from '_system/Icons'
 import Badge from '_system/Badge'
 
 @inject('userStore')
 @observer
 class StoryCard extends React.Component {
   state = {
-    liked: undefined,
-    forked: undefined,
-    isAuthor: undefined,
+    liked: false,
+    forked: false,
+    isAuthor: false,
   }
 
   componentDidMount() {
     const { userStore, story } = this.props
     const guid = story.id + userStore.me.id
 
-    if (story.usersWhoLiked.length >= 1 && story.usersWhoLiked.filter(e => e.guid === guid)) {
+    if (story.usersWhoLiked.length >= 1 && story.usersWhoLiked.filter(e => e.guid === guid).length >= 1) {
       this.setState({ liked: true })
     }
 
@@ -40,12 +42,10 @@ class StoryCard extends React.Component {
     const { liked } = this.state
     if (liked) {
       const { userStore, story: { id } } = this.props
-      console.log('unlike')
-      userStore.unlikeStory(id)
+      userStore.unlikeStory(id, userStore.me.id)
       this.setState({ liked: false })
       return
     }
-    console.log('like')
     const { userStore, story: { id } } = this.props
     userStore.likeStory(id)
     this.setState({ liked: true })
@@ -76,21 +76,27 @@ class StoryCard extends React.Component {
               </Link>
               <CardDesc>{story.description}</CardDesc>
             </div>
-            <div>
-              <Badge>New</Badge>
-              <Badge>Hot</Badge>
-            </div>
+            {/* <div> */}
+            {/*   <Badge>New</Badge> */}
+            {/*   <Badge>Hot</Badge> */}
+            {/* </div> */}
           </div>
           <CardMetaWrapper>
             <CardMetaAction onClick={this.likeStory}>
-              { liked
-                ? `Liked! ${story.likes}`
-                : `+ Like ${story.likes}`
+              {liked
+                ? <><HeartIcon />Liked {story.likes}</>
+                : <><HeartIcon />Like {story.likes}</>
               }
             </CardMetaAction>
-            <CardMetaAction>[] Save</CardMetaAction>
-            <CardMetaAction>() Contribute</CardMetaAction>
-            <CardAuthor>posted by u/{story.authorProfile.userName}</CardAuthor>
+            <CardMetaAction>
+              <BookmarkIcon />
+              Save
+            </CardMetaAction>
+            <CardMetaAction>
+              <ContributeIcon />
+              Contribute
+            </CardMetaAction>
+            <CardAuthor>posted by @{story.authorProfile.userName}</CardAuthor>
           </CardMetaWrapper>
         </CardWrapper>
       </Card>
@@ -106,7 +112,7 @@ class ProfileStoryCard extends React.PureComponent {
     if (story.isForked) {
       generatedLink = `/story/preview/fork/${story.id}`
     } else if (story.isCloned) {
-      generatedLink = `story/preview/clone/${story.id}`
+      generatedLink = `/story/preview/clone/${story.id}`
     }
     history.push(generatedLink)
   }

@@ -45,6 +45,7 @@ const baseTabListStyles = css`
   background-color: ${colors.background.tint2};
   border-radius: 4px;
   width: 100%;
+  margin-bottom: 1.5em;
 `
 
 const TabList = styled('div')`

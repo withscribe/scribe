@@ -10,9 +10,9 @@ const styles = {
   width: '16',
   viewBox: '0 0 16 16',
   style: {
-    display: 'block',
-    verticalAlign: 'text-top',
-    fill: colors.g300,
+    display: 'inline',
+    verticalAlign: 'bottom',
+    fill: colors.n300,
   },
 }
 
@@ -21,6 +21,9 @@ const popoverStyles = {
   borderRadius: '4px',
   padding: '1em',
   zIndex: '100',
+  position: 'absolute',
+  backgroundColor: colors.white,
+  maxWidth: '250px',
 }
 
 const Tooltip = ({ onHover, shouldShow, text }) => (

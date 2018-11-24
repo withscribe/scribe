@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { colors, typography, transitions } from '_system/Theme'
 
-const intent = {
+const intentMeta = {
   none: {
     text: colors.white,
     bg: colors.intent.none,
@@ -38,7 +38,7 @@ const normal = {
     hover: colors.background.tint2,
   },
   warning: {
-    text: colors.y300,
+    text: colors.o300,
     bg: colors.background.tint1,
     hover: colors.background.tint2,
   },
@@ -62,8 +62,8 @@ const primary = {
   },
   warning: {
     text: colors.white,
-    bg: colors.y300,
-    hover: colors.y400,
+    bg: colors.o300,
+    hover: colors.o400,
   },
   danger: {
     text: colors.white,
@@ -84,7 +84,7 @@ const minimal = {
     bg: 'transparent',
   },
   warning: {
-    text: colors.y300,
+    text: colors.o300,
     hover: colors.background.tint1,
     bg: 'transparent',
   },
@@ -96,7 +96,7 @@ const minimal = {
 }
 
 const bundle = {
-  intent,
+  intent: intentMeta,
   primary,
   minimal,
   default: normal,
@@ -226,25 +226,26 @@ const IntentButton = styled('button')(
   `,
 )
 
-const Button = styled('button')(
-  baseStyles,
-  ({ appearance }) => `
-    background-color: ${style[appearance].bg};
-    color: ${style[appearance].text};
-    :hover {
-      background-color: ${style[appearance].hover};
-    }
-  `,
-)
+// const Button = styled('button')(
+//   baseStyles,
+//   ({ appearance }) => `
+//     background-color: ${style[appearance].bg};
+//     color: ${style[appearance].text};
+//     :hover {
+//       background-color: ${style[appearance].hover};
+//     }
+//   `,
+// )
 
-const unsafebaseStyles = css`
+const buttonBaseStyles = css`
   height: 40px;
   width: auto;
   border: 0;
   outline: 0;
   border-radius: 4px;
   ${typography.text.small};
-  padding: 0 1em;
+  padding: 0 1.5em;
+  margin-right: 1em;
   cursor: pointer;
   display: inline-block;
   text-decoration: none;
@@ -252,30 +253,29 @@ const unsafebaseStyles = css`
   text-align: center;
 `
 
-const UnsafeButton = styled('button')(
-  unsafebaseStyles,
-  ({ appearance, tent }) => `
-    background-color: ${bundle[appearance][tent].bg};
-    color: ${bundle[appearance][tent].text};
+const Button = styled('button')(
+  buttonBaseStyles,
+  ({ appearance, intent }) => `
+    background-color: ${bundle[appearance][intent].bg};
+    color: ${bundle[appearance][intent].text};
     :hover {
-      background-color: ${bundle[appearance][tent].hover};
+      background-color: ${bundle[appearance][intent].hover};
     }
   `,
 )
 
-UnsafeButton.propTypes = {
-  tent: PropTypes.oneOf(['none', 'success', 'warning', 'danger']),
+Button.propTypes = {
+  intent: PropTypes.oneOf(['none', 'success', 'warning', 'danger']),
   appearance: PropTypes.oneOf(['default', 'minimal', 'primary']).isRequired,
 }
 
-UnsafeButton.defaultProps = {
-  tent: 'none',
+Button.defaultProps = {
+  intent: 'none',
   appearance: 'default',
 }
 
 export {
   Button,
-  UnsafeButton,
   ButtonPrimary,
   ButtonSecondary,
   ButtonInlay,

@@ -78,7 +78,7 @@ injectGlobal`
   }
   .editor {
     width: 100%;
-    background-color: #efefef;
+    background-color: #F9F9FB;
     min-height: 30vh;
     border-radius: 4px;
     padding: 1em;
@@ -133,8 +133,8 @@ const App = () => (
 
                 <PrivateRoute exact path="/~:name" redirectTo="/login" component={Community} />
 
-                <PrivateRoute exact path="/story/preview/fork/:id" redirectTo="/login" component={ViewFork} />
-                <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewClone} />
+                <PrivateRoute exact path="/story/preview/fork/:id" redirectTo="/login" component={ViewStory} />
+                <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewStory} />
                 <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={ViewStory} />
                 <PrivateRoute exact path="/story/revisions/:storyId/" redirectTo="/login" component={ViewRevisions} />
                 <PrivateRoute exact path="/story/revisions/:storyId/:revisionId" redirectTo="/login" component={ViewRevision} />

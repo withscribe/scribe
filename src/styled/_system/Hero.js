@@ -19,6 +19,14 @@ const types = {
     text: colors.white,
     bg: colors.g300,
   },
+  red: {
+    text: colors.white,
+    bg: colors.r300,
+  },
+  grey: {
+    text: colors.black,
+    bg: colors.background.tint2,
+  },
 }
 
 const baseHeroStyles = css`
@@ -28,6 +36,7 @@ const baseHeroStyles = css`
   margin-top: 2em;
   margin-bottom: 2em;
   padding: 2em;
+  width: 100%;
 `
 
 const Hero = styled('div')(

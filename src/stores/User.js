@@ -175,11 +175,12 @@ const UserStore = types
      * @function likeStory
      * @async
      * @param {String} storyId - The ID of the story to be liked
+     * @param {String} profileId - The ID of the profile unliking
     */
-    const unlikeStory = flow(function* (storyId) {
+    const unlikeStory = flow(function* (storyId, profileId) {
       const { data: { removeLike } } = yield client.mutate({
         mutation: removeStoryLikeMutation,
-        variables: ({ storyId }),
+        variables: ({ storyId, profileId }),
       })
     })
 

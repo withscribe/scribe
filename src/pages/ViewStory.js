@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
-import { ButtonPrimary, Button } from '_system/Button'
-import { TitleText, TitleSecondary, AuthorLabel } from '_system/Typography'
-import { HomeGrid } from '_system/Grid'
-import { GhostWrapper, GhostSmall } from '_system/Ghost'
+import { Button } from '_system/Button'
+import { TitleSecondary } from '_system/Typography'
+import { LoadingSpinner } from '_system/Loader'
+import { GhostWrapper } from '_system/Ghost'
+import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
+import { HeartIcon, EditIcon, HistoryIcon } from '_system/Icons'
 import StoryViewer from 'Components/Papyrus/StoryViewer'
 import {
   ViewStoryGrid, ViewStoryWidthAdapter,
   SecondaryTitleGridPosition, CloneGridPosition, ContributeGridPosition,
-  LikeButtonGridPosition,
 } from 'styled/ViewStory'
 import Tooltip from 'Components/Tooltip'
 
@@ -33,7 +34,7 @@ class ViewStory extends React.Component {
 
     storyStore.getStory(storyId).then(() => {
       const guid = storyId + userStore.me.id
-      if (storyStore.story.usersWhoLiked.length >= 1 && storyStore.story.usersWhoLiked.filter(e => e.guid === guid)) {
+      if (storyStore.story.usersWhoLiked.length >= 1 && storyStore.story.usersWhoLiked.filter(e => e.guid === guid).length >= 1) {
         this.setState({ liked: true })
       }
       const hasForked = storyStore.story.isForked
@@ -61,8 +62,14 @@ class ViewStory extends React.Component {
   }
 
   likeStory = (storyId) => {
-    const { storyStore } = this.props
-    storyStore.likeStory(storyId)
+    const { liked } = this.state
+    const { userStore } = this.props
+    if (liked) {
+      userStore.unlikeStory(storyId, userStore.me.id)
+      this.setState({ liked: false })
+      return
+    }
+    userStore.likeStory(storyId)
     this.setState({ liked: true })
   }
 
@@ -88,25 +95,50 @@ class ViewStory extends React.Component {
     return (
       <ViewStoryWidthAdapter>
         <GhostWrapper isDoneRendering={storyStore.fetchingStory}>
-          <HomeGrid>
-            <GhostSmall style={{ backgroundColor: '#efefef' }} />
-            <GhostSmall style={{ backgroundColor: '#efefef' }} />
-            <GhostSmall style={{ backgroundColor: '#efefef' }} />
-            <GhostSmall style={{ backgroundColor: '#efefef' }} />
-          </HomeGrid>
+          <LoadingSpinner />
         </GhostWrapper>
         {!storyStore.fetchingStory && storyStore.story
           && <>
-            <TitleText>
-              {story.title}
-              <AuthorLabel>
-                By:
-                {story.author
-                  ? story.author
-                  : 'No Author Assigned.'
+            <Hero appearance="grey">
+              <HeroPrimaryText>
+                {story.title}
+              </HeroPrimaryText>
+              <HeroSpanText>
+                By: {story.author}
+              </HeroSpanText>
+            </Hero>
+            <div style={{ marginBottom: '1em' }}>
+              <Button
+                appearance="default"
+                onClick={() => this.likeStory(story.id)}>
+                {liked
+                  ? <><HeartIcon />Liked</>
+                  : <><HeartIcon />Like</>
                 }
-              </AuthorLabel>
-            </TitleText>
+              </Button>
+              {isAuthor
+                && (
+                  <Link to={`/story/edit/${storyStore.story.id}`}>
+                    <Button
+                      appearance="minimal"
+                      intent="warning">
+                      <><EditIcon /> Edit</>
+                    </Button>
+                  </Link>
+                )
+              }
+              {isAuthor && hasRevisions
+                && (
+                  <Link to={`/story/revisions/${story.id}/`}>
+                    <Button
+                      appearance="minimal"
+                      onClick={() => this.likeStory(story.id)}>
+                      <><HistoryIcon /> View History</>
+                    </Button>
+                  </Link>
+                )
+              }
+            </div>
             <ViewStoryGrid>
               <StoryViewer style={{ gridColumn: '1', gridRow: '1 / -1' }} content={story.content} />
               {!isAuthor
@@ -117,7 +149,7 @@ class ViewStory extends React.Component {
 
                   <ContributeGridPosition>
                     <Button
-                      appearance="blue"
+                      appearance="default"
                       onClick={() => this.forkStory(story.id)}>
                       {forked
                         ? 'Contributed!'
@@ -132,7 +164,7 @@ class ViewStory extends React.Component {
 
                   <CloneGridPosition>
                     <Button
-                      appearance="blue"
+                      appearance="default"
                       onClick={() => this.cloneStory(story.id)}>
                       Clone Story
                     </Button>
@@ -143,27 +175,7 @@ class ViewStory extends React.Component {
                   </CloneGridPosition>
                 </>)
               }
-              {isAuthor
-                && (
-                  <Link to={`/story/edit/${storyStore.story.id}`}>Edit</Link>
-                )
-              }
-              {isAuthor && hasRevisions
-                && (
-                  <Link to={`/story/revisions/${story.id}/`}>
-                    <ButtonPrimary onClick={() => this.likeStory(story.id)}>View History</ButtonPrimary>
-                  </Link>
-                )
-              }
             </ViewStoryGrid>
-            <ButtonPrimary
-              className={LikeButtonGridPosition}
-              onClick={() => this.likeStory(story.id)}>
-              {liked
-                ? 'Liked!'
-                : 'Like'
-              }
-            </ButtonPrimary>
           </>
         }
       </ViewStoryWidthAdapter>

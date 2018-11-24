@@ -26,9 +26,7 @@ const StoryGridPosition = css`
 const SecondaryTitleGridPosition = css`
   grid-column: 2;
   grid-row: 1;
-  margin: 10px;
-  align-items: center;
-  justify-self: center;
+  margin: 0;
 `
 
 const ContributeGridPosition = styled('div')`

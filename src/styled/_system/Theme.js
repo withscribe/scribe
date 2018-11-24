@@ -61,11 +61,18 @@ const greens = {
   g400: '#00783E',
 }
 
+const oranges = {
+  o100: '#FDF8F3',
+  o200: '#FAE3CD',
+  o300: '#D9822B',
+  o400: '#95591E',
+}
+
 const intent = {
   none: blues.b300,
   success: greens.g300,
   danger: reds.r300,
-  warning: yellows.y300,
+  warning: oranges.o300,
 }
 
 export const colors = {
@@ -81,6 +88,7 @@ export const colors = {
   ...yellows,
   ...reds,
   ...greens,
+  ...oranges,
 }
 
 
