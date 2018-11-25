@@ -9,7 +9,7 @@ import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import RevisionCard from 'Components/RevisionCard'
 
-@inject('storyStore', 'userStore', 'toastStore')
+@inject('storyStore', 'userStore')
 @observer
 class ViewRevisions extends React.Component {
   state = {
@@ -71,7 +71,6 @@ class ViewRevisions extends React.Component {
 ViewRevisions.propTypes = {
   storyStore: PropTypes.object.isRequired,
   userStore: PropTypes.object.isRequired,
-  toastStore: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
 }
 

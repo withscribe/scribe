@@ -27,6 +27,10 @@ const types = {
     text: colors.black,
     bg: colors.background.tint2,
   },
+  black: {
+    text: colors.white,
+    bg: colors.black,
+  },
 }
 
 const baseHeroStyles = css`

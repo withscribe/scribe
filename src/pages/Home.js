@@ -30,29 +30,21 @@ class Home extends React.Component {
     const { storyStore, communityStore, history } = this.props
     return (
       <>
-        <div
-          style={{
-            width: '50vw',
-            display: 'flex',
-            alignSelf: 'center',
-            flexDirection: 'column',
-          }}>
-          <Hero appearance="purple">
-            <HeroPrimaryText>Discover</HeroPrimaryText>
-            <HeroSpanText>Find Content and Communities on Scribe.</HeroSpanText>
-          </Hero>
-          <TabList>
-            {tabs.map((tab, index) => (
-              <Tab
-                key={tab}
-                id={tab}
-                onSelect={() => this.setState({ selectedIndex: index })}
-                isSelected={index === selectedIndex}>
-                {tab}
-              </Tab>
-            ))}
-          </TabList>
-        </div>
+        <Hero appearance="purple">
+          <HeroPrimaryText>Discover</HeroPrimaryText>
+          <HeroSpanText>Find Content and Communities on Scribe.</HeroSpanText>
+        </Hero>
+        <TabList>
+          {tabs.map((tab, index) => (
+            <Tab
+              key={tab}
+              id={tab}
+              onSelect={() => this.setState({ selectedIndex: index })}
+              isSelected={index === selectedIndex}>
+              {tab}
+            </Tab>
+          ))}
+        </TabList>
         <HomeGrid>
           {!storyStore.fetchingStories && selectedIndex === 0
             ? <>
@@ -99,7 +91,7 @@ class Home extends React.Component {
                 <HeroPrimaryText>Can't find a community?</HeroPrimaryText>
                 <Link to="/community/create">
                   {/* <Button appearance="white">Create Community</Button> */}
-                  <Button appearance="default">Create Community</Button>
+                  <Button appearance="default">Create it yourself</Button>
                 </Link>
               </Hero>
               {communityStore.communities.map(community => (

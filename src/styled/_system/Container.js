@@ -6,6 +6,7 @@ const Container = styled.div`
   max-width: 50vw;
   flex-direction: column;
   flex-wrap: wrap;
+  align-items: flex-start;
 `
 
 const Wrapper = styled('main')`

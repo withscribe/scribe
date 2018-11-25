@@ -30,22 +30,22 @@ const normal = {
   none: {
     text: colors.b300,
     bg: colors.background.tint1,
-    hover: colors.background.tint2,
+    hover: colors.n200,
   },
   success: {
     text: colors.g300,
     bg: colors.background.tint1,
-    hover: colors.background.tint2,
+    hover: colors.n200,
   },
   warning: {
     text: colors.o300,
     bg: colors.background.tint1,
-    hover: colors.background.tint2,
+    hover: colors.n200,
   },
   danger: {
     text: colors.r300,
     bg: colors.background.tint1,
-    hover: colors.background.tint2,
+    hover: colors.n200,
   },
 }
 

@@ -17,6 +17,7 @@ class StoryCard extends React.Component {
     liked: false,
     forked: false,
     isAuthor: false,
+    optimisticLikes: undefined,
   }
 
   componentDidMount() {
@@ -34,21 +35,26 @@ class StoryCard extends React.Component {
     || story.nonAuthorId === userStore.me.id) {
       this.setState({ isAuthor: true })
     }
+
+    this.setState({ optimisticLikes: story.likes })
   }
 
   likeStory = (e) => {
     e.preventDefault()
     e.stopPropagation()
     const { liked } = this.state
+    let { optimisticLikes } = this.state
     if (liked) {
       const { userStore, story: { id } } = this.props
       userStore.unlikeStory(id, userStore.me.id)
-      this.setState({ liked: false })
+      const decrementedLikeCount = optimisticLikes -= 1
+      this.setState({ liked: false, optimisticLikes: decrementedLikeCount })
       return
     }
     const { userStore, story: { id } } = this.props
+    const incrementedLikeCount = optimisticLikes += 1
     userStore.likeStory(id)
-    this.setState({ liked: true })
+    this.setState({ liked: true, optimisticLikes: incrementedLikeCount })
   }
 
   redirectToStory = () => {
@@ -57,7 +63,7 @@ class StoryCard extends React.Component {
   }
 
   render() {
-    const { liked, forked, isAuthor } = this.state
+    const { liked, forked, isAuthor, optimisticLikes } = this.state
     const { story } = this.props
     return (
       <Card key={story.id}>
@@ -84,8 +90,8 @@ class StoryCard extends React.Component {
           <CardMetaWrapper>
             <CardMetaAction onClick={this.likeStory}>
               {liked
-                ? <><HeartIcon />Liked {story.likes}</>
-                : <><HeartIcon />Like {story.likes}</>
+                ? <><HeartIcon />Liked {optimisticLikes}</>
+                : <><HeartIcon />Like {optimisticLikes}</>
               }
             </CardMetaAction>
             <CardMetaAction>

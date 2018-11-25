@@ -5,7 +5,7 @@ import { typography } from '_system/Theme'
 
 const FormWrapper = styled.div`
   display: flex;
-  /* height: 30vw; */
+  width: 100%;
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;

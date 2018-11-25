@@ -18,7 +18,7 @@ const ToolbarButton = styled('button')`
   text-align: center;
   cursor: pointer;
   ${p => p.active
-    ? `background-color: ${colors.g100};`
+    ? `background-color: ${colors.n200};`
     : null
   };
 
@@ -27,11 +27,11 @@ const ToolbarButton = styled('button')`
   }
 
   &:active {
-    background-color: ${colors.g200};
+    background-color: ${colors.n200};
   }
 
   &:hover {
-    background-color: ${colors.g100};
+    background-color: ${colors.n100};
   }
 `
 

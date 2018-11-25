@@ -82,6 +82,7 @@ injectGlobal`
     min-height: 30vh;
     border-radius: 4px;
     padding: 1em;
+    margin-bottom: 1em;
   }
 `
 

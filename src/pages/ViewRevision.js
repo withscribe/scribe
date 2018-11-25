@@ -97,7 +97,7 @@ class ViewRevision extends React.Component {
           {isAuthor
             && (
               <Button
-                appearance="blue"
+                appearance="default"
                 onClick={this.handleRevertClick}>
                 Revert
               </Button>

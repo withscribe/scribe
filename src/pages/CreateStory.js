@@ -6,9 +6,9 @@ import { Box } from 'grid-styled/emotion'
 import Input, {
   Label, LabelConstraint,
 } from '_system/Input'
-import { TitleText } from '_system/Typography'
-import { ButtonPrimary } from '_system/Button'
+import { Button } from '_system/Button'
 import { EditorWrapper } from 'Styled/Editor'
+import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 import TextEditor from 'Components/Papyrus/TextEditor'
 
 @inject('storyEditorStore', 'userStore')
@@ -41,8 +41,8 @@ class CreateStory extends React.Component {
         userStore.me.userName,
       )
       storyEditorStore.submitStory(userStore.me.id, author)
-        .then((res) => {
-          console.log(`SubmitStory Response: ${res}`)
+        .then(() => {
+          this.setState({ submitted: true })
           history.push(`/story/preview/${storyEditorStore.storyId}`)
         }).catch((err) => {
           console.log(`SubmitStory Error: ${err}`)
@@ -61,14 +61,16 @@ class CreateStory extends React.Component {
     const { storyEditorStore } = this.props
     console.log(som)
     storyEditorStore.changeContent(som)
-    // return som
   }
 
   render() {
     const { storyEditorStore } = this.props
     return (
-      <EditorWrapper>
-        <TitleText>Create a new Story</TitleText>
+      <>
+        <Hero appearance="black">
+          <HeroPrimaryText>Create a new Story</HeroPrimaryText>
+          <HeroSpanText>Share your ideas with the Scribe community.</HeroSpanText>
+        </Hero>
         <Label>Story Title</Label>
         <Box width={1 / 2}>
           <Input
@@ -86,12 +88,15 @@ class CreateStory extends React.Component {
         </Box>
         <Label>Content</Label>
         <TextEditor get={this.getSerializedStoryContent} />
-        { storyEditorStore.saveInProgress
-          ? <ButtonPrimary type="button" onClick={(e) => { e.preventDefault() }}>Saving</ButtonPrimary>
-          : <ButtonPrimary type="button" onClick={this.handleSubmitClick}>Submit</ButtonPrimary>
-        }
-
-      </EditorWrapper>
+        <Button
+          appearance="primary"
+          onClick={this.handleSubmitClick}>
+          {storyEditorStore.saveInProgress
+            ? 'Submitting'
+            : 'Submit'
+          }
+        </Button>
+      </>
     )
   }
 }
