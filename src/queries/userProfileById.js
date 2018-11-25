@@ -30,6 +30,9 @@ const ProfileByIdQuery = gql`
           description
           content
         }
+        communities {
+          name
+        }
       }
     }
   }

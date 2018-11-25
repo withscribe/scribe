@@ -15,6 +15,14 @@ function getDefaultProps(width) {
   }
 }
 
+export const CaretDownIcon = props => (
+  <svg {...getDefaultProps(16)} {...props}>
+    <path
+      fillRule="evenodd"
+      d="M12 6.5c0-.28-.22-.5-.5-.5h-7a.495.495 0 0 0-.37.83l3.5 4c.09.1.22.17.37.17s.28-.07.37-.17l3.5-4c.08-.09.13-.2.13-.33z" />
+  </svg>
+)
+
 export const HistoryIcon = props => (
   <svg {...getDefaultProps(16)} {...props}>
     <path

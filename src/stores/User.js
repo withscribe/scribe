@@ -5,6 +5,7 @@ import ProfileByIdQuery from 'Queries/userProfileById'
 import UpdateProfileMutation from 'Mutations/updateProfile'
 import likeStoryMutation from 'Mutations/like'
 import removeStoryLikeMutation from 'Mutations/removeLike'
+import JoinCommunityMutation from 'Mutations/joinCommunityMutation'
 import { toastStore } from 'Components/App'
 
 const StoryModel = types
@@ -22,6 +23,11 @@ const LikesModel = types
     guid: types.string,
   })
 
+const temp__CommunityModel = types
+  .model('CommunityModel', {
+    name: types.string,
+  })
+
 const UserModel = types
   .model('UserModel', {
     email: types.string,
@@ -34,6 +40,7 @@ const UserModel = types
     originalStories: types.array(StoryModel),
     nonOriginalStories: types.array(StoryModel),
     storiesLiked: types.array(LikesModel),
+    communities: types.array(temp__CommunityModel),
   })
 
 const UserStore = types
@@ -69,26 +76,6 @@ const UserStore = types
         ...profile,
       }
     }
-
-    /**
-     * User store function to like a specific story
-     * @function likeStory
-     * @param {String} storyId - The ID of the story to be liked
-     * @param {String} profileId - The ID of the user who liked the story
-    */
-    const likeAStory = flow(function* (storyId) {
-      const { data: { likeStory } } = yield client.mutate({
-        mutation: likeStoryMutation,
-        variables: ({ storyId }),
-      })
-    })
-
-    const removeLikeFromStory = flow(function* (storyId) {
-      const { data: { removeLike } } = yield client.mutate({
-        mutation: removeLikeMutation,
-        variables: ({ storyId }),
-      })
-    })
 
     /**
      * User store function that is intended to pull only the current Users data on [persisted/] login
@@ -184,6 +171,14 @@ const UserStore = types
       })
     })
 
+    const joinCommunity = flow(function* (profileId, communityId) {
+      const { data } = yield client.mutate({
+        mutation: JoinCommunityMutation,
+        variables: ({ profileId, communityId }),
+      })
+      self.refreshMeById(self.me.account_id)
+    })
+
     const changeEmail = (newEmail) => {
       self.me.email = newEmail
     }
@@ -222,6 +217,7 @@ const UserStore = types
       changeuserName,
       likeStory,
       unlikeStory,
+      joinCommunity,
     }
   })
   .views(self => ({
