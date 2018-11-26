@@ -5,6 +5,7 @@ import submitStoryMutation from 'Mutations/submitStory'
 import updateStoryMutation from 'Mutations/updateStory'
 import contributeRequestMutation from 'Mutations/contributeRequest'
 import revertStoryMutation from 'Mutations/revertStory'
+import addStoryToCommunityMutation from 'Mutations/addStoryToCommunity'
 import StoryByIdQuery from 'Queries/storyById'
 import { toastStore } from 'Components/App'
 
@@ -129,9 +130,7 @@ const StoryEditorStore = types
           display: true,
         })
         self.changeStoryId(id)
-        self.saveInProgress = false
       } catch (err) {
-        // TODO: actually log the errors
         console.log(err)
         toastStore.addToast({
           id: '' + Math.random() + '',
@@ -140,6 +139,22 @@ const StoryEditorStore = types
         })
       } finally {
         self.saveInProgress = false
+      }
+    })
+
+    const addStoryToCommunity = flow(function* (communityId, storyId) {
+      try {
+        const { data: { id } } = yield client.mutate({
+          mutation: addStoryToCommunityMutation,
+          variables: ({ id: communityId, storyId }),
+        })
+      } catch (err) {
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Failed to tie story to community.',
+          display: true,
+        })
       }
     })
 
@@ -164,10 +179,7 @@ const StoryEditorStore = types
           message: 'Story has been updated!',
           display: true,
         })
-        self.saveInProgress = false
       } catch (err) {
-        self.saveInProgress = false
-        // TODO: actually log the errors
         console.log(err)
         toastStore.addToast({
           id: '' + Math.random() + '',
@@ -182,9 +194,7 @@ const StoryEditorStore = types
     const sendContribution = flow(function* (contributorName) {
       try {
         self.sendingContributionRequest = true
-        const {
-          storyId, content,
-        } = self
+        const { storyId, content } = self
         const { data: { contributeRequest: { id } } } = yield client.mutate({
           mutation: contributeRequestMutation,
           variables: ({
@@ -196,9 +206,7 @@ const StoryEditorStore = types
           message: 'Contribution has been sent!',
           display: true,
         })
-        self.sendingContributionRequest = false
       } catch (err) {
-        self.sendingContributionRequest = false
         console.log(err)
         toastStore.addToast({
           id: '' + Math.random() + '',
@@ -226,8 +234,6 @@ const StoryEditorStore = types
         })
       } catch (err) {
         console.log('revertStory Error', err)
-      } finally {
-        // do something
       }
     })
 
@@ -243,12 +249,13 @@ const StoryEditorStore = types
       setData,
       sendContribution,
       revertStory,
+      addStoryToCommunity,
     }
   })
-  .views((self) => {
-    const isValid = () => !self.title && !self.description && !self.content
-
-    return { isValid }
-  })
+  .views(self => ({
+    get isValid() {
+      return !self.title && !self.description && !self.content
+    },
+  }))
 
 export default StoryEditorStore

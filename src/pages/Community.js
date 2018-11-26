@@ -20,16 +20,27 @@ class Community extends React.Component {
   }
 
   componentDidMount() {
-    const { communityStore, match: { params: { name } } } = this.props
-    communityStore.getCommunity(name)
+    const { userStore, communityStore, match: { params: { name } } } = this.props
+    communityStore.getCommunity(name).then(() => {
+      console.log(communityStore)
+      if (communityStore.community.members.filter(c => c.userName === userStore.me.userName)) {
+        this.setState({ isMember: true })
+      }
+    })
   }
 
   joinCommunity = () => {
+    const { isMember } = this.state
     const { userStore, userStore: { me }, communityStore: { community } } = this.props
+    if (isMember) {
+      userStore.leaveCommunity(me.id, community.id)
+      return
+    }
     userStore.joinCommunity(me.id, community.id)
   }
 
   render() {
+    const { isMember } = this.state
     const { history, communityStore, communityStore: { community } } = this.props
     return (
       <CommunityWidthAdapter>
@@ -55,7 +66,10 @@ class Community extends React.Component {
                 <Button
                   appearance="primary"
                   onClick={this.joinCommunity}>
-                  Join Community
+                  {isMember
+                    ? 'Leave Community'
+                    : 'Join Community'
+                  }
                 </Button>
               </CommunityInfoSection>
             </CommunitySeperator>

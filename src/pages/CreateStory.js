@@ -16,13 +16,13 @@ import TextEditor from 'Components/Papyrus/TextEditor'
 @observer
 class CreateStory extends React.Component {
   state = {
-    test: ['option', 'another', 'another2'],
     selectedCommunity: undefined,
   }
-  componentDidMount() {
-    const { storyEditorStore } = this.props
 
-    if (storyEditorStore.isValid()) {
+  componentDidMount() {
+    const { storyEditorStore, userStore } = this.props
+
+    if (storyEditorStore.isValid) {
       // do something to ask the user if they would like to reset
     } else {
       // should init on all runs since this component is made for create only
@@ -45,12 +45,17 @@ class CreateStory extends React.Component {
         userStore.me.lastName,
         userStore.me.userName,
       )
+
       storyEditorStore.submitStory(userStore.me.id, author)
         .then(() => {
-          this.setState({ submitted: true })
-          history.push(`/story/preview/${storyEditorStore.storyId}`)
-        }).catch((err) => {
-          console.log(`SubmitStory Error: ${err}`)
+          const { selectedCommunity } = this.state
+          const { storyEditorStore: { storyId, saveInProgress } } = this.props
+          // console.log(selectedCommunity, storyId, saveInProgress, storyEditorStore)
+          if (selectedCommunity !== undefined || selectedCommunity !== 'none') {
+            const communityIdFromList = userStore.me.communities.filter(c => c.name === selectedCommunity)
+            storyEditorStore.addStoryToCommunity(communityIdFromList, storyId)
+          }
+          // history.push(`/story/preview/${storyEditorStore.storyId}`)
         })
     }
   }

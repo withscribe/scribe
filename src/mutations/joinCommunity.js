@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-const JoinCommunityMutation = gql`
+const joinCommunityMutation = gql`
   mutation addMemberToCommunity($profileId: ID!, $communityId: ID!) {
     addMemberToCommunity(profileId: $profileId, communityId: $communityId) {
       id
@@ -8,4 +8,4 @@ const JoinCommunityMutation = gql`
   }
 `
 
-export default JoinCommunityMutation
+export default joinCommunityMutation

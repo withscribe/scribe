@@ -5,7 +5,8 @@ import ProfileByIdQuery from 'Queries/userProfileById'
 import UpdateProfileMutation from 'Mutations/updateProfile'
 import likeStoryMutation from 'Mutations/like'
 import removeStoryLikeMutation from 'Mutations/removeLike'
-import JoinCommunityMutation from 'Mutations/joinCommunityMutation'
+import joinCommunityMutation from 'Mutations/joinCommunity'
+import leaveCommunityMutation from 'Mutations/leaveCommunity'
 import { toastStore } from 'Components/App'
 
 const StoryModel = types
@@ -25,6 +26,7 @@ const LikesModel = types
 
 const temp__CommunityModel = types
   .model('CommunityModel', {
+    id: types.string,
     name: types.string,
   })
 
@@ -173,8 +175,16 @@ const UserStore = types
 
     const joinCommunity = flow(function* (profileId, communityId) {
       const { data } = yield client.mutate({
-        mutation: JoinCommunityMutation,
+        mutation: joinCommunityMutation,
         variables: ({ profileId, communityId }),
+      })
+      self.refreshMeById(self.me.account_id)
+    })
+
+    const leaveCommunity = flow(function* (profileId, communityId) {
+      const { data } = yield client.mutate({
+        mutation: leaveCommunityMutation,
+        variables: ({ id: communityId, profileId }),
       })
       self.refreshMeById(self.me.account_id)
     })
@@ -218,6 +228,7 @@ const UserStore = types
       likeStory,
       unlikeStory,
       joinCommunity,
+      leaveCommunity,
     }
   })
   .views(self => ({
