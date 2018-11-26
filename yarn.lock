@@ -884,6 +884,11 @@
   resolved "https://registry.yarnpkg.com/@types/async/-/async-2.0.49.tgz#92e33d13f74c895cb9a7f38ba97db8431ed14bc0"
   integrity sha512-Benr3i5odUkvpFkOpzGqrltGdbSs+EVCkEBGXbuR7uT0VzhXKIkhem6PDzHdx5EonA+rfbB3QvP6aDOw5+zp5Q==
 
+"@types/jquery@^2.0.40":
+  version "2.0.51"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-2.0.51.tgz#d0c728663de8905457a26c8891ac08ad2b3539c9"
+  integrity sha512-+vtCjz+pzr5KkaX/GMnVF0YtQqkm+oVcdBH0Q7zCxdwk42c71xJ9hT1b6Mbn4Kf7CAxSHvkWF1LRdpYwUM+pcg==
+
 "@types/node@*":
   version "10.11.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.3.tgz#c055536ac8a5e871701aa01914be5731539d01ee"
@@ -10264,6 +10269,20 @@ time-stamp@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/time-stamp/-/time-stamp-1.1.0.tgz#764a5a11af50561921b133f3b44e618687e0f5c3"
   integrity sha1-dkpaEa9QVhkhsTPztE5hhofg9cM=
+
+timeago-react@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/timeago-react/-/timeago-react-2.0.0.tgz#01ed7cea809a0e03706c6ec5602bfd29f76d8e49"
+  integrity sha512-XaO7aTKL5Yh6RzQrC9rl5zsSERBIPeAvDJRC7Hs0zwoZH2lj+e8FvQRA6DC+zjaFL3u+oBbeT2KYMIPE/ZMYTQ==
+  dependencies:
+    timeago.js "^3.0.1"
+
+timeago.js@^3.0.1:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/timeago.js/-/timeago.js-3.0.2.tgz#32a67e7c0d887ea42ca588d3aae26f77de5e76cc"
+  integrity sha1-MqZ+fA2IfqQspYjTquJvd95edsw=
+  dependencies:
+    "@types/jquery" "^2.0.40"
 
 timed-out@^3.0.0:
   version "3.1.3"

@@ -6,11 +6,14 @@ const ContributionByIdQuery = gql`
       id
       forkId
       originalStoryId
+      contributorName
       contributorProfileId
       authorProfileId
       originalContent
       contributionContent
       comment
+      createdAt
+      updatedAt
     }
   }
 `
