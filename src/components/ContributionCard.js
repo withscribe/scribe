@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { Card, CardTitle, CardWrapper } from '_system/Card'
 import { CardDesc } from '_system/Typography'
 
-class ContributionCard extends React.Component {
+class ContributionCard extends React.PureComponent {
   state = {
   }
 
@@ -24,7 +24,7 @@ class ContributionCard extends React.Component {
     return (
       <Card key={contribution.id}>
         <CardWrapper
-          onClick={() => this.redirectToContribution(contribution.id)}>
+          onClick={this.redirectToContribution}>
           <div
             style={{
               display: 'flex',
