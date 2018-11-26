@@ -38,6 +38,7 @@ class CreateStory extends React.Component {
 
   handleSubmitClick = () => {
     const { storyEditorStore, userStore, history } = this.props
+    const { selectedCommunity } = this.state
     if (storyEditorStore.isValid) {
       const author = this.getAuthorName(
         userStore.me.firstName,
@@ -45,14 +46,11 @@ class CreateStory extends React.Component {
         userStore.me.userName,
       )
 
-      storyEditorStore.submitStory(userStore.me.id, author)
+      const communityIdFromList = userStore.me.communities.filter(c => c.name === selectedCommunity)
+      const communityId = communityIdFromList[0].id || null
+      storyEditorStore.submitStory(userStore.me.id, author, communityId)
         .then(() => {
-          const { selectedCommunity } = this.state
           const { storyEditorStore: { storyId, saveInProgress } } = this.props
-          if (selectedCommunity !== null && selectedCommunity !== 'none') {
-            const communityIdFromList = userStore.me.communities.filter(c => c.name === selectedCommunity)
-            storyEditorStore.addStoryToCommunity(communityIdFromList, storyId)
-          }
           // history.push(`/story/preview/${storyEditorStore.storyId}`)
         })
     }
@@ -102,7 +100,7 @@ class CreateStory extends React.Component {
         <Label>Share your Story with a community you belong to <LabelTip>Optional</LabelTip></Label>
         <Select
           onChange={this.handleSelectChange}>
-          <option value="none">no community</option>
+          <option value={null}>no community</option>
           {me.communities.map(community => (
             <option key={community.name} value={community.name}>{community.name}</option>
           ))}

@@ -3,12 +3,14 @@ import { Redirect } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import { EditorWrapper } from 'Styled/Editor'
-import Input, {
-  Label, LabelConstraint,
-} from '_system/Input'
 import { TitleText } from '_system/Typography'
-import { ButtonPrimary } from '_system/Button'
+import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
+import { Button } from '_system/Button'
 import TextEditor from 'Components/Papyrus/TextEditor'
+import {
+  ViewStoryGrid, ViewStoryWidthAdapter,
+  SecondaryTitleGridPosition, CloneGridPosition, ContributeGridPosition,
+} from 'styled/ViewStory'
 
 @inject('storyEditorStore', 'userStore', 'toastStore')
 @observer
@@ -28,9 +30,10 @@ class EditStory extends React.Component {
         console.log('we are allowed to be here')
         this.setState({ permission: true })
       } else {
-        return (
-          <Redirect to={`/story/preview/${storyId}`} />
-        )
+        console.log('we are not allowed to be here')
+        // return (
+        //   <Redirect to={`/story/preview/${storyId}`} />
+        // )
       }
 
       if (storyEditorStore.isForked) {
@@ -77,18 +80,32 @@ class EditStory extends React.Component {
     const { storyEditorStore } = this.props
     const { showForkDetails } = this.state
     return (
-      <EditorWrapper>
-        <TitleText>{storyEditorStore.title}</TitleText>
+      <ViewStoryWidthAdapter>
+        <Hero
+          appearance="grey">
+          <HeroPrimaryText>{storyEditorStore.title}</HeroPrimaryText>
+          <HeroSpanText>Currently Editing</HeroSpanText>
+        </Hero>
         {storyEditorStore.content
           && <TextEditor content={storyEditorStore.content} get={this.serializedStoryUpdateCallback} />
         }
-        <ButtonPrimary type="button" disabled={storyEditorStore.saveInProgress} onClick={this.handleUpdateClick}>
-          {storyEditorStore.saveInProgress ? 'Saving' : 'Update'}
-        </ButtonPrimary>
-        {showForkDetails
-          && <ButtonPrimary type="button" onClick={this.sendContributionRequest}>Send Contribution Request</ButtonPrimary>
-        }
-      </EditorWrapper>
+        <div>
+          <Button appearance="default" intent="success" type="button" disabled={storyEditorStore.saveInProgress} onClick={this.handleUpdateClick}>
+            {storyEditorStore.saveInProgress ? 'Saving Changed' : 'Save Changes'}
+          </Button>
+          {showForkDetails
+            && (
+              <Button
+                appearance="primary"
+                intent="warning"
+                type="button"
+                onClick={this.sendContributionRequest}>
+                Send Contribution Request
+              </Button>
+            )
+          }
+        </div>
+      </ViewStoryWidthAdapter>
     )
   }
 }

@@ -114,14 +114,14 @@ const StoryEditorStore = types
      * @function submitStory
      * @param {number} authorId - The ProfileId of the user submitting the Story
      */
-    const submitStory = flow(function* (authorId, author) {
+    const submitStory = flow(function* (authorId, author, communityId) {
       try {
         self.saveInProgress = true
         const { title, description, content } = self
         const { data: { submitStory: { id } } } = yield client.mutate({
           mutation: submitStoryMutation,
           variables: ({
-            title, author, description, content, authorId,
+            title, author, description, content, authorId, communityId,
           }),
         })
         toastStore.addToast({
@@ -139,22 +139,6 @@ const StoryEditorStore = types
         })
       } finally {
         self.saveInProgress = false
-      }
-    })
-
-    const addStoryToCommunity = flow(function* (communityId, storyId) {
-      try {
-        const { data: { id } } = yield client.mutate({
-          mutation: addStoryToCommunityMutation,
-          variables: ({ id: communityId, storyId }),
-        })
-      } catch (err) {
-        console.log(err)
-        toastStore.addToast({
-          id: '' + Math.random() + '',
-          message: 'Failed to tie story to community.',
-          display: true,
-        })
       }
     })
 
@@ -249,7 +233,6 @@ const StoryEditorStore = types
       setData,
       sendContribution,
       revertStory,
-      addStoryToCommunity,
     }
   })
   .views(self => ({

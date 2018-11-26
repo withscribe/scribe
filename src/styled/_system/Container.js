@@ -7,6 +7,7 @@ const Container = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   align-items: flex-start;
+  margin-bottom: 10em;
 `
 
 const Wrapper = styled('main')`

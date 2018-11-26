@@ -10,7 +10,7 @@ import { CardDesc } from '_system/Typography'
 import { ContributeIcon, BookmarkIcon, HeartIcon } from '_system/Icons'
 import Badge from '_system/Badge'
 
-@inject('userStore')
+@inject('userStore', 'storyStore')
 @observer
 class StoryCard extends React.Component {
   state = {
@@ -57,6 +57,22 @@ class StoryCard extends React.Component {
     this.setState({ liked: true, optimisticLikes: incrementedLikeCount })
   }
 
+  cloneStory = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const { userStore, storyStore, story: { parentStoryId } } = this.props
+    console.log(this.props.story)
+    storyStore.clone(parentStoryId, userStore.me.id)
+  }
+
+  forkStory = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const { userStore, storyStore, storyStore: { parentStoryId } } = this.props
+    storyStore.forkStory(parentStoryId, userStore.me.id)
+  }
+
+
   redirectToStory = () => {
     const { history, story: { id } } = this.props
     history.push(`/story/preview/${id}`)
@@ -94,15 +110,15 @@ class StoryCard extends React.Component {
                 : <><HeartIcon />Like {optimisticLikes}</>
               }
             </CardMetaAction>
-            <CardMetaAction>
+            <CardMetaAction onClick={this.cloneStory}>
               <BookmarkIcon />
               Save
             </CardMetaAction>
-            <CardMetaAction>
+            <CardMetaAction onClick={this.forkStory}>
               <ContributeIcon />
               Contribute
             </CardMetaAction>
-            <CardAuthor>posted by @{story.authorProfile.userName}</CardAuthor>
+            <CardAuthor>by @{story.authorProfile.userName}</CardAuthor>
           </CardMetaWrapper>
         </CardWrapper>
       </Card>
