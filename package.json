@@ -43,6 +43,7 @@
     "slate": "^0.42.5",
     "slate-plain-serializer": "^0.6.14",
     "slate-react": "^0.19.7",
+    "timeago-react": "^2.0.0",
     "yup": "^0.26.6"
   },
   "devDependencies": {

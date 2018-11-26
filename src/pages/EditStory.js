@@ -47,9 +47,9 @@ class EditStory extends React.Component {
   }
 
   sendContributionRequest = () => {
-    const { storyEditorStore } = this.props
+    const { storyEditorStore, userStore } = this.props
 
-    storyEditorStore.sendContribution(storyEditorStore.storyId)
+    storyEditorStore.sendContribution(userStore.me.userName)
       .then((res) => {
         console.log(`UpdateStory Response: ${res}`)
       }).catch((err) => {

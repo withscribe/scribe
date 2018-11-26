@@ -1,4 +1,6 @@
-import { types, flow, destroy, applySnapshot } from 'mobx-state-tree'
+import {
+  types, flow, destroy, applySnapshot,
+} from 'mobx-state-tree'
 import Plain from 'slate-plain-serializer'
 import { Value } from 'slate'
 
@@ -14,11 +16,14 @@ const ContributionsModel = types
     id: types.string,
     forkId: types.string,
     originalStoryId: types.string,
+    contributorName: types.string,
     contributorProfileId: types.string,
     authorProfileId: types.string,
     originalContent: types.string,
     contributionContent: types.string,
     comment: types.maybeNull(types.string),
+    createdAt: types.string,
+    updatedAt: types.string,
   })
 
 const ContributionsStore = types
@@ -27,6 +32,7 @@ const ContributionsStore = types
     contributions: types.array(ContributionsModel),
     approvingChanges: types.optional(types.boolean, false),
     rejectingChanges: types.optional(types.boolean, false),
+    isLoadingContributions: types.optional(types.boolean, false),
   })
   .actions((self) => {
     /**
@@ -54,12 +60,23 @@ const ContributionsStore = types
      * @param {String} authorProfileId - The ID of the user profile who wrote the original story
     */
     const getContributionRequests = flow(function* (authorProfileId) {
-      const { data: { getContributionsById } } = yield client.query({
-        query: ContributionsByIdQuery,
-        variables: ({ authorProfileId }),
-        fetchPolicy: 'network-only',
-      })
-      self.setContributions(getContributionsById)
+      try {
+        self.isLoadingContributions = true
+        const { data: { getContributionsById } } = yield client.query({
+          query: ContributionsByIdQuery,
+          variables: ({ authorProfileId }),
+          fetchPolicy: 'network-only',
+        })
+        self.setContributions(getContributionsById)
+      } catch (err) {
+        toastStore.addToast({
+          id: `${Math.random()}`,
+          message: 'Failed to load contributions. Please try again.',
+          display: true,
+        })
+      } finally {
+        self.isLoadingContributions = false
+      }
     })
 
     /**
@@ -84,7 +101,7 @@ const ContributionsStore = types
           variables: ({ contributionId }),
         })
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Changes have been approved and added to the story!',
           display: true,
         })
@@ -92,7 +109,7 @@ const ContributionsStore = types
         self.approvingChanges = false
         console.log(err)
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Changes have failed to be approved. Please try again.',
           display: true,
         })
@@ -109,7 +126,7 @@ const ContributionsStore = types
           variables: ({ contributionId }),
         })
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Changes have been rejected and contributor notified!',
           display: true,
         })
@@ -117,7 +134,7 @@ const ContributionsStore = types
         self.rejectingChanges = false
         console.log(err)
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Changes have failed to be rejected. Please try again.',
           display: true,
         })

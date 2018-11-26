@@ -1,14 +1,11 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import { Button } from '_system/Button'
-import Input, {
-  Label,
-} from '_system/Input'
+import ContributionCard from 'Components/ContributionCard'
+import { HomeGrid } from '_system/Grid'
+import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 import { ContributionWrapper } from 'Styled/Contributions'
-import { ListCard } from '_system/ListCard'
-import { ContributionsGrid } from '_system/Grid'
 
 @inject('userStore', 'storyStore', 'contributionsStore')
 @observer
@@ -16,32 +13,43 @@ class Contributions extends React.Component {
   state = {}
 
   componentDidMount() {
-    const { contributionsStore, userStore } = this.props
+    const { contributionsStore, userStore, storyStore } = this.props
     contributionsStore.getContributionRequests(userStore.me.id)
+    storyStore.getAllStories()
   }
 
   render() {
-    const { contributionsStore, storyStore } = this.props
+    const { contributionsStore, storyStore, history } = this.props
     return (
       <ContributionWrapper>
-        <Label>Your Contribution Requests</Label>
-        {contributionsStore.contributions.length > 0 ? (
-          <ContributionsGrid>
-            {contributionsStore.contributions.map(contribution => (
-              <ListCard key={contribution.id}>
-                <Link to={`/profile/contributions/diff/${contribution.id}`}>
-                  <div style={{ width: '100%', height: '15vh' }}>
-                    {contribution.id}
-                  </div>
-                </Link>
-              </ListCard>
-            ))}
-          </ContributionsGrid>
-        ) : <span>Nothing to see here.</span>
+        {!contributionsStore.isLoadingContributions && !storyStore.fetchingStories
+        && (contributionsStore.contributions.length >= 1 ? (
+          <>
+            <Hero appearance="green">
+              <HeroPrimaryText>Contribution Requests</HeroPrimaryText>
+              <HeroSpanText>Contributions people would like to make to your stories!</HeroSpanText>
+            </Hero>
+            <HomeGrid>
+              {contributionsStore.contributions.map(contribution => (
+                <ContributionCard
+                  contribution={contribution}
+                  story={storyStore.stories.find(s => s.id === contribution.originalStoryId)}
+                  key={contribution.id}
+                  history={history} />
+              ))}
+            </HomeGrid>
+          </>) : '*crickets*')
         }
       </ContributionWrapper>
     )
   }
+}
+
+Contributions.propTypes = {
+  history: PropTypes.object.isRequired,
+  contributionsStore: PropTypes.object.isRequired,
+  userStore: PropTypes.object.isRequired,
+  storyStore: PropTypes.object.isRequired,
 }
 
 export default Contributions
