@@ -16,7 +16,7 @@ import TextEditor from 'Components/Papyrus/TextEditor'
 @observer
 class CreateStory extends React.Component {
   state = {
-    selectedCommunity: undefined,
+    selectedCommunity: null,
   }
 
   componentDidMount() {
@@ -38,7 +38,6 @@ class CreateStory extends React.Component {
 
   handleSubmitClick = () => {
     const { storyEditorStore, userStore, history } = this.props
-
     if (storyEditorStore.isValid) {
       const author = this.getAuthorName(
         userStore.me.firstName,
@@ -50,8 +49,7 @@ class CreateStory extends React.Component {
         .then(() => {
           const { selectedCommunity } = this.state
           const { storyEditorStore: { storyId, saveInProgress } } = this.props
-          // console.log(selectedCommunity, storyId, saveInProgress, storyEditorStore)
-          if (selectedCommunity !== undefined || selectedCommunity !== 'none') {
+          if (selectedCommunity !== null && selectedCommunity !== 'none') {
             const communityIdFromList = userStore.me.communities.filter(c => c.name === selectedCommunity)
             storyEditorStore.addStoryToCommunity(communityIdFromList, storyId)
           }

@@ -22,7 +22,6 @@ class Community extends React.Component {
   componentDidMount() {
     const { userStore, communityStore, match: { params: { name } } } = this.props
     communityStore.getCommunity(name).then(() => {
-      console.log(communityStore)
       if (communityStore.community.members.filter(c => c.userName === userStore.me.userName)) {
         this.setState({ isMember: true })
       }
@@ -34,9 +33,11 @@ class Community extends React.Component {
     const { userStore, userStore: { me }, communityStore: { community } } = this.props
     if (isMember) {
       userStore.leaveCommunity(me.id, community.id)
+      this.setState({ isMember: false })
       return
     }
     userStore.joinCommunity(me.id, community.id)
+    this.setState({ isMember: true })
   }
 
   render() {
@@ -67,7 +68,7 @@ class Community extends React.Component {
                   appearance="primary"
                   onClick={this.joinCommunity}>
                   {isMember
-                    ? 'Leave Community'
+                    ? 'Already a Member'
                     : 'Join Community'
                   }
                 </Button>

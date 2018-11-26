@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 const leaveCommunityMutation = gql`
-  mutation removeMemberFromCommunity($id: ID!, $profileId: ID!) {
-    removeMemberFromCommunity(id: $id, profileId: $profileId) {
+  mutation removeMember($profileId: ID!, $communityId: ID!) {
+    removeMember(profileId: $profileId, communityId: $communityId) {
       id
     }
   }

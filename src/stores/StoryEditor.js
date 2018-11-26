@@ -254,7 +254,7 @@ const StoryEditorStore = types
   })
   .views(self => ({
     get isValid() {
-      return !self.title && !self.description && !self.content
+      return self.title && self.description && self.content
     },
   }))
 

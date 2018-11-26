@@ -184,7 +184,7 @@ const UserStore = types
     const leaveCommunity = flow(function* (profileId, communityId) {
       const { data } = yield client.mutate({
         mutation: leaveCommunityMutation,
-        variables: ({ id: communityId, profileId }),
+        variables: ({ profileId, communityId }),
       })
       self.refreshMeById(self.me.account_id)
     })
