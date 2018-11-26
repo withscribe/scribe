@@ -4,9 +4,10 @@ import { inject, observer } from 'mobx-react'
 import { Box } from 'grid-styled/emotion'
 
 import Input, {
-  Label, LabelConstraint,
+  Label, LabelConstraint, LabelTip,
 } from '_system/Input'
 import { Button } from '_system/Button'
+import Select from '_system/Select'
 import { EditorWrapper } from 'Styled/Editor'
 import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 import TextEditor from 'Components/Papyrus/TextEditor'
@@ -14,10 +15,14 @@ import TextEditor from 'Components/Papyrus/TextEditor'
 @inject('storyEditorStore', 'userStore')
 @observer
 class CreateStory extends React.Component {
-  componentDidMount() {
-    const { storyEditorStore } = this.props
+  state = {
+    selectedCommunity: null,
+  }
 
-    if (storyEditorStore.isValid()) {
+  componentDidMount() {
+    const { storyEditorStore, userStore } = this.props
+
+    if (storyEditorStore.isValid) {
       // do something to ask the user if they would like to reset
     } else {
       // should init on all runs since this component is made for create only
@@ -33,19 +38,22 @@ class CreateStory extends React.Component {
 
   handleSubmitClick = () => {
     const { storyEditorStore, userStore, history } = this.props
-
     if (storyEditorStore.isValid) {
       const author = this.getAuthorName(
         userStore.me.firstName,
         userStore.me.lastName,
         userStore.me.userName,
       )
+
       storyEditorStore.submitStory(userStore.me.id, author)
         .then(() => {
-          this.setState({ submitted: true })
-          history.push(`/story/preview/${storyEditorStore.storyId}`)
-        }).catch((err) => {
-          console.log(`SubmitStory Error: ${err}`)
+          const { selectedCommunity } = this.state
+          const { storyEditorStore: { storyId, saveInProgress } } = this.props
+          if (selectedCommunity !== null && selectedCommunity !== 'none') {
+            const communityIdFromList = userStore.me.communities.filter(c => c.name === selectedCommunity)
+            storyEditorStore.addStoryToCommunity(communityIdFromList, storyId)
+          }
+          // history.push(`/story/preview/${storyEditorStore.storyId}`)
         })
     }
   }
@@ -63,8 +71,13 @@ class CreateStory extends React.Component {
     storyEditorStore.changeContent(som)
   }
 
+  handleSelectChange = (e) => {
+    console.log(e.target.value)
+    this.setState({ selectedCommunity: e.target.value })
+  }
+
   render() {
-    const { storyEditorStore } = this.props
+    const { storyEditorStore, userStore: { me } } = this.props
     return (
       <>
         <Hero appearance="black">
@@ -86,6 +99,14 @@ class CreateStory extends React.Component {
             value={storyEditorStore.description}
             onChange={e => storyEditorStore.changeDesc(e.target.value)} />
         </Box>
+        <Label>Share your Story with a community you belong to <LabelTip>Optional</LabelTip></Label>
+        <Select
+          onChange={this.handleSelectChange}>
+          <option value="none">no community</option>
+          {me.communities.map(community => (
+            <option key={community.name} value={community.name}>{community.name}</option>
+          ))}
+        </Select>
         <Label>Content</Label>
         <TextEditor get={this.getSerializedStoryContent} />
         <Button

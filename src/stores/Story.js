@@ -9,12 +9,12 @@ import forkStoryMutation from 'Mutations/fork'
 import AllStories from 'Queries/allStories'
 import { toastStore } from 'Components/App'
 
-const AuthorModel = types
+export const AuthorModel = types
   .model('AuthorModel', {
     userName: types.string,
   })
 
-const LikesModel = types
+export const LikesModel = types
   .model('LikesModel', {
     id: types.string,
     guid: types.string,

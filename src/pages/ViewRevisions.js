@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
-import { Link } from 'react-router-dom'
 
 import { Label } from '_system/Input'
 import { TitleText } from '_system/Typography'
