@@ -22,13 +22,13 @@ class Contributions extends React.Component {
     const { contributionsStore, storyStore, history } = this.props
     return (
       <ContributionWrapper>
+        <Hero appearance="green">
+          <HeroPrimaryText>Contribution Requests</HeroPrimaryText>
+          <HeroSpanText>Contributions people would like to make to your stories!</HeroSpanText>
+        </Hero>
         {!contributionsStore.isLoadingContributions && !storyStore.fetchingStories
         && (contributionsStore.contributions.length >= 1 ? (
           <>
-            <Hero appearance="green">
-              <HeroPrimaryText>Contribution Requests</HeroPrimaryText>
-              <HeroSpanText>Contributions people would like to make to your stories!</HeroSpanText>
-            </Hero>
             <HomeGrid>
               {contributionsStore.contributions.map(contribution => (
                 <ContributionCard

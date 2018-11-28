@@ -9,6 +9,7 @@ import {
   CommunityWidthAdapter, CommunitySeperator,
   CommunityStorySection,
   CommunityInfoSection,
+  CommunityInfoHeader,
 } from 'Styled/Community'
 
 @inject('communityStore', 'userStore')
@@ -51,10 +52,6 @@ class Community extends React.Component {
               <HeroPrimaryText>{community.name}</HeroPrimaryText>
               <HeroSpanText>{community.description}</HeroSpanText>
             </Hero>
-            <div>
-              <span>{communityStore.memberCount} members</span>
-              <span>{communityStore.storyCount} stories</span>
-            </div>
             <CommunitySeperator>
               <CommunityStorySection width={3 / 4}>
                 <HomeGrid>
@@ -64,6 +61,11 @@ class Community extends React.Component {
                 </HomeGrid>
               </CommunityStorySection>
               <CommunityInfoSection width={1 / 4}>
+                <CommunityInfoHeader>
+                  Community Details
+                </CommunityInfoHeader>
+                <p><b>{communityStore.memberCount}</b> member(s)</p>
+                <p><b>{communityStore.storyCount}</b> storie(s)</p>
                 <Button
                   appearance="primary"
                   onClick={this.joinCommunity}>

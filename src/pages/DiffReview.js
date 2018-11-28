@@ -2,9 +2,11 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import ReactDiffViewer from 'react-diff-viewer'
 
-import { ButtonPrimary } from '_system/Button'
+import { Button } from '_system/Button'
+import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
+import { ViewStoryWidthAdapter } from 'Styled/ViewStory'
 
-@inject('userStore', 'storyStore', 'contributionsStore')
+@inject('contributionsStore')
 @observer
 class DiffReview extends React.Component {
   state = {}
@@ -30,19 +32,37 @@ class DiffReview extends React.Component {
   render() {
     const { contributionsStore: { contribution }, contributionsStore } = this.props
     return (
-      <>
+      <ViewStoryWidthAdapter>
         {contribution
           && <>
+            <Hero
+              appearance="grey">
+              <HeroPrimaryText>Contribution Difference Viewer</HeroPrimaryText>
+              <HeroSpanText>An overview of the proposed changes.</HeroSpanText>
+            </Hero>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '2em', width: '100%' }}>
+              <Button
+                appearance="primary"
+                intent="success"
+                type="button"
+                onClick={() => this.approveChanges(contribution.id)}>
+                Approve & Update Story
+              </Button>
+              <Button
+                appearance="default"
+                intent="danger"
+                type="button"
+                onClick={() => this.rejectChanges(contribution.id)}>
+                Reject
+              </Button>
+            </div>
             <ReactDiffViewer
               oldValue={contributionsStore.deserializeContent(contribution.originalContent)}
               newValue={contributionsStore.deserializeContent(contribution.contributionContent)}
-              splitView={true}
-            />
-            <ButtonPrimary type="button" onClick={() => this.approveChanges(contribution.id)}>Approve & Update Story</ButtonPrimary>
-            <ButtonPrimary type="button" onClick={() => this.rejectChanges(contribution.id)}>Reject</ButtonPrimary>
-        </>
+              splitView />
+          </>
         }
-      </>
+      </ViewStoryWidthAdapter>
     )
   }
 }

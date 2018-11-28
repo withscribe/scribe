@@ -10,9 +10,6 @@ class ContributionCard extends React.PureComponent {
   state = {
   }
 
-  componentDidMount() {
-  }
-
   redirectToContribution = () => {
     const { history, contribution: { id } } = this.props
     history.push(`/profile/contributions/diff/${id}`)
@@ -20,7 +17,7 @@ class ContributionCard extends React.PureComponent {
 
   render() {
     const { contribution, story } = this.props
-
+    console.log(contribution)
     return (
       <Card key={contribution.id}>
         <CardWrapper

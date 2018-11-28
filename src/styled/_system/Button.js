@@ -215,28 +215,6 @@ const ButtonInlay = styled('button')`
   ${inlayStyles};
 `
 
-const IntentButton = styled('button')(
-  baseStyles,
-  ({ appearance }) => `
-    background-color: ${intent[appearance].bg};
-    color: ${intent[appearance].bg};
-    :hover {
-      color: ${intent[appearance].hover};
-    }
-  `,
-)
-
-// const Button = styled('button')(
-//   baseStyles,
-//   ({ appearance }) => `
-//     background-color: ${style[appearance].bg};
-//     color: ${style[appearance].text};
-//     :hover {
-//       background-color: ${style[appearance].hover};
-//     }
-//   `,
-// )
-
 const buttonBaseStyles = css`
   height: 40px;
   width: auto;
@@ -251,6 +229,10 @@ const buttonBaseStyles = css`
   text-decoration: none;
   transition: ${transitions.default};
   text-align: center;
+
+  :last-of-type {
+    margin-right: 0;
+  }
 `
 
 const Button = styled('button')(
@@ -279,5 +261,4 @@ export {
   ButtonPrimary,
   ButtonSecondary,
   ButtonInlay,
-  IntentButton,
 }
