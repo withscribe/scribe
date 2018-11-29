@@ -3,51 +3,113 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
+import Tab from 'Components/Tabs/Tab'
 import StoryCard from 'Components/StoryCard'
+import { TabList } from '_system/Tabs'
 import { HomeGrid } from '_system/Grid'
-import { Card, CardImage } from '_system/Card'
-import { TitleText } from '_system/Typography'
-import { ButtonPrimary } from '_system/Button'
-import { GhostWrapper, GhostSmall } from '_system/Ghost'
+import { Button } from '_system/Button'
+import { GhostWrapper, GhostCard } from '_system/Ghost'
+import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 
-@inject('storyStore')
+@inject('storyStore', 'communityStore')
 @observer
 class Home extends React.Component {
-  state = {}
+  state = {
+    selectedIndex: 0,
+    tabs: ['Stories', 'Communities'],
+  }
 
   componentDidMount() {
-    const { storyStore } = this.props
+    const { storyStore, communityStore } = this.props
     storyStore.getAllStories()
+    communityStore.getAllCommunities()
   }
 
   render() {
-    const { storyStore } = this.props
+    const { tabs, selectedIndex } = this.state
+    const { storyStore, communityStore, history } = this.props
     return (
       <>
-        <TitleText>Discover</TitleText>
-        <GhostWrapper isDoneRendering={storyStore.fetchingStories}>
-          <HomeGrid>
-            <GhostSmall style={{ backgroundColor: '#efefef' }} />
-            <GhostSmall style={{ backgroundColor: '#efefef' }} />
-            <GhostSmall style={{ backgroundColor: '#efefef' }} />
-            <GhostSmall style={{ backgroundColor: '#efefef' }} />
-          </HomeGrid>
-        </GhostWrapper>
+        <Hero appearance="purple">
+          <HeroPrimaryText>Discover</HeroPrimaryText>
+          <HeroSpanText>Find Content and Communities on Scribe.</HeroSpanText>
+        </Hero>
+        <TabList>
+          {tabs.map((tab, index) => (
+            <Tab
+              key={tab}
+              id={tab}
+              onSelect={() => this.setState({ selectedIndex: index })}
+              isSelected={index === selectedIndex}>
+              {tab}
+            </Tab>
+          ))}
+        </TabList>
         <HomeGrid>
-          {storyStore.stories && !storyStore.fetchingStories
+          {!storyStore.fetchingStories && selectedIndex === 0
             ? <>
-              {storyStore.nonClonedStories.map((story) => {
-                // ^^^ this makes mst bitch
-                // You are trying to read or write to an object that is no longer part of a state tree.
-                // Putting the contents of the function (instead of the function) seems to fix it....
-                // https://github.com/mobxjs/mobx-state-tree/issues/912
-                const wide = story.id.includes('4e')
+              {storyStore.nonClonedStories.map((story, idx) => {
+                if (idx === 3) {
+                  return (
+                    <Hero appearance="green" key="hero_2018aabda">
+                      <HeroPrimaryText>Feeling Creative?</HeroPrimaryText>
+                      <Link to="/story/create">
+                        <Button
+                          appearance="default"
+                          intent="success">
+                          Write your own Story
+                        </Button>
+                      </Link>
+                    </Hero>
+                  )
+                }
                 return (
-                  <StoryCard story={story} key={story.id} />
+                  /* we pass the history prop down to each card so we avoid a ton of
+                    unnecessary working..
+                    (not sure if it would even be a performance problem)
+                  */
+                  <StoryCard history={history} story={story} key={story.id} />
                 )
               })}
             </>
-            : <span>nothing to see here</span>
+            : (
+              <GhostWrapper isDoneRendering={storyStore.fetchingStories}>
+                <HomeGrid>
+                  <GhostCard />
+                  <GhostCard />
+                  <GhostCard />
+                  <GhostCard />
+                </HomeGrid>
+              </GhostWrapper>
+            )
+          }
+        </HomeGrid>
+        <HomeGrid>
+          {!communityStore.fetchingCommunities && selectedIndex === 1
+            ? <>
+              <Hero appearance="teal">
+                <HeroPrimaryText>Can't find a community?</HeroPrimaryText>
+                <Link to="/community/create">
+                  {/* <Button appearance="white">Create Community</Button> */}
+                  <Button appearance="default">Create it yourself</Button>
+                </Link>
+              </Hero>
+              {communityStore.communities.map(community => (
+                <div key={community.id}>
+                  {community.name}
+                </div>
+              ))}
+            </>
+            : (
+              <GhostWrapper isDoneRendering={communityStore.fetchingCommunities}>
+                <HomeGrid>
+                  <GhostCard />
+                  <GhostCard />
+                  <GhostCard />
+                  <GhostCard />
+                </HomeGrid>
+              </GhostWrapper>
+            )
           }
         </HomeGrid>
       </>
@@ -57,6 +119,7 @@ class Home extends React.Component {
 
 Home.propTypes = {
   storyStore: PropTypes.object.isRequired,
+  communityStore: PropTypes.object.isRequired,
 }
 
 export default Home

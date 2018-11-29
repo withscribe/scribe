@@ -27,8 +27,8 @@ class Header extends React.Component {
         <HeaderContainer>
           <NavList>
             <NavItem>
-              <Link to="/">
-                <HeaderLogo>Unravl</HeaderLogo>
+              <Link to="/home">
+                <HeaderLogo>Scribe</HeaderLogo>
               </Link>
             </NavItem>
             <NavItem>
@@ -39,7 +39,7 @@ class Header extends React.Component {
               </Link>
             </NavItem>
             <NavItem>
-              <Link to="/editor/create">
+              <Link to="/story/create">
                 <ButtonInlay>
                   Create
                 </ButtonInlay>
@@ -48,7 +48,7 @@ class Header extends React.Component {
             <NavItem spaceRight>
               <Link to="/profile">
                 <ButtonInlay>
-                  My Stories
+                  My Library
                 </ButtonInlay>
               </Link>
             </NavItem>
@@ -66,7 +66,7 @@ class Header extends React.Component {
               </NavItem>
               <NavItem>
                 <Link to="/register">
-                  <Button>
+                  <Button appearance="default">
                     Sign Up
                   </Button>
                 </Link>

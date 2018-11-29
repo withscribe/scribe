@@ -5,7 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import WebpackChunkHash from 'webpack-chunk-hash'
 import CompressionWebpackPlugin from 'compression-webpack-plugin'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 export default {
@@ -39,7 +39,7 @@ export default {
       minRatio: 0.8,
     }),
     new HtmlWebpackPlugin({
-      title: 'Unravel',
+      title: 'Scribe.',
       // favicon: path.join(__dirname, 'assets', 'img', 'favicon.ico'),
       template: path.join(__dirname, 'src', 'index.ejs'),
       minify: {
@@ -121,15 +121,31 @@ export default {
     ],
   },
   optimization: {
+    minimize: true,
     concatenateModules: true,
     minimizer: [
-      new UglifyJSPlugin({
-        sourceMap: false,
-        uglifyOptions: {
+      new TerserPlugin({
+        terserOptions: {
+          parse: {
+            ecma: 8,
+          },
           compress: {
-            inline: false,
+            ecma: 5,
+            warnings: false,
+            comparisons: false,
+            inline: 2,
+          },
+          mangle: {
+            safari10: true,
+          },
+          output: {
+            ecma: 5,
+            comments: false,
+            ascii_only: true,
           },
         },
+        parallel: true,
+        sourceMap: false,
       }),
     ],
     runtimeChunk: false,

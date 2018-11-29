@@ -7,15 +7,18 @@ const HeaderWrapper = styled.header`
   display: flex;
   flex-align: center;
   justify-content: space-between;
-  background: ${colors.g500};
-  color: ${colors.white};
+  background: ${colors.white};
+  color: ${colors.n300};
   position: relative;
   width: 100vw;
   justify-content: center;
+  box-shadow: 0px -3px 20px 4px #efefef;
+  /* border-bottom: 1px solid #dad8de; */ // twitch border color
+  border-bottom: 1px solid ${colors.border.default};
 `
 
 const HeaderContainer = styled.nav`
-  width: 70em;
+  width: 95vw;
 `
 
 const NavList = styled.ul`
@@ -46,7 +49,7 @@ const NavItem = styled.li`
 
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: ${colors.white};
+  color: ${colors.n300};
   font-size: 1.25rem;
 `
 
@@ -60,7 +63,7 @@ const HeaderBar = styled.div`
 
 const HeaderLogo = styled.span`
   font-size: 1.25rem;
-  color: ${colors.white};
+  color: ${colors.b400};
   text-decoration: none;
   font-family: Theinhardt-Bold;
   font-weight: 300;

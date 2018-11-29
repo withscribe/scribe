@@ -17,20 +17,21 @@ const oldInput = styled.input`
 
 const inputBaseStyles = css`
   label: input;
-  background-color: #FBFBFB;
+  background-color: ${colors.white};
   border-width: 1px;
   border-style: solid;
-  border-color: #D8DDE1;
+  border-color: ${colors.n200};
   border-radius: 4px;
   /* box-shadow: rgba(8, 35, 51, 0.05) 0px 3px 6px; */
   padding: 0.90rem 0.75rem;
+  margin-bottom: 2em;
   transition: border-color 200ms ease-in-out;
   width: 100%;
-  font-size: ${typography.text.small};
+  ${typography.text.small};
 
   &:focus,
   &:active {
-    border: 1px solid #3388FF;
+    border: 1px solid ${colors.b300};
     outline: none;
   }
 
@@ -42,10 +43,10 @@ const inputBaseStyles = css`
 
 const inputWarningStyles = css`
   &:not(:focus) {
-    border-color: #FFC859;
+    border-color: ${colors.intent.warning};
 
     &::placeholder {
-      color: #FFC859;
+      color: ${colors.y200};
     }
   }
 `
@@ -56,31 +57,35 @@ const inputOptionalStyles = css`
   box-shadow: none;
 `
 
-const inputInvalidStyles = css`
+const inputDangerStyles = css`
   &:not(:focus) {
-    border-color: #FFAF9F;
+    border-color: ${colors.intent.danger};
 
     &::placeholder {
-      color: #FFAF9F;
+      color: ${colors.r200};
     }
   }
 `
 
 const Input = styled('input')`
   ${inputBaseStyles};
-  ${p => p.warn ? `${inputWarningStyles}` : null};
-  ${p => p.optional ? `${inputOptionalStyles}` : null};
-  ${p => p.invalid ? `${inputInvalidStyles}` : null};
+  ${p => p.isWarn ? `${inputWarningStyles}` : null};
+  ${p => p.isOptional ? `${inputOptionalStyles}` : null};
+  ${p => p.isInvalid ? `${inputDangerStyles}` : null};
 `
 
 const Label = styled.label`
   label: form-label;
-  /* margin-bottom: 0.25em; */
+  margin-bottom: 0.25em;
   display: block
 `
 
 const LabelTip = styled('sup')`
   color: #7D7D7D;
+`
+
+const LabelConstraint = styled('sup')`
+  color: ${colors.r300};
 `
 
 const InlineLabel = styled.label`
@@ -102,21 +107,8 @@ const InlineInput = styled.input`
   outline: 0;
 `
 
-const TextArea = styled.textarea`
-  display: block;
-  padding: 0 0.5em;
-  margin: 1em 0 0 1em;
-  width: 90vw;
-  height: 100%;
-  border: 0;
-  font-size: 1rem;
-  background: #f3f3f3;
-  border-radius: 3px;
-  outline: 0;
-`
-
 export default Input
 
 export {
-  Label, LabelTip, InlineLabel, InlineInput, TextArea,
+  Label, LabelTip, LabelConstraint, InlineLabel, InlineInput,
 }

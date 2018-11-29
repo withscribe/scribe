@@ -1,21 +1,33 @@
-import { types, flow, destroy } from 'mobx-state-tree'
-
-import StoryModel from './Story'
+import { types, flow, destroy, getSnapshot, applySnapshot } from 'mobx-state-tree'
 
 import { client } from 'Services/Client'
 import ProfileByIdQuery from 'Queries/userProfileById'
 import UpdateProfileMutation from 'Mutations/updateProfile'
-import { errorStore } from 'Components/App'
+import likeStoryMutation from 'Mutations/like'
+import removeStoryLikeMutation from 'Mutations/removeLike'
+import joinCommunityMutation from 'Mutations/joinCommunity'
+import leaveCommunityMutation from 'Mutations/leaveCommunity'
+import { toastStore } from 'Components/App'
+
+const StoryModel = types
+  .model('StoryModel', {
+    id: types.string,
+    title: types.string,
+    description: types.string,
+    isForked: types.optional(types.boolean, false),
+    isCloned: types.optional(types.boolean, false),
+  })
 
 const LikesModel = types
   .model('LikesModel', {
     id: types.string,
-    guid: types.string
+    guid: types.string,
   })
 
-const FieldsModel = types
-  .model('FieldsModel', {
-
+const temp__CommunityModel = types
+  .model('CommunityModel', {
+    id: types.string,
+    name: types.string,
   })
 
 const UserModel = types
@@ -27,8 +39,10 @@ const UserModel = types
     lastName: types.maybeNull(types.string),
     userName: types.string,
     occupation: types.maybeNull(types.string),
-    stories: types.optional(types.array(StoryModel), []),
-    storiesLiked: types.optional(types.array(LikesModel), [])
+    originalStories: types.array(StoryModel),
+    nonOriginalStories: types.array(StoryModel),
+    storiesLiked: types.array(LikesModel),
+    communities: types.array(temp__CommunityModel),
   })
 
 const UserStore = types
@@ -40,7 +54,6 @@ const UserStore = types
     updatingProfile: types.optional(types.boolean, false),
     isEditingProfile: types.optional(types.boolean, false),
     me: types.maybeNull(UserModel),
-    // updatedFields: types.optional(types.map, {}),
   })
   .actions((self) => {
     /**
@@ -50,11 +63,6 @@ const UserStore = types
      */
     const setMe = (data) => {
       const { profile } = data
-      errorStore.addError({
-        id: "" + Math.random(1) + "",
-        message: 'sent in setMe',
-        display: true,
-      })
       console.log(`[userStore] setMe was called ${data}`)
       if (self.me === null) {
         console.log(`[userStore] 'me' isn't created yet... creating`)
@@ -70,26 +78,6 @@ const UserStore = types
         ...profile,
       }
     }
-
-    /**
-     * User store function to like a specific story
-     * @function likeStory
-     * @param {String} storyId - The ID of the story to be liked
-     * @param {String} profileId - The ID of the user who liked the story
-    */
-    const likeAStory = flow(function* (storyId) {
-      const { data: { likeStory } } = yield client.mutate({
-        mutation: likeStoryMutation,
-        variables: ({ storyId }),
-      })
-    })
-
-    const removeLikeFromStory = flow(function* (storyId) {
-      const { data: { removeLike } } = yield client.mutate({
-        mutation: removeLikeMutation,
-        variables: ({ storyId }),
-      })
-    })
 
     /**
      * User store function that is intended to pull only the current Users data on [persisted/] login
@@ -127,7 +115,7 @@ const UserStore = types
         self.setMe(accountById)
       } catch (err) {
         self.updatingUser = false
-        errorStore.addError({
+        toastStore.addToast({
           id: '009090',
           message: 'error in refreshMeById',
         })
@@ -151,11 +139,54 @@ const UserStore = types
       } catch (err) {
         self.updatingProfile = false
         self.isEditingProfile = true
-        errorStore.addError({
+        toastStore.addToast({
           id: '123123',
           message: 'error in saveProfileChanges',
         })
       }
+    })
+
+    /**
+     * User store function to like a story
+     * @function likeStory
+     * @async
+     * @param {String} storyId - The ID of the story to be liked
+    */
+    const likeStory = flow(function* (storyId) {
+      const { data: { likeStory } } = yield client.mutate({
+        mutation: likeStoryMutation,
+        variables: ({ storyId }),
+      })
+    })
+
+    /**
+     * User store function to remove a like on a story
+     * @function likeStory
+     * @async
+     * @param {String} storyId - The ID of the story to be liked
+     * @param {String} profileId - The ID of the profile unliking
+    */
+    const unlikeStory = flow(function* (storyId, profileId) {
+      const { data: { removeLike } } = yield client.mutate({
+        mutation: removeStoryLikeMutation,
+        variables: ({ storyId, profileId }),
+      })
+    })
+
+    const joinCommunity = flow(function* (profileId, communityId) {
+      const { data } = yield client.mutate({
+        mutation: joinCommunityMutation,
+        variables: ({ profileId, communityId }),
+      })
+      self.refreshMeById(self.me.account_id)
+    })
+
+    const leaveCommunity = flow(function* (profileId, communityId) {
+      const { data } = yield client.mutate({
+        mutation: leaveCommunityMutation,
+        variables: ({ profileId, communityId }),
+      })
+      self.refreshMeById(self.me.account_id)
     })
 
     const changeEmail = (newEmail) => {
@@ -184,27 +215,35 @@ const UserStore = types
     }
 
     return {
-      pullMeById, refreshMeById, setMe, removeMe, saveProfileChanges,
-      changeEmail, changefirstName, changelastName, changeOccupation, changeuserName,
+      pullMeById,
+      refreshMeById,
+      setMe,
+      removeMe,
+      saveProfileChanges,
+      changeEmail,
+      changefirstName,
+      changelastName,
+      changeOccupation,
+      changeuserName,
+      likeStory,
+      unlikeStory,
+      joinCommunity,
+      leaveCommunity,
     }
   })
   .views(self => ({
+    get forkedStories() {
+      return self.me.nonOriginalStories.filter(story => story.isForked)
+    },
+    get clonedStories() {
+      return self.me.nonOriginalStories.filter(story => story.isCloned)
+    },
     get concatenatedName() {
       return self.me && self.me.firstName !== null && self.me.lastName != null ? `${self.me.firstName} ${self.me.lastName}` : '?'
     },
-
     get geterrors() {
       return self.errors
     },
-    hasUserLiked(storyId) {
-      let hasLiked = false
-      self.me.storiesLiked.map(item => {
-        if(item.guid == storyId+self.me.id) {
-          hasLiked = true 
-        }
-      })
-      return hasLiked
-    }
   }))
 
 export default UserStore

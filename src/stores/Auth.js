@@ -3,6 +3,7 @@ import { types, flow } from 'mobx-state-tree'
 import { client } from 'Services/Client'
 import loginMutation from 'Mutations/login'
 import registerMutation from 'Mutations/register'
+import { toastStore } from 'Components/App'
 
 const AuthStore = types
   .model('AuthStore', {
@@ -53,6 +54,7 @@ const AuthStore = types
         return false
       }
     })
+
     /**
      * Auth store function for registering a new user
      * @async
@@ -66,10 +68,28 @@ const AuthStore = types
           mutation: registerMutation,
           variables: ({ userName: username, email, password }),
         })
-        console.log(token)
-        self.inProgress = false
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Account has been created. Please login.',
+          display: true,
+        })
       } catch (err) {
         console.log(err)
+        if (err.message.includes('Username')) {
+          toastStore.addToast({
+            id: '' + Math.random() + '',
+            message: 'Username has already been taken.',
+            display: true,
+          })
+        } else {
+          toastStore.addToast({
+            id: '' + Math.random() + '',
+            message: 'Email is already registered.',
+            display: true,
+          })
+        }
+        self.inProgress = false
+      } finally {
         self.inProgress = false
       }
     })

@@ -5,7 +5,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import Stylish from 'webpack-stylish'
 
 export default {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-source-map',
+  // devtool: 'eval',
   mode: 'development',
   entry: {
     app: [
@@ -33,7 +34,7 @@ export default {
     }),
     new HtmlWebpackPlugin({
       // inject: false,
-      title: 'webpack4 Boiler',
+      title: 'Scribe.',
       // favicon: path.join(__dirname, 'src', 'assets', 'img', 'favicon.ico'),
       template: path.join(__dirname, 'src', 'index.ejs'),
       minify: {

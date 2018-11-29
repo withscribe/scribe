@@ -2,72 +2,97 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 
+import Tab from 'Components/Tabs/Tab'
+import { TabList } from '_system/Tabs'
 import { Button } from '_system/Button'
 import Input, {
   Label, InlineLabel, InlineInput, TextArea,
 } from '_system/Input'
+import { HomeGrid } from '_system/Grid'
+import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
+import { ProfileStoryCard } from 'Components/StoryCard'
 
-@inject('userStore', 'storyStore')
+@inject('userStore')
 @observer
 class MyStories extends React.Component {
-    
+  state = {
+    selectedIndex: 0,
+    tabs: ['Original', 'Cloned', 'Forked', 'Contribute'],
+  }
+
   componentDidMount() {
-    const { storyStore } = this.props
-    storyStore.getAllStories()
-  }
-
-  previewStory = (storyId) => {
-    const { storyStore } = this.props
-    console.log(storyId)
-    storyStore.setActiveStory(storyId)
-    this.props.history.push(`/story/preview/${storyId}`)
-  }
-
-  editStory = (storyId) => {
-    const { storyStore } = this.props
-    console.log(storyId)
-    storyStore.setActiveStory(storyId)
-    this.props.history.push(`/editor/${storyId}`)
+    const { userStore } = this.props
+    userStore.refreshMeById(userStore.me.account_id)
   }
 
   render() {
-    const { storyStore, userStore } = this.props
+    const { tabs, selectedIndex } = this.state
+    const { history, userStore, userStore: { me: { originalStories } } } = this.props
     return (
-        <>
-          {storyStore.fetchingStories
-            ? <span>Stories Loading</span> : <span>Stories Loaded</span>
-          }
-          {storyStore.stories.length > 0 ? (
-            <ul>
-              {storyStore.usersStories(userStore.me.id).map(story => (
-                <div key={story.id}>
-                  {story.isCloned
-                    ? <>
-                      <li>{story.title}<small><b>CLONE</b></small></li>
-                      <Button onClick={() => this.previewStory(story.id)}>
-                          View
-                      </Button>
-                      <Button onClick={() => this.editStory(story.id)}>
-                          Edit
-                      </Button>
-                      <Label>Likes: {story.likes}</Label> 
-                    </>
-                    : <>
-                      <li>{story.title}</li>
-                      <Button onClick={() => this.previewStory(story.id)}>
-                          View
-                      </Button>
-                      <Button onClick={() => this.editStory(story.id)}>
-                          Edit
-                      </Button>
-                      <Label>Likes: {story.likes ?story.likes : 0}</Label> 
-                    </>
-                  } 
-                </div>
+      <>
+        <Hero appearance="teal">
+          <HeroPrimaryText>My Library</HeroPrimaryText>
+          <HeroSpanText>All your stories in one place.</HeroSpanText>
+        </Hero>
+        <TabList>
+          {tabs.map((tab, index) => (
+            <Tab
+              key={tab}
+              id={tab}
+              onSelect={() => this.setState({ selectedIndex: index })}
+              isSelected={index === selectedIndex}>
+              {tab}
+            </Tab>
+          ))}
+        </TabList>
+        {!userStore.updatingUser && selectedIndex === 0
+          && (originalStories.length >= 1 ? (<>
+            <Hero appearance="green">
+              <HeroPrimaryText>Original Stories</HeroPrimaryText>
+              <HeroSpanText>Things you've written yourself</HeroSpanText>
+            </Hero>
+            <HomeGrid>
+              {originalStories.map(story => (
+                <ProfileStoryCard
+                  story={story}
+                  key={story.id}
+                  history={history} />
               ))}
-            </ul>
-          ) : <span>nothing to see here</span>
-          }
+            </HomeGrid>
+          </>) : '*crickets*')
+        }
+        {!userStore.updatingUser && selectedIndex === 1
+          && (userStore.clonedStories.length >= 1 ? (<>
+            <Hero appearance="blue">
+              <HeroPrimaryText>Cloned Stories</HeroPrimaryText>
+              <HeroSpanText>Things you've cloned</HeroSpanText>
+            </Hero>
+            <HomeGrid>
+              {userStore.clonedStories.map(story => (
+                <ProfileStoryCard
+                  story={story}
+                  key={story.id}
+                  history={history} />
+              ))}
+            </HomeGrid>
+          </>) : '*more crickets*')
+        }
+        {!userStore.updatingUser && selectedIndex === 2
+          && (userStore.forkedStories.length >= 1 ? (<>
+            <Hero appearance="red">
+              <HeroPrimaryText>Forked Stories</HeroPrimaryText>
+              <HeroSpanText>Things you've forked</HeroSpanText>
+            </Hero>
+            <HomeGrid>
+              {userStore.forkedStories.map(story => (
+                <ProfileStoryCard
+                  story={story}
+                  key={story.id}
+                  history={history} />
+              ))}
+            </HomeGrid>
+          </>) : '*too many crickets*')
+        }
       </>
     )
   }
@@ -75,7 +100,6 @@ class MyStories extends React.Component {
 
 MyStories.propTypes = {
   userStore: PropTypes.object.isRequired,
-  storyStore: PropTypes.object.isRequired,
 }
 
 export default MyStories

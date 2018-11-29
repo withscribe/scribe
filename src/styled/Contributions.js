@@ -1,13 +1,7 @@
 import styled from 'react-emotion'
 import { Flex } from 'grid-styled/emotion'
 
-
-const ProfileSettingsHeader = styled.h1`
-  font-size: 4rem;
-  font-family: Theinhardt-Bold;
-`
-
-const ProfileWrapper = styled(Flex)`
+const ContributionWrapper = styled(Flex)`
   margin: auto;
   justify-content: center;
   align-items: flex-start;
@@ -15,8 +9,6 @@ const ProfileWrapper = styled(Flex)`
   width: 100%;
 `
 
-
 export {
-  ProfileSettingsHeader,
-  ProfileWrapper,
+  ContributionWrapper,
 }

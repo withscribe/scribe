@@ -7,7 +7,7 @@ import { Flex, Box } from 'grid-styled/emotion'
 import Input, { Label, LabelTip } from '_system/Input'
 import { TitleText } from '_system/Typography'
 import { ButtonPrimary } from '_system/Button'
-import { ProfileWrapper } from 'Styled/ProfileSettings.js'
+import { ProfileWrapper } from 'Styled/Profile'
 
 @inject('userStore')
 @observer

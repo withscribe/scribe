@@ -3,17 +3,24 @@ import { types, flow } from 'mobx-state-tree'
 import { client } from 'Services/Client'
 import submitStoryMutation from 'Mutations/submitStory'
 import updateStoryMutation from 'Mutations/updateStory'
+import contributeRequestMutation from 'Mutations/contributeRequest'
+import revertStoryMutation from 'Mutations/revertStory'
+import addStoryToCommunityMutation from 'Mutations/addStoryToCommunity'
 import StoryByIdQuery from 'Queries/storyById'
+import { toastStore } from 'Components/App'
 
 const StoryEditorStore = types
   .model('StoryEditorModel', {
     saveInProgress: types.optional(types.boolean, false),
+    sendingContributionRequest: types.optional(types.boolean, false),
     storyId: types.maybe(types.string),
     title: types.maybe(types.string),
     description: types.maybe(types.string),
     content: types.maybe(types.string),
-    minAge: types.maybe(types.integer),
-    maxAge: types.maybe(types.integer),
+    nonAuthorId: types.maybeNull(types.string),
+    authorId: types.maybe(types.string),
+    isForked: types.optional(types.boolean, false),
+    isCloned: types.optional(types.boolean, false),
   })
   .actions((self) => {
     /**
@@ -54,24 +61,6 @@ const StoryEditorStore = types
     }
 
     /**
-     * Story store function used to alter the Story Minimum Age
-     * @function changeMinAge
-     * @param {number} newMinAge - The value provided from the StoryEditor minAge input
-     */
-    const changeMinAge = (newMinAge) => {
-      self.minAge = parseInt(newMinAge, 10)
-    }
-
-    /**
-     * Story store function used to alter the Story Maximum
-     * @function changeMaxAge
-     * @param {number} newMaxAge - The value provided from the StoryEditor maxAge input
-     */
-    const changeMaxAge = (newMaxAge) => {
-      self.maxAge = parseInt(newMaxAge, 10)
-    }
-
-    /**
      * Story store function used to initialise the Store to prevent input with null values
      * @function init
      */
@@ -80,8 +69,8 @@ const StoryEditorStore = types
       self.title = ''
       self.description = ''
       self.content = ''
-      self.minAge = 1
-      self.maxAge = 100
+      self.authorId = ''
+      self.nonAuthorId = ''
       self.saveInProgress = false
     }
 
@@ -95,6 +84,7 @@ const StoryEditorStore = types
         query: StoryByIdQuery,
         variables: ({ storyId }),
       })
+      console.log(storyById)
       self.setData(storyById)
     })
 
@@ -106,32 +96,50 @@ const StoryEditorStore = types
      */
     const setData = (data) => {
       const {
-        id, title, description, content,
+        id, title, description, content, isForked, isCloned,
+        authorId, nonAuthorId,
       } = data
       self.storyId = id
       self.title = title
       self.description = description
       self.content = content
+      self.isForked = isForked
+      self.isCloned = isCloned
+      self.authorId = authorId
+      self.nonAuthorId = nonAuthorId
     }
 
     /**
      * Story store function used to submit the Story to the server
      * @function submitStory
-     * @param {number} profileId - The ProfileId of the user submitting the Story
+     * @param {number} authorId - The ProfileId of the user submitting the Story
      */
-    const submitStory = flow(function* (profileId, author) {
-      console.log(profileId)
-      self.saveInProgress = true
-      const { title, description, content } = self
-      const { data: { submitStory: { id } } } = yield client.mutate({
-        mutation: submitStoryMutation,
-        variables: ({
-          title, author, description, content, profileId,
-        }),
-      })
-      console.log(`[storyEditorStore] submitStory: (resulting id) ${id}`)
-      self.changeStoryId(id)
-      self.saveInProgress = false
+    const submitStory = flow(function* (authorId, author, communityId) {
+      try {
+        self.saveInProgress = true
+        const { title, description, content } = self
+        const { data: { submitStory: { id } } } = yield client.mutate({
+          mutation: submitStoryMutation,
+          variables: ({
+            title, author, description, content, authorId, communityId,
+          }),
+        })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Story has been created!',
+          display: true,
+        })
+        self.changeStoryId(id)
+      } catch (err) {
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Story failed to submit.',
+          display: true,
+        })
+      } finally {
+        self.saveInProgress = false
+      }
     })
 
     /**
@@ -139,18 +147,78 @@ const StoryEditorStore = types
      * @function updateStory
      */
     const updateStory = flow(function* () {
-      self.saveInProgress = true
-      const {
-        storyId, title, description, content,
-      } = self
-      const { data: { updateStory: { id } } } = yield client.mutate({
-        mutation: updateStoryMutation,
-        variables: ({
-          id: storyId, title, description, content,
-        }),
-      })
-      console.log(`[storyEditorStore] updateStory: (resulting id) ${id}`)
-      self.saveInProgress = false
+      try {
+        self.saveInProgress = true
+        const {
+          storyId, title, description, content,
+        } = self
+        const { data: { updateStory: { id } } } = yield client.mutate({
+          mutation: updateStoryMutation,
+          variables: ({
+            id: storyId, title, description, content,
+          }),
+        })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Story has been updated!',
+          display: true,
+        })
+      } catch (err) {
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Story failed to update.',
+          display: true,
+        })
+      } finally {
+        self.saveInProgress = false
+      }
+    })
+
+    const sendContribution = flow(function* (contributorName) {
+      try {
+        self.sendingContributionRequest = true
+        const { storyId, content } = self
+        const { data: { contributeRequest: { id } } } = yield client.mutate({
+          mutation: contributeRequestMutation,
+          variables: ({
+            storyId, content, contributorName,
+          }),
+        })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Contribution has been sent!',
+          display: true,
+        })
+      } catch (err) {
+        console.log(err)
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Failed to send contribution.',
+          display: true,
+        })
+      } finally {
+        self.sendingContributionRequest = false
+      }
+    })
+
+    const revertStory = flow(function* (storyId, revisionId) {
+      try {
+        const { data: { revertStory: { id } } } = yield client.mutate({
+          mutation: revertStoryMutation,
+          variables: ({
+            storyId,
+            revisionId,
+          }),
+        })
+        toastStore.addToast({
+          id: '' + Math.random() + '',
+          message: 'Successfully Reverted Story.',
+          display: true,
+        })
+      } catch (err) {
+        console.log('revertStory Error', err)
+      }
     })
 
     return {
@@ -158,25 +226,19 @@ const StoryEditorStore = types
       changeTitle,
       changeDesc,
       changeContent,
-      changeMinAge,
-      changeMaxAge,
       init,
       submitStory,
       updateStory,
       loadStory,
       setData,
+      sendContribution,
+      revertStory,
     }
   })
-  .views((self) => {
-    const isAgeRangeValid = () => {
-      const { minAge, maxAge } = self
-      return !(minAge < 0 || maxAge > 150 || minAge > maxAge || maxAge < minAge)
-    }
-
-    const isValid = () => !self.title && !self.description && !self.content
-      && !self.content && !self.minAge && !self.maxAge && !isAgeRangeValid()
-
-    return { isAgeRangeValid, isValid }
-  })
+  .views(self => ({
+    get isValid() {
+      return self.title && self.description && self.content
+    },
+  }))
 
 export default StoryEditorStore

@@ -2,36 +2,35 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { Transition } from 'react-spring'
 
-// import { Button, Content, Countdown } from 'Styled/Toast/ToastElement'
 import ToastContainer from 'Styled/Toast/ToastContainer'
-import { DefaultToast } from 'Styled/Toast/ToastElement'
+import ControlledToast from 'Components/Toast/ControlledToast'
 
-@inject('errorStore')
+@inject('toastStore')
 @observer
 class ToastProvider extends React.Component {
-  state = {}
+  state = { }
 
   render() {
-    const { errorStore: { errors }, errorStore } = this.props
-    console.log(errorStore.errorList)
+    const { toastStore: { toasts }, toastStore } = this.props
     return (
       <>
-        {errors && (
+        {toasts && (
           <ToastContainer>
             <Transition
-              keys={errorStore.errorList.map(e => e.id)}
+              items={toastStore.toastList}
+              keys={toast => toast.id}
               from={{ opacity: 0 }}
               enter={{ opacity: 1 }}
               leave={{ opacity: 0, pointerEvents: 'none' }}>
-              {errorStore.errorList.map(error => styles => (
-                <DefaultToast
-                  style={styles}
+              {t => props => (
+                <ControlledToast
+                  style={props}
                   autoDismiss
                   appearance="success"
-                  onDismiss={() => errorStore.removeError(error.id)}>
-                  {error.message}
-                </DefaultToast>
-              ))}
+                  onDismiss={() => toastStore.removeToast(t.id)}>
+                  {t.message}
+                </ControlledToast>
+              )}
             </Transition>
           </ToastContainer>
         )}

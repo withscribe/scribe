@@ -5,6 +5,7 @@ import { Transition } from 'react-spring'
 import { withRouter, Link } from 'react-router-dom'
 
 import AvatarBox from '_system/Avatar'
+import { colors } from '_system/Theme'
 import {
   DropdownWrapper, DropdownMenu, DropdownContext, DropdownLast,
   DropdownItems, DropdownItem, ContextDetail,
@@ -12,10 +13,16 @@ import {
 
 
 const DropdownArrow = ({ flipped }) => (
-  <figure style={{ margin: '0 0 0 6em', display: 'inline-flex', color: 'rgb(218, 216, 222)' }}>
+  <figure
+    style={{
+      margin: '0 1em 0 0',
+      display: 'inline-flex',
+      justifyContent: 'flex-end',
+      width: '100%',
+    }}>
     <svg
       style={{
-        fill: '#fff',
+        fill: `${colors.n300}`,
         transform: flipped ? 'rotate(180deg)' : 'none',
         transition: 'all .2s ease-in',
       }}
@@ -60,7 +67,7 @@ class HeaderDropdown extends React.Component {
     // TODO: Get this from userStore.me
     // or send down as a prop from the Header component...
     // this doesnt really need to be state aware
-    const name = userStore.concatenatedName
+    const name = userStore.concatenatedName || userStore.me.userName
     if (!name || typeof name !== 'string' || name === null) return fallback
     return name
       .replace(/\s+/, ' ')
@@ -85,7 +92,6 @@ class HeaderDropdown extends React.Component {
 
   render() {
     const { showMenu } = this.state
-    console.log(`menu state: ${showMenu}`)
     const { userStore, userStore: { me } } = this.props
     const { initials } = this.state
     return (
@@ -97,24 +103,24 @@ class HeaderDropdown extends React.Component {
           </AvatarBox>
           {me.firstName && me.lastName
             ? `${userStore.concatenatedName}`
-            : 'Anonymous Moose'
+            : `${userStore.me.userName}`
           }
           <DropdownArrow flipped={showMenu} />
         </DropdownWrapper>
-        <Transition from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
-          { showMenu && (styles => (
+        <Transition items={showMenu} from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
+          {show => show && (styles => (
             <DropdownMenu style={styles}>
               <DropdownItems>
                 <DropdownContext>
                   <span>
-                    <ContextDetail>{me.email}</ContextDetail>
                     <ContextDetail>{me.userName}</ContextDetail>
+                    <ContextDetail>{me.email}</ContextDetail>
                   </span>
                 </DropdownContext>
                 <DropdownLast>
-                  <Link to="/editor/new">
+                  <Link to="/profile/contributions">
                     <DropdownItem>
-                      Create a Story
+                      Contributions
                     </DropdownItem>
                   </Link>
                   <Link to="/profile">

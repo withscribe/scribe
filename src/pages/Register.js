@@ -4,9 +4,12 @@ import { inject, observer } from 'mobx-react'
 
 import withValidation from '../hoc/withValidation'
 
-import Input from '_system/Input'
-import { Button } from '_system/Button'
-import { FormWrapper, FormContainer, FormTitle } from 'Styled/LRForm'
+import { types } from 'Services/Validation'
+import Input, { Label } from '_system/Input'
+import { ButtonPrimary } from '_system/Button'
+import {
+  FormWrapper, FormContainer, FormTitle, FormDesc,
+} from 'Styled/LRForm'
 
 @inject('userStore', 'authStore')
 @observer
@@ -17,17 +20,21 @@ class Register extends React.Component {
 
   onRegister = (e) => {
     e.preventDefault()
-    // const canRegister = this.props.validate()
-    // if (canRegister) {
+    const { assert } = this.props
+    // assert(types.REGISTER)
       const { authStore } = this.props
       authStore.registerUser()
     // }
   }
 
+  // this may be used for more logic in the future to replace
+  // onBlur={() => assert(types.USERNAME)}
+  onBlur = () => { }
+
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/start' } }
     const { redirectToReferrer } = this.state
-    const { authStore, errors, valid, validate, single } = this.props
+    const { authStore, errors, valid, assert } = this.props
 
     if (redirectToReferrer) {
       return <Redirect to={from} />
@@ -35,41 +42,54 @@ class Register extends React.Component {
 
     return (
       <FormWrapper>
-        <FormContainer width={[1.1 / 3, 1 / 4]}>
+        <FormContainer width={1 / 2}>
+          <FormTitle>Join the open writing community.</FormTitle>
+          <FormDesc>
+            With a Scribe account, you can create your own stories, expand your personal library,
+            and contribute to stories you love!
+          </FormDesc>
+        </FormContainer>
+        <FormContainer width={1 / 3} ml="auto" mt="10em">
           <form>
+            <Label>Username</Label>
             <Input
               placeholder="username"
               type="text"
-              onBlur={() => single('USERNAME')}
+              onBlur={() => assert(types.USERNAME)}
+              isInvalid={errors.USERNAME}
               onChange={e => authStore.changeUsername(e.target.value)} />
             {errors.USERNAME && <span style={{ color: 'red' }}>{errors.USERNAME}</span>}
+            <Label>Email</Label>
             <Input
               placeholder="email"
               type="email"
-              onBlur={() => single('EMAIL')}
+              onBlur={() => assert(types.EMAIL)}
+              isInvalid={errors.EMAIL}
               onChange={e => authStore.changeEmail(e.target.value)} />
             {errors.EMAIL && <span style={{ color: 'red' }}>{errors.EMAIL}</span>}
+            <Label>Password</Label>
             <Input
               placeholder="password"
               type="password"
-              onBlur={() => single('PASSWORD')}
+              onBlur={() => assert(types.PASSWORD)}
+              isInvalid={errors.PASSWORD}
               onChange={e => authStore.changePassword(e.target.value)} />
             {errors.PASSWORD && <span style={{ color: 'red' }}>{errors.PASSWORD}</span>}
+            <Label>Confirm Password</Label>
             <Input
               placeholder="confirm password"
               type="password"
-              onBlur={() => single('COPY')}
+              onBlur={() => assert(types.CONFIRM)}
+              isInvalid={errors.CONFIRM}
               onChange={e => authStore.changeConfirmPassword(e.target.value)} />
-            {errors.COPY && <span style={{ color: 'red' }}>{errors.COPY}</span>}
-            <Button
+            {errors.CONFIRM && <span style={{ color: 'red' }}>{errors.CONFIRM}</span>}
+            <ButtonPrimary
               type="submit"
               disabled={valid === false}
-              full
-              withHeight
               onClick={e => this.onRegister(e)}>
-              Register Account
-            </Button>
-            <Link to="/login">Already have an account? Log in.</Link>
+              Register
+            </ButtonPrimary>
+            <Link to="/login">Already have an account? <u>Log in.</u></Link>
           </form>
         </FormContainer>
       </FormWrapper>

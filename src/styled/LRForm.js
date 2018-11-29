@@ -1,30 +1,42 @@
 import styled from 'react-emotion'
 import { Box } from 'grid-styled/emotion'
 
+import { typography } from '_system/Theme'
 
 const FormWrapper = styled.div`
   display: flex;
-  height: calc(100vh - 69px);
+  width: 100%;
   justify-content: flex-start;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
 `
 
-// const FormContainer = styled.div`
-//   width: 25vw;
-//   text-align: center;
-// `
 const FormContainer = styled(Box)`
   /* width: 25vw; */
-  text-align: center;
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+
+  & >form {
+    display: flex;
+    flex-direction: column;
+  }
 `
 
-const FormTitle = styled.h1`
-  color: #333;
+const FormTitle = styled('h1')`
+  ${typography.headings.large};
+  font-family: Theinhardt-Bold;
+  margin: 0;
 `
+
+const FormDesc = styled('p')`
+  ${typography.text.small};
+`
+
 
 export {
   FormWrapper,
   FormContainer,
   FormTitle,
+  FormDesc,
 }

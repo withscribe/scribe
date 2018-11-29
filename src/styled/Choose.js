@@ -18,7 +18,7 @@ const ChoiceBox = styled(Box)`
   position: relative;
 `
 
-const ChoiceLink = styled(Link)`//TODO: img w/ icon
+const ChoiceLink = styled(Link)`
   height: 100%;
   width: 100%;
   background: #efefef;

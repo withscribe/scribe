@@ -1,13 +1,15 @@
 import gql from 'graphql-tag'
 
 const cloneStoryMutation = gql`
-    mutation cloneStoryMutation($parentStoryId: ID!, $profileId: ID!) {
-        cloneStory(parentStoryId: $parentStoryId, profileId: $profileId) {
+    mutation cloneStoryMutation($parentStoryId: ID!, $nonAuthorId: ID!) {
+        cloneStory(parentStoryId: $parentStoryId, nonAuthorId: $nonAuthorId) {
             id
             title
             description
             content
-            profileId
+            author
+            authorId
+            nonAuthorId
             parentStoryId
         }
     }

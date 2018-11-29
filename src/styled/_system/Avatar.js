@@ -1,4 +1,5 @@
 import styled from 'react-emotion'
+import { colors } from '_system/Theme'
 
 const AvatarBox = styled.div`
   display: flex;
@@ -7,7 +8,7 @@ const AvatarBox = styled.div`
   height: ${props => props.size + 'px'};
   min-width: ${props => props.size + 'px'};
   border-radius: 50px;
-  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid ${colors.n300};
   margin: 1em;
   user-select: none;
   display: ${props => props.inline ? 'inline' : null};
