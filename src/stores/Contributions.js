@@ -1,3 +1,4 @@
+// Evan Kysley, Austin Howlett, Gerhard Knelsen
 import {
   types, flow, destroy, applySnapshot,
 } from 'mobx-state-tree'

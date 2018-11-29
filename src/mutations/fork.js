@@ -10,7 +10,7 @@ const forkStoryMutation = gql`
             nonAuthorId
             title
             description
-            content           
+            content
         }
     }
 `

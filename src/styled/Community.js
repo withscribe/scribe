@@ -32,6 +32,7 @@ const CommunityInfoHeader = styled('div')`
   color: ${colors.white};
   padding: 0.5em 1em;
   border-radius: 6px 6px 0 0;
+  margin: -.05em;
 `
 
 export {
