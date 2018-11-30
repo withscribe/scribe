@@ -5,6 +5,7 @@ const ToastModel = types
     id: types.string,
     message: types.string,
     display: types.boolean,
+    intent: types.enumeration('Type', ['success', 'danger', 'warning', 'info']),
   })
 
 const ToastStore = types

@@ -136,7 +136,6 @@ const StoryStore = types
       } finally {
         self.fetchingRevision = false
       }
-
     })
     /**
      * Story store function used to attach a single requested
@@ -176,18 +175,20 @@ const StoryStore = types
         self.cloningStory = false
         self.setCurrentCloneId(id)
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'A personal copy has been added to your library.',
           display: true,
+          intent: 'success',
         })
       } catch (err) {
         self.cloningStory = false
         // TODO: actually log the errors
         console.log(err)
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Failed to clone this story.',
           display: true,
+          intent: 'danger',
         })
       } finally {
         self.cloningStory = false
@@ -233,18 +234,20 @@ const StoryStore = types
         })
         self.forkingStory = false
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'A forked copy has been added to your library.',
           display: true,
+          intent: 'success',
         })
       } catch (err) {
         self.forkingStory = false
         // TODO: actually log the errors
         console.log(err)
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Failed to fork this story.',
           display: true,
+          intent: 'danger',
         })
       } finally {
         self.forkingStory = false

@@ -74,6 +74,7 @@ const ContributionsStore = types
           id: `${Math.random()}`,
           message: 'Failed to load contributions. Please try again.',
           display: true,
+          intent: 'danger',
         })
       } finally {
         self.isLoadingContributions = false
@@ -105,6 +106,7 @@ const ContributionsStore = types
           id: `${Math.random()}`,
           message: 'Changes have been approved and added to the story!',
           display: true,
+          intent: 'success',
         })
       } catch (err) {
         self.approvingChanges = false
@@ -113,6 +115,7 @@ const ContributionsStore = types
           id: `${Math.random()}`,
           message: 'Changes have failed to be approved. Please try again.',
           display: true,
+          intent: 'danger',
         })
       } finally {
         self.approvingChanges = false
@@ -130,6 +133,7 @@ const ContributionsStore = types
           id: `${Math.random()}`,
           message: 'Changes have been rejected and contributor notified!',
           display: true,
+          intent: 'success',
         })
       } catch (err) {
         self.rejectingChanges = false
@@ -138,6 +142,7 @@ const ContributionsStore = types
           id: `${Math.random()}`,
           message: 'Changes have failed to be rejected. Please try again.',
           display: true,
+          intent: 'danger',
         })
       } finally {
         self.rejectingChanges = false

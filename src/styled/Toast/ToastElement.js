@@ -25,7 +25,7 @@ export const types = {
     fg: colors.g300,
     bg: colors.white,
   },
-  error: {
+  danger: {
     icon: DangerIcon,
     text: colors.r400,
     fg: colors.r300,
@@ -33,8 +33,8 @@ export const types = {
   },
   warning: {
     icon: WarningIcon,
-    text: colors.y400,
-    fg: colors.y300,
+    text: colors.o400,
+    fg: colors.o300,
     bg: colors.white,
   },
   info: {

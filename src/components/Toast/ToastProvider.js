@@ -26,7 +26,7 @@ class ToastProvider extends React.Component {
                 <ControlledToast
                   style={props}
                   autoDismiss
-                  appearance="success"
+                  appearance={t.intent}
                   onDismiss={() => toastStore.removeToast(t.id)}>
                   {t.message}
                 </ControlledToast>
