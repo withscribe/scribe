@@ -125,17 +125,19 @@ const StoryEditorStore = types
           }),
         })
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Story has been created!',
           display: true,
+          intent: 'success',
         })
         self.changeStoryId(id)
       } catch (err) {
         console.log(err)
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Story failed to submit.',
           display: true,
+          intent: 'danger',
         })
       } finally {
         self.saveInProgress = false
@@ -159,16 +161,18 @@ const StoryEditorStore = types
           }),
         })
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Story has been updated!',
           display: true,
+          intent: 'success',
         })
       } catch (err) {
         console.log(err)
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Story failed to update.',
           display: true,
+          intent: 'danger',
         })
       } finally {
         self.saveInProgress = false
@@ -186,16 +190,18 @@ const StoryEditorStore = types
           }),
         })
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Contribution has been sent!',
           display: true,
+          intent: 'success',
         })
       } catch (err) {
         console.log(err)
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Failed to send contribution.',
           display: true,
+          intent: 'danger',
         })
       } finally {
         self.sendingContributionRequest = false
@@ -212,9 +218,10 @@ const StoryEditorStore = types
           }),
         })
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Successfully Reverted Story.',
           display: true,
+          intent: 'success',
         })
       } catch (err) {
         console.log('revertStory Error', err)

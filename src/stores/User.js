@@ -116,8 +116,10 @@ const UserStore = types
       } catch (err) {
         self.updatingUser = false
         toastStore.addToast({
-          id: '009090',
-          message: 'error in refreshMeById',
+          id: `${Math.random()}`,
+          message: 'Something went wrong while refreshing your profile',
+          display: true,
+          intent: 'warning',
         })
       }
     })
@@ -140,8 +142,10 @@ const UserStore = types
         self.updatingProfile = false
         self.isEditingProfile = true
         toastStore.addToast({
-          id: '123123',
-          message: 'error in saveProfileChanges',
+          id: `${Math.random()}`,
+          message: 'Something went wrong while updating your profile',
+          display: true,
+          intent: 'warning',
         })
       }
     })

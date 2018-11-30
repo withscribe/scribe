@@ -69,23 +69,26 @@ const AuthStore = types
           variables: ({ userName: username, email, password }),
         })
         toastStore.addToast({
-          id: '' + Math.random() + '',
+          id: `${Math.random()}`,
           message: 'Account has been created. Please login.',
           display: true,
+          intent: 'success',
         })
       } catch (err) {
         console.log(err)
         if (err.message.includes('Username')) {
           toastStore.addToast({
-            id: '' + Math.random() + '',
+            id: `${Math.random()}`,
             message: 'Username has already been taken.',
             display: true,
+            intent: 'warning',
           })
         } else {
           toastStore.addToast({
-            id: '' + Math.random() + '',
+            id: `${Math.random()}`,
             message: 'Email is already registered.',
             display: true,
+            intent: 'warning',
           })
         }
         self.inProgress = false
