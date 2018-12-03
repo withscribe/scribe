@@ -105,7 +105,7 @@ class TextEditor extends React.PureComponent {
     )
   }
 
-  renderMark = (props, next) => {
+  renderMark = (props, editor, next) => {
     const { children, mark, attributes } = props
 
     switch (mark.type) {
