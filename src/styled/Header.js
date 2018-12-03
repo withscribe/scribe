@@ -1,6 +1,7 @@
 import styled from 'react-emotion'
 import { Link } from 'react-router-dom'
 
+import { ScribeLogo } from '../assets/ScribeLogo.svg'
 import { colors } from '_system/Theme'
 
 const HeaderWrapper = styled.header`
@@ -61,13 +62,8 @@ const HeaderBar = styled.div`
   bottom: 2rem;
 `
 
-const HeaderLogo = styled.span`
-  font-size: 1.25rem;
-  color: ${colors.b400};
-  text-decoration: none;
-  font-family: Theinhardt-Bold;
-  font-weight: 300;
-  margin: 0;
+const HeaderLogo = styled('img')`
+  height: 39px;
 `
 
 const HeaderUsername = styled.h1`
