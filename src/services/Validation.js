@@ -1,7 +1,7 @@
 import { string, object, ref } from 'yup'
 
 const loginSchema = object().shape({
-  email: string().email().required('Email is required'),
+  email: string().email('Email must be valid').required('Email is required'),
   password: string().required('Password is required'),
 })
 
@@ -9,7 +9,7 @@ const registerSchema = object().shape({
   username: string().required('Username is required'),
   email: string().email().required('Email is required'),
   password: string().required('Password is required'),
-  confirmPassword: string().oneOf([ref('password'), null], "Passwords don't match").required('Confirm Password is required'),
+  confirmPassword: string().oneOf([ref('password'), null], "Passwords don't match").required('Password Confirmation is required'),
 })
 
 const passwordField = object().shape({
@@ -18,7 +18,7 @@ const passwordField = object().shape({
 
 const confirmPasswordField = object().shape({
   password: string().required('Password is required'),
-  confirmPassword: string().oneOf([ref('password'), null], "Passwords don't match").required('Confirm Password is required'),
+  confirmPassword: string().oneOf([ref('password'), null], "Passwords don't match").required('Password Confirmation is required'),
 })
 
 const usernameField = object().shape({

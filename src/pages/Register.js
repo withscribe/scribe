@@ -4,9 +4,10 @@ import { inject, observer } from 'mobx-react'
 
 import withValidation from '../hoc/withValidation'
 
+import { FieldInputError } from '_system/Typography'
 import { types } from 'Services/Validation'
 import Input, { Label } from '_system/Input'
-import { ButtonPrimary } from '_system/Button'
+import { Button } from '_system/Button'
 import {
   FormWrapper, FormContainer, FormTitle, FormDesc,
 } from 'Styled/LRForm'
@@ -58,7 +59,7 @@ class Register extends React.Component {
               onBlur={() => assert(types.USERNAME)}
               isInvalid={errors.USERNAME}
               onChange={e => authStore.changeUsername(e.target.value)} />
-            {errors.USERNAME && <span style={{ color: 'red' }}>{errors.USERNAME}</span>}
+            {errors.USERNAME && <FieldInputError>{errors.USERNAME}</FieldInputError>}
             <Label>Email</Label>
             <Input
               placeholder="email"
@@ -66,7 +67,7 @@ class Register extends React.Component {
               onBlur={() => assert(types.EMAIL)}
               isInvalid={errors.EMAIL}
               onChange={e => authStore.changeEmail(e.target.value)} />
-            {errors.EMAIL && <span style={{ color: 'red' }}>{errors.EMAIL}</span>}
+            {errors.EMAIL && <FieldInputError>{errors.EMAIL}</FieldInputError>}
             <Label>Password</Label>
             <Input
               placeholder="password"
@@ -74,7 +75,7 @@ class Register extends React.Component {
               onBlur={() => assert(types.PASSWORD)}
               isInvalid={errors.PASSWORD}
               onChange={e => authStore.changePassword(e.target.value)} />
-            {errors.PASSWORD && <span style={{ color: 'red' }}>{errors.PASSWORD}</span>}
+            {errors.PASSWORD && <FieldInputError>{errors.PASSWORD}</FieldInputError>}
             <Label>Confirm Password</Label>
             <Input
               placeholder="confirm password"
@@ -82,13 +83,15 @@ class Register extends React.Component {
               onBlur={() => assert(types.CONFIRM)}
               isInvalid={errors.CONFIRM}
               onChange={e => authStore.changeConfirmPassword(e.target.value)} />
-            {errors.CONFIRM && <span style={{ color: 'red' }}>{errors.CONFIRM}</span>}
-            <ButtonPrimary
+            {errors.CONFIRM && <FieldInputError>{errors.CONFIRM}</FieldInputError>}
+            <Button
+              appearance="primary"
+              intent="none"
               type="submit"
               disabled={valid === false}
               onClick={e => this.onRegister(e)}>
               Register
-            </ButtonPrimary>
+            </Button>
             <Link to="/login">Already have an account? <u>Log in.</u></Link>
           </form>
         </FormContainer>

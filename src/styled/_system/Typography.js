@@ -1,6 +1,6 @@
 import styled from 'react-emotion'
 
-import { typography, transitions } from '_system/Theme'
+import { typography, transitions, colors } from '_system/Theme'
 
 const TitleText = styled('h1')`
   ${typography.headings.xlarge};
@@ -32,10 +32,17 @@ const CardDesc = styled('p')`
   margin: 0.5em 0 0 0;
 `
 
+const FieldInputError = styled('span')`
+  color: ${colors.r300};
+  margin-top: -2em;
+  margin-bottom: 1em;
+`
+
 export {
   TitleText,
   TitleSecondary,
   CardTitle,
   CardDesc,
   AuthorLabel,
+  FieldInputError,
 }

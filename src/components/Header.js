@@ -17,6 +17,8 @@ import {
   HeaderUsername,
 } from 'Styled/Header'
 
+import ScribeLogo from '../assets/ScribeLogo.svg'
+
 @inject('userStore')
 @observer
 class Header extends React.Component {
@@ -28,7 +30,7 @@ class Header extends React.Component {
           <NavList>
             <NavItem>
               <Link to="/home">
-                <HeaderLogo>Scribe</HeaderLogo>
+                <HeaderLogo src={ScribeLogo} />
               </Link>
             </NavItem>
             <NavItem>

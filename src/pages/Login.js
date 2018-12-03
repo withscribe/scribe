@@ -5,11 +5,12 @@ import PropTypes from 'prop-types'
 
 import withValidation from '../hoc/withValidation'
 
+import { FieldInputError } from '_system/Typography'
 import { types } from 'Services/Validation'
 import Input, {
   Label, LabelConstraint,
 } from '_system/Input'
-import { Button, ButtonPrimary } from '_system/Button'
+import { Button } from '_system/Button'
 import {
   FormWrapper, FormContainer, FormTitle, FormDesc,
 } from 'Styled/LRForm'
@@ -61,7 +62,7 @@ class Login extends React.Component {
               onBlur={() => assert(types.EMAIL)}
               isInvalid={errors.EMAIL}
               onChange={e => authStore.changeEmail(e.target.value)} />
-            {errors.EMAIL && <span style={{ color: 'red' }}>{errors.EMAIL}</span>}
+            {errors.EMAIL && <FieldInputError>{errors.EMAIL}</FieldInputError>}
             <Label>Password</Label>
             <Input
               placeholder="password"
@@ -69,11 +70,13 @@ class Login extends React.Component {
               onBlur={() => assert(types.PASSWORD)}
               isInvalid={errors.PASSWORD}
               onChange={e => authStore.changePassword(e.target.value)} />
-            {errors.PASSWORD && <span style={{ color: 'red' }}>{errors.PASSWORD}</span>}
-            <ButtonPrimary
+            {errors.PASSWORD && <FieldInputError>{errors.PASSWORD}</FieldInputError>}
+            <Button
+              appearance="default"
+              intent="none"
               onClick={e => this.onLogin(e)}>
               Login
-            </ButtonPrimary>
+            </Button>
             <Link to="/register">Don't have an account? <u>Sign Up</u></Link>
           </form>
         </FormContainer>
