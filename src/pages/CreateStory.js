@@ -80,16 +80,16 @@ class CreateStory extends React.Component {
       <>
         <Hero appearance="black">
           <HeroPrimaryText>Create a new Story</HeroPrimaryText>
-          <HeroSpanText>Share your ideas with the Scribe community.</HeroSpanText>
+          <HeroSpanText>Share your tale with the Scribe community.</HeroSpanText>
         </Hero>
-        <Label>Story Title</Label>
+        <Label>Story Title <LabelConstraint>required</LabelConstraint></Label>
         <Box width={1 / 2}>
           <Input
             type="text"
             value={storyEditorStore.title}
             onChange={e => storyEditorStore.changeTitle(e.target.value)} />
         </Box>
-        <Label>Story Description <LabelConstraint>Max 140 characters</LabelConstraint></Label>
+        <Label>Story Description <LabelConstraint>max 140 characters</LabelConstraint></Label>
         <Box width={3 / 4}>
           <Input
             type="text"

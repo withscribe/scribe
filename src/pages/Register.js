@@ -9,7 +9,7 @@ import { types } from 'Services/Validation'
 import Input, { Label } from '_system/Input'
 import { Button } from '_system/Button'
 import {
-  FormWrapper, FormContainer, FormTitle, FormDesc,
+  FormWrapper, FormContainer, FormTitle, FormDesc, FormChangeLink,
 } from 'Styled/LRForm'
 
 @inject('userStore', 'authStore')
@@ -92,7 +92,7 @@ class Register extends React.Component {
               onClick={e => this.onRegister(e)}>
               Register
             </Button>
-            <Link to="/login">Already have an account? <u>Log in.</u></Link>
+            <FormChangeLink to="/login">Already have an account? <u>Log in.</u></FormChangeLink>
           </form>
         </FormContainer>
       </FormWrapper>

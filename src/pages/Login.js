@@ -12,7 +12,7 @@ import Input, {
 } from '_system/Input'
 import { Button } from '_system/Button'
 import {
-  FormWrapper, FormContainer, FormTitle, FormDesc,
+  FormWrapper, FormContainer, FormTitle, FormDesc, FormChangeLink,
 } from 'Styled/LRForm'
 
 @inject('userStore', 'authStore')
@@ -77,7 +77,7 @@ class Login extends React.Component {
               onClick={e => this.onLogin(e)}>
               Login
             </Button>
-            <Link to="/register">Don't have an account? <u>Sign Up</u></Link>
+            <FormChangeLink to="/register">Don't have an account? <u>Sign Up</u></FormChangeLink>
           </form>
         </FormContainer>
       </FormWrapper>

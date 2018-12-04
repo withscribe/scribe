@@ -4,10 +4,10 @@ import { inject, observer } from 'mobx-react'
 import { clone, getSnapshot, applySnapshot } from 'mobx-state-tree'
 import { Flex, Box } from 'grid-styled/emotion'
 
-import Input, { Label, LabelTip } from '_system/Input'
-import { TitleText } from '_system/Typography'
-import { ButtonPrimary } from '_system/Button'
+import Input, { Label, LabelTip, LabelConstraint } from '_system/Input'
+import { Button } from '_system/Button'
 import { ProfileWrapper } from 'Styled/Profile'
+import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 
 @inject('userStore')
 @observer
@@ -43,7 +43,11 @@ class Choose extends React.Component {
       <>
         {dataclone && (
           <ProfileWrapper>
-            <TitleText>Profile Settings</TitleText>
+            <Hero
+              appearance="black">
+              <HeroPrimaryText>Profile Info</HeroPrimaryText>
+              <HeroSpanText>Change your Profile Info</HeroSpanText>
+            </Hero>
             <Flex width={1}>
               <Box width={0.7 / 2} pr="2em">
                 <Label>First Name <LabelTip>optional</LabelTip></Label>
@@ -65,27 +69,33 @@ class Choose extends React.Component {
               </Box>
             </Flex>
             <Box width={1 / 2}>
-              <Label>Email</Label>
+              <Label>Email <LabelConstraint>required</LabelConstraint></Label>
               <Input
-                type="text"
+                type="email"
                 value={dataclone.me.email}
                 onChange={e => dataclone.changeEmail(e.target.value)} />
             </Box>
             <Box width={1 / 2}>
-              <Label>Username</Label>
+              <Label>Username <LabelConstraint>required</LabelConstraint></Label>
               <Input
-                // placeholder={me.userName}
                 type="text"
                 value={dataclone.me.userName}
                 onChange={e => dataclone.changeuserName(e.target.value)} />
             </Box>
-            <h3>id: {userStore.me.id}</h3>
-            <h3>account_id: {userStore.me.account_id}</h3>
-            <h3>occupation: {userStore.me.occupation}</h3>
-            <ButtonPrimary
-              border
-              withHeight
-              onClick={this.saveChanges}>Save Changes</ButtonPrimary>
+            <div>
+              <Button
+                appearance="minimal"
+                intent="success"
+                onClick={this.saveChanges}>
+                Save Changes
+              </Button>
+              <Button
+                appearance="default"
+                intent="danger"
+                onClick={this.discardChanges}>
+                Cancel
+              </Button>
+            </div>
           </ProfileWrapper>
         )}
       </>

@@ -25,6 +25,7 @@ const CommunityInfoSection = styled(Box)`
   border-radius: 6px;
   display: flex;
   flex-direction: column;
+  padding: 1em;
 `
 
 const CommunityInfoHeader = styled('div')`
@@ -32,7 +33,8 @@ const CommunityInfoHeader = styled('div')`
   color: ${colors.white};
   padding: 0.5em 1em;
   border-radius: 6px 6px 0 0;
-  margin: -.05em;
+  margin: -1em;
+  margin-bottom: 0.5em;
 `
 
 export {

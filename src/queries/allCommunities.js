@@ -6,7 +6,12 @@ const AllCommunities = gql`
       id
       name
       description
-      membersIds
+      members {
+        userName
+      }
+      stories {
+        id
+      }
       privacy
       bannedMembersIds
     }

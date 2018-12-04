@@ -32,7 +32,8 @@ const CommunitiesModel = types
     id: types.string,
     name: types.string,
     description: types.string,
-    memberIds: types.array(IdModel),
+    members: types.array(temp__UserModel),
+    stories: types.array(IdModel),
     privacy: types.maybe(types.enumeration('Type', ['PUBLIC', 'PRIVATE', 'INVITE_ONLY'])),
     bannedMemberIds: types.array(IdModel),
   })

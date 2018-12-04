@@ -1,7 +1,8 @@
 import styled from 'react-emotion'
 import { Box } from 'grid-styled/emotion'
+import { Link } from 'react-router-dom'
 
-import { typography } from '_system/Theme'
+import { typography, colors } from '_system/Theme'
 
 const FormWrapper = styled.div`
   display: flex;
@@ -33,10 +34,16 @@ const FormDesc = styled('p')`
   ${typography.text.small};
 `
 
+const FormChangeLink = styled(Link)`
+  margin-top: 0.5em;
+  color: ${colors.black};
+`
+
 
 export {
   FormWrapper,
   FormContainer,
   FormTitle,
   FormDesc,
+  FormChangeLink,
 }

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import Tab from 'Components/Tabs/Tab'
 import StoryCard from 'Components/StoryCard'
+import CommunityCard from 'Components/CommunityCard'
 import { TabList } from '_system/Tabs'
 import { HomeGrid } from '_system/Grid'
 import { Button } from '_system/Button'
@@ -89,15 +90,13 @@ class Home extends React.Component {
             ? <>
               <Hero appearance="teal">
                 <HeroPrimaryText>Can't find a community?</HeroPrimaryText>
-                <Link to="/community/create">
-                  {/* <Button appearance="white">Create Community</Button> */}
-                  <Button appearance="default">Create it yourself</Button>
-                </Link>
+                {/* <Link to="/community/create"> */}
+                  {/* <Button appearance="default">Create it yourself</Button> */}
+                  <HeroSpanText>Let Scribe know! We create user requested communities all the time.</HeroSpanText>
+                {/* </Link> */}
               </Hero>
               {communityStore.communities.map(community => (
-                <div key={community.id}>
-                  {community.name}
-                </div>
+                <CommunityCard history={history} community={community} key={community.id} />
               ))}
             </>
             : (
