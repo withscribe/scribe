@@ -8,7 +8,6 @@ import {
 } from '_system/Card'
 import { CardDesc } from '_system/Typography'
 import { ContributeIcon, BookmarkIcon, HeartIcon } from '_system/Icons'
-import Badge from '_system/Badge'
 
 @inject('userStore', 'storyStore')
 @observer
@@ -60,16 +59,15 @@ class StoryCard extends React.Component {
   cloneStory = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const { userStore, storyStore, story: { parentStoryId } } = this.props
-    console.log(this.props.story)
-    storyStore.clone(parentStoryId, userStore.me.id)
+    const { userStore, storyStore, story } = this.props
+    storyStore.clone(story.id, userStore.me.id)
   }
 
   forkStory = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const { userStore, storyStore, storyStore: { parentStoryId } } = this.props
-    storyStore.forkStory(parentStoryId, userStore.me.id)
+    const { userStore, storyStore, story } = this.props
+    storyStore.forkStory(story.id, userStore.me.id)
   }
 
 
@@ -98,10 +96,6 @@ class StoryCard extends React.Component {
               </Link>
               <CardDesc>{story.description}</CardDesc>
             </div>
-            {/* <div> */}
-            {/*   <Badge>New</Badge> */}
-            {/*   <Badge>Hot</Badge> */}
-            {/* </div> */}
           </div>
           <CardMetaWrapper>
             <CardMetaAction onClick={this.likeStory}>
