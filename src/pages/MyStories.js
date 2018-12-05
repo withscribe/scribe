@@ -17,7 +17,7 @@ import { ProfileStoryCard } from 'Components/StoryCard'
 class MyStories extends React.Component {
   state = {
     selectedIndex: 0,
-    tabs: ['Original', 'Cloned', 'Forked', 'Contribute'],
+    tabs: ['Original', 'Saved', 'Forked'],
   }
 
   componentDidMount() {
@@ -49,7 +49,7 @@ class MyStories extends React.Component {
           && (originalStories.length >= 1 ? (<>
             <Hero appearance="green">
               <HeroPrimaryText>Original Stories</HeroPrimaryText>
-              <HeroSpanText>Things you've written yourself</HeroSpanText>
+              <HeroSpanText>Stories you've written yourself.</HeroSpanText>
             </Hero>
             <HomeGrid>
               {originalStories.map(story => (
@@ -64,8 +64,8 @@ class MyStories extends React.Component {
         {!userStore.updatingUser && selectedIndex === 1
           && (userStore.clonedStories.length >= 1 ? (<>
             <Hero appearance="blue">
-              <HeroPrimaryText>Cloned Stories</HeroPrimaryText>
-              <HeroSpanText>Things you've cloned</HeroSpanText>
+              <HeroPrimaryText>Saved Stories</HeroPrimaryText>
+              <HeroSpanText>Stories you've saved from other Authors.</HeroSpanText>
             </Hero>
             <HomeGrid>
               {userStore.clonedStories.map(story => (
@@ -81,7 +81,7 @@ class MyStories extends React.Component {
           && (userStore.forkedStories.length >= 1 ? (<>
             <Hero appearance="red">
               <HeroPrimaryText>Forked Stories</HeroPrimaryText>
-              <HeroSpanText>Things you've forked</HeroSpanText>
+              <HeroSpanText>Stories you've forked from other Authors.</HeroSpanText>
             </Hero>
             <HomeGrid>
               {userStore.forkedStories.map(story => (
