@@ -18,6 +18,7 @@ class ViewRevision extends React.Component {
   state = {
     isAuthor: false,
     isIdentical: true,
+    postProcess: false,
   }
 
   componentDidMount() {
@@ -32,10 +33,11 @@ class ViewRevision extends React.Component {
       if (storyStore.story.authorId === userStore.me.id || storyStore.story.nonAuthorId === userStore.me.id) {
         this.setState({ isAuthor: true })
       }
+      this.compareContent()
     })
     storyStore.getRevision(revisionId)
       .then(() => {
-
+        this.compareContent()
       })
   }
 
@@ -65,6 +67,9 @@ class ViewRevision extends React.Component {
       } else {
         this.setState({ isIdentical: false })
       }
+
+      this.setState({ postProcess: true })
+
     }
 
   }
@@ -87,7 +92,7 @@ class ViewRevision extends React.Component {
 
   render() {
     const { storyStore: { story, revision }, storyStore } = this.props
-    const { isAuthor, isIdentical } = this.state
+    const { isAuthor, isIdentical, postProcess } = this.state
     return (
         <>
           <GhostWrapper isDoneRendering={storyStore.fetchingStory}>
@@ -108,7 +113,7 @@ class ViewRevision extends React.Component {
                 {story.author ? story.author : 'No Author Assigned.'}
               </Label>
 
-              {isIdentical
+              {postProcess && isIdentical
                 && (
                   <Badge>Content is identical</Badge>
                 )
@@ -123,7 +128,7 @@ class ViewRevision extends React.Component {
               }
           </>
           }
-          {isAuthor && !isIdentical
+          {postProcess && isAuthor && !isIdentical
           && (
             <Button
               appearance="default"
