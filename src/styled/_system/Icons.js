@@ -7,7 +7,6 @@ function getDefaultProps(width) {
     width: `${width}`,
     viewBox: `0 0 ${width} 16`,
     style: {
-      marginRight: '0.35em',
       display: 'inline-block',
       verticalAlign: 'text-top',
       fill: 'currentColor',

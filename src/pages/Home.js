@@ -8,7 +8,7 @@ import StoryCard from 'Components/StoryCard'
 import CommunityCard from 'Components/CommunityCard'
 import { TabList } from '_system/Tabs'
 import { HomeGrid } from '_system/Grid'
-import { Button } from '_system/Button'
+import Button from '_system/Button'
 import { GhostWrapper, GhostCard } from '_system/Ghost'
 import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 

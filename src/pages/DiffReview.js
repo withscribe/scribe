@@ -2,7 +2,7 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import ReactDiffViewer from 'react-diff-viewer'
 
-import { Button } from '_system/Button'
+import Button from '_system/Button'
 import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 import { ViewStoryWidthAdapter } from 'Styled/ViewStory'
 

@@ -9,7 +9,7 @@ import { Label } from '_system/Input'
 import { TitleText } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
-import { Button } from '_system/Button'
+import Button from '_system/Button'
 
 @inject('storyStore', 'userStore', 'storyEditorStore')
 @observer

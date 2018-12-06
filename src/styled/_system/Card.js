@@ -96,6 +96,10 @@ const CardMetaAction = styled('button')`
     cursor: pointer;
     background-color: ${colors.b200};
   }
+
+  &> svg {
+    margin-right: 0.35em;
+  }
 `
 
 export {

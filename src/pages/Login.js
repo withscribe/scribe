@@ -10,7 +10,7 @@ import { types } from 'Services/Validation'
 import Input, {
   Label, LabelConstraint,
 } from '_system/Input'
-import { Button } from '_system/Button'
+import Button from '_system/Button'
 import {
   FormWrapper, FormContainer, FormTitle, FormDesc, FormChangeLink,
 } from 'Styled/LRForm'

@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 import { EditorWrapper } from 'Styled/Editor'
 import { TitleText } from '_system/Typography'
 import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
-import { Button } from '_system/Button'
+import Button from '_system/Button'
 import TextEditor from 'Components/Papyrus/TextEditor'
 import {
   ViewStoryGrid, ViewStoryWidthAdapter,

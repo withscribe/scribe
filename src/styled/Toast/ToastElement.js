@@ -49,7 +49,7 @@ const Button = styled.div`
   cursor: pointer;
   flex-shrink: 0;
   opacity: 0.5;
-  padding: 1em;
+  padding: .8em;
   transition: opacity 150ms;
   &:hover {
     opacity: 1;
@@ -59,9 +59,9 @@ const Button = styled.div`
 const Content = styled.div`
   flex-grow: 1;
   font-size: 14px;
-  line-height: 1.4;
-  min-height: 40px;
   padding: 1em;
+  color: ${colors.n300};
+  font-family: Theinhardt-Bold;
 `
 
 const Countdown = styled.div`
@@ -84,13 +84,14 @@ const Icon = ({ appearance }) => {
         borderBottomLeftRadius: '4px',
         backgroundColor: meta.fg,
         color: meta.bg,
-        flexShrink: 0,
-        paddingBottom: '8px',
-        paddingTop: '8px',
         position: 'relative',
         overflow: 'hidden',
         textAlign: 'center',
         width: 30,
+        height: '46px',
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
       }}>
       <Countdown />
       <Glyph css={{ position: 'relative', zIndex: 1 }} />
@@ -107,7 +108,7 @@ const ToastElement = styled('div')(
     color: types[appearance].text,
     display: 'flex',
     marginBottom: '8px',
-    width: '360px',
+    alignItems: 'center',
   }),
 )
 

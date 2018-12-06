@@ -6,7 +6,7 @@ import { Box } from 'grid-styled/emotion'
 import Input, {
   Label, LabelConstraint, LabelTip,
 } from '_system/Input'
-import { Button } from '_system/Button'
+import Button from '_system/Button'
 import Select from '_system/Select'
 import { EditorWrapper } from 'Styled/Editor'
 import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'

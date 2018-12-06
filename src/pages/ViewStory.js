@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
-import { Button } from '_system/Button'
+import Button from '_system/Button'
 import { TitleSecondary } from '_system/Typography'
 import { LoadingSpinner } from '_system/Loader'
 import { GhostWrapper } from '_system/Ghost'

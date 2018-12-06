@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import HeaderDropdown from 'Components/HeaderDropdown'
-import { Button, ButtonInlay } from '_system/Button'
+import Button from '_system/Button'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import {
   HeaderWrapper,
@@ -35,23 +35,23 @@ class Header extends React.Component {
             </NavItem>
             <NavItem>
               <Link to="/home">
-                <ButtonInlay>
+                <Button appearance="minimal">
                   Discover
-                </ButtonInlay>
+                </Button>
               </Link>
             </NavItem>
             <NavItem>
               <Link to="/story/create">
-                <ButtonInlay>
+                <Button appearance="minimal">
                   Create
-                </ButtonInlay>
+                </Button>
               </Link>
             </NavItem>
             <NavItem spaceRight>
               <Link to="/profile">
-                <ButtonInlay>
+                <Button appearance="minimal">
                   My Library
-                </ButtonInlay>
+                </Button>
               </Link>
             </NavItem>
             <GhostWrapper isDoneRendering={pullingLoginData}>
@@ -61,9 +61,9 @@ class Header extends React.Component {
             && <>
               <NavItem>
                 <Link to="/login">
-                  <ButtonInlay>
+                  <Button appearance="minimal" intent="none">
                     Login
-                  </ButtonInlay>
+                  </Button>
                 </Link>
               </NavItem>
               <NavItem>

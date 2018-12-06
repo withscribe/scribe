@@ -6,12 +6,10 @@ import { onError } from 'apollo-link-error'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { Redirect } from 'react-router-dom'
-// import fetch from 'unfetch'
 
 const httpLink = new HttpLink({
   uri: 'http://138.197.130.167/scribe',
   credentials: 'same-origin',
-  // fetch,
 })
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {

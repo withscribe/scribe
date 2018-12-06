@@ -5,7 +5,7 @@ import { clone, getSnapshot, applySnapshot } from 'mobx-state-tree'
 import { Flex, Box } from 'grid-styled/emotion'
 
 import Input, { Label, LabelTip, LabelConstraint } from '_system/Input'
-import { Button } from '_system/Button'
+import Button from '_system/Button'
 import { ProfileWrapper } from 'Styled/Profile'
 import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
 

@@ -11,7 +11,7 @@ const styles = {
   viewBox: '0 0 16 16',
   style: {
     display: 'inline',
-    verticalAlign: 'bottom',
+    // verticalAlign: 'bottom',
     fill: colors.n300,
   },
 }

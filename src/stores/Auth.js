@@ -49,9 +49,18 @@ const AuthStore = types
         self.inProgress = false
         return login
       } catch (err) {
-        console.log(err)
-        self.inProgress = false
+        console.log(err.message.includes('User Not Found'))
+        if (err.message.includes('User Not Found')) {
+          toastStore.addToast({
+            id: `${Math.random()}`,
+            message: 'An Account with that Username and Password was not found.',
+            display: true,
+            intent: 'danger',
+          })
+        }
         return false
+      } finally {
+        self.inProgress = false
       }
     })
 
