@@ -10,12 +10,14 @@ import { TitleText } from '_system/Typography'
 import { HomeGrid } from '_system/Grid'
 import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import { Button } from '_system/Button'
+import Badge from '_system/Badge'
 
 @inject('storyStore', 'userStore', 'storyEditorStore')
 @observer
 class ViewRevision extends React.Component {
   state = {
     isAuthor: false,
+    isIdentical: true,
   }
 
   componentDidMount() {
@@ -32,6 +34,9 @@ class ViewRevision extends React.Component {
       }
     })
     storyStore.getRevision(revisionId)
+      .then(() => {
+
+      })
   }
 
   componentWillUnmount() {
@@ -43,6 +48,25 @@ class ViewRevision extends React.Component {
     const json = JSON.parse(content)
     const temp = Value.fromJSON(json)
     return Plain.serialize(temp)
+  }
+
+  compareContent = () => {
+
+    const { storyStore } = this.props
+
+    if (!storyStore.fetchingStory && !storyStore.fetchingRevision) {
+
+      const originalContnet = this.deserializeContent(storyStore.story.content)
+      const revisionContnet = this.deserializeContent(storyStore.revision.content)
+
+      const result = originalContnet.localeCompare(revisionContnet)
+      if (result === 0) {
+        this.setState({ isIdentical: true })
+      } else {
+        this.setState({ isIdentical: false })
+      }
+    }
+
   }
 
   handleRevertClick = () => {
@@ -63,7 +87,7 @@ class ViewRevision extends React.Component {
 
   render() {
     const { storyStore: { story, revision }, storyStore } = this.props
-    const { isAuthor } = this.state
+    const { isAuthor, isIdentical } = this.state
     return (
         <>
           <GhostWrapper isDoneRendering={storyStore.fetchingStory}>
@@ -84,6 +108,11 @@ class ViewRevision extends React.Component {
                 {story.author ? story.author : 'No Author Assigned.'}
               </Label>
 
+              {isIdentical
+                && (
+                  <Badge>Content is identical</Badge>
+                )
+              }
               {!storyStore.fetchingRevision && revision
                 && (
                   <ReactDiffViewer
@@ -94,14 +123,14 @@ class ViewRevision extends React.Component {
               }
           </>
           }
-          {isAuthor
-            && (
-              <Button
-                appearance="default"
-                onClick={this.handleRevertClick}>
-                Revert
-              </Button>
-            )
+          {isAuthor && !isIdentical
+          && (
+            <Button
+              appearance="default"
+              onClick={this.handleRevertClick}>
+              Revert
+            </Button>
+          )
           }
       </>
     )
