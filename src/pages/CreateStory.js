@@ -47,7 +47,7 @@ class CreateStory extends React.Component {
       )
 
       const communityIdFromList = userStore.me.communities.filter(c => c.name === selectedCommunity)
-      const communityId = communityIdFromList[0].id || null
+      const communityId = communityIdFromList.length > 0 ? communityIdFromList[0].id : null
       storyEditorStore.submitStory(userStore.me.id, author, communityId)
         .then(() => {
           const { storyEditorStore: { storyId, saveInProgress } } = this.props
