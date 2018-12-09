@@ -21,11 +21,13 @@ class Register extends React.Component {
 
   onRegister = (e) => {
     e.preventDefault()
-    const { assert } = this.props
-    // assert(types.REGISTER)
-      const { authStore } = this.props
-      authStore.registerUser()
-    // }
+    const { assert, authStore } = this.props
+    assert(types.REGISTER).then(() => {
+      const { isFormValid } = this.props
+      if (isFormValid) {
+        authStore.registerUser()
+      }
+    })
   }
 
   // this may be used for more logic in the future to replace

@@ -53,7 +53,7 @@ const validate = async (type, value) => {
   case types.LOGIN:
     return loginSchema.validate({ ...value })
   case types.REGISTER:
-    return registerSchema.validate({ value })
+    return registerSchema.validate({ ...value })
   default:
     return value
   }

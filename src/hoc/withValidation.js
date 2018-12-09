@@ -15,6 +15,7 @@ const withValidation = (WrappedComponent) => {
         CONFIRM: null,
       },
       isLoginValid: false,
+      isFormValid: false,
     }
 
     assert = async (type) => {
@@ -77,6 +78,17 @@ const withValidation = (WrappedComponent) => {
           })
         break
       }
+      case types.REGISTER: {
+        const { authStore: { email, password, confirmPassword, username } } = this.props
+        await validate(type, { username, email, password, confirmPassword })
+          .then(() => {
+            this.setState({ isFormValid: true })
+          })
+          .catch(() => {
+            this.setState({ isFormValid: false })
+          })
+        break
+      }
       default:
         console.log('no valid type supplied')
       }
@@ -84,12 +96,13 @@ const withValidation = (WrappedComponent) => {
 
     render() {
       const { props } = this
-      const { errors, isLoginValid } = this.state
+      const { errors, isLoginValid, isFormValid } = this.state
       return (
         <WrappedComponent
           errors={errors}
           assert={this.assert}
           isLoginValid={isLoginValid}
+          isFormValid={isFormValid}
           {...props} />
       )
     }

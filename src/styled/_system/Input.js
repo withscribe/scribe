@@ -39,6 +39,13 @@ const inputBaseStyles = css`
     color: #9DA7B1;
     transition: color 200ms ease-in-out;
   }
+  &[disabled],
+  &:disabled {
+    background-color: ${colors.background.tint1};
+    &:active {
+      border: 1px solid ${colors.background.tint2};
+    }
+  }
 `
 
 const inputWarningStyles = css`

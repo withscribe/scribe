@@ -72,6 +72,7 @@ class Choose extends React.Component {
               <Label>Email <LabelConstraint>required</LabelConstraint></Label>
               <Input
                 type="email"
+                disabled
                 value={dataclone.me.email}
                 onChange={e => dataclone.changeEmail(e.target.value)} />
             </Box>
@@ -79,6 +80,7 @@ class Choose extends React.Component {
               <Label>Username <LabelConstraint>required</LabelConstraint></Label>
               <Input
                 type="text"
+                disabled
                 value={dataclone.me.userName}
                 onChange={e => dataclone.changeuserName(e.target.value)} />
             </Box>
@@ -89,12 +91,12 @@ class Choose extends React.Component {
                 onClick={this.saveChanges}>
                 Save Changes
               </Button>
-              <Button
-                appearance="default"
-                intent="danger"
-                onClick={this.discardChanges}>
-                Cancel
-              </Button>
+              {/* <Button */}
+              {/*   appearance="default" */}
+              {/*   intent="danger" */}
+              {/*   onClick={this.discardChanges}> */}
+              {/*   Cancel */}
+              {/* </Button> */}
             </div>
           </ProfileWrapper>
         )}
