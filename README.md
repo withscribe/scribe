@@ -1,51 +1,35 @@
-# Unravl
-Front-End client for Unravl
+<div align="center">
 
-# Machine Requirements
-- yarn@latest (optional but preferred)
-- ^ otherwise, npm 
+  ### Online writing that just works.
 
-# Setup Instructions
-1. yarn | npm install
-2. yarn start | npm start to spinup webpack dev server/live reloading/etc
-3. yarn build | npm build to create production bundle
+</div>
 
-# Styling 
-We use `emotion` & `react-emotion` for styling
-Flex Grid components are taken from `grid-styled/emotion`
+This is repo for the Front End codebase of Scribe.
 
-App-wide emotion components (buttons, input, cards, etc) are located in `styled/_system/.`
-Component specific *emotion components* are located in `styled/.` where the filename corresponds with the component file name 
+## Docs
+- [Contributing](#contributing)
+  - [Codebase](#codebase)
+    - [Technologies](#technologies)
+    - [Folder Structure](#folder-structure)
+    - [Code Style](#code-style)
+  - [First time setup](#first-time-setup)
+  - [Running the app locally](#running-the-app-locally)
 
-# Project Structure
----
-`[dir] assets`: Folder for fonts, pictures, etc
+## Contributing
+_this repo is NOT in a position to be contributed too outside of the core team._
 
-`[dir] components`: Reusable components here
+Regardless, this codebase is in good working condition. While the project is in its infancy, the folder stucture will most likely change often.
 
-`[dir] hoc`: Folder for higher-order-components
+## Codebase
 
-`[dir] mutations`: GraphQL mutations folder
+#### Technologies
 
-`[dir] pages`: Think of this as a url specific page, we are Presenting the components here
+- **JavaScript**: We use Node.js to power the light express server, and React to power our frontend. All of the code you'll touch in this codebase will be JavaScript.
 
-`[dir] queries`: GraphQL queries folder
+List of other tech that is used
+- **GraphQL**: API Client using Apollo
+- **React**: Frontend
+- **SlateJS**: WSYIWYG Editor
 
-`[dir] services`: Folder for things like the Apollo Client
 
-`[dir] stores`: Folder for all MST stores
-
-`[dir] styled`: Folder for all app styling
-
-`[file] src/index.js`: The project root, import the root-most component from Components/App.js
-
-`[file] src/components/App.js`: The root-most component. This will hold the routing, presentational components, store init, etc
-
-# Commit Structure (Prepending commit message)
-`Feat: [desc]` If commit contains a new feature or addition
-
-`Fix: [desc]` If commit fixes something
-
-`Chore: [desc]` If it is something small that feels like a chore to do
-
-`Change: [desc]` If the commit is nothing major, to a number of files, you could probably do this
+//@todo
