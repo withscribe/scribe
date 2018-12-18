@@ -1,5 +1,7 @@
 import React from 'react'
 
+import ErrorFallback from 'Components/Error/ErrorFallback'
+
 class ErrorBoundary extends React.Component {
   state = { error: null }
 
@@ -12,7 +14,7 @@ class ErrorBoundary extends React.Component {
     const { children } = this.props
 
     if (error) {
-      return 'looks like something went wrong :( reload the page'
+      return <ErrorFallback />
     }
 
     return children
