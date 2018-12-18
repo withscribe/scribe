@@ -5,6 +5,7 @@ import { Switch } from 'react-router-dom'
 import Header from 'Components/Header'
 import PrivateRoute from 'Components/PrivateRoute'
 import PublicRoute from 'Components/PublicRoute'
+import ErrorBoundary from 'Components/Error/ErrorBoundary'
 import { Wrapper, Container } from '_system/Container'
 /* Import Pages Start */
 import Register from 'Pages/Register'
@@ -25,7 +26,7 @@ import Choose from 'Pages/Choose'
 import Community from 'Pages/Community'
 
 const Routes = () => (
-  <>
+  <ErrorBoundary>
     <Header />
     <Wrapper>
       <Container>
@@ -55,7 +56,7 @@ const Routes = () => (
         </Switch>
       </Container>
     </Wrapper>
-  </>
+  </ErrorBoundary>
 )
 
 export default Routes
