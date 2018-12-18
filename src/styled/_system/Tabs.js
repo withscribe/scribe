@@ -32,10 +32,10 @@ const selectedTabStyles = css`
 
 const TabButton = styled('span')`
   ${baseTabStyles};
-  ${p => p.selected ? `${selectedTabStyles}` : null};
+  ${p => p.selected ? css`${selectedTabStyles}` : null};
 
   :hover {
-    ${p => p.selected ? null : `${baseHoverStyles}`};
+    ${p => p.selected ? null : css`${baseHoverStyles}`};
   }
 `
 

@@ -44,7 +44,7 @@ const largeCardStyles = css`
 
 const ListCard = styled('div')`
   ${baseStyles};
-  ${p => p.wide ? `${largeCardStyles}` : null};
+  ${p => p.wide ? css`${largeCardStyles}` : null};
 `
 
 export {

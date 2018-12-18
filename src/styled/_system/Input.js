@@ -77,9 +77,9 @@ const inputDangerStyles = css`
 
 const Input = styled('input')`
   ${inputBaseStyles};
-  ${p => p.isWarn ? `${inputWarningStyles}` : null};
-  ${p => p.isOptional ? `${inputOptionalStyles}` : null};
-  ${p => p.isInvalid ? `${inputDangerStyles}` : null};
+  ${p => p.isWarn ? css`${inputWarningStyles}` : null};
+  ${p => p.isOptional ? css`${inputOptionalStyles}` : null};
+  ${p => p.isInvalid ? css`${inputDangerStyles}` : null};
 `
 
 const Label = styled.label`

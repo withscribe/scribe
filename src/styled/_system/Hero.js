@@ -72,7 +72,7 @@ const heroSpanWithAction = css`
 
 const HeroSpanText = styled('span')`
   ${heroSpanStyles};
-  ${p => p.withAction ? `${heroSpanWithAction}` : null}
+  ${p => p.withAction ? css`${heroSpanWithAction}` : null}
 `
 
 
