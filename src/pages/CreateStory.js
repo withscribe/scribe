@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
-import { Box } from 'grid-styled/emotion'
+import { Box } from '@rebass/grid/emotion'
 
 import Input, {
   Label, LabelConstraint, LabelTip,

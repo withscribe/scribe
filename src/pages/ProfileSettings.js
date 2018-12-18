@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { clone, getSnapshot, applySnapshot } from 'mobx-state-tree'
-import { Flex, Box } from 'grid-styled/emotion'
+import { Flex, Box } from '@rebass/grid/emotion'
 
 import Input, { Label, LabelTip, LabelConstraint } from '_system/Input'
 import Button from '_system/Button'

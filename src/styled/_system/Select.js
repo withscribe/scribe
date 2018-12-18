@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled, { css } from 'react-emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
 import { CaretDownIcon } from '_system/Icons'
 import { colors } from '_system/Theme'

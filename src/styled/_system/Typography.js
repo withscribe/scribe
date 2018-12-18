@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 import { typography, transitions, colors } from '_system/Theme'
 

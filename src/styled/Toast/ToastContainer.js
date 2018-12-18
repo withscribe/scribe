@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 const ToastContainer = styled.div`
   box-sizing: border-box;

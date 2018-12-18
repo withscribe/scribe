@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'mobx-react'
-import { injectGlobal } from 'react-emotion'
+import { Global, css } from '@emotion/core'
 import decode from 'jwt-decode'
 
 /* Import Hot Routes */
@@ -21,7 +21,7 @@ import CommunityStore from 'Stores/Community'
 import ToastStore from 'Stores/Toasts'
 
 // eslint-disable-next-line
-injectGlobal`
+const global = css`
   @font-face {
     font-family: Theinhardt;
     src: url(${TR}) format('woff');
@@ -101,6 +101,7 @@ const store = {
 const App = () => (
   <Provider {...store}>
     <>
+      <Global styles={global} />
       <ToastProvider />
       <Router>
         <Routes />

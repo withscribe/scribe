@@ -1,5 +1,5 @@
-import styled from 'react-emotion'
-import { Flex, Box } from 'grid-styled/emotion'
+import styled from '@emotion/styled'
+import { Flex, Box } from '@rebass/grid/emotion'
 import { Link } from 'react-router-dom'
 
 const ChoiceWrapper = styled(Flex)`
