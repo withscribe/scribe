@@ -63,7 +63,7 @@ const HeaderBar = styled.div`
 `
 
 const HeaderLogo = styled('img')`
-  height: 39px;
+  height: 45px;
 `
 
 const HeaderUsername = styled.h1`
