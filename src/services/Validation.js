@@ -1,32 +1,59 @@
 import { string, object, ref } from 'yup'
 
+const invalidEmail = 'Email must be valid'
+const noEmail = 'Email is required'
+
+const noUsername = 'Username is required'
+const shortUsername = 'Username must be at least 2 characters'
+
+const noPassword = 'Password is required'
+const shortPassword = 'Password must be at least 5 characters'
+
+const passwordValidation = string()
+  .min(5, shortPassword)
+  .max(25)
+  .required(noPassword)
+
+const emailValidation = string()
+  .email(invalidEmail)
+  .required(noEmail)
+
+const usernameValidation = string()
+  .min(2, shortUsername)
+  .max(12)
+  .required(noUsername)
+
 const loginSchema = object().shape({
-  email: string().email('Email must be valid').required('Email is required'),
-  password: string().required('Password is required'),
+  email: emailValidation,
+  password: passwordValidation,
 })
 
 const registerSchema = object().shape({
-  username: string().required('Username is required'),
-  email: string().email().required('Email is required'),
-  password: string().required('Password is required'),
-  confirmPassword: string().oneOf([ref('password'), null], "Passwords don't match").required('Password Confirmation is required'),
+  username: usernameValidation,
+  email: emailValidation,
+  password: passwordValidation,
+  confirmPassword: string()
+    .oneOf([ref('password'), null], "Passwords don't match")
+    .required('Password Confirmation is required'),
 })
 
 const passwordField = object().shape({
-  password: string().required('Password is required'),
+  password: passwordValidation,
 })
 
 const confirmPasswordField = object().shape({
-  password: string().required('Password is required'),
-  confirmPassword: string().oneOf([ref('password'), null], "Passwords don't match").required('Password Confirmation is required'),
+  password: passwordValidation,
+  confirmPassword: string()
+    .oneOf([ref('password'), null], "Passwords don't match")
+    .required('Password Confirmation is required'),
 })
 
 const usernameField = object().shape({
-  username: string().required('Username is required'),
+  username: usernameValidation,
 })
 
 const emailField = object().shape({
-  email: string().email().required('Email is required'),
+  email: emailValidation,
 })
 
 
