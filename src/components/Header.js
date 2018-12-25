@@ -9,12 +9,13 @@ import { GhostWrapper, GhostSmall } from '_system/Ghost'
 import {
   HeaderWrapper,
   HeaderContainer,
-  NavList,
-  NavItem,
-  NavLink,
-  HeaderBar,
   HeaderLogo,
-  HeaderUsername,
+  DiscoverTab,
+  CreateTab,
+  LibraryTab,
+  ProfileTab,
+  LoginTab,
+  SignupTab,
 } from 'Styled/Header'
 
 import ScribeLogo from '../assets/ScribeLogo.svg'
@@ -27,59 +28,46 @@ class Header extends React.Component {
     return (
       <HeaderWrapper>
         <HeaderContainer>
-          <NavList>
-            <NavItem>
-              <Link to="/home">
-                <HeaderLogo src={ScribeLogo} />
-              </Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/home">
-                <Button appearance="minimal">
-                  Discover
-                </Button>
-              </Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/story/create">
-                <Button appearance="minimal">
-                  Create
-                </Button>
-              </Link>
-            </NavItem>
-            <NavItem spaceRight>
-              <Link to="/profile">
-                <Button appearance="minimal">
-                  My Library
-                </Button>
-              </Link>
-            </NavItem>
-            <GhostWrapper isDoneRendering={pullingLoginData}>
-              <GhostSmall />
-            </GhostWrapper>
-            {!me && !pullingLoginData
-            && <>
-              <NavItem>
-                <Link to="/login">
-                  <Button appearance="minimal" intent="none">
-                    Login
-                  </Button>
-                </Link>
-              </NavItem>
-              <NavItem>
-                <Link to="/register">
-                  <Button appearance="default">
-                    Sign Up
-                  </Button>
-                </Link>
-              </NavItem>
-            </>
-            }
-            {me && !pullingLoginData
-             && <HeaderDropdown />
-            }
-            {/* <HeaderBar /> */}
-          </NavList>
+          <Link to="/home">
+            <HeaderLogo src={ScribeLogo} />
+          </Link>
+          <DiscoverTab to="/home">
+            <Button
+              appearance="minimal">
+                Discover
+            </Button>
+          </DiscoverTab>
+          <CreateTab to="/story/create">
+            <Button
+              appearance="minimal">
+                Create
+            </Button>
+          </CreateTab>
+          <LibraryTab to="/profile">
+            <Button appearance="minimal">
+              My Library
+            </Button>
+          </LibraryTab>
+          <GhostWrapper isDoneRendering={pullingLoginData}>
+            <GhostSmall />
+          </GhostWrapper>
+          {!me && !pullingLoginData
+          && <>
+            <LoginTab to="/login">
+              <Button appearance="minimal" intent="none">
+                Login
+              </Button>
+            </LoginTab>
+            <SignupTab to="/register">
+              <Button appearance="default">
+                Sign Up
+              </Button>
+            </SignupTab>
+          </>
+          }
+          {me && !pullingLoginData
+           && <><ProfileTab to="/profile/settings"><HeaderDropdown /></ProfileTab></>
+          }
         </HeaderContainer>
       </HeaderWrapper>
     )

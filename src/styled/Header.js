@@ -1,83 +1,73 @@
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 
-import { ScribeLogo } from '../assets/ScribeLogo.svg'
 import { colors } from '_system/Theme'
 
-const HeaderWrapper = styled.header`
-  display: flex;
-  flex-align: center;
-  justify-content: space-between;
-  background: ${colors.white};
-  color: ${colors.n300};
-  position: relative;
-  width: 100vw;
-  justify-content: center;
-  box-shadow: 0px -3px 20px 4px #efefef;
-  /* border-bottom: 1px solid #dad8de; */ // twitch border color
-  border-bottom: 1px solid ${colors.border.default};
-`
+const HeaderWrapper = styled.header``
 
 const HeaderContainer = styled.nav`
-  width: 95vw;
+  width: 100%;
+  display: grid;
+  position: relative;
+  grid-template-columns: auto auto auto auto 1fr auto;
+  grid-template-rows: 1fr;
+  grid-template-areas: 'logo discover create library . profile login signup';
+  line-height: 1;
+  box-shadow: rgba(22, 23, 26, 0.05) 0px 4px 8px;
+  border-bottom: 1px solid #E4E7EB;
+  padding: 0 1.5em;
+  z-index: 3000;
+  align-items: stretch;
+  background-color: ${colors.white};
 `
 
-const NavList = styled.ul`
-  display: flex;
-  height: 60px;
-  align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: relative;
-`
-
-const NavItem = styled.li`
-  display: inline-block;
-  flex: 0 0 auto;
-  position: relative;
+const Tab = styled(Link)`
   margin-left: 1em;
-  margin-right: ${props => props.spaceRight ? 'auto' : null};
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &:first-of-type {
-    margin-left: 0;
-  }
-`
-
-const NavLink = styled(Link)`
   text-decoration: none;
   color: ${colors.n300};
-  font-size: 1.25rem;
+  display: grid;
+  grid-template-areas: 'icon label';
+  grid-template-rows: auto;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-items: center;
 `
 
-const HeaderBar = styled.div`
-  /* width: 80vw; */
-  height: 1px;
-  background: ${colors.white};
-  position: absolute;
-  bottom: 2rem;
+const DiscoverTab = styled(Tab)`
+  grid-area: discover;
+`
+
+const CreateTab = styled(Tab)`
+  grid-area: create;
+`
+
+const LibraryTab = styled(Tab)`
+  grid-area: library;
+`
+
+const ProfileTab = styled(Tab)`
+  grid-area: profile;
+`
+const LoginTab = styled(Tab)`
+  grid-area: login;
+`
+
+const SignupTab = styled(Tab)`
+  grid-area: signup;
 `
 
 const HeaderLogo = styled('img')`
   height: 45px;
 `
 
-const HeaderUsername = styled.h1`
-  font-size: 2rem;
-  font-weight: 300;
-`
-
 export {
   HeaderWrapper,
   HeaderContainer,
-  NavList,
-  NavItem,
-  NavLink,
-  HeaderBar,
   HeaderLogo,
-  HeaderUsername,
+  DiscoverTab,
+  CreateTab,
+  LibraryTab,
+  ProfileTab,
+  LoginTab,
+  SignupTab,
 }

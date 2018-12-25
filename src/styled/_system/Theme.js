@@ -1,5 +1,5 @@
 const white = '#FFFFFF'
-const black = '#0F131A'
+const black = '#16171a'
 
 
 const border = {

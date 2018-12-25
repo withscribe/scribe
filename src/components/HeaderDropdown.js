@@ -90,6 +90,16 @@ class HeaderDropdown extends React.Component {
     })
   }
 
+  hoverMenu = () => {
+    this.setState(prevState => ({
+      showMenu: !prevState.showMenu,
+    }))
+  }
+
+  hoverMenuLeage = () => {
+    this.setState({ showMenu: false })
+  }
+
   render() {
     const { showMenu } = this.state
     const { userStore, userStore: { me } } = this.props
@@ -97,7 +107,8 @@ class HeaderDropdown extends React.Component {
     return (
       <>
         <DropdownWrapper
-          onClick={this.openMenu}>
+          onPointerEnter={this.hoverMenu}
+          onPointerLeave={this.hoverMenuLeage}>
           <AvatarBox>
             <span>{ initials }</span>
           </AvatarBox>
@@ -107,38 +118,34 @@ class HeaderDropdown extends React.Component {
           }
           <DropdownArrow flipped={showMenu} />
         </DropdownWrapper>
-        <Transition items={showMenu} from={{ height: 0 }} enter={{ height: 'auto' }} leave={{ height: 0 }}>
-          {show => show && (styles => (
-            <DropdownMenu style={styles}>
-              <DropdownItems>
-                <DropdownContext>
-                  <span>
-                    <ContextDetail>{me.userName}</ContextDetail>
-                    <ContextDetail>{me.email}</ContextDetail>
-                  </span>
-                </DropdownContext>
-                <DropdownLast>
-                  <Link to="/profile/contributions">
-                    <DropdownItem>
-                      Contributions
-                    </DropdownItem>
-                  </Link>
-                  <Link to="/profile">
-                    <DropdownItem>
-                      Profile
-                    </DropdownItem>
-                  </Link>
-                  <Link to="/profile/settings">
-                    <DropdownItem>
-                      Settings
-                    </DropdownItem>
-                  </Link>
-                  <DropdownItem onClick={this.logout}>Logout</DropdownItem>
-                </DropdownLast>
-              </DropdownItems>
-            </DropdownMenu>
-          ))}
-        </Transition>
+        <DropdownMenu>
+          <DropdownItems>
+            <DropdownContext>
+              <span>
+                <ContextDetail>{me.userName}</ContextDetail>
+                <ContextDetail>{me.email}</ContextDetail>
+              </span>
+            </DropdownContext>
+            <DropdownLast>
+              <Link to="/profile/contributions">
+                <DropdownItem>
+                  Contributions
+                </DropdownItem>
+              </Link>
+              <Link to="/profile">
+                <DropdownItem>
+                  Profile
+                </DropdownItem>
+              </Link>
+              <Link to="/profile/settings">
+                <DropdownItem>
+                  Settings
+                </DropdownItem>
+              </Link>
+              <DropdownItem onClick={this.logout}>Logout</DropdownItem>
+            </DropdownLast>
+          </DropdownItems>
+        </DropdownMenu>
       </>
     )
   }

@@ -2,8 +2,26 @@ import styled from '@emotion/styled'
 
 import { colors } from '_system/Theme'
 
+const DropdownMenu = styled.div`
+  max-width: 225px;
+  min-width: 225px;
+  top: 100%;
+  position: absolute;
+  right: 1.5em;
+  padding: 8px;
+  z-index: 4;
+  color: ${colors.intent.danger};
+  background-color: transparent;
+  user-select: none;
+  display: none;
+
+  & :hover {
+    display: block;
+  }
+`
+
 const DropdownWrapper = styled.div`
-  width: 274px;
+  width: 225px;
   display: flex;
   align-items: center;
   height: 100%;
@@ -13,6 +31,9 @@ const DropdownWrapper = styled.div`
 
   &:hover {
     background-color: ${colors.b200};
+    & ~ ${DropdownMenu} {
+      display: block;
+    }
   }
 
   &:active {
@@ -20,28 +41,8 @@ const DropdownWrapper = styled.div`
   }
 `
 
-const DropdownMenu = styled.div`
-  max-width: 274px;
-  min-width: 274px;
-  top: 60px;
-  position: absolute;
-  margin: 0;
-  line-height: 1rem;
-  right: 0;
-  z-index: 4;
-  color: ${colors.intent.danger};
-  background-color: ${colors.white};
-  user-select: none;
-  overflow: hidden;
-  box-shadow: 0 3px 12px rgba(27,31,35,.15);
-  border: 1px solid ${colors.border.default};
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-`
-
 const DropdownContext = styled.div`
-  max-width: 274px;
-  min-width: 274px;
+  width: 100%;
   padding: 5px;
   display: inline-flex;
   align-items: center;
@@ -56,15 +57,19 @@ const DropdownLast = styled.section`
 const DropdownItems = styled.ul`
   margin: 0;
   padding: 0;
+  box-shadow: rgba(22, 23, 26, 0.15) 0px 8px 16px;
+  overflow: hidden;
+  border: 1px solid ${colors.border.default};
+  border-top: none;
+  border-radius: 8px;
 `
 
 const DropdownItem = styled.li`
-  min-width: 210px;
   width: 100%;
   display: block;
   line-height: normal;
   list-style: none;
-  padding: 1em;
+  padding: 16px;
   cursor: pointer;
 
   &:hover {
