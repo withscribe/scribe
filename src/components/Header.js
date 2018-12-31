@@ -66,7 +66,11 @@ class Header extends React.Component {
           </>
           }
           {me && !pullingLoginData
-           && <><ProfileTab to="/profile/settings"><HeaderDropdown /></ProfileTab></>
+          && <>
+            <ProfileTab>
+              <HeaderDropdown />
+            </ProfileTab>
+            </>
           }
         </HeaderContainer>
       </HeaderWrapper>

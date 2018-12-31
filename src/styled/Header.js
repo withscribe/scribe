@@ -45,9 +45,10 @@ const LibraryTab = styled(Tab)`
   grid-area: library;
 `
 
-const ProfileTab = styled(Tab)`
+const ProfileTab = styled.div`
   grid-area: profile;
 `
+
 const LoginTab = styled(Tab)`
   grid-area: login;
 `
