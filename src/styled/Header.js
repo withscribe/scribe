@@ -16,7 +16,7 @@ const HeaderContainer = styled.nav`
   box-shadow: rgba(22, 23, 26, 0.05) 0px 4px 8px;
   border-bottom: 1px solid #E4E7EB;
   padding: 0 1.5em;
-  z-index: 3000;
+  z-index: 99;
   align-items: stretch;
   background-color: ${colors.white};
 `

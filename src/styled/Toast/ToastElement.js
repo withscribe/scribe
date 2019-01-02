@@ -80,7 +80,7 @@ const Icon = ({ appearance }) => {
   const Glyph = meta.icon
   return (
     <div
-      css={{
+      style={{
         borderTopLeftRadius: '4px',
         borderBottomLeftRadius: '4px',
         backgroundColor: meta.fg,
@@ -95,12 +95,12 @@ const Icon = ({ appearance }) => {
         justifyContent: 'center',
       }}>
       <Countdown />
-      <Glyph css={{ position: 'relative', zIndex: 1 }} />
+      <Glyph />
     </div>
   )
 }
 
-const ToastElement = styled('div')(
+const ToastElement = styled.div(
   ({ appearance }) => ({
     // backgroundColor: types[appearance].bg,
     backgroundColor: '#ffffff',
@@ -110,6 +110,7 @@ const ToastElement = styled('div')(
     display: 'flex',
     marginBottom: '8px',
     alignItems: 'center',
+    zIndex: 100,
   }),
 )
 
