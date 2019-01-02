@@ -116,7 +116,6 @@ const UserStore = types
       } catch (err) {
         self.updatingUser = false
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Something went wrong while refreshing your profile',
           display: true,
           intent: 'warning',
@@ -142,7 +141,6 @@ const UserStore = types
         self.updatingProfile = false
         self.isEditingProfile = true
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Something went wrong while updating your profile',
           display: true,
           intent: 'warning',
@@ -247,6 +245,9 @@ const UserStore = types
     },
     get geterrors() {
       return self.errors
+    },
+    isUserAuthor(authorId, nonAuthorId) {
+      return self.me.id === authorId || self.me.id === nonAuthorId
     },
   }))
 

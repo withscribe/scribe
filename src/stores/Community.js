@@ -1,4 +1,9 @@
-import { types, flow, destroy, applySnapshot } from 'mobx-state-tree'
+import {
+  types,
+  flow,
+  destroy,
+  applySnapshot,
+} from 'mobx-state-tree'
 
 import { client } from 'Services/Client'
 import { toastStore } from 'Components/App'
@@ -135,14 +140,14 @@ const CommunityStore = types
     }
   })
   .views(self => ({
-    communityMemberCount(index) {
-      return self.communities[index].memberIds.length
-    },
     get memberCount() {
       return self.community.members.length
     },
     get storyCount() {
       return self.community.stories.length
+    },
+    isUserMember(username) {
+      return self.community.members.filter(c => c.userName === username).length >= 1
     },
   }))
 

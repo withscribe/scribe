@@ -175,7 +175,6 @@ const StoryStore = types
         self.cloningStory = false
         self.setCurrentCloneId(id)
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'A personal copy has been added to your library.',
           display: true,
           intent: 'success',
@@ -185,7 +184,6 @@ const StoryStore = types
         // TODO: actually log the errors
         console.log(err)
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Failed to clone this story.',
           display: true,
           intent: 'danger',
@@ -234,7 +232,6 @@ const StoryStore = types
         })
         self.forkingStory = false
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'A forked copy has been added to your library.',
           display: true,
           intent: 'success',
@@ -244,7 +241,6 @@ const StoryStore = types
         // TODO: actually log the errors
         console.log(err)
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Failed to fork this story.',
           display: true,
           intent: 'danger',
@@ -288,11 +284,8 @@ const StoryStore = types
       }
       return false
     },
-    isAuthor(profileId) {
-      if (self.story.authorId === profileId) {
-        return true
-      }
-      return false
+    isUserAuthor(userProfileId) {
+      return self.story.authorId === userProfileId || self.story.nonAuthorId === userProfileId
     },
   }))
 

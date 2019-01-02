@@ -2,7 +2,7 @@ import { types } from 'mobx-state-tree'
 
 const ToastModel = types
   .model('ToastModel', {
-    id: types.string,
+    id: types.optional(types.string, `${Math.random()}`),
     message: types.string,
     display: types.boolean,
     intent: types.enumeration('Type', ['success', 'danger', 'warning', 'info']),

@@ -52,7 +52,6 @@ const AuthStore = types
         console.log(err.message.includes('User Not Found'))
         if (err.message.includes('User Not Found')) {
           toastStore.addToast({
-            id: `${Math.random()}`,
             message: 'An Account with that Username and Password was not found.',
             display: true,
             intent: 'danger',
@@ -78,7 +77,6 @@ const AuthStore = types
           variables: ({ userName: username, email, password }),
         })
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Account has been created. Please login.',
           display: true,
           intent: 'success',
@@ -87,14 +85,12 @@ const AuthStore = types
         console.log(err)
         if (err.message.includes('Username')) {
           toastStore.addToast({
-            id: `${Math.random()}`,
             message: 'Username has already been taken.',
             display: true,
             intent: 'warning',
           })
         } else {
           toastStore.addToast({
-            id: `${Math.random()}`,
             message: 'Email is already registered.',
             display: true,
             intent: 'warning',

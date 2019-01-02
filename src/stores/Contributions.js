@@ -70,7 +70,6 @@ const ContributionsStore = types
         self.setContributions(getContributionsById)
       } catch (err) {
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Failed to load contributions. Please try again.',
           display: true,
           intent: 'danger',
@@ -102,7 +101,6 @@ const ContributionsStore = types
           variables: ({ contributionId }),
         })
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Changes have been approved and added to the story!',
           display: true,
           intent: 'success',
@@ -111,7 +109,6 @@ const ContributionsStore = types
         self.approvingChanges = false
         console.log(err)
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Changes have failed to be approved. Please try again.',
           display: true,
           intent: 'danger',
@@ -129,7 +126,6 @@ const ContributionsStore = types
           variables: ({ contributionId }),
         })
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Changes have been rejected and contributor notified!',
           display: true,
           intent: 'success',
@@ -138,7 +134,6 @@ const ContributionsStore = types
         self.rejectingChanges = false
         console.log(err)
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Changes have failed to be rejected. Please try again.',
           display: true,
           intent: 'danger',
