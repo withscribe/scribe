@@ -1,6 +1,6 @@
 {
   "extends": "airbnb",
-  "plugins": ["react"],
+  "plugins": ["react", "emotion"],
   "env": {
     "browser": true,
     "node": true,
