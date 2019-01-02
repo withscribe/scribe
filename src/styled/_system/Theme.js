@@ -70,7 +70,7 @@ const oranges = {
 }
 
 const intent = {
-  none: blues.b300,
+  none: blues.p300,
   success: greens.g300,
   danger: reds.r300,
   warning: oranges.o300,

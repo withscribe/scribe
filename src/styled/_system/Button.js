@@ -8,7 +8,7 @@ const intentMeta = {
   none: {
     text: colors.white,
     bg: colors.intent.none,
-    hover: colors.b400,
+    hover: colors.p400,
   },
   success: {
     text: colors.white,
@@ -29,7 +29,7 @@ const intentMeta = {
 
 const normal = {
   none: {
-    text: colors.b300,
+    text: colors.p300,
     bg: colors.background.tint1,
     hover: colors.n200,
   },
@@ -53,8 +53,8 @@ const normal = {
 const primary = {
   none: {
     text: colors.white,
-    bg: colors.b300,
-    hover: colors.b400,
+    bg: colors.p300,
+    hover: colors.p400,
   },
   success: {
     text: colors.white,
