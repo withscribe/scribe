@@ -1,7 +1,7 @@
-import React from 'react'
+/** @jsx jsx */
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { css } from '@emotion/core'
+import { css, jsx } from '@emotion/core'
 
 import { CaretDownIcon } from '_system/Icons'
 import { colors } from '_system/Theme'
@@ -50,7 +50,7 @@ const Select = ({ onChange, children, ...props }) => (
       onChange={onChange}>
       {children}
     </StyledSelect>
-    <CaretDownIcon className={extraIconStyles} />
+    <CaretDownIcon css={extraIconStyles} />
   </SelectWrapper>
 )
 
