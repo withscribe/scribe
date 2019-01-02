@@ -21,9 +21,9 @@ class Community extends React.Component {
   }
 
   componentDidMount() {
-    const { userStore, communityStore, match: { params: { name } } } = this.props
+    const { userStore: { me: { userName } }, communityStore, match: { params: { name } } } = this.props
     communityStore.getCommunity(name).then(() => {
-      if (communityStore.community.members.filter(c => c.userName === userStore.me.userName).length >= 1) {
+      if (communityStore.isUserMember(userName)) {
         this.setState({ isMember: true })
       }
     })
@@ -47,7 +47,8 @@ class Community extends React.Component {
     return (
       <CommunityWidthAdapter>
         {!communityStore.fetchingCommunity && community
-          && <>
+          && (
+          <>
             <Hero appearance="grey">
               <HeroPrimaryText>{community.name}</HeroPrimaryText>
               <HeroSpanText>{community.description}</HeroSpanText>
@@ -77,6 +78,7 @@ class Community extends React.Component {
               </CommunityInfoSection>
             </CommunitySeperator>
           </>
+          )
         }
       </CommunityWidthAdapter>
     )

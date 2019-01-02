@@ -30,8 +30,7 @@ class StoryCard extends React.Component {
     const hasForked = story.isForked
     this.setState({ forked: hasForked })
 
-    if (story.authorId === userStore.me.id
-    || story.nonAuthorId === userStore.me.id) {
+    if (userStore.isUserAuthor(story.authorId, story.nonAuthorId)) {
       this.setState({ isAuthor: true })
     }
 

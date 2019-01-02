@@ -12,7 +12,7 @@ import {
   SecondaryTitleGridPosition, CloneGridPosition, ContributeGridPosition,
 } from 'styled/ViewStory'
 
-@inject('storyEditorStore', 'userStore', 'toastStore')
+@inject('storyEditorStore', 'userStore')
 @observer
 class EditStory extends React.Component {
   state = {
@@ -25,8 +25,7 @@ class EditStory extends React.Component {
     const storyId = this.props.match.params.id
 
     storyEditorStore.loadStory(storyId).then(() => {
-      if (storyEditorStore.authorId === userStore.me.id
-      || storyEditorStore.nonAuthorId === userStore.me.id) {
+      if (storyEditorStore.isUserAuthor(userStore.me.id)) {
         console.log('we are allowed to be here')
         this.setState({ permission: true })
       } else {
