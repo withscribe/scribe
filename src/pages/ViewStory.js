@@ -112,8 +112,8 @@ class ViewStory extends React.Component {
                 appearance="default"
                 onClick={() => this.likeStory(story.id)}>
                 {liked
-                  ? <><HeartIcon />Liked</>
-                  : <><HeartIcon />Like</>
+                  ? <><HeartIcon active={liked} />Liked</>
+                  : <><HeartIcon active={liked}/>Like</>
                 }
               </Button>
               {isAuthor
@@ -166,7 +166,7 @@ class ViewStory extends React.Component {
                     <Button
                       appearance="default"
                       onClick={() => this.cloneStory(story.id)}>
-                      Clone Story
+                      Save Story
                     </Button>
                     <Tooltip
                       onHover={this.toggleCloneTooltip}
