@@ -25,14 +25,16 @@ import DiffReview from 'Pages/DiffReview'
 import Choose from 'Pages/Choose'
 import Community from 'Pages/Community'
 
+const Loading = ({ pastDelay }) => (pastDelay ? <LoadingSpinner /> : null)
+
 const EditStory = Loadable({
   loader: () => import('Pages/EditStory'/* webpackChunkName: "EditStory" */),
-  loading: ({ isLoading }) => isLoading && <LoadingSpinner />,
+  loading: ({ isLoading }) => isLoading && <Loading />,
 })
 
 const CreateStory = Loadable({
   loader: () => import('Pages/CreateStory'/* webpackChunkName: "CreateStory" */),
-  loading: ({ isLoading }) => isLoading && <LoadingSpinner />,
+  loading: ({ isLoading }) => isLoading && <Loading />,
 })
 
 const Routes = () => (
