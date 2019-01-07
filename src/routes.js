@@ -1,6 +1,8 @@
 import React from 'react'
 import { Switch } from 'react-router-dom'
+import Loadable from 'react-loadable'
 
+import { LoadingSpinner } from '_system/Loader'
 /* Import Components Start */
 import Header from 'Components/Header'
 import PrivateRoute from 'Components/PrivateRoute'
@@ -14,14 +16,24 @@ import Home from 'Pages/Home'
 import MyStories from 'Pages/MyStories'
 import Contributions from 'Pages/Contributions'
 import ProfileSettings from 'Pages/ProfileSettings'
-import CreateStory from 'Pages/CreateStory'
-import EditStory from 'Pages/EditStory'
+// import CreateStory from 'Pages/CreateStory'
+// import EditStory from 'Pages/EditStory'
 import ViewStory from 'Pages/ViewStory'
 import ViewRevision from 'Pages/ViewRevision'
 import ViewRevisions from 'Pages/ViewRevisions'
 import DiffReview from 'Pages/DiffReview'
 import Choose from 'Pages/Choose'
 import Community from 'Pages/Community'
+
+const EditStory = Loadable({
+  loader: () => import('Pages/EditStory'/* webpackChunkName: "EditStory" */),
+  loading: ({ isLoading }) => isLoading && <LoadingSpinner />,
+})
+
+const CreateStory = Loadable({
+  loader: () => import('Pages/CreateStory'/* webpackChunkName: "CreateStory" */),
+  loading: ({ isLoading }) => isLoading && <LoadingSpinner />,
+})
 
 const Routes = () => (
   <ErrorBoundary>

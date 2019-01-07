@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'mobx-react'
 import { Global, css } from '@emotion/core'
 import decode from 'jwt-decode'
+import * as OfflinePluginRuntime from 'offline-plugin/runtime'
 
 /* Import Hot Routes */
 import Routes from '../hot-routes'
@@ -109,6 +110,11 @@ const App = () => (
     </>
   </Provider>
 )
+
+OfflinePluginRuntime.install({
+  // Apply new updates immediately
+  onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
+});
 
 export default App
 
