@@ -7,6 +7,7 @@ import CompressionWebpackPlugin from 'compression-webpack-plugin'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import OfflinePlugin from 'offline-plugin'
 
 export default {
   entry: {
@@ -56,6 +57,14 @@ export default {
       },
     }),
     new BundleAnalyzerPlugin(),
+    new OfflinePlugin({
+      caches: {},
+      externals: ['/'],
+      autoUpdate: true,
+      ServiceWorker: {
+        events: true,
+      },
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
