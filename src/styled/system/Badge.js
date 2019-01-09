@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
-import { colors } from '_system/Theme'
+import { colors } from 'system/Theme'
 
 const defaultStyles = css`
   display: block;

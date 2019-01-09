@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 
-import { colors } from '_system/Theme'
+import { colors } from 'system/Theme'
 
 const HeaderWrapper = styled.header``
 

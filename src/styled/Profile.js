@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Flex } from '@rebass/grid/emotion'
 
-import { typography } from '_system/Theme'
+import { typography } from 'system/Theme'
 
 
 const ProfileSettingsHeader = styled.h1`

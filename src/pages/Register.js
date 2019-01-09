@@ -4,10 +4,10 @@ import { inject, observer } from 'mobx-react'
 
 import withValidation from '../hoc/withValidation'
 
-import { FieldInputError } from '_system/Typography'
+import { FieldInputError } from 'system/Typography'
 import { types } from 'Services/Validation'
-import Input, { Label } from '_system/Input'
-import Button from '_system/Button'
+import Input, { Label } from 'system/Input'
+import Button from 'system/Button'
 import {
   FormWrapper, FormContainer, FormTitle, FormDesc, FormChangeLink,
 } from 'Styled/LRForm'

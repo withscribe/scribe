@@ -3,8 +3,8 @@ import { inject, observer } from 'mobx-react'
 import PropTypes from 'prop-types'
 
 import ContributionCard from 'Components/ContributionCard'
-import { HomeGrid } from '_system/Grid'
-import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
+import { HomeGrid } from 'system/Grid'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'system/Hero'
 import { ContributionWrapper } from 'Styled/Contributions'
 
 @inject('userStore', 'storyStore', 'contributionsStore')

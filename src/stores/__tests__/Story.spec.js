@@ -1,4 +1,5 @@
 import { getSnapshot, onSnapshot, onPatch } from 'mobx-state-tree'
+import 'unfetch/polyfill'
 import { reaction } from 'mobx'
 import { StoryModel, UserStore } from '../Story'
 

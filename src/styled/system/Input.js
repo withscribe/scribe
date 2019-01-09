@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
-import { colors, typography } from '_system/Theme'
+import { colors, typography } from 'system/Theme'
 
 const oldInput = styled.input`
   padding: 0 0.5em;

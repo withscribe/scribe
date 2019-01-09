@@ -5,11 +5,11 @@ import { Box } from '@rebass/grid/emotion'
 
 import Input, {
   Label, LabelConstraint, LabelTip,
-} from '_system/Input'
-import Button from '_system/Button'
-import Select from '_system/Select'
+} from 'system/Input'
+import Button from 'system/Button'
+import Select from 'system/Select'
 import { EditorWrapper } from 'Styled/Editor'
-import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'system/Hero'
 import TextEditor from 'Components/Papyrus/TextEditor'
 
 @inject('storyEditorStore', 'userStore')

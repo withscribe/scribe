@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
-import { colors, transitions } from '_system/Theme'
+import { colors, transitions } from 'system/Theme'
 
 const baseHoverStyles = css`
   background-color: ${colors.n200};

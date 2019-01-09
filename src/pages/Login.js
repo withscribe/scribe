@@ -5,12 +5,12 @@ import PropTypes from 'prop-types'
 
 import withValidation from '../hoc/withValidation'
 
-import { FieldInputError } from '_system/Typography'
+import { FieldInputError } from 'system/Typography'
 import { types } from 'Services/Validation'
 import Input, {
   Label, LabelConstraint,
-} from '_system/Input'
-import Button from '_system/Button'
+} from 'system/Input'
+import Button from 'system/Button'
 import {
   FormWrapper, FormContainer, FormTitle, FormDesc, FormChangeLink,
 } from 'Styled/LRForm'

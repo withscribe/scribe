@@ -4,10 +4,10 @@ import { inject, observer } from 'mobx-react'
 import { clone, getSnapshot, applySnapshot } from 'mobx-state-tree'
 import { Flex, Box } from '@rebass/grid/emotion'
 
-import Input, { Label, LabelTip, LabelConstraint } from '_system/Input'
-import Button from '_system/Button'
+import Input, { Label, LabelTip, LabelConstraint } from 'system/Input'
+import Button from 'system/Button'
 import { ProfileWrapper } from 'Styled/Profile'
-import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'system/Hero'
 
 @inject('userStore')
 @observer

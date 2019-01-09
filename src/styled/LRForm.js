@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { Box } from '@rebass/grid/emotion'
 import { Link } from 'react-router-dom'
 
-import { typography, colors } from '_system/Theme'
+import { typography, colors } from 'system/Theme'
 
 const FormWrapper = styled.div`
   display: flex;

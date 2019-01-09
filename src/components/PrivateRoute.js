@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Route, Redirect } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
-import { LoadingSpinner } from '_system/Loader'
+import { LoadingSpinner } from 'system/Loader'
 /* eslint-disable no-undef */
 const PrivateRoute = ({
   component: Component, userStore, redirectTo, ...rest

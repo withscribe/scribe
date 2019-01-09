@@ -3,7 +3,7 @@ import { css } from '@emotion/core'
 
 import {
   transitions, colors, typography,
-} from '_system/Theme'
+} from 'system/Theme'
 
 const baseStyles = css`
   display: flex;

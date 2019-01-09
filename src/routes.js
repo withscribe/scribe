@@ -6,7 +6,7 @@ import Header from 'Components/Header'
 import PrivateRoute from 'Components/PrivateRoute'
 import PublicRoute from 'Components/PublicRoute'
 import ErrorBoundary from 'Components/Error/ErrorBoundary'
-import { Wrapper, Container } from '_system/Container'
+import { Wrapper, Container } from 'system/Container'
 /* Import Pages Start */
 import Register from 'Pages/Register'
 import Login from 'Pages/Login'

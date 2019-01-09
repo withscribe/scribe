@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-import { typography } from '_system/Theme'
+import { typography } from 'system/Theme'
 
 const Error = styled.div`
   height: 100%;

@@ -2,13 +2,13 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/core'
 
-import { colors } from '_system/Theme'
+import { colors } from 'system/Theme'
 import {
   WarningIcon,
   CheckIcon,
   DangerIcon,
   InfoIcon,
-} from '_system/Icons'
+} from 'system/Icons'
 
 const shrink = keyframes`
   from {

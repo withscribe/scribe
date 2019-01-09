@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 
 import Tab from 'Components/Tabs/Tab'
-import { TabList } from '_system/Tabs'
-import { Button } from '_system/Button'
+import { TabList } from 'system/Tabs'
+import { Button } from 'system/Button'
 import Input, {
   Label, InlineLabel, InlineInput, TextArea,
-} from '_system/Input'
-import { HomeGrid } from '_system/Grid'
-import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
+} from 'system/Input'
+import { HomeGrid } from 'system/Grid'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'system/Hero'
 import { ProfileStoryCard } from 'Components/StoryCard'
 
 @inject('userStore')

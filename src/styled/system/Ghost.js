@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import { colors } from '_system/Theme'
+import { colors } from 'system/Theme'
 
 const GhostSmall = styled('div')`
   height: 38px;

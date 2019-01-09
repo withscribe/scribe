@@ -53,7 +53,7 @@ export default {
       Components: path.join(__dirname, 'src/components'),
       Pages: path.join(__dirname, 'src/pages'),
       Styled: path.join(__dirname, 'src/styled'),
-      _system: path.join(__dirname, 'src/styled/_system'),
+      system: path.join(__dirname, 'src/styled/system'),
       Queries: path.join(__dirname, 'src/queries'),
       Mutations: path.join(__dirname, 'src/mutations'),
       Stores: path.join(__dirname, 'src/stores'),
