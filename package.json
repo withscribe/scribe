@@ -100,15 +100,41 @@
     "webpack-stylish": "^0.1.8"
   },
   "jest": {
+    "moduleNameMapper": {
+      "^Components$": "<rootDir>/src/components/$1",
+      "^Pages$": "<rootDir>/src/pages/$1",
+      "^System[\/](.+)$": "<rootDir>/src/styled/system/$1",
+      "^Styled$": "<rootDir>/src/styled/$1",
+      "^Queries$": "<rootDir>/src/queries/$1",
+      "^Mutations$": "<rootDir>/src/mutations/$1",
+      "^Stores$": "<rootDir>/src/stores/$1",
+      "^Services$": "<rootDir>/src/services/$1",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/__mocks__/fileMock.js"
+    },
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "modulePaths": [
+      "src"
+    ],
     "testMatch": [
-      "**/__tests__/**/*.spec.js?(x)"
+      "**/__tests__/**/*.spec.js?(x)",
+      "**/__tests__/**/*.+(js|jsx|ts|tsx)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/fixtures/",
+      "__tests__/helpers/",
+      "__mocks__"
     ],
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "!*.json",
-      "!webpack.*",
-      "!src/queries/*",
-      "!src/services/*"
+      "src/**/*.+(js|jsx|ts|tsx|)"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/fixtures/",
+      "__tests__/helpers/",
+      "__mocks__"
     ]
   }
 }
