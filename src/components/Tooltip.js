@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { InfoIcon } from 'system/Icons'
-import { colors } from 'system/Theme'
+import { InfoIcon } from 'System/Icons'
+import { colors } from 'System/Theme'
 
 const styles = {
   'aria-hidden': true,

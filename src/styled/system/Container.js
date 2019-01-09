@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-import { mq } from 'system/Theme'
+import { mq } from 'System/Theme'
 
 const Container = styled.div`
   width: 100%;

@@ -3,9 +3,9 @@ import { Redirect } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import { EditorWrapper } from 'Styled/Editor'
-import { TitleText } from 'system/Typography'
-import Hero, { HeroPrimaryText, HeroSpanText } from 'system/Hero'
-import Button from 'system/Button'
+import { TitleText } from 'System/Typography'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'System/Hero'
+import Button from 'System/Button'
 import TextEditor from 'Components/Papyrus/TextEditor'
 import {
   ViewStoryGrid, ViewStoryWidthAdapter,

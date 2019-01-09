@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Button from 'system/Button'
+import Button from 'System/Button'
 import { Error, Heading, SubHeading } from 'Styled/ErrorFallback'
 
 const ErrorFallback = () => (

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-import { colors, typography, transitions } from 'system/Theme'
+import { colors, typography, transitions } from 'System/Theme'
 
 const Toolbar = styled('div')`
   position: relative;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-import { colors } from 'system/Theme'
+import { colors } from 'System/Theme'
 
 const DropdownMenu = styled.div`
   max-width: 225px;

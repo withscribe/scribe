@@ -2,8 +2,8 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import ReactDiffViewer from 'react-diff-viewer'
 
-import Button from 'system/Button'
-import Hero, { HeroPrimaryText, HeroSpanText } from 'system/Hero'
+import Button from 'System/Button'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'System/Hero'
 import { ViewStoryWidthAdapter } from 'Styled/ViewStory'
 
 @inject('contributionsStore')

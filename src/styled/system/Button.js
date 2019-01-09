@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 import PropTypes from 'prop-types'
 
-import { colors, typography, transitions } from 'system/Theme'
+import { colors, typography, transitions } from 'System/Theme'
 
 const intentMeta = {
   none: {

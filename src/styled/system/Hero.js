@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
-import { typography, colors, spacing } from 'system/Theme'
+import { typography, colors, spacing } from 'System/Theme'
 
 const types = {
   purple: {

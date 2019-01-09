@@ -1,9 +1,9 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 
-import Button from 'system/Button'
-import Hero, { HeroPrimaryText, HeroSpanText } from 'system/Hero'
-import { HomeGrid } from 'system/Grid'
+import Button from 'System/Button'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'System/Hero'
+import { HomeGrid } from 'System/Grid'
 import StoryCard from 'Components/StoryCard'
 import {
   CommunityWidthAdapter, CommunitySeperator,

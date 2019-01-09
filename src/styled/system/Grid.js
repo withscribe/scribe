@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-import { mq } from 'system/Theme'
+import { mq } from 'System/Theme'
 
 const HomeGrid = styled('div')`
   display: grid;

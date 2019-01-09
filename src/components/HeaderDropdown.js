@@ -4,8 +4,8 @@ import { inject, observer } from 'mobx-react'
 import { Transition } from 'react-spring'
 import { withRouter, Link } from 'react-router-dom'
 
-import AvatarBox from 'system/Avatar'
-import { colors } from 'system/Theme'
+import AvatarBox from 'System/Avatar'
+import { colors } from 'System/Theme'
 import {
   DropdownWrapper, DropdownMenu, DropdownContext, DropdownLast,
   DropdownItems, DropdownItem, ContextDetail,

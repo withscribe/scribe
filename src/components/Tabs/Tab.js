@@ -1,6 +1,6 @@
 import React from 'react'
 
-import TabButton from 'system/Tabs'
+import TabButton from 'System/Tabs'
 
 class Tab extends React.PureComponent {
   handleClick = () => {

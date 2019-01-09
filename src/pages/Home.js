@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom'
 import Tab from 'Components/Tabs/Tab'
 import StoryCard from 'Components/StoryCard'
 import CommunityCard from 'Components/CommunityCard'
-import { TabList } from 'system/Tabs'
-import { HomeGrid } from 'system/Grid'
-import Button from 'system/Button'
-import { GhostWrapper, GhostCard } from 'system/Ghost'
-import Hero, { HeroPrimaryText, HeroSpanText } from 'system/Hero'
+import { TabList } from 'System/Tabs'
+import { HomeGrid } from 'System/Grid'
+import Button from 'System/Button'
+import { GhostWrapper, GhostCard } from 'System/Ghost'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'System/Hero'
 
 @inject('storyStore', 'communityStore')
 @observer

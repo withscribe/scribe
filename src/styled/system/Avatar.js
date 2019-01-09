@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { colors } from 'system/Theme'
+import { colors } from 'System/Theme'
 
 const AvatarBox = styled.div`
   display: flex;

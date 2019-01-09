@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom'
 import {
   Card, CardTitle, CardAuthor, CardWrapper,
   CardMetaWrapper, CardMetaAction,
-} from 'system/Card'
-import { CardDesc } from 'system/Typography'
-import { ContributeIcon, BookmarkIcon, HeartIcon } from 'system/Icons'
-import Badge from 'system/Badge'
+} from 'System/Card'
+import { CardDesc } from 'System/Typography'
+import { ContributeIcon, BookmarkIcon, HeartIcon } from 'System/Icons'
+import Badge from 'System/Badge'
 
 @inject('userStore', 'storyStore')
 @observer

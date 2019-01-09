@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import HeaderDropdown from 'Components/HeaderDropdown'
-import Button from 'system/Button'
-import { GhostWrapper, GhostSmall } from 'system/Ghost'
+import Button from 'System/Button'
+import { GhostWrapper, GhostSmall } from 'System/Ghost'
 import {
   HeaderWrapper,
   HeaderContainer,

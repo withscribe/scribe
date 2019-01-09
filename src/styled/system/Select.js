@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { css, jsx } from '@emotion/core'
 
-import { CaretDownIcon } from 'system/Icons'
-import { colors } from 'system/Theme'
+import { CaretDownIcon } from 'System/Icons'
+import { colors } from 'System/Theme'
 
 const selectWrapperStyles = css`
   display: inline-flex;

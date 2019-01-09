@@ -5,12 +5,12 @@ import ReactDiffViewer from 'react-diff-viewer'
 import Plain from 'slate-plain-serializer'
 import { Value } from 'slate'
 
-import { Label } from 'system/Input'
-import { TitleText } from 'system/Typography'
-import { HomeGrid } from 'system/Grid'
-import { GhostWrapper, GhostSmall } from 'system/Ghost'
-import Button from 'system/Button'
-import Badge from 'system/Badge'
+import { Label } from 'System/Input'
+import { TitleText } from 'System/Typography'
+import { HomeGrid } from 'System/Grid'
+import { GhostWrapper, GhostSmall } from 'System/Ghost'
+import Button from 'System/Button'
+import Badge from 'System/Badge'
 
 @inject('storyStore', 'userStore', 'storyEditorStore')
 @observer

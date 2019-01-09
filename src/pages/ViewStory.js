@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
-import Button from 'system/Button'
-import { TitleSecondary } from 'system/Typography'
-import { LoadingSpinner } from 'system/Loader'
-import { GhostWrapper } from 'system/Ghost'
-import Hero, { HeroPrimaryText, HeroSpanText } from 'system/Hero'
-import { HeartIcon, EditIcon, HistoryIcon } from 'system/Icons'
+import Button from 'System/Button'
+import { TitleSecondary } from 'System/Typography'
+import { LoadingSpinner } from 'System/Loader'
+import { GhostWrapper } from 'System/Ghost'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'System/Hero'
+import { HeartIcon, EditIcon, HistoryIcon } from 'System/Icons'
 import StoryViewer from 'Components/Papyrus/StoryViewer'
 import {
   ViewStoryGrid, ViewStoryWidthAdapter,
