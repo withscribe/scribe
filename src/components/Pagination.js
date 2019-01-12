@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import PageButton, { TabList } from 'System/Pagination'
+
 const LEFT_PAGE = 'LEFT'
 const RIGHT_PAGE = 'RIGHT'
 
@@ -16,7 +18,7 @@ const getRange = (from, to, step = 1) => {
   return range
 }
 
-class Pagination extends React.Component {
+class Pagination extends React.PureComponent {
   state = {
     currentPage: 1,
   }
@@ -71,8 +73,7 @@ class Pagination extends React.Component {
   fetchPageNumbers = () => {
     const { currentPage } = this.state
 
-    const totalPages = this.totalPages
-    const pageNeighbours = this.pageNeighbours
+    const { totalPages, pageNeighbours } = this
 
     /**
      * totalNumbers: the total page numbers to show on the control
@@ -130,42 +131,43 @@ class Pagination extends React.Component {
     const { currentPage } = this.state
     const pages = this.fetchPageNumbers()
     if (!this.totalRecords || this.totalPages === 1) return null
-
     return (
       <>
         <nav>
-          <ul>
+          <TabList>
             {pages.map((page, idx) => {
               if (page === LEFT_PAGE) {
                 return (
-                  <li key={idx}>
-                    <a onClick={this.handleMoveLeft}>
+                  <li key="BUTTON_PREV">
+                    <PageButton onClick={this.handleMoveLeft}>
                       <span>&laquo;</span>
                       <span>Previous</span>
-                    </a>
+                    </PageButton>
                   </li>
                 )
               }
 
               if (page === RIGHT_PAGE) {
                 return (
-                  <li key={idx}>
-                    <a onClick={this.handleMoveRight}>
+                  <li key="BUTTON_NEXT">
+                    <PageButton onClick={this.handleMoveRight}>
                       <span>&raquo;</span>
                       <span>Next</span>
-                    </a>
+                    </PageButton>
                   </li>
                 )
               }
               return (
-                <li key={idx}>
-                  <a onClick={this.handleClick(page)}>
+                <li key={`PAGE-${idx}`}>
+                  <PageButton
+                    onClick={this.handleClick(page)}
+                    selected={currentPage === page}>
                     { page }
-                  </a>
+                  </PageButton>
                 </li>
               )
             })}
-          </ul>
+          </TabList>
         </nav>
       </>
     )
