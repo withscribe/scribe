@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router-dom'
+import { Switch, Redirect, Route } from 'react-router-dom'
 
 /* Import Components Start */
 import Header from 'Components/Header'
@@ -29,6 +29,11 @@ const Routes = () => (
     <Wrapper>
       <Container>
         <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => <Redirect to="/home" />} />
+
           <PublicRoute exact path="/login" redirectTo="/home" component={Login} />
           <PublicRoute exact path="/register" redirectTo="/home" component={Register} />
 
