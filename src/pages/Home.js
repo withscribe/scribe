@@ -27,6 +27,15 @@ class Home extends React.Component {
     communityStore.getAllCommunities()
   }
 
+  onPageChanged = (data) => {
+    const { storyStore } = this.props
+    const { currentPage, totalPages, pageLimit } = data
+
+    const skip = currentPage * 10
+
+    storyStore.getAllStories(skip)
+  }
+
   render() {
     const { tabs, selectedIndex } = this.state
     const { storyStore, communityStore, history } = this.props
@@ -47,6 +56,9 @@ class Home extends React.Component {
             </Tab>
           ))}
         </TabList>
+        <Pagination
+          onPageChanged={this.onPageChanged}data
+          totalRecords={50} />
         <HomeGrid>
           {!storyStore.fetchingStories && selectedIndex === 0
             ? (

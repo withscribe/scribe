@@ -78,11 +78,12 @@ const StoryStore = types
      * @async
      * @function getAllStories
     */
-    const getAllStories = flow(function* () {
+    const getAllStories = flow(function* (skip = 0, first = 10) {
       try {
         self.fetchingStories = true
         const { data: { allStories } } = yield client.query({
           query: AllStories,
+          variables: ({ first, skip }),
           fetchPolicy: 'network-only',
         })
         self.setStories(allStories)

@@ -182,7 +182,7 @@ Pagination.propTypes = {
 }
 
 Pagination.defaultProps = {
-  pageLimit: 10,
+  pageLimit: 30,
   pageNeighbours: 2,
 }
 
