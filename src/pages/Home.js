@@ -23,7 +23,6 @@ class Home extends React.Component {
 
   componentDidMount() {
     const { storyStore, communityStore } = this.props
-    storyStore.getAllStories()
     communityStore.getAllCommunities()
   }
 
@@ -31,7 +30,11 @@ class Home extends React.Component {
     const { storyStore } = this.props
     const { currentPage, totalPages, pageLimit } = data
 
-    const skip = currentPage * 10
+    /* We don't need to skip anything if the current page is (1)
+     * otherwise, we take the current page, subtract 1 and take the 10 next stories...
+     * ex. `page 2 = skip 10 (the contents of page 1)` = `currentPage - 1`
+    */
+    const skip = (currentPage === 1 ? 0 : currentPage - 1) * 10
 
     storyStore.getAllStories(skip)
   }
@@ -57,8 +60,8 @@ class Home extends React.Component {
           ))}
         </TabList>
         <Pagination
-          onPageChanged={this.onPageChanged}data
-          totalRecords={50} />
+          onPageChanged={this.onPageChanged}
+          totalRecords={100} />
         <HomeGrid>
           {!storyStore.fetchingStories && selectedIndex === 0
             ? (
