@@ -31,7 +31,7 @@ const selectedPageStyles = css`
   font-family: Theinhardt-Bold;
 `
 
-const PageButton = styled('a')`
+const PageButton = styled.a`
   ${basePaginationStyles};
   ${p => p.selected ? css`${selectedPageStyles}` : null};
 
@@ -41,7 +41,7 @@ const PageButton = styled('a')`
 `
 
 
-const baseTabListStyles = css`
+const basePageListStyles = css`
   display: flex;
   flex-direction: row;
   background-color: ${colors.background.tint2};
@@ -54,12 +54,17 @@ const baseTabListStyles = css`
   justify-content: center;
 `
 
-const TabList = styled('ul')`
-  ${baseTabListStyles};
+const TabList = styled.ul`
+  ${basePageListStyles};
+`
+
+const TabContainer = styled.nav`
+  width: 100%;
 `
 
 export default PageButton
 
 export {
   TabList,
+  TabContainer,
 }

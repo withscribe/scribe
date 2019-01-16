@@ -30,7 +30,7 @@ const selectedTabStyles = css`
   background-color: ${colors.b200};
 `
 
-const TabButton = styled('span')`
+const TabButton = styled.div`
   ${baseTabStyles};
   ${p => p.selected ? css`${selectedTabStyles}` : null};
 
@@ -47,9 +47,10 @@ const baseTabListStyles = css`
   border-radius: 4px;
   width: 100%;
   margin-bottom: 1.5em;
+  user-select: none;
 `
 
-const TabList = styled('div')`
+const TabList = styled.div`
   ${baseTabListStyles};
 `
 

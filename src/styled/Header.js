@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { colors } from 'System/Theme'
 
@@ -21,7 +21,7 @@ const HeaderContainer = styled.nav`
   background-color: ${colors.white};
 `
 
-const Tab = styled(Link)`
+const Tab = styled(NavLink)`
   margin-left: 1em;
   text-decoration: none;
   color: ${colors.n300};
@@ -31,6 +31,10 @@ const Tab = styled(Link)`
   grid-template-columns: auto auto;
   align-items: center;
   justify-items: center;
+
+  &.active {
+    background-color: ${colors.black};
+  }
 `
 
 const DiscoverTab = styled(Tab)`
