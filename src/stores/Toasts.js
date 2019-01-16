@@ -2,7 +2,7 @@ import { types } from 'mobx-state-tree'
 
 const ToastModel = types
   .model('ToastModel', {
-    id: types.optional(types.string, `${Math.random()}`),
+    id: types.optional(types.number, () => Math.random()),
     message: types.string,
     display: types.boolean,
     intent: types.enumeration('Type', ['success', 'danger', 'warning', 'info']),
@@ -13,12 +13,12 @@ const ToastStore = types
     toasts: types.optional(types.array(ToastModel), []),
   })
   .actions(self => ({
-    addToast(err) {
-      self.toasts.push(err)
+    addToast(toast) {
+      self.toasts.push(toast)
     },
 
-    removeToast(todo) {
-      const to = self.toasts.filter(v => v.id === todo)
+    removeToast(toastId) {
+      const to = self.toasts.filter(v => v.id === toastId)
       to[0].display = false
     },
   }))
