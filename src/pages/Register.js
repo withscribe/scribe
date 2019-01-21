@@ -21,11 +21,19 @@ class Register extends React.Component {
 
   onRegister = (e) => {
     e.preventDefault()
-    const { assert, authStore } = this.props
+    const { assert, authStore, userStore } = this.props
     assert(types.REGISTER).then(() => {
       const { isFormValid } = this.props
       if (isFormValid) {
         authStore.registerUser()
+          .then(() => {
+            authStore.loginUser()
+              .then((res) => {
+                const { account } = res
+                userStore.pullMeById(account.id)
+                this.setState({ redirectToReferrer: true })
+              })
+          })
       }
     })
   }
@@ -94,7 +102,15 @@ class Register extends React.Component {
               onClick={e => this.onRegister(e)}>
               Register
             </Button>
-            <FormChangeLink to="/login">Already have an account? <u>Log in.</u></FormChangeLink>
+            <FormChangeLink
+              to={{
+                pathname: '/login',
+                state: {
+                  from,
+                },
+              }}>
+              Already have an account? <u>Log in.</u>
+            </FormChangeLink>
           </form>
         </FormContainer>
       </FormWrapper>
