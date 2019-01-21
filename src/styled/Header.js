@@ -13,8 +13,8 @@ const HeaderContainer = styled.nav`
   grid-template-rows: 1fr;
   grid-template-areas: 'logo discover create library . profile login signup';
   line-height: 1;
-  box-shadow: rgba(22, 23, 26, 0.05) 0px 4px 8px;
-  border-bottom: 1px solid #E4E7EB;
+  /* box-shadow: rgba(22, 23, 26, 0.05) 0px 4px 8px; */
+  /* border-bottom: 1px solid #E4E7EB; */
   padding: 0 1.5em;
   z-index: 99;
   align-items: stretch;
