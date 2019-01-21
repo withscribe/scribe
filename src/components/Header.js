@@ -54,12 +54,12 @@ class Header extends React.Component {
           {!me && !pullingLoginData
           && <>
             <LoginTab to="/login">
-              <Button appearance="minimal" intent="none">
+              <Button appearance="link">
                 Login
               </Button>
             </LoginTab>
             <SignupTab to="/register">
-              <Button appearance="default">
+              <Button appearance="default" intent="none">
                 Sign Up
               </Button>
             </SignupTab>
