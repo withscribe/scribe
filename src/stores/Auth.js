@@ -111,10 +111,9 @@ const AuthStore = types
     const logoutUser = () => {
       if (localStorage.getItem('token')) {
         localStorage.removeItem('token')
-      } else {
-        return false
+        return true
       }
-      return true
+      return false
     }
 
     return {
