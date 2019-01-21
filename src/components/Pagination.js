@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import PageButton, { TabList } from 'System/Pagination'
+import PageButton, { TabList, TabContainer } from 'System/Pagination'
 
 const LEFT_PAGE = 'LEFT'
 const RIGHT_PAGE = 'RIGHT'
@@ -133,7 +133,7 @@ class Pagination extends React.PureComponent {
     if (!this.totalRecords || this.totalPages === 1) return null
     return (
       <>
-        <nav>
+        <TabContainer>
           <TabList>
             {pages.map((page, idx) => {
               if (page === LEFT_PAGE) {
@@ -168,7 +168,7 @@ class Pagination extends React.PureComponent {
               )
             })}
           </TabList>
-        </nav>
+        </TabContainer>
       </>
     )
   }
