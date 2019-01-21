@@ -37,13 +37,14 @@ const Routes = () => (
           <PublicRoute exact path="/login" redirectTo="/home" component={Login} />
           <PublicRoute exact path="/register" redirectTo="/home" component={Register} />
 
-          <PrivateRoute exact path="/home" redirectTo="/login" component={Home} />
+          <PublicRoute exact path="/home" redirectTo="/login" component={Home} />
 
-          <PrivateRoute exact path="/~:name" redirectTo="/login" component={Community} />
+          <PublicRoute exact path="/~:name" redirectTo="/login" component={Community} />
 
-          <PrivateRoute exact path="/story/preview/fork/:id" redirectTo="/login" component={ViewStory} />
-          <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewStory} />
-          <PrivateRoute exact path="/story/preview/:id" redirectTo="/login" component={ViewStory} />
+          {/* <PrivateRoute exact path="/story/preview/fork/:id" redirectTo="/login" component={ViewStory} /> */}
+          {/* <PrivateRoute exact path="/story/preview/clone/:id" redirectTo="/login" component={ViewStory} /> */}
+
+          <PublicRoute exact path="/story/preview/:id" redirectTo="/login" component={ViewStory} />
           <PrivateRoute exact path="/story/revisions/:storyId/" redirectTo="/login" component={ViewRevisions} />
           <PrivateRoute exact path="/story/revisions/:storyId/:revisionId" redirectTo="/login" component={ViewRevision} />
 
