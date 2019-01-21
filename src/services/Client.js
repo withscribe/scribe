@@ -39,7 +39,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
       console.log('[GraphQL error]', message)
       if (message === 'jwt expired') {
         localStorage.removeItem('token')
-        return <Redirect to="/" />
+        window.location.reload(true)
       }
     })
     if (networkError) {
