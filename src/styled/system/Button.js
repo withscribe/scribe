@@ -96,11 +96,35 @@ const minimal = {
   },
 }
 
+const link = {
+  none: {
+    text: colors.p300,
+    hover: 'transparent',
+    bg: 'transparent',
+  },
+  success: {
+    text: colors.g300,
+    hover: 'transparent',
+    bg: 'transparent',
+  },
+  warning: {
+    text: colors.o300,
+    hover: 'transparent',
+    bg: 'transparent',
+  },
+  danger: {
+    text: colors.r300,
+    hover: 'transparent',
+    bg: 'transparent',
+  },
+}
+
 const bundle = {
   intent: intentMeta,
   primary,
   minimal,
   default: normal,
+  link,
 }
 
 const disabledStyles = css`
@@ -138,6 +162,12 @@ const buttonBaseStyles = css`
   }
 `
 
+const linkButtonStyles = css`
+  :hover {
+    text-decoration: underline;
+  }
+`
+
 const Button = styled('button')(
   buttonBaseStyles,
   ({ appearance, intent }) => `
@@ -147,11 +177,12 @@ const Button = styled('button')(
       background-color: ${bundle[appearance][intent].hover};
     }
   `,
+  p => p.appearance === 'link' ? css`${linkButtonStyles}` : null,
 )
 
 Button.propTypes = {
   intent: PropTypes.oneOf(['none', 'success', 'warning', 'danger']),
-  appearance: PropTypes.oneOf(['default', 'minimal', 'primary']).isRequired,
+  appearance: PropTypes.oneOf(['default', 'minimal', 'primary', 'link']).isRequired,
 }
 
 Button.defaultProps = {
