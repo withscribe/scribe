@@ -47,7 +47,7 @@ const basePageListStyles = css`
   background-color: ${colors.background.tint2};
   border-radius: 4px;
   width: 100%;
-  margin-bottom: 1.5em;
+  margin-top: 0;
   list-style: none;
   user-select: none;
   padding: 0;
