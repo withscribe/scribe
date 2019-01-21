@@ -1,4 +1,4 @@
-import { types, flow, destroy, getSnapshot, applySnapshot } from 'mobx-state-tree'
+import { types, flow, destroy } from 'mobx-state-tree'
 
 import { client } from 'Services/Client'
 import ProfileByIdQuery from 'Queries/userProfileById'
@@ -243,8 +243,8 @@ const UserStore = types
     get concatenatedName() {
       return self.me && self.me.firstName !== null && self.me.lastName != null ? `${self.me.firstName} ${self.me.lastName}` : '?'
     },
-    get geterrors() {
-      return self.errors
+    get isLoggedIn() {
+      return self.me
     },
     isUserAuthor(authorId, nonAuthorId) {
       return self.me.id === authorId || self.me.id === nonAuthorId
