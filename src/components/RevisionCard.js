@@ -4,9 +4,9 @@ import { Link, Redirect } from 'react-router-dom'
 
 import {
   Card, CardTitle, CardAuthor, CardWrapper, CardBadgeWrapper, CardMetaWrapper, CardMetaAction,
-} from '_system/Card'
-import { CardDesc } from '_system/Typography'
-import Badge from '_system/Badge'
+} from 'System/Card'
+import { CardDesc } from 'System/Typography'
+import Badge from 'System/Badge'
 
 @inject('userStore')
 @observer

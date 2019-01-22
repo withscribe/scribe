@@ -125,7 +125,6 @@ const StoryEditorStore = types
           }),
         })
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Story has been created!',
           display: true,
           intent: 'success',
@@ -134,7 +133,6 @@ const StoryEditorStore = types
       } catch (err) {
         console.log(err)
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Story failed to submit.',
           display: true,
           intent: 'danger',
@@ -161,7 +159,6 @@ const StoryEditorStore = types
           }),
         })
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Story has been updated!',
           display: true,
           intent: 'success',
@@ -169,7 +166,6 @@ const StoryEditorStore = types
       } catch (err) {
         console.log(err)
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Story failed to update.',
           display: true,
           intent: 'danger',
@@ -190,7 +186,6 @@ const StoryEditorStore = types
           }),
         })
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Contribution has been sent!',
           display: true,
           intent: 'success',
@@ -198,7 +193,6 @@ const StoryEditorStore = types
       } catch (err) {
         console.log(err)
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Failed to send contribution.',
           display: true,
           intent: 'danger',
@@ -218,7 +212,6 @@ const StoryEditorStore = types
           }),
         })
         toastStore.addToast({
-          id: `${Math.random()}`,
           message: 'Successfully Reverted Story.',
           display: true,
           intent: 'success',
@@ -245,6 +238,9 @@ const StoryEditorStore = types
   .views(self => ({
     get isValid() {
       return self.title && self.description && self.content
+    },
+    isUserAuthor(userProfileId) {
+      return self.authorId === userProfileId || self.nonAuthorId === userProfileId
     },
   }))
 

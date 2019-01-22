@@ -1,7 +1,8 @@
 import React from 'react'
-import styled, { keyframes } from 'react-emotion'
+import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core'
 
-import { colors } from '_system/Theme'
+import { colors } from 'System/Theme'
 
 const rotate = keyframes`
   0% {

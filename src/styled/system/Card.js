@@ -1,9 +1,9 @@
-import styled, { css } from 'react-emotion'
-import { Link } from 'react-router-dom'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
 import {
   transitions, colors, typography,
-} from '_system/Theme'
+} from 'System/Theme'
 
 const baseStyles = css`
   display: flex;
@@ -13,6 +13,7 @@ const baseStyles = css`
   transition: ${transitions.default};
   border-bottom: 1px solid ${colors.border.default};
   padding: 1em;
+  word-break: break-all;
 
   a {
     display: block;

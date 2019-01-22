@@ -5,12 +5,12 @@ import PropTypes from 'prop-types'
 
 import withValidation from '../hoc/withValidation'
 
-import { FieldInputError } from '_system/Typography'
+import { FieldInputError } from 'System/Typography'
 import { types } from 'Services/Validation'
 import Input, {
   Label, LabelConstraint,
-} from '_system/Input'
-import Button from '_system/Button'
+} from 'System/Input'
+import Button from 'System/Button'
 import {
   FormWrapper, FormContainer, FormTitle, FormDesc, FormChangeLink,
 } from 'Styled/LRForm'
@@ -39,7 +39,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { from } = this.props.location.state || { from: { pathname: '/start' } }
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
     const { redirectToReferrer } = this.state
     const { authStore, errors, assert } = this.props
 
@@ -77,7 +77,15 @@ class Login extends React.Component {
               onClick={e => this.onLogin(e)}>
               Login
             </Button>
-            <FormChangeLink to="/register">Don't have an account? <u>Sign Up</u></FormChangeLink>
+            <FormChangeLink
+              to={{
+                pathname: '/register',
+                state: {
+                  from,
+                },
+              }}>
+              Don't have an account? <u>Sign Up</u>
+            </FormChangeLink>
           </form>
         </FormContainer>
       </FormWrapper>

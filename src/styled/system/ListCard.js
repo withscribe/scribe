@@ -1,8 +1,9 @@
-import styled, { css } from 'react-emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
 import {
   gradients, transitions, colors, typography,
-} from '_system/Theme'
+} from 'System/Theme'
 
 const baseStyles = css`
   display: flex;
@@ -43,7 +44,7 @@ const largeCardStyles = css`
 
 const ListCard = styled('div')`
   ${baseStyles};
-  ${p => p.wide ? `${largeCardStyles}` : null};
+  ${p => p.wide ? css`${largeCardStyles}` : null};
 `
 
 export {

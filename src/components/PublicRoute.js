@@ -25,7 +25,7 @@ const PrivateRoute = ({
             )
           )} />
       )}
-  </>
+    </>
   )
 }
 

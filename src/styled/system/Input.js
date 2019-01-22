@@ -1,6 +1,7 @@
-import styled, { css } from 'react-emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
-import { colors, typography } from '_system/Theme'
+import { colors, typography } from 'System/Theme'
 
 const oldInput = styled.input`
   padding: 0 0.5em;
@@ -76,9 +77,9 @@ const inputDangerStyles = css`
 
 const Input = styled('input')`
   ${inputBaseStyles};
-  ${p => p.isWarn ? `${inputWarningStyles}` : null};
-  ${p => p.isOptional ? `${inputOptionalStyles}` : null};
-  ${p => p.isInvalid ? `${inputDangerStyles}` : null};
+  ${p => p.isWarn ? css`${inputWarningStyles}` : null};
+  ${p => p.isOptional ? css`${inputOptionalStyles}` : null};
+  ${p => p.isInvalid ? css`${inputDangerStyles}` : null};
 `
 
 const Label = styled.label`

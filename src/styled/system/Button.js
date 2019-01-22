@@ -1,13 +1,14 @@
-import styled, { css } from 'react-emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 import PropTypes from 'prop-types'
 
-import { colors, typography, transitions } from '_system/Theme'
+import { colors, typography, transitions } from 'System/Theme'
 
 const intentMeta = {
   none: {
     text: colors.white,
     bg: colors.intent.none,
-    hover: colors.b400,
+    hover: colors.p400,
   },
   success: {
     text: colors.white,
@@ -28,7 +29,7 @@ const intentMeta = {
 
 const normal = {
   none: {
-    text: colors.b300,
+    text: colors.p300,
     bg: colors.background.tint1,
     hover: colors.n200,
   },
@@ -52,8 +53,8 @@ const normal = {
 const primary = {
   none: {
     text: colors.white,
-    bg: colors.b300,
-    hover: colors.b400,
+    bg: colors.p300,
+    hover: colors.p400,
   },
   success: {
     text: colors.white,
@@ -95,11 +96,35 @@ const minimal = {
   },
 }
 
+const link = {
+  none: {
+    text: colors.p300,
+    hover: 'transparent',
+    bg: 'transparent',
+  },
+  success: {
+    text: colors.g300,
+    hover: 'transparent',
+    bg: 'transparent',
+  },
+  warning: {
+    text: colors.o300,
+    hover: 'transparent',
+    bg: 'transparent',
+  },
+  danger: {
+    text: colors.r300,
+    hover: 'transparent',
+    bg: 'transparent',
+  },
+}
+
 const bundle = {
   intent: intentMeta,
   primary,
   minimal,
   default: normal,
+  link,
 }
 
 const disabledStyles = css`
@@ -137,6 +162,12 @@ const buttonBaseStyles = css`
   }
 `
 
+const linkButtonStyles = css`
+  :hover {
+    text-decoration: underline;
+  }
+`
+
 const Button = styled('button')(
   buttonBaseStyles,
   ({ appearance, intent }) => `
@@ -146,11 +177,12 @@ const Button = styled('button')(
       background-color: ${bundle[appearance][intent].hover};
     }
   `,
+  p => p.appearance === 'link' ? css`${linkButtonStyles}` : null,
 )
 
 Button.propTypes = {
   intent: PropTypes.oneOf(['none', 'success', 'warning', 'danger']),
-  appearance: PropTypes.oneOf(['default', 'minimal', 'primary']).isRequired,
+  appearance: PropTypes.oneOf(['default', 'minimal', 'primary', 'link']).isRequired,
 }
 
 Button.defaultProps = {

@@ -4,17 +4,18 @@ import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import HeaderDropdown from 'Components/HeaderDropdown'
-import Button from '_system/Button'
-import { GhostWrapper, GhostSmall } from '_system/Ghost'
+import Button from 'System/Button'
+import { GhostWrapper, GhostSmall } from 'System/Ghost'
 import {
   HeaderWrapper,
   HeaderContainer,
-  NavList,
-  NavItem,
-  NavLink,
-  HeaderBar,
   HeaderLogo,
-  HeaderUsername,
+  DiscoverTab,
+  CreateTab,
+  LibraryTab,
+  ProfileTab,
+  LoginTab,
+  SignupTab,
 } from 'Styled/Header'
 
 import ScribeLogo from '../assets/ScribeLogo.svg'
@@ -27,59 +28,50 @@ class Header extends React.Component {
     return (
       <HeaderWrapper>
         <HeaderContainer>
-          <NavList>
-            <NavItem>
-              <Link to="/home">
-                <HeaderLogo src={ScribeLogo} />
-              </Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/home">
-                <Button appearance="minimal">
-                  Discover
-                </Button>
-              </Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/story/create">
-                <Button appearance="minimal">
-                  Create
-                </Button>
-              </Link>
-            </NavItem>
-            <NavItem spaceRight>
-              <Link to="/profile">
-                <Button appearance="minimal">
-                  My Library
-                </Button>
-              </Link>
-            </NavItem>
-            <GhostWrapper isDoneRendering={pullingLoginData}>
-              <GhostSmall />
-            </GhostWrapper>
-            {!me && !pullingLoginData
-            && <>
-              <NavItem>
-                <Link to="/login">
-                  <Button appearance="minimal" intent="none">
-                    Login
-                  </Button>
-                </Link>
-              </NavItem>
-              <NavItem>
-                <Link to="/register">
-                  <Button appearance="default">
-                    Sign Up
-                  </Button>
-                </Link>
-              </NavItem>
+          <Link to="/home">
+            <HeaderLogo src={ScribeLogo} />
+          </Link>
+          <DiscoverTab to="/home">
+            <Button
+              appearance="minimal">
+                Discover
+            </Button>
+          </DiscoverTab>
+          <CreateTab to="/story/create">
+            <Button
+              appearance="minimal">
+                Create
+            </Button>
+          </CreateTab>
+          <LibraryTab to="/profile">
+            <Button appearance="minimal">
+              My Library
+            </Button>
+          </LibraryTab>
+          <GhostWrapper isDoneRendering={pullingLoginData}>
+            <GhostSmall />
+          </GhostWrapper>
+          {!me && !pullingLoginData
+          && <>
+            <LoginTab to="/login">
+              <Button appearance="link">
+                Login
+              </Button>
+            </LoginTab>
+            <SignupTab to="/register">
+              <Button appearance="default" intent="none">
+                Sign Up
+              </Button>
+            </SignupTab>
+          </>
+          }
+          {me && !pullingLoginData
+          && <>
+            <ProfileTab>
+              <HeaderDropdown />
+            </ProfileTab>
             </>
-            }
-            {me && !pullingLoginData
-             && <HeaderDropdown />
-            }
-            {/* <HeaderBar /> */}
-          </NavList>
+          }
         </HeaderContainer>
       </HeaderWrapper>
     )

@@ -1,6 +1,7 @@
-import styled, { css } from 'react-emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
-import { colors, transitions } from '_system/Theme'
+import { colors, transitions } from 'System/Theme'
 
 const baseHoverStyles = css`
   background-color: ${colors.n200};
@@ -29,12 +30,12 @@ const selectedTabStyles = css`
   background-color: ${colors.b200};
 `
 
-const TabButton = styled('span')`
+const TabButton = styled.div`
   ${baseTabStyles};
-  ${p => p.selected ? `${selectedTabStyles}` : null};
+  ${p => p.selected ? css`${selectedTabStyles}` : null};
 
   :hover {
-    ${p => p.selected ? null : `${baseHoverStyles}`};
+    ${p => p.selected ? null : css`${baseHoverStyles}`};
   }
 `
 
@@ -46,9 +47,10 @@ const baseTabListStyles = css`
   border-radius: 4px;
   width: 100%;
   margin-bottom: 1.5em;
+  user-select: none;
 `
 
-const TabList = styled('div')`
+const TabList = styled.div`
   ${baseTabListStyles};
 `
 

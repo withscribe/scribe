@@ -3,16 +3,16 @@ import { Redirect } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 import { EditorWrapper } from 'Styled/Editor'
-import { TitleText } from '_system/Typography'
-import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
-import Button from '_system/Button'
+import { TitleText } from 'System/Typography'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'System/Hero'
+import Button from 'System/Button'
 import TextEditor from 'Components/Papyrus/TextEditor'
 import {
   ViewStoryGrid, ViewStoryWidthAdapter,
   SecondaryTitleGridPosition, CloneGridPosition, ContributeGridPosition,
 } from 'styled/ViewStory'
 
-@inject('storyEditorStore', 'userStore', 'toastStore')
+@inject('storyEditorStore', 'userStore')
 @observer
 class EditStory extends React.Component {
   state = {
@@ -25,8 +25,7 @@ class EditStory extends React.Component {
     const storyId = this.props.match.params.id
 
     storyEditorStore.loadStory(storyId).then(() => {
-      if (storyEditorStore.authorId === userStore.me.id
-      || storyEditorStore.nonAuthorId === userStore.me.id) {
+      if (storyEditorStore.isUserAuthor(userStore.me.id)) {
         console.log('we are allowed to be here')
         this.setState({ permission: true })
       } else {

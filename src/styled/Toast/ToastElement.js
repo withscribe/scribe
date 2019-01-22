@@ -1,13 +1,14 @@
 import React from 'react'
-import styled, { keyframes } from 'react-emotion'
+import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core'
 
-import { colors } from '_system/Theme'
+import { colors } from 'System/Theme'
 import {
   WarningIcon,
   CheckIcon,
   DangerIcon,
   InfoIcon,
-} from '_system/Icons'
+} from 'System/Icons'
 
 const shrink = keyframes`
   from {
@@ -79,7 +80,7 @@ const Icon = ({ appearance }) => {
   const Glyph = meta.icon
   return (
     <div
-      css={{
+      style={{
         borderTopLeftRadius: '4px',
         borderBottomLeftRadius: '4px',
         backgroundColor: meta.fg,
@@ -94,12 +95,12 @@ const Icon = ({ appearance }) => {
         justifyContent: 'center',
       }}>
       <Countdown />
-      <Glyph css={{ position: 'relative', zIndex: 1 }} />
+      <Glyph />
     </div>
   )
 }
 
-const ToastElement = styled('div')(
+const ToastElement = styled.div(
   ({ appearance }) => ({
     // backgroundColor: types[appearance].bg,
     backgroundColor: '#ffffff',
@@ -109,6 +110,7 @@ const ToastElement = styled('div')(
     display: 'flex',
     marginBottom: '8px',
     alignItems: 'center',
+    zIndex: 100,
   }),
 )
 

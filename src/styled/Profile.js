@@ -1,6 +1,7 @@
-import styled from 'react-emotion'
-import { Flex } from 'grid-styled/emotion'
-import { typography } from '_system/Theme'
+import styled from '@emotion/styled'
+import { Flex } from '@rebass/grid/emotion'
+
+import { typography } from 'System/Theme'
 
 
 const ProfileSettingsHeader = styled.h1`

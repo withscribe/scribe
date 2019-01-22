@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CloseIcon } from '_system/Icons'
+import { CloseIcon } from 'System/Icons'
 import { ToastElement, Icon, Content, Button } from 'Styled/Toast/ToastElement'
 
 

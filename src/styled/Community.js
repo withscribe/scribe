@@ -1,7 +1,8 @@
-import styled, { css } from 'react-emotion'
-import { Box } from 'grid-styled/emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
+import { Box } from '@rebass/grid/emotion'
 
-import { colors } from '_system/Theme'
+import { colors } from 'System/Theme'
 
 const CommunityWidthAdapter = styled('div')`
   display: flex;

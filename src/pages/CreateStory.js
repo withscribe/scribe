@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
-import { Box } from 'grid-styled/emotion'
+import { Box } from '@rebass/grid/emotion'
 
 import Input, {
   Label, LabelConstraint, LabelTip,
-} from '_system/Input'
-import Button from '_system/Button'
-import Select from '_system/Select'
+} from 'System/Input'
+import Button from 'System/Button'
+import Select from 'System/Select'
 import { EditorWrapper } from 'Styled/Editor'
-import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'System/Hero'
 import TextEditor from 'Components/Papyrus/TextEditor'
 
 @inject('storyEditorStore', 'userStore')

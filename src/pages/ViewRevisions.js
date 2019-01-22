@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 
-import { Label } from '_system/Input'
-import { TitleText } from '_system/Typography'
-import { HomeGrid } from '_system/Grid'
-import { GhostWrapper, GhostSmall } from '_system/Ghost'
+import { Label } from 'System/Input'
+import { TitleText } from 'System/Typography'
+import { HomeGrid } from 'System/Grid'
+import { GhostWrapper, GhostSmall } from 'System/Ghost'
 import RevisionCard from 'Components/RevisionCard'
 
 @inject('storyStore', 'userStore')

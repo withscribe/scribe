@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 import {
   Card, CardTitle, CardAuthor, CardWrapper,
   CardMetaWrapper, CardMetaAction,
-} from '_system/Card'
-import { CardDesc } from '_system/Typography'
-import { ContributeIcon, BookmarkIcon, HeartIcon } from '_system/Icons'
+} from 'System/Card'
+import { CardDesc } from 'System/Typography'
+import { ContributeIcon, BookmarkIcon, HeartIcon } from 'System/Icons'
 
 @inject('userStore', 'storyStore')
 @observer
@@ -21,18 +21,20 @@ class StoryCard extends React.Component {
 
   componentDidMount() {
     const { userStore, story } = this.props
-    const guid = story.id + userStore.me.id
 
-    if (story.usersWhoLiked.length >= 1 && story.usersWhoLiked.filter(e => e.guid === guid).length >= 1) {
-      this.setState({ liked: true })
-    }
+    if (userStore.isLoggedIn) {
+      const guid = story.id + userStore.me.id
 
-    const hasForked = story.isForked
-    this.setState({ forked: hasForked })
+      if (story.usersWhoLiked.length >= 1 && story.usersWhoLiked.filter(e => e.guid === guid).length >= 1) {
+        this.setState({ liked: true })
+      }
 
-    if (story.authorId === userStore.me.id
-    || story.nonAuthorId === userStore.me.id) {
-      this.setState({ isAuthor: true })
+      const hasForked = story.isForked
+      this.setState({ forked: hasForked })
+
+      if (userStore.isUserAuthor(story.authorId, story.nonAuthorId)) {
+        this.setState({ isAuthor: true })
+      }
     }
 
     this.setState({ optimisticLikes: story.likes })
@@ -41,16 +43,21 @@ class StoryCard extends React.Component {
   likeStory = (e) => {
     e.preventDefault()
     e.stopPropagation()
+
+    const { userStore } = this.props
+    if (!userStore.isLoggedIn) {
+      return
+    }
     const { liked } = this.state
     let { optimisticLikes } = this.state
     if (liked) {
-      const { userStore, story: { id } } = this.props
+      const { story: { id } } = this.props
       userStore.unlikeStory(id, userStore.me.id)
       const decrementedLikeCount = optimisticLikes -= 1
       this.setState({ liked: false, optimisticLikes: decrementedLikeCount })
       return
     }
-    const { userStore, story: { id } } = this.props
+    const { story: { id } } = this.props
     const incrementedLikeCount = optimisticLikes += 1
     userStore.likeStory(id)
     this.setState({ liked: true, optimisticLikes: incrementedLikeCount })
@@ -59,14 +66,22 @@ class StoryCard extends React.Component {
   cloneStory = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const { userStore, storyStore, story } = this.props
+    const { userStore } = this.props
+    if (!userStore.isLoggedIn) {
+      return
+    }
+    const { storyStore, story } = this.props
     storyStore.clone(story.id, userStore.me.id)
   }
 
   forkStory = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const { userStore, storyStore, story } = this.props
+    const { userStore } = this.props
+    if (!userStore.isLoggedIn) {
+      return
+    }
+    const { storyStore, story } = this.props
     storyStore.forkStory(story.id, userStore.me.id)
   }
 

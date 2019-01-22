@@ -55,7 +55,7 @@ export default {
         minifyURLs: true,
       },
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
@@ -67,7 +67,7 @@ export default {
       Components: path.join(__dirname, 'src/components'),
       Pages: path.join(__dirname, 'src/pages'),
       Styled: path.join(__dirname, 'src/styled'),
-      _system: path.join(__dirname, 'src/styled/_system'),
+      System: path.join(__dirname, 'src/styled/system'),
       Queries: path.join(__dirname, 'src/queries'),
       Mutations: path.join(__dirname, 'src/mutations'),
       Stores: path.join(__dirname, 'src/stores'),
@@ -126,26 +126,14 @@ export default {
     minimizer: [
       new TerserPlugin({
         terserOptions: {
-          parse: {
-            ecma: 8,
-          },
-          compress: {
-            ecma: 5,
-            warnings: false,
-            comparisons: false,
-            inline: 2,
-          },
-          mangle: {
-            safari10: true,
-          },
+          compress: true,
+          parallel: true,
+          sourceMap: false,
+          mangle: true,
           output: {
-            ecma: 5,
             comments: false,
-            ascii_only: true,
           },
         },
-        parallel: true,
-        sourceMap: false,
       }),
     ],
     runtimeChunk: false,

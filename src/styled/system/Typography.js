@@ -1,6 +1,6 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
-import { typography, transitions, colors } from '_system/Theme'
+import { typography, transitions, colors } from 'System/Theme'
 
 const TitleText = styled('h1')`
   ${typography.headings.xlarge};

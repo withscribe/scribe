@@ -27,9 +27,30 @@ Regardless, this codebase is in good working condition. While the project is in 
 - **JavaScript**: We use Node.js to power the light express server, and React to power our frontend. All of the code you'll touch in this codebase will be JavaScript.
 
 List of other tech that is used
-- **GraphQL**: API Client using Apollo
+- **GraphQL/Apollo**: API Client using Apollo
 - **React**: Frontend
 - **SlateJS**: WSYIWYG Editor
+- **emotionJS**: CSS-in-JS
+- **Loadable**: Code Splitting
+- **offline-plugin**: Service Worker
+
+- **Flow**: Typing (soon)
 
 
-//@todo
+#### Folder Structure
+```
+spectrum/
+├── __mocks__     # Mock functions (etc) for Testing
+├── assets        # Static assets 
+├── components    # Reusable Components
+├── hoc           # Higher Order Components
+├── mutations     # GraphQL Mutations
+├── pages         # A View (/[something]) built from components 
+├── queries       # GraphQL Queries
+├── services      # Utils-Like folder
+├── stores        # MST Stories+Models
+├── shared        # Shared JavaScript code
+├── styled        # CSS-in-JS (emotion) files  
+├────── system    # Folder for styling primitives
+└──────────────────────────────────────────────────────
+```

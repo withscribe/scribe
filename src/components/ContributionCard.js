@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import TimeAgo from 'timeago-react'
 import PropTypes from 'prop-types'
 
-import { Card, CardTitle, CardWrapper } from '_system/Card'
-import { CardDesc } from '_system/Typography'
+import { Card, CardTitle, CardWrapper } from 'System/Card'
+import { CardDesc } from 'System/Typography'
 
 class ContributionCard extends React.PureComponent {
   state = {

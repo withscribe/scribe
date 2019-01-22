@@ -1,6 +1,7 @@
-const white = '#FFFFFF'
-const black = '#0F131A'
+import facepaint from 'facepaint'
 
+const white = '#FFFFFF'
+const black = '#16171a'
 
 const border = {
   default: '#E4E7EB',
@@ -69,7 +70,7 @@ const oranges = {
 }
 
 const intent = {
-  none: blues.b300,
+  none: blues.p300,
   success: greens.g300,
   danger: reds.r300,
   warning: oranges.o300,
@@ -134,3 +135,9 @@ export const spacing = {
   m5: 'margin: 5em',
   mb1: 'margin-bottom: 1em',
 }
+
+export const mq = facepaint([
+  '@media(max-width: 420px)',
+  '@media(max-width: 920px)',
+  '@media(max-width: 1120px)',
+])

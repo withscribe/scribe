@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
-import Button from '_system/Button'
-import { TitleSecondary } from '_system/Typography'
-import { LoadingSpinner } from '_system/Loader'
-import { GhostWrapper } from '_system/Ghost'
-import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
-import { HeartIcon, EditIcon, HistoryIcon } from '_system/Icons'
+import Button from 'System/Button'
+import { TitleSecondary } from 'System/Typography'
+import { LoadingSpinner } from 'System/Loader'
+import { GhostWrapper } from 'System/Ghost'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'System/Hero'
+import { HeartIcon, EditIcon, HistoryIcon } from 'System/Icons'
 import StoryViewer from 'Components/Papyrus/StoryViewer'
 import {
   ViewStoryGrid, ViewStoryWidthAdapter,
@@ -112,8 +112,8 @@ class ViewStory extends React.Component {
                 appearance="default"
                 onClick={() => this.likeStory(story.id)}>
                 {liked
-                  ? <><HeartIcon />Liked</>
-                  : <><HeartIcon />Like</>
+                  ? <><HeartIcon active={liked} />Liked</>
+                  : <><HeartIcon active={liked}/>Like</>
                 }
               </Button>
               {isAuthor
@@ -166,7 +166,7 @@ class ViewStory extends React.Component {
                     <Button
                       appearance="default"
                       onClick={() => this.cloneStory(story.id)}>
-                      Clone Story
+                      Save Story
                     </Button>
                     <Tooltip
                       onHover={this.toggleCloneTooltip}

@@ -1,9 +1,10 @@
-import React from 'react'
+/** @jsx jsx */
 import PropTypes from 'prop-types'
-import styled, { css } from 'react-emotion'
+import styled from '@emotion/styled'
+import { css, jsx } from '@emotion/core'
 
-import { CaretDownIcon } from '_system/Icons'
-import { colors } from '_system/Theme'
+import { CaretDownIcon } from 'System/Icons'
+import { colors } from 'System/Theme'
 
 const selectWrapperStyles = css`
   display: inline-flex;
@@ -49,7 +50,7 @@ const Select = ({ onChange, children, ...props }) => (
       onChange={onChange}>
       {children}
     </StyledSelect>
-    <CaretDownIcon className={extraIconStyles} />
+    <CaretDownIcon css={extraIconStyles} />
   </SelectWrapper>
 )
 

@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import { clone, getSnapshot, applySnapshot } from 'mobx-state-tree'
-import { Flex, Box } from 'grid-styled/emotion'
+import { Flex, Box } from '@rebass/grid/emotion'
 
-import Input, { Label, LabelTip, LabelConstraint } from '_system/Input'
-import Button from '_system/Button'
+import Input, { Label, LabelTip, LabelConstraint } from 'System/Input'
+import Button from 'System/Button'
 import { ProfileWrapper } from 'Styled/Profile'
-import Hero, { HeroPrimaryText, HeroSpanText } from '_system/Hero'
+import Hero, { HeroPrimaryText, HeroSpanText } from 'System/Hero'
 
 @inject('userStore')
 @observer

@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 const AllStories = gql`
-  query {
-    allStories {
+  query allStories ($first: Int, $skip: Int) {
+    allStories(first: $first, skip: $skip) {
       id
       title
       description
@@ -27,7 +27,7 @@ const AllStories = gql`
         description
         content
       }
-    } 
+    }
   }
 `
 

@@ -1,6 +1,7 @@
-import styled, { css } from 'react-emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
-import { typography, colors, spacing } from '_system/Theme'
+import { typography, colors, spacing } from 'System/Theme'
 
 const types = {
   purple: {
@@ -71,7 +72,7 @@ const heroSpanWithAction = css`
 
 const HeroSpanText = styled('span')`
   ${heroSpanStyles};
-  ${p => p.withAction ? `${heroSpanWithAction}` : null}
+  ${p => p.withAction ? css`${heroSpanWithAction}` : null}
 `
 
 
