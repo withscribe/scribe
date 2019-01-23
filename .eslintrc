@@ -30,7 +30,7 @@
     "react/forbid-prop-types": 0,
     "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }],
     "react/jsx-boolean-value": ["warn", "never"],
-    "react/jsx-closing-bracket-location": ["warn", "after-props"],
+
     "react/jsx-curly-spacing": ["warn", "never"],
     "react/jsx-first-prop-new-line": ["warn", "multiline"],
     "react/jsx-indent": ["warn", 2],
