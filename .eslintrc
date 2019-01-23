@@ -1,6 +1,6 @@
 {
   "extends": "airbnb",
-  "plugins": ["react", "emotion"],
+  "plugins": ["react", "emotion", "prettier"],
   "env": {
     "browser": true,
     "node": true,
@@ -45,8 +45,8 @@
     "import/extensions": 0,
     "import/order": ["warn", {"newlines-between": "always"}],
     "semi": [2, "never" ],
-    // "operator-linebreak": ["error", "before"],
-    "babel/object-curly-spacing": 0
+    "babel/object-curly-spacing": 0,
+    "indent": ["error", 2, { "SwitchCase": 1 }]
   },
   "overrides": [
     {
