@@ -8,7 +8,7 @@
   },
   "parser": "babel-eslint",
   "rules": {
-    "indent": ["error", 2],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "react/prefer-stateless-function": "warn",
     "react/sort-comp": [
       1,
@@ -45,8 +45,7 @@
     "import/extensions": 0,
     "import/order": ["warn", {"newlines-between": "always"}],
     "semi": [2, "never" ],
-    "babel/object-curly-spacing": 0,
-    "indent": ["error", 2, { "SwitchCase": 1 }]
+    "babel/object-curly-spacing": 0
   },
   "overrides": [
     {
